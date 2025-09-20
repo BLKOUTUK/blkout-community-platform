@@ -162,7 +162,7 @@ const ModerationQueue: React.FC = () => {
 
       // Trigger BLKOUTHUB webhook
       try {
-        const response = await fetch('/api/webhooks/blkouthub', {
+        const response = await fetch('https://api.blkoutcollective.org/v1/webhooks/blkouthub', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

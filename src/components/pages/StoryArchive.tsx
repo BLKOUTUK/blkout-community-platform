@@ -42,7 +42,7 @@ const StoryArchive: React.FC = () => {
       setLoading(true);
       try {
         // Fetch real articles from the database via API
-        const response = await fetch('/api/story-archive');
+        const response = await fetch('https://api.blkoutcollective.org/v1/story-archive');
         const data = await response.json();
 
         if (response.ok) {
