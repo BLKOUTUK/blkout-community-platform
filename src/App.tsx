@@ -17,8 +17,8 @@ import StoryArchive from '@/components/pages/StoryArchive';
 import EventsCalendar from '@/components/pages/EventsCalendar';
 import IVORAssistant from './components/ivor/IVORAssistant';
 
-// API Configuration - Layer 1 connects ONLY to Layer 2 API Gateway
-const LIBERATION_API = import.meta.env.VITE_API_URL || 'https://blkout-liberation-backend.vercel.app/api/v1';
+// API Configuration - Working backend
+const LIBERATION_API = import.meta.env.VITE_API_URL || 'https://blkout-simple-technical.vercel.app/api';
 
 // Import live events API at the top level
 import { eventsAPI } from './services/events-api';
