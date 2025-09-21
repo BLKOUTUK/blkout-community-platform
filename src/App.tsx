@@ -17,8 +17,8 @@ import StoryArchive from '@/components/pages/StoryArchive';
 import EventsCalendar from '@/components/pages/EventsCalendar';
 import IVORAssistant from './components/ivor/IVORAssistant';
 
-// Temporary: Force mock data mode for admin testing - trigger rebuild
-const LIBERATION_API = '/api-disabled-for-testing-v2';
+// API Configuration - using environment variables for backend connectivity
+const LIBERATION_API = import.meta.env.VITE_API_URL || 'https://blkout-simple-technical.vercel.app/api';
 
 // Import live events API at the top level
 import { eventsAPI } from './services/events-api';
