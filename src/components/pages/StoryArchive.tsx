@@ -172,7 +172,8 @@ const StoryArchive: React.FC = () => {
       {/* Video Hero */}
       <VideoHero
         title="STORIES"
-        description="270+ stories from the BLKOUT community. Your voices, your experiences, your liberation."
+        subtitle="Your voices, your experiences, your liberation"
+        description="270+ stories from the BLKOUT community."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',

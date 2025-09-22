@@ -246,7 +246,7 @@ export const DemocraticGovernanceInterface: React.FC<DemocraticGovernanceInterfa
       {/* Hero Section with Video Background */}
       <VideoHero
         title="GOVERNANCE"
-        subtitle="Democratic member control and transparency"
+        subtitle="Your voice matters in our community decisions"
         description="As a Community Benefit Society with asset lock, we are governed by our members through democratic one-member-one-vote principles. Access membership, transparency reports, financial statements, and participate in shaping our community-controlled future."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',

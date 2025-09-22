@@ -42,7 +42,7 @@ export default function AboutUs() {
       {/* Hero Section with Video Background */}
       <VideoHero
         title="ABOUT"
-        subtitle="Liberation Platform"
+        subtitle="Welcome to our liberation community"
         description="The world's first technically implemented liberation platform with community benefit society governance, fair creator compensation, and trauma-informed community protection for Black queer communities."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',

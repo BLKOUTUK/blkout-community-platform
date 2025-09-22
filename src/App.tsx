@@ -3,7 +3,7 @@
 // STRICT SEPARATION: Application shell only - NO business logic
 
 import React, { useState, useEffect } from 'react';
-import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain } from 'lucide-react';
+import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain, ArrowRight, ExternalLink, Globe, Mail } from 'lucide-react';
 import {
   cn,
   culturalUtils,
@@ -185,25 +185,6 @@ export default function App() {
         overlayOpacity={0.7}
         className="mb-8"
       >
-        {/* Platform Statistics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-2xl mx-auto mt-8">
-          <div className="bg-liberation-black-power bg-opacity-70 rounded-lg p-3 md:p-4">
-            <div className="text-lg md:text-2xl font-bold text-liberation-gold-divine">{platformStats.membersServed.toLocaleString()}</div>
-            <div className="text-liberation-silver text-xs md:text-sm">Members Served</div>
-          </div>
-          <div className="bg-liberation-black-power bg-opacity-70 rounded-lg p-3 md:p-4">
-            <div className="text-lg md:text-2xl font-bold text-liberation-gold-divine">{platformStats.storiesShared.toLocaleString()}</div>
-            <div className="text-liberation-silver text-xs md:text-sm">Stories Shared</div>
-          </div>
-          <div className="bg-liberation-black-power bg-opacity-70 rounded-lg p-3 md:p-4">
-            <div className="text-lg md:text-2xl font-bold text-liberation-gold-divine">{platformStats.eventsHosted.toLocaleString()}</div>
-            <div className="text-liberation-silver text-xs md:text-sm">Events Hosted</div>
-          </div>
-          <div className="bg-liberation-black-power bg-opacity-70 rounded-lg p-3 md:p-4">
-            <div className="text-lg md:text-2xl font-bold text-liberation-gold-divine">{platformStats.liberationActions.toLocaleString()}</div>
-            <div className="text-liberation-silver text-xs md:text-sm">Liberation Actions</div>
-          </div>
-        </div>
       </VideoHero>
 
       {/* Rotating Liberation Quotes */}
@@ -222,31 +203,109 @@ export default function App() {
         </div>
       </section>
 
-      {/* Liberation Values Grid */}
-      <section className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        <div className="bg-liberation-red-liberation rounded-xl p-4 md:p-6 text-white">
-          <Heart className="h-6 md:h-8 w-6 md:w-8 mb-3 md:mb-4" />
-          <h3 className="text-lg md:text-xl font-bold mb-2">Fair Creator Compensation</h3>
-          <p className="text-liberation-silver text-sm md:text-base">Community-agreed fair compensation rates with profits reinvested through democratic governance.</p>
-        </div>
+      {/* Welcome Links Grid */}
+      <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+        <button
+          onClick={() => window.open('https://blkout-scrollytelling.vercel.app', '_blank')}
+          className="group bg-gradient-to-br from-liberation-red-liberation to-liberation-purple-spirit text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
+        >
+          <div className="flex items-center mb-4">
+            <Play className="h-8 w-8 text-liberation-gold-divine" />
+          </div>
+          <h3 className="text-lg font-bold mb-2">Liberation Story</h3>
+          <p className="text-liberation-silver text-sm mb-4">
+            Experience our immersive scrollytelling journey through Black queer liberation.
+          </p>
+          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
+            Watch Story
+            <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </button>
 
-        <div className="bg-liberation-green-africa rounded-xl p-4 md:p-6 text-white">
-          <Vote className="h-6 md:h-8 w-6 md:w-8 mb-3 md:mb-4" />
-          <h3 className="text-lg md:text-xl font-bold mb-2">Democratic Governance</h3>
-          <p className="text-liberation-silver text-sm md:text-base">Community members vote on platform decisions, policies, and resource allocation.</p>
-        </div>
+        <button
+          onClick={() => setActiveTab('intro')}
+          className="group bg-gradient-to-br from-liberation-green-africa to-liberation-gold-divine text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
+        >
+          <div className="flex items-center mb-4">
+            <Brain className="h-8 w-8 text-liberation-black-power" />
+          </div>
+          <h3 className="text-lg font-bold mb-2">Meet IVOR</h3>
+          <p className="text-liberation-black-power opacity-80 text-sm mb-4">
+            Chat with our trauma-informed AI assistant built for our community.
+          </p>
+          <div className="flex items-center text-liberation-black-power font-semibold text-sm">
+            Start Chat
+            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </button>
 
-        <div className="bg-liberation-purple-spirit rounded-xl p-4 md:p-6 text-white">
-          <Shield className="h-6 md:h-8 w-6 md:w-8 mb-3 md:mb-4" />
-          <h3 className="text-lg md:text-xl font-bold mb-2">Trauma-Informed Design</h3>
-          <p className="text-liberation-silver text-sm md:text-base">Every interaction designed with healing, safety, and community wellbeing in mind.</p>
-        </div>
+        <button
+          onClick={() => setActiveTab('community')}
+          className="group bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
+        >
+          <div className="flex items-center mb-4">
+            <Users className="h-8 w-8 text-liberation-gold-divine" />
+          </div>
+          <h3 className="text-lg font-bold mb-2">Community Platform</h3>
+          <p className="text-liberation-silver text-sm mb-4">
+            Explore events, stories, and democratic governance features.
+          </p>
+          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
+            Enter Platform
+            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </button>
 
-        <div className="bg-liberation-gold-divine rounded-xl p-4 md:p-6 text-liberation-black-power">
-          <DollarSign className="h-6 md:h-8 w-6 md:w-8 mb-3 md:mb-4" />
-          <h3 className="text-lg md:text-xl font-bold mb-2">Economic Justice</h3>
-          <p className="text-liberation-black-power opacity-80 text-sm md:text-base">Cooperative ownership model ensures wealth stays in our communities.</p>
-        </div>
+        <button
+          onClick={() => window.open('https://blkouthub.com', '_blank')}
+          className="group bg-gradient-to-br from-liberation-gold-divine to-liberation-red-liberation text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
+        >
+          <div className="flex items-center mb-4">
+            <Globe className="h-8 w-8 text-liberation-black-power" />
+          </div>
+          <h3 className="text-lg font-bold mb-2">BLKOUTHUB</h3>
+          <p className="text-liberation-black-power opacity-80 text-sm mb-4">
+            Join our secure community on Heartbeat.chat with enhanced governance access.
+          </p>
+          <div className="flex items-center text-liberation-black-power font-semibold text-sm">
+            Visit Hub
+            <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </button>
+
+        <button
+          onClick={() => window.open('https://blkout.substack.com', '_blank')}
+          className="group bg-gradient-to-br from-liberation-silver to-liberation-purple-spirit text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
+        >
+          <div className="flex items-center mb-4">
+            <Mail className="h-8 w-8 text-liberation-black-power" />
+          </div>
+          <h3 className="text-lg font-bold mb-2">Liberation Newsletter</h3>
+          <p className="text-liberation-black-power opacity-80 text-sm mb-4">
+            Stay connected with our liberation updates and community news.
+          </p>
+          <div className="flex items-center text-liberation-black-power font-semibold text-sm">
+            Subscribe
+            <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </button>
+
+        <button
+          onClick={() => setActiveTab('governance')}
+          className="group bg-gradient-to-br from-liberation-black-power to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 border-2 border-liberation-gold-divine text-left"
+        >
+          <div className="flex items-center mb-4">
+            <Heart className="h-8 w-8 text-liberation-gold-divine" />
+          </div>
+          <h3 className="text-lg font-bold mb-2">I Want It All</h3>
+          <p className="text-liberation-silver text-sm mb-4">
+            Start here and explore the entire ecosystem at your own pace.
+          </p>
+          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
+            Full Access
+            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </button>
       </section>
 
       {/* Quick Actions */}

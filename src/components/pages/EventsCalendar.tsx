@@ -84,7 +84,7 @@ const EventsCalendar: React.FC = () => {
       {/* Video Hero Section */}
       <VideoHero
         title="EVENTS"
-        subtitle="Liberation Organizing & Community Building"
+        subtitle="Join us for community connection and action"
         description="Trauma-informed accessible spaces for democratic organizing, mutual aid, and collective liberation. Build community power through action."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
