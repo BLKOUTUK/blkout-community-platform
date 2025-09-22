@@ -171,7 +171,7 @@ const StoryArchive: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
       {/* Video Hero */}
       <VideoHero
-        title="STORY ARCHIVE"
+        title="STORIES"
         description="270+ stories from the BLKOUT community. Your voices, your experiences, your liberation."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',

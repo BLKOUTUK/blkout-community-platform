@@ -245,7 +245,7 @@ export const DemocraticGovernanceInterface: React.FC<DemocraticGovernanceInterfa
     <div className={cn('space-y-8', className)} data-testid={testId} {...props}>
       {/* Hero Section with Video Background */}
       <VideoHero
-        title="COMMUNITY BENEFIT SOCIETY GOVERNANCE"
+        title="GOVERNANCE"
         subtitle="Democratic member control and transparency"
         description="As a Community Benefit Society with asset lock, we are governed by our members through democratic one-member-one-vote principles. Access membership, transparency reports, financial statements, and participate in shaping our community-controlled future."
         videos={[

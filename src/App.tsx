@@ -27,7 +27,6 @@ import BLKOUTHUBInvitation from '@/components/community/BLKOUTHUBInvitation';
 import BLKOUTHUBBenefitsDisplay from '@/components/community/BLKOUTHUBBenefitsDisplay';
 import VideoHero from '@/components/ui/VideoHero';
 import { DemocraticGovernanceInterface } from '@/components/liberation/democratic-governance-interface';
-import { CreatorSovereigntyDashboard } from '@/components/liberation/creator-sovereignty-dashboard';
 import { useBLKOUTHUBMembership } from '@/services/blkouthub-integration';
 
 // API Configuration - Working backend

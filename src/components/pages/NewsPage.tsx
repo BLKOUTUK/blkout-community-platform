@@ -112,7 +112,7 @@ const NewsPage: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
       {/* Video Hero Section */}
       <VideoHero
-        title="COMMUNITY NEWS CURATION"
+        title="NEWSROOM"
         subtitle="Shared News Agenda & Story Discovery"
         description="Phase 1: Community curators aggregate relevant stories from across the internet. Your votes create our shared news agenda and train IVOR to find stories that matter to us."
         videos={[

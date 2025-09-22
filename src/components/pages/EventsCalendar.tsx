@@ -83,7 +83,7 @@ const EventsCalendar: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
       {/* Video Hero Section */}
       <VideoHero
-        title="COMMUNITY EVENTS"
+        title="EVENTS"
         subtitle="Liberation Organizing & Community Building"
         description="Trauma-informed accessible spaces for democratic organizing, mutual aid, and collective liberation. Build community power through action."
         videos={[
