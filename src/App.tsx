@@ -308,35 +308,6 @@ export default function App() {
         </button>
       </section>
 
-      {/* Quick Actions */}
-      <section className="bg-liberation-black-power rounded-xl p-4 md:p-6">
-        <h2 className="text-xl md:text-2xl font-bold text-liberation-gold-divine mb-4 md:mb-6">Get Started</h2>
-        <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
-          <button
-            onClick={() => setActiveTab('intro')}
-            className="bg-liberation-purple-spirit text-white p-4 rounded-lg hover:bg-opacity-80 transition-colors text-left touch-friendly"
-          >
-            <h4 className="font-semibold mb-2 text-sm md:text-base">Meet IVOR</h4>
-            <p className="text-xs md:text-sm text-liberation-silver">Your AI liberation assistant for organizing and support.</p>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('community')}
-            className="bg-liberation-red-liberation text-white p-4 rounded-lg hover:bg-opacity-80 transition-colors text-left touch-friendly"
-          >
-            <h4 className="font-semibold mb-2 text-sm md:text-base">Join Community</h4>
-            <p className="text-xs md:text-sm text-liberation-silver">Connect with Black queer organizers on BLKOUTHUB.</p>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('stories')}
-            className="bg-liberation-green-africa text-white p-4 rounded-lg hover:bg-opacity-80 transition-colors text-left touch-friendly"
-          >
-            <h4 className="font-semibold mb-2 text-sm md:text-base">Explore Events</h4>
-            <p className="text-xs md:text-sm text-liberation-silver">Find community gatherings and liberation organizing.</p>
-          </button>
-        </div>
-      </section>
     </div>
   );
 
