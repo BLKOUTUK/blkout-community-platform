@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ArrowLeft, Play, Pause, Volume2, VolumeX, MessageSquare, Brain, Heart, Users, Zap, Shield } from 'lucide-react';
+import { ArrowLeft, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 
 const IVORIntroduction: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -55,32 +55,26 @@ const IVORIntroduction: React.FC = () => {
 
   const features = [
     {
-      icon: Brain,
       title: "Intelligent Assistance",
       description: "AI-powered support trained on liberation principles and community values"
     },
     {
-      icon: Heart,
       title: "Trauma-Informed",
       description: "Designed with healing-centered practices and culturally responsive care"
     },
     {
-      icon: Users,
       title: "Community-Centered",
       description: "Built by and for Black queer communities with democratic governance"
     },
     {
-      icon: Shield,
       title: "Privacy First",
       description: "Your data sovereignty protected with end-to-end encryption"
     },
     {
-      icon: Zap,
       title: "Always Available",
       description: "24/7 support when you need it most, crisis-informed responses"
     },
     {
-      icon: MessageSquare,
       title: "Multi-Platform",
       description: "Access IVOR through web, mobile, SMS, and social media platforms"
     }
@@ -267,7 +261,7 @@ const IVORIntroduction: React.FC = () => {
                 className="bg-gradient-to-br from-gray-800 to-gray-900 border border-liberation-sovereignty-gold/10 rounded-2xl p-6 hover:border-liberation-sovereignty-gold/30 transition-all duration-300"
               >
                 <div className="w-12 h-12 bg-liberation-sovereignty-gold/20 rounded-2xl flex items-center justify-center mb-4">
-                  <feature.icon className="h-6 w-6 text-liberation-sovereignty-gold" />
+                  <img src="/blkout-logo.png" alt="BLKOUT Logo" className="h-6 w-6 rounded-full" />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-3">{feature.title}</h3>
                 <p className="text-gray-400 leading-relaxed">{feature.description}</p>

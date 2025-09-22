@@ -27,19 +27,19 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
   const steps = [
     {
       id: 'welcome',
-      title: '🏴‍☠️ Welcome to BLKOUT Platform',
+      title: 'WELCOME TO BLKOUT PLATFORM',
       content: 'Your home for Black queer liberation technology. Built by and for our communities with sovereignty, safety, and collective power at the core.',
       action: 'next'
     },
     {
       id: 'ecosystem',
-      title: 'Choose Your Path',
+      title: 'CHOOSE YOUR PATH',
       content: 'Start your journey through our liberation platform.',
       action: 'ecosystem'
     },
     {
       id: 'transition',
-      title: 'Connecting You to Liberation',
+      title: 'CONNECTING YOU TO LIBERATION',
       content: 'Opening your selected pathway into the BLKOUT ecosystem...',
       action: 'complete'
     }
@@ -167,6 +167,10 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
           <motion.h1
             id="onboarding-title"
             className="text-3xl md:text-4xl lg:text-5xl font-black text-liberation-gold-divine mb-6 leading-tight"
+            style={{
+              textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+              WebkitTextStroke: '1px #000'
+            }}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
@@ -192,7 +196,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
             transition={{ delay: 0.5, duration: 0.5 }}
           >
             {steps[currentStep].action === 'ecosystem' && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto max-h-[70vh] overflow-y-auto px-4">
                 {/* Liberation Story */}
                 <motion.button
                   onClick={() => handleEcosystemChoice('scrollytelling')}
@@ -201,7 +205,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="flex items-center justify-center mb-4">
-                    <Play className="h-8 w-8 text-liberation-gold-divine" />
+                    <img src="/blkout-logo.png" alt="BLKOUT Logo" className="h-8 w-8 rounded-full" />
                   </div>
                   <h3 className="text-lg font-bold mb-2">Liberation Story</h3>
                   <p className="text-liberation-silver text-sm mb-4">
@@ -221,7 +225,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="flex items-center justify-center mb-4">
-                    <Bot className="h-8 w-8 text-liberation-black-power" />
+                    <img src="/blkout-logo.png" alt="BLKOUT Logo" className="h-8 w-8 rounded-full" />
                   </div>
                   <h3 className="text-lg font-bold mb-2">Meet IVOR</h3>
                   <p className="text-liberation-black-power opacity-80 text-sm mb-4">
@@ -241,7 +245,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="flex items-center justify-center mb-4">
-                    <Users className="h-8 w-8 text-liberation-gold-divine" />
+                    <img src="/blkout-logo.png" alt="BLKOUT Logo" className="h-8 w-8 rounded-full" />
                   </div>
                   <h3 className="text-lg font-bold mb-2">Community Platform</h3>
                   <p className="text-liberation-silver text-sm mb-4">
@@ -261,7 +265,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="flex items-center justify-center mb-4">
-                    <Globe className="h-8 w-8 text-liberation-black-power" />
+                    <img src="/blkout-logo.png" alt="BLKOUT Logo" className="h-8 w-8 rounded-full" />
                   </div>
                   <h3 className="text-lg font-bold mb-2">BLKOUTHUB</h3>
                   <p className="text-liberation-black-power opacity-80 text-sm mb-4">
@@ -281,7 +285,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="flex items-center justify-center mb-4">
-                    <Mail className="h-8 w-8 text-liberation-black-power" />
+                    <img src="/blkout-logo.png" alt="BLKOUT Logo" className="h-8 w-8 rounded-full" />
                   </div>
                   <h3 className="text-lg font-bold mb-2">Liberation Newsletter</h3>
                   <p className="text-liberation-black-power opacity-80 text-sm mb-4">
@@ -301,7 +305,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="flex items-center justify-center mb-4">
-                    <Heart className="h-8 w-8 text-liberation-gold-divine" />
+                    <img src="/blkout-logo.png" alt="BLKOUT Logo" className="h-8 w-8 rounded-full" />
                   </div>
                   <h3 className="text-lg font-bold mb-2">I Want It All</h3>
                   <p className="text-liberation-silver text-sm mb-4">
@@ -363,10 +367,10 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
           transition={{ delay: 0.8 }}
         >
           <div className="flex flex-wrap justify-center gap-4 text-xs text-liberation-silver opacity-75">
-            <span>🏴‍☠️ Creator Sovereignty</span>
-            <span>🗳️ Democratic Governance</span>
-            <span>💜 Trauma-Informed Design</span>
-            <span>🌍 Community Power</span>
+            <span><img src="/blkout-logo.png" alt="BLKOUT Logo" className="inline h-3 w-3 rounded-full mr-1" />Creator Sovereignty</span>
+            <span><img src="/blkout-logo.png" alt="BLKOUT Logo" className="inline h-3 w-3 rounded-full mr-1" />Democratic Governance</span>
+            <span><img src="/blkout-logo.png" alt="BLKOUT Logo" className="inline h-3 w-3 rounded-full mr-1" />Trauma-Informed Design</span>
+            <span><img src="/blkout-logo.png" alt="BLKOUT Logo" className="inline h-3 w-3 rounded-full mr-1" />Community Power</span>
           </div>
         </motion.div>
       </motion.div>
