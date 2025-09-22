@@ -86,7 +86,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
 
       case 'newsletter':
         // Open newsletter signup
-        window.open('https://blkout.substack.com', '_blank');
+        window.open('https://sendfox.com/blkoutuk', '_blank');
         setTimeout(() => completeOnboarding(), 1000);
         break;
     }

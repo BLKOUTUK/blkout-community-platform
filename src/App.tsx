@@ -274,7 +274,7 @@ export default function App() {
         </button>
 
         <button
-          onClick={() => window.open('https://blkout.substack.com', '_blank')}
+          onClick={() => window.open('https://sendfox.com/blkoutuk', '_blank')}
           className="group bg-gradient-to-br from-liberation-silver to-liberation-purple-spirit text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
         >
           <div className="flex items-center mb-4">
