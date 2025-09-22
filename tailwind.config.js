@@ -11,20 +11,25 @@ export default {
         liberation: {
           // Pan-African colors
           'red-liberation': '#E31E24',      // Pan-African red
-          'black-power': '#000000',         // Black power and solidarity  
+          'black-power': '#000000',         // Black power and solidarity
           'green-africa': '#00A86B',        // Pan-African green
-          
+
+          // Platform core colors
+          'gold-divine': '#FFD700',         // Divine gold for celebration
+          'silver': '#C0C0C0',              // Elegant silver for subtle text
+          'purple-spirit': '#8B008B',       // Spiritual purple for community
+
           // Pride celebration palette
           'pride-pink': '#FF69B4',          // Hot pink for joy
           'pride-purple': '#8B008B',        // Deep magenta for dignity
           'pride-blue': '#0099CC',          // Sky blue for hope
           'pride-yellow': '#FFD700',        // Gold for celebration
-          
+
           // Community healing colors
           'healing-sage': '#9CAF88',        // Soft sage for trauma-informed spaces
           'healing-lavender': '#E6E6FA',    // Gentle lavender for safe spaces
           'community-warm': '#F4A460',      // Sandy brown for community warmth
-          
+
           // Economic justice colors
           'sovereignty-gold': '#FFD700',    // 75% creator sovereignty
           'transparency-blue': '#87CEEB',   // Revenue transparency

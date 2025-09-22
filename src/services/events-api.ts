@@ -26,6 +26,7 @@ export interface LiberationEvent {
   accessibilityFeatures: string[];
   communityValue: 'education' | 'mutual-aid' | 'organizing' | 'celebration' | 'healing';
   status: 'upcoming' | 'happening-now' | 'completed' | 'cancelled';
+  sourceUrl?: string; // Link back to the original source of the event
   created: string;
   updated: string;
 }
@@ -41,6 +42,7 @@ export interface EventSubmission {
   traumaInformed: boolean;
   accessibilityFeatures: string[];
   communityValue: LiberationEvent['communityValue'];
+  sourceUrl?: string; // Optional link back to the original source of the event
 }
 
 class EventsAPIService {

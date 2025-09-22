@@ -46,6 +46,83 @@ export const liberationColors = {
   },
 } as const;
 
+// Governance utility functions
+export const governanceUtils = {
+  // Voting status utilities
+  getVotingStatusColor: (status: string) => {
+    switch (status) {
+      case 'active': return 'text-liberation-green-africa bg-liberation-green-africa';
+      case 'pending': return 'text-liberation-pride-yellow bg-liberation-pride-yellow';
+      case 'completed': return 'text-liberation-pride-blue bg-liberation-pride-blue';
+      case 'rejected': return 'text-liberation-red-liberation bg-liberation-red-liberation';
+      default: return 'text-liberation-silver bg-liberation-silver';
+    }
+  },
+
+  // Proposal type utilities
+  getProposalTypeColor: (type: string) => {
+    switch (type) {
+      case 'platform-change': return 'text-liberation-purple-spirit bg-liberation-purple-spirit';
+      case 'resource-allocation': return 'text-liberation-sovereignty-gold bg-liberation-sovereignty-gold';
+      case 'community-guideline': return 'text-liberation-healing-sage bg-liberation-healing-sage';
+      case 'technical-improvement': return 'text-liberation-pride-blue bg-liberation-pride-blue';
+      default: return 'text-liberation-silver bg-liberation-silver';
+    }
+  },
+
+  // Democratic participation utilities
+  formatParticipationRate: (participated: number, total: number) => {
+    const rate = (participated / total) * 100;
+    return `${rate.toFixed(1)}%`;
+  },
+
+  // Liberation values assessment
+  assessLiberationImpact: (proposal: any) => {
+    // Basic assessment for display purposes only
+    return {
+      creatorSovereignty: proposal.creatorSovereigntyImpact || 'neutral',
+      democraticGovernance: proposal.democraticGovernanceImpact || 'positive',
+      traumaInformed: proposal.traumaInformedImpact || 'neutral',
+      culturalAuthenticity: proposal.culturalAuthenticityImpact || 'positive'
+    };
+  }
+} as const;
+
+// Date utility functions
+export const dateUtils = {
+  formatDate: (date: string | Date) => {
+    const d = new Date(date);
+    return d.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  },
+
+  formatDateTime: (date: string | Date) => {
+    const d = new Date(date);
+    return d.toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit'
+    });
+  },
+
+  isDatePast: (date: string | Date) => {
+    return new Date(date) < new Date();
+  },
+
+  getDaysUntil: (date: string | Date) => {
+    const now = new Date();
+    const target = new Date(date);
+    const diffTime = target.getTime() - now.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }
+} as const;
+
 // Accessibility utility functions
 export const accessibilityUtils = {
   // WCAG 3.0 Bronze contrast ratios
@@ -139,26 +216,5 @@ export const creatorSovereigntyUtils = {
       style: 'currency',
       currency: currency,
     }).format(parseFloat(amount));
-  },
-} as const;
-
-// Date and time formatting utilities (presentation only)
-export const dateUtils = {
-  formatDisplayDate: (isoString: string): string => {
-    return new Date(isoString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  },
-  
-  formatDisplayDateTime: (isoString: string): string => {
-    return new Date(isoString).toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    });
   },
 } as const;

@@ -12,7 +12,8 @@ import {
   Search,
   Clock,
   CheckCircle,
-  XCircle
+  XCircle,
+  ExternalLink
 } from 'lucide-react';
 import AdminAuth, { checkAdminAuth } from './AdminAuth';
 import EventSubmissionForm from '../forms/EventSubmissionForm';
@@ -303,6 +304,21 @@ const AdminEventsInterface: React.FC = () => {
                           {event.organizer.name}
                         </div>
                       </div>
+
+                      {/* Source URL */}
+                      {event.sourceUrl && (
+                        <div className="mt-3 flex items-center text-liberation-sovereignty-gold">
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          <a
+                            href={event.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm hover:text-liberation-sovereignty-gold/80 transition-colors underline"
+                          >
+                            Original Source: {new URL(event.sourceUrl).hostname}
+                          </a>
+                        </div>
+                      )}
 
                       {event.traumaInformed && (
                         <div className="mt-3 flex items-center text-green-400">

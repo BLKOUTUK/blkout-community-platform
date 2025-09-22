@@ -2,26 +2,79 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BLKOUT Liberation Platform</title>
-    <meta name="description" content="Community-owned liberation platform for Black queer communities">
-    <meta name="author" content="BLKOUT Community">
-    <meta name="keywords" content="Black queer, liberation, community, platform, democracy">
 
-    <!-- Liberation Platform Metadata -->
-    <meta property="og:title" content="BLKOUT Liberation Platform">
-    <meta property="og:description" content="Community-owned liberation platform for Black queer communities">
-    <meta property="og:type" content="website">
+    <!-- PWA and Mobile Optimization -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="BLKOUT Liberation" />
+
+    <!-- Theme and Visual Styling -->
+    <meta name="theme-color" content="#FFD700" />
+    <meta name="msapplication-TileColor" content="#000000" />
+    <meta name="msapplication-navbutton-color" content="#FFD700" />
+
+    <!-- Platform Description -->
+    <title>BLKOUT Community Platform</title>
+    <meta name="description" content="BLKOUT - Community platform for Black queer communities with creator sovereignty, democratic governance, and trauma-informed design" />
+    <meta name="keywords" content="BLKOUT, Black queer, community, creator sovereignty, democratic governance, trauma-informed, mutual aid, economic justice" />
+    <meta name="author" content="BLKOUT Community">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="BLKOUT Community Platform" />
+    <meta property="og:description" content="BLKOUT - Community platform for Black queer communities with creator sovereignty and democratic governance" />
+    <meta property="og:image" content="/blkout-logo.png" />
+    <meta property="og:url" content="https://blkout.vercel.app" />
+    <meta property="og:site_name" content="BLKOUT Community Platform" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BLKOUT Community Platform" />
+    <meta name="twitter:description" content="BLKOUT - Community platform for Black queer communities" />
+    <meta name="twitter:image" content="/blkout-logo.png" />
+
+    <!-- Icons and Manifest -->
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/blkout-logo.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Performance and Security -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
 
     <!-- Accessibility -->
-    <meta name="theme-color" content="#000000">
-    <meta name="color-scheme" content="dark light">
+    <meta name="color-scheme" content="dark light" />
 
     <!-- Community Values -->
     <meta name="liberation:creator-sovereignty" content="75-percent">
     <meta name="liberation:community-governance" content="democratic">
     <meta name="liberation:trauma-informed" content="true">
+
+    <!-- PWA Installation Script -->
+    <script>
+      // Register service worker for offline capabilities
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('🏴‍☠️ BLKOUT Liberation SW registered:', registration.scope);
+            })
+            .catch((error) => {
+              console.log('🏴‍☠️ BLKOUT Liberation SW registration failed:', error);
+            });
+        });
+      }
+
+      // PWA install prompt handling
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log('🏴‍☠️ BLKOUT Liberation Platform can be installed');
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

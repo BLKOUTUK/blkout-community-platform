@@ -12,7 +12,8 @@ import {
   User,
   Globe,
   Home,
-  Monitor
+  Monitor,
+  ExternalLink
 } from 'lucide-react';
 import { EventSubmission } from '../../services/events-api';
 
@@ -46,7 +47,8 @@ const EventSubmissionForm: React.FC<EventSubmissionFormProps> = ({
     },
     traumaInformed: true,
     accessibilityFeatures: [],
-    communityValue: 'organizing'
+    communityValue: 'organizing',
+    sourceUrl: ''
   });
 
   const [accessibilityInput, setAccessibilityInput] = useState('');
@@ -524,6 +526,27 @@ const EventSubmissionForm: React.FC<EventSubmissionFormProps> = ({
           <label htmlFor="trauma-informed" className="text-sm font-bold text-gray-300">
             This event follows trauma-informed practices
           </label>
+        </div>
+
+        {/* Source URL */}
+        <div>
+          <label htmlFor="source-url" className="block text-sm font-bold text-gray-300 mb-2">
+            Source URL (Optional)
+          </label>
+          <div className="relative">
+            <ExternalLink className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <input
+              id="source-url"
+              type="url"
+              value={formData.sourceUrl || ''}
+              onChange={(e) => handleInputChange('sourceUrl', e.target.value)}
+              className="w-full bg-gray-800 border border-gray-600 rounded-lg pl-10 pr-4 py-3 text-white focus:border-liberation-sovereignty-gold focus:outline-none"
+              placeholder="https://example.com/original-event-posting"
+            />
+          </div>
+          <p className="text-xs text-gray-500 mt-1">
+            Link to the original source where this event was posted (social media, website, etc.)
+          </p>
         </div>
 
         {/* Contact Information */}

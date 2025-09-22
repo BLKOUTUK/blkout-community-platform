@@ -1,0 +1,92 @@
+{
+  "name": "BLKOUT Liberation Platform",
+  "short_name": "BLKOUT",
+  "description": "Community-owned liberation platform for Black queer communities - 75% creator sovereignty, democratic governance, trauma-informed design",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#FFD700",
+  "orientation": "portrait-primary",
+  "categories": ["social", "productivity", "lifestyle"],
+  "lang": "en-US",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Liberation Dashboard",
+      "short_name": "Dashboard",
+      "description": "Community liberation dashboard with values and actions",
+      "url": "/?tab=liberation",
+      "icons": [
+        {
+          "src": "/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Community Events",
+      "short_name": "Events",
+      "description": "Liberation organizing and community building calendar",
+      "url": "/?tab=events",
+      "icons": [
+        {
+          "src": "/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Ask IVOR",
+      "short_name": "IVOR",
+      "description": "Community AI assistant for learning and support",
+      "url": "/?ivor=open",
+      "icons": [
+        {
+          "src": "/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Story Archive",
+      "short_name": "Stories",
+      "description": "Community archive of Black queer experiences",
+      "url": "/?tab=stories",
+      "icons": [
+        {
+          "src": "/favicon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "features": [
+    "offline-capability",
+    "community-driven",
+    "liberation-focused",
+    "trauma-informed-design",
+    "accessibility-optimized"
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

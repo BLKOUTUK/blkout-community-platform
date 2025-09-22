@@ -26,10 +26,10 @@ export default function AdminAuth({ onAuthenticated, onCancel, requiredAction }:
 
   const SESSION_DURATION = 8 * 60 * 60 * 1000; // 8 hours
 
-  // Hardcoded admin credentials for secure access (in production, use proper auth service)
+  // Admin credentials for secure access (in production, use proper auth service)
   const ADMIN_CREDENTIALS = {
-    admin: 'liberation2024',
-    moderator: 'community2024'
+    admin: 'blkOUT2025!',
+    moderator: 'blkOUT2025!'
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -102,7 +102,7 @@ export default function AdminAuth({ onAuthenticated, onCancel, requiredAction }:
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-3 text-white focus:border-liberation-sovereignty-gold focus:outline-none"
-              placeholder="admin or moderator"
+              placeholder="Enter email address"
               required
               disabled={loading}
             />

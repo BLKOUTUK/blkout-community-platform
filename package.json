@@ -1,7 +1,7 @@
 {
-  "name": "blkout-liberation-frontend",
-  "version": "1.0.0-liberation",
-  "description": "Layer 1 Community Frontend Presentation - Liberation-focused React components",
+  "name": "blkout-community-platform",
+  "version": "1.0.0-production",
+  "description": "Independent Production-Grade Community Liberation Platform",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build --mode production",
@@ -52,7 +52,7 @@
   },
   "type": "module",
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   },
   "liberation": {
     "layerResponsibilities": "presentation-only",

@@ -244,10 +244,23 @@
   /* Touch-friendly interaction areas */
   .touch-friendly {
     @apply min-h-[44px] min-w-[44px]; /* WCAG 3.0 Bronze minimum */
+    touch-action: manipulation; /* Prevent double-tap zoom */
   }
 
   .touch-friendly-large {
     @apply min-h-[56px] min-w-[56px]; /* Generous touch area */
+    touch-action: manipulation;
+  }
+
+  /* Mobile-specific improvements */
+  @media (max-width: 768px) {
+    .touch-friendly {
+      @apply min-h-[48px] min-w-[48px]; /* Larger on mobile */
+    }
+
+    .touch-friendly-large {
+      @apply min-h-[60px] min-w-[60px]; /* Even larger on mobile */
+    }
   }
 
   /* Trauma-informed interaction states */

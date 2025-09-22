@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Users, Clock, ArrowLeft, Heart, Star } from 'lucide-react';
+import { Calendar, MapPin, Users, Clock, ArrowLeft, Heart, Star, ExternalLink } from 'lucide-react';
 import { eventsAPI, LiberationEvent } from '../../services/events-api';
 import ContentRating from '../community/ContentRating';
 import EventReview from '../community/EventReview';
 import WeeklyHighlights from '../community/WeeklyHighlights';
 
+import VideoHero from '@/components/ui/VideoHero';
 const EventsCalendar: React.FC = () => {
   const [events, setEvents] = useState<LiberationEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -80,6 +81,22 @@ const EventsCalendar: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+      {/* Video Hero Section */}
+      <VideoHero
+        title="📅 COMMUNITY EVENTS"
+        subtitle="Liberation Organizing & Community Building"
+        description="Trauma-informed accessible spaces for democratic organizing, mutual aid, and collective liberation. Build community power through action."
+        videos={[
+          '/videos/hero/PLATFORM HERO 1.mp4',
+          '/videos/hero/PLATFORM HERO 2.mp4',
+          '/videos/hero/PLATFORM HERO 3.mp4'
+        ]}
+        height="md"
+        textColor="light"
+        overlayOpacity={0.8}
+        className="mb-8"
+      />
+
       {/* Header */}
       <header className="border-b border-liberation-sovereignty-gold/20 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-8 py-6">
@@ -158,7 +175,7 @@ const EventsCalendar: React.FC = () => {
             </div>
           ) : (
             /* Events Grid */
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {filteredEvents
                 .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
                 .map((event) => {
@@ -167,7 +184,7 @@ const EventsCalendar: React.FC = () => {
                   const typeColor = getEventTypeColor(event.type);
 
                   return (
-                    <div key={event.id} className="bg-gradient-to-br from-gray-900 to-gray-800 border border-liberation-sovereignty-gold/10 rounded-2xl p-6 hover:border-liberation-sovereignty-gold/30 transition-all duration-300">
+                    <div key={event.id} className="bg-gradient-to-br from-gray-900 to-gray-800 border border-liberation-sovereignty-gold/10 rounded-2xl p-4 md:p-6 hover:border-liberation-sovereignty-gold/30 transition-all duration-300">
                       {/* Event Header */}
                       <div className="mb-4">
                         <div className="flex items-center justify-between mb-3">
@@ -180,36 +197,50 @@ const EventsCalendar: React.FC = () => {
                           </div>
                         </div>
 
-                        <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">
+                        <h3 className="text-base md:text-lg font-bold text-white mb-2 line-clamp-2">
                           {event.title}
                         </h3>
 
-                        <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
+                        <p className="text-gray-400 text-xs md:text-sm leading-relaxed mb-3 md:mb-4 line-clamp-3">
                           {event.description}
                         </p>
                       </div>
 
                       {/* Event Details */}
-                      <div className="space-y-2 mb-4">
-                        <div className="flex items-center text-sm text-gray-300">
-                          <Clock className="h-4 w-4 mr-2 text-liberation-sovereignty-gold" />
+                      <div className="space-y-2 mb-3 md:mb-4">
+                        <div className="flex items-center text-xs md:text-sm text-gray-300">
+                          <Clock className="h-3 md:h-4 w-3 md:w-4 mr-2 text-liberation-sovereignty-gold" />
                           {dateInfo.time}
                         </div>
 
-                        <div className="flex items-start text-sm text-gray-300">
-                          <MapPin className="h-4 w-4 mr-2 text-liberation-sovereignty-gold flex-shrink-0 mt-0.5" />
+                        <div className="flex items-start text-xs md:text-sm text-gray-300">
+                          <MapPin className="h-3 md:h-4 w-3 md:w-4 mr-2 text-liberation-sovereignty-gold flex-shrink-0 mt-0.5" />
                           <div>
                             <span className="capitalize">{event.location.type}</span>
                             {event.location.details && (
-                              <div className="text-gray-400">{event.location.details}</div>
+                              <div className="text-gray-400 text-xs">{event.location.details}</div>
                             )}
                           </div>
                         </div>
 
-                        <div className="flex items-center text-sm text-gray-300">
-                          <Users className="h-4 w-4 mr-2 text-liberation-sovereignty-gold" />
+                        <div className="flex items-center text-xs md:text-sm text-gray-300">
+                          <Users className="h-3 md:h-4 w-3 md:w-4 mr-2 text-liberation-sovereignty-gold" />
                           <span>Organized by {event.organizer.name}</span>
                         </div>
+
+                        {event.sourceUrl && (
+                          <div className="flex items-center text-xs md:text-sm text-gray-300">
+                            <ExternalLink className="h-3 md:h-4 w-3 md:w-4 mr-2 text-liberation-sovereignty-gold" />
+                            <a
+                              href={event.sourceUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-liberation-sovereignty-gold hover:text-liberation-sovereignty-gold/80 transition-colors underline"
+                            >
+                              View Original Source
+                            </a>
+                          </div>
+                        )}
 
                         {event.registration.required && event.registration.capacity && (
                           <div className="text-sm text-gray-400">
@@ -304,7 +335,7 @@ const EventsCalendar: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black py-4 px-8 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105"
+              className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black py-3 md:py-4 px-6 md:px-8 rounded-2xl font-bold text-base md:text-lg transition-all duration-300 hover:scale-105 touch-friendly"
               onClick={() => {
                 // TODO: Navigate to event submission form
                 console.log('Navigate to event submission form');
@@ -313,7 +344,7 @@ const EventsCalendar: React.FC = () => {
               Organize an Event
             </button>
             <button
-              className="bg-transparent border-2 border-liberation-sovereignty-gold text-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold hover:text-black py-4 px-8 rounded-2xl font-bold text-lg transition-all duration-300"
+              className="bg-transparent border-2 border-liberation-sovereignty-gold text-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold hover:text-black py-3 md:py-4 px-6 md:px-8 rounded-2xl font-bold text-base md:text-lg transition-all duration-300 touch-friendly"
               onClick={() => {
                 // TODO: Navigate to community organizing guidelines
                 console.log('Navigate to community organizing guidelines');

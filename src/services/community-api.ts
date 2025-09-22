@@ -25,7 +25,7 @@ const API_BASE_URL = 'https://api.blkoutcollective.org/v1/community'; // Layer 2
 
 // API Client Class implementing CommunityAPIContract
 export class CommunityAPIClient implements CommunityAPIContract {
-  private readonly baseURL: string;
+  protected readonly baseURL: string;
   
   constructor(baseURL: string = API_BASE_URL) {
     this.baseURL = baseURL;
@@ -269,10 +269,555 @@ export class CommunityAPIClient implements CommunityAPIContract {
       reviewDate: response.reviewDate || new Date().toISOString(),
     };
   }
+
+  // Chrome Extension Integration Endpoints
+  async submitStoryFromExtension(storyData: {
+    title: string;
+    excerpt: string;
+    originalUrl: string;
+    sourceName: string;
+    category: string;
+    tags: string[];
+    curatorId: string;
+    contentType?: 'article' | 'event' | 'story';
+    eventData?: {
+      date?: string;
+      location?: string;
+      capacity?: number;
+    };
+    extractedImages?: string[];
+    metadata?: Record<string, any>;
+  }): Promise<{ success: boolean; id?: string; message: string }> {
+    const response = await this.postToAPIGateway('/story-submissions', {
+      ...storyData,
+      submittedVia: 'chrome-extension',
+      submittedAt: new Date().toISOString(),
+    });
+    return this.validateStorySubmissionResult(response);
+  }
+
+  async submitEventFromExtension(eventData: {
+    title: string;
+    description: string;
+    excerpt: string;
+    category: 'mutual-aid' | 'organizing' | 'education' | 'celebration' | 'support' | 'action';
+    type: 'virtual' | 'in-person' | 'hybrid';
+    date: string;
+    endDate?: string;
+    location: {
+      type: 'virtual' | 'in-person' | 'hybrid';
+      details?: string;
+      address?: string;
+      virtualLink?: string;
+    };
+    organizer: {
+      name: string;
+      email?: string;
+      organization?: string;
+    };
+    registration?: {
+      required: boolean;
+      capacity?: number;
+      registrationUrl?: string;
+      deadline?: string;
+      cost?: string;
+    };
+    accessibilityFeatures: string[];
+    tags: string[];
+    curatorId: string;
+    extractedImages?: string[];
+    metadata?: Record<string, any>;
+  }): Promise<{ success: boolean; id?: string; message: string }> {
+    const response = await this.postToAPIGateway('/event-submissions', {
+      ...eventData,
+      submittedVia: 'chrome-extension',
+      submittedAt: new Date().toISOString(),
+    });
+    return this.validateEventSubmissionResult(response);
+  }
+
+  async getModerationQueue(curatorId?: string): Promise<{
+    submissions: Array<{
+      id: string;
+      title: string;
+      excerpt: string;
+      originalUrl: string;
+      sourceName: string;
+      curatorId: string;
+      submittedAt: string;
+      status: 'pending' | 'approved' | 'rejected';
+      moderatorFeedback?: string;
+    }>;
+    stats: {
+      totalPending: number;
+      yourSubmissions: number;
+      approvalRate: number;
+    };
+  }> {
+    const endpoint = curatorId ? `/moderation-queue?curatorId=${curatorId}` : '/moderation-queue';
+    const response = await this.fetchFromAPIGateway(endpoint);
+    return this.validateModerationQueueResponse(response);
+  }
+
+  async updateStoryRating(storyId: string, interestLevel: 'low' | 'medium' | 'high', userId?: string): Promise<{
+    success: boolean;
+    newInterestScore: number;
+    totalVotes: number;
+  }> {
+    const response = await this.postToAPIGateway('/story-ratings', {
+      storyId,
+      interestLevel,
+      userId,
+      ratedAt: new Date().toISOString(),
+    });
+    return this.validateRatingResult(response);
+  }
+
+  async updateEventRating(eventId: string, ratingData: {
+    overallRating: number;
+    aspects: {
+      accessibility: number;
+      traumaInformed: number;
+      organization: number;
+      communityValue: number;
+      inclusion: number;
+    };
+    attended: 'yes' | 'no' | 'partial';
+    wouldRecommend: boolean;
+    feedback?: string;
+    helpfulTags?: string[];
+    reportConcerns?: boolean;
+  }, userId?: string): Promise<{
+    success: boolean;
+    ratingId: string;
+    aggregateRating: number;
+    totalRatings: number;
+  }> {
+    const response = await this.postToAPIGateway('/event-ratings', {
+      eventId,
+      ...ratingData,
+      userId,
+      ratedAt: new Date().toISOString(),
+    });
+    return this.validateEventRatingResult(response);
+  }
+
+  async getStoryArchive(filters?: {
+    category?: string;
+    contentType?: 'article' | 'audio' | 'video' | 'gallery' | 'multimedia';
+    blkoutTheme?: 'CONNECT' | 'CREATE' | 'CARE';
+    tags?: string[];
+    limit?: number;
+    offset?: number;
+  }): Promise<{
+    articles: Array<{
+      id: string;
+      title: string;
+      excerpt: string;
+      content: string;
+      category: string;
+      author: string;
+      publishedAt: string;
+      readTime: string;
+      tags: string[];
+      imageUrl?: string;
+      originalUrl?: string;
+      contentType?: 'article' | 'audio' | 'video' | 'gallery' | 'multimedia';
+      audioUrl?: string;
+      videoUrl?: string;
+      galleryImages?: string[];
+      blkoutTheme?: 'CONNECT' | 'CREATE' | 'CARE';
+      interestScore?: number;
+      totalVotes?: number;
+    }>;
+    pagination: {
+      total: number;
+      limit: number;
+      offset: number;
+      hasMore: boolean;
+    };
+  }> {
+    const params = new URLSearchParams();
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== undefined) {
+          if (Array.isArray(value)) {
+            value.forEach(v => params.append(key, v));
+          } else {
+            params.append(key, value.toString());
+          }
+        }
+      });
+    }
+    
+    const endpoint = `/story-archive${params.toString() ? `?${params.toString()}` : ''}`;
+    const response = await this.fetchFromAPIGateway(endpoint);
+    return this.validateStoryArchiveResponse(response);
+  }
+
+  async getNewsArticles(filters?: {
+    category?: string;
+    timeframe?: 'today' | 'week' | 'month';
+    featured?: boolean;
+    limit?: number;
+    offset?: number;
+  }): Promise<{
+    articles: Array<{
+      id: string;
+      title: string;
+      excerpt: string;
+      category: string;
+      author: string;
+      publishedAt: string;
+      readTime: string;
+      originalUrl: string;
+      sourceName: string;
+      curatorId: string;
+      submittedAt: string;
+      interestScore: number;
+      totalVotes: number;
+      userInterestLevel?: 'low' | 'medium' | 'high';
+      topics: string[];
+      sentiment: string;
+      relevanceScore: number;
+      isStoryOfWeek?: boolean;
+      weeklyRank?: number;
+    }>;
+    featured?: {
+      id: string;
+      title: string;
+      excerpt: string;
+      category: string;
+      author: string;
+      publishedAt: string;
+      readTime: string;
+      originalUrl: string;
+      sourceName: string;
+      interestScore: number;
+      totalVotes: number;
+      weeklyRank: number;
+    };
+    pagination: {
+      total: number;
+      limit: number;
+      offset: number;
+      hasMore: boolean;
+    };
+  }> {
+    const params = new URLSearchParams();
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== undefined) {
+          params.append(key, value.toString());
+        }
+      });
+    }
+    
+    const endpoint = `/news-articles${params.toString() ? `?${params.toString()}` : ''}`;
+    const response = await this.fetchFromAPIGateway(endpoint);
+    return this.validateNewsArticlesResponse(response);
+  }
+
+  // Validation methods for new endpoints
+  private validateStorySubmissionResult(response: any): { success: boolean; id?: string; message: string } {
+    return {
+      success: response.success || false,
+      id: response.id || undefined,
+      message: response.message || 'Story submission result unknown',
+    };
+  }
+
+  private validateEventSubmissionResult(response: any): { success: boolean; id?: string; message: string } {
+    return {
+      success: response.success || false,
+      id: response.id || undefined,
+      message: response.message || 'Event submission result unknown',
+    };
+  }
+
+  private validateEventRatingResult(response: any): {
+    success: boolean;
+    ratingId: string;
+    aggregateRating: number;
+    totalRatings: number;
+  } {
+    return {
+      success: response.success || false,
+      ratingId: response.ratingId || '',
+      aggregateRating: Math.min(5, Math.max(0, response.aggregateRating || 0)),
+      totalRatings: Math.max(0, response.totalRatings || 0),
+    };
+  }
+
+  private validateModerationQueueResponse(response: any): {
+    submissions: Array<any>;
+    stats: { totalPending: number; yourSubmissions: number; approvalRate: number };
+  } {
+    return {
+      submissions: Array.isArray(response.submissions) ? response.submissions : [],
+      stats: {
+        totalPending: response.stats?.totalPending || 0,
+        yourSubmissions: response.stats?.yourSubmissions || 0,
+        approvalRate: response.stats?.approvalRate || 0,
+      },
+    };
+  }
+
+  private validateRatingResult(response: any): {
+    success: boolean;
+    newInterestScore: number;
+    totalVotes: number;
+  } {
+    return {
+      success: response.success || false,
+      newInterestScore: Math.min(100, Math.max(0, response.newInterestScore || 0)),
+      totalVotes: Math.max(0, response.totalVotes || 0),
+    };
+  }
+
+  private validateStoryArchiveResponse(response: any): {
+    articles: Array<any>;
+    pagination: { total: number; limit: number; offset: number; hasMore: boolean };
+  } {
+    return {
+      articles: Array.isArray(response.articles) ? response.articles : [],
+      pagination: {
+        total: Math.max(0, response.pagination?.total || 0),
+        limit: Math.max(1, response.pagination?.limit || 20),
+        offset: Math.max(0, response.pagination?.offset || 0),
+        hasMore: response.pagination?.hasMore || false,
+      },
+    };
+  }
+
+  private validateNewsArticlesResponse(response: any): {
+    articles: Array<any>;
+    featured?: any;
+    pagination: { total: number; limit: number; offset: number; hasMore: boolean };
+  } {
+    return {
+      articles: Array.isArray(response.articles) ? response.articles : [],
+      featured: response.featured || undefined,
+      pagination: {
+        total: Math.max(0, response.pagination?.total || 0),
+        limit: Math.max(1, response.pagination?.limit || 20),
+        offset: Math.max(0, response.pagination?.offset || 0),
+        hasMore: response.pagination?.hasMore || false,
+      },
+    };
+  }
+}
+
+export class CommunityAPIAdmin extends CommunityAPIClient {
+  private getHeaders() {
+    return {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('blkout_admin_token')}`,
+      'X-Liberation-Layer': 'admin-interface',
+    };
+  }
+
+  // Event-specific admin methods
+  async getEventModerationQueue(): Promise<EventModerationItem[]> {
+    try {
+      const response = await fetch(`${this.baseURL}/admin/events/moderation-queue`, {
+        headers: this.getHeaders()
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch event moderation queue: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Event moderation queue fetch error:', error);
+      // Return mock data for development
+      return [
+        {
+          id: 'event-001',
+          title: 'Black Queer Youth Mental Health Workshop',
+          submittedBy: 'community_organizer_001',
+          submittedAt: '2024-01-15T10:00:00Z',
+          category: 'education',
+          type: 'hybrid',
+          date: '2024-02-01T18:00:00Z',
+          description: 'Trauma-informed mental health workshop specifically designed for Black queer youth.',
+          organizer: 'Liberation Mental Health Collective',
+          status: 'pending'
+        },
+        {
+          id: 'event-002',
+          title: 'Community Mutual Aid Distribution',
+          submittedBy: 'mutual_aid_coord',
+          submittedAt: '2024-01-14T15:30:00Z',
+          category: 'mutual-aid',
+          type: 'in-person',
+          date: '2024-01-25T14:00:00Z',
+          description: 'Weekly food and resource distribution for community members in need.',
+          organizer: 'BLKOUT Mutual Aid Network',
+          status: 'pending'
+        }
+      ];
+    }
+  }
+
+  async approveEventForCalendar(eventId: string): Promise<void> {
+    try {
+      const response = await fetch(`${this.baseURL}/admin/events/${eventId}/approve`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify({ action: 'approve_to_calendar' })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to approve event: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Event approval error:', error);
+      throw error;
+    }
+  }
+
+  async rejectEvent(eventId: string): Promise<void> {
+    try {
+      const response = await fetch(`${this.baseURL}/admin/events/${eventId}/reject`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify({ action: 'reject' })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to reject event: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Event rejection error:', error);
+      throw error;
+    }
+  }
+
+  async submitSingleEvent(eventData: EventSubmission): Promise<void> {
+    try {
+      const response = await fetch(`${this.baseURL}/admin/events/submit`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify(eventData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to submit event: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Single event submission error:', error);
+      throw error;
+    }
+  }
+
+  async submitBulkEvents(bulkData: BulkEventSubmission): Promise<void> {
+    try {
+      const response = await fetch(`${this.baseURL}/admin/events/bulk-submit`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify(bulkData)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to submit bulk events: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Bulk events submission error:', error);
+      throw error;
+    }
+  }
+
+  // Admin-specific methods for dashboard functionality
+  async getAdminStats(): Promise<{
+    pendingStories: number;
+    approvedToday: number;
+    totalCurators: number;
+    weeklySubmissions: number;
+  }> {
+    try {
+      const response = await fetch(`${this.baseURL}/admin/stats`, {
+        headers: this.getHeaders()
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch admin stats: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Admin stats fetch error:', error);
+      // Return mock data for development
+      return {
+        pendingStories: 12,
+        approvedToday: 8,
+        totalCurators: 45,
+        weeklySubmissions: 28
+      };
+    }
+  }
+
+  async approveStoryForNewsroom(storyId: string): Promise<void> {
+    try {
+      const response = await fetch(`${this.baseURL}/admin/stories/${storyId}/approve`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify({ action: 'approve_to_newsroom' })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to approve story: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Story approval error:', error);
+      throw error;
+    }
+  }
+
+  async rejectStory(storyId: string): Promise<void> {
+    try {
+      const response = await fetch(`${this.baseURL}/admin/stories/${storyId}/reject`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify({ action: 'reject' })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to reject story: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Story rejection error:', error);
+      throw error;
+    }
+  }
+
+  async submitSingleStory(storyData: {
+    title: string;
+    url: string;
+    category: string;
+    excerpt: string;
+    tags: string[];
+  }): Promise<void> {
+    try {
+      const response = await fetch(`${this.baseURL}/admin/stories/submit`, {
+        method: 'POST',
+        headers: this.getHeaders(),
+        body: JSON.stringify(storyData)
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to submit story: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Single story submission error:', error);
+      throw error;
+    }
+  }
 }
 
 // Export singleton instance for application use
-export const communityAPI = new CommunityAPIClient();
+export const communityAPI = new CommunityAPIAdmin();
 
 // Export type-only imports for component use
 export type {

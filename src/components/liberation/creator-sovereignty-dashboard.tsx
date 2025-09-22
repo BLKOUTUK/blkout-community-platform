@@ -14,9 +14,10 @@ import {
   dateUtils
 } from '@/lib/liberation-utils';
 import { communityAPI } from '@/services/community-api';
-import type { 
-  CreatorSovereigntyDisplay, 
-  BaseComponentProps 
+import VideoHero from '@/components/ui/VideoHero';
+import type {
+  CreatorSovereigntyDisplay,
+  BaseComponentProps
 } from '@/types/liberation';
 
 /**
@@ -325,28 +326,33 @@ export const CreatorSovereigntyDashboard: React.FC<CreatorSovereigntyDashboardPr
   };
 
   return (
-    <div
-      className={cn(
-        'space-y-6 p-6 rounded-lg border-2',
-        liberationColors.economic.transparency,
-        'border-liberation-transparency-blue/20 bg-white',
-        traumaInformedMode && traumaInformedUtils.getSafeTransition('medium'),
-        className
-      )}
-      data-testid={testId}
-      aria-label="Creator sovereignty dashboard"
-      {...props}
-    >
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold font-liberation text-liberation-black-power">
-            Creator Sovereignty Dashboard
-          </h2>
-          <p className="text-sm opacity-70 mt-1">
-            Your economic empowerment and creative control status
-          </p>
-        </div>
+    <div className={cn('space-y-8', className)} data-testid={testId} {...props}>
+      {/* Hero Section with Video Background */}
+      <VideoHero
+        title="💰 CREATOR SOVEREIGNTY"
+        subtitle="Economic empowerment and creative control"
+        description="You maintain 75% revenue share and complete creative control. Your content, your rules, your liberation."
+        videos={[
+          '/videos/hero/PLATFORM HERO 1.mp4',
+          '/videos/hero/PLATFORM HERO 2.mp4',
+          '/videos/hero/PLATFORM HERO 3.mp4'
+        ]}
+        height="md"
+        textColor="light"
+        overlayOpacity={0.8}
+        className="mb-8"
+      />
+
+      {/* Main Dashboard */}
+      <div
+        className={cn(
+          'space-y-6 p-6 rounded-lg border-2',
+          liberationColors.economic.transparency,
+          'border-liberation-transparency-blue/20 bg-white',
+          traumaInformedMode && traumaInformedUtils.getSafeTransition('medium')
+        )}
+        aria-label="Creator sovereignty dashboard"
+      >
         
         {celebrationMode && (
           <div className={cn(

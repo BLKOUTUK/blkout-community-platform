@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import { Shield, Heart, Users, FileText, MapPin, Phone, Mail, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
+import VideoHero from '@/components/ui/VideoHero';
 
 interface CollapsibleSectionProps {
   title: string;
@@ -38,16 +39,24 @@ const CollapsibleSection = ({ title, children, defaultOpen = false }: Collapsibl
 export default function AboutUs() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-br from-liberation-pride-pink/20 via-liberation-pride-purple/30 to-gray-900 py-16">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <h1 className="text-5xl font-black text-white mb-6">
-            ABOUT BLKOUT LIBERATION PLATFORM
-          </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            The world's first technically implemented liberation platform with 75% creator sovereignty,
-            democratic governance, and trauma-informed community protection for Black queer communities.
-          </p>
+      {/* Hero Section with Video Background */}
+      <VideoHero
+        title="ℹ️ ABOUT BLKOUT"
+        subtitle="Liberation Platform"
+        description="The world's first technically implemented liberation platform with community benefit society governance, fair creator compensation, and trauma-informed community protection for Black queer communities."
+        videos={[
+          '/videos/hero/PLATFORM HERO 1.mp4',
+          '/videos/hero/PLATFORM HERO 2.mp4',
+          '/videos/hero/PLATFORM HERO 3.mp4'
+        ]}
+        height="lg"
+        textColor="light"
+        overlayOpacity={0.8}
+        className="mb-8"
+      />
+
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="">
           <div className="flex items-center justify-center space-x-8 text-sm">
             <div className="flex items-center space-x-2">
               <Shield className="w-5 h-5 text-liberation-healing-sage" />
@@ -83,10 +92,11 @@ export default function AboutUs() {
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="bg-gray-800 p-6 rounded-xl border-l-4 border-liberation-pride-pink">
-                  <h5 className="text-liberation-pride-pink font-bold mb-2">75% Creator Sovereignty</h5>
+                  <h5 className="text-liberation-pride-pink font-bold mb-2">Fair Creator Compensation</h5>
                   <p className="text-sm text-gray-300">
-                    Not performative promises - technically enforced revenue sharing where creators retain
-                    75% of value generated, with 25% supporting platform infrastructure and community programs.
+                    As a Community Benefit Society with asset lock, any profits are reinvested in the community.
+                    Creators receive fair compensation at rates agreed through democratic governance. Creators
+                    have a say in where 75% of profits are reinvested: mutual aid, diaspora support, and creative enterprise.
                   </p>
                 </div>
                 <div className="bg-gray-800 p-6 rounded-xl border-l-4 border-liberation-pride-purple">
@@ -146,7 +156,7 @@ export default function AboutUs() {
                   <h5 className="font-bold text-liberation-healing-sage mb-2">🌟 Empowerment & Cultural Responsiveness</h5>
                   <ul className="text-sm text-gray-300 space-y-1">
                     <li>• Black queer joy celebration integrated into platform design</li>
-                    <li>• Economic empowerment through guaranteed creator sovereignty</li>
+                    <li>• Economic empowerment through fair creator compensation and community ownership</li>
                     <li>• Cultural authenticity prioritized over growth metrics</li>
                     <li>• Community healing circles and mutual aid coordination</li>
                   </ul>
@@ -259,7 +269,8 @@ export default function AboutUs() {
                     </div>
                     <div>
                       <strong className="text-white">Financial Model:</strong><br />
-                      75% creator revenue share, 25% platform operations and community programs
+                      Community benefit society with asset lock. Fair creator compensation at democratically agreed rates.
+                      All profits reinvested in community programs, mutual aid, and creative enterprise.
                     </div>
                   </div>
                 </div>
@@ -353,7 +364,7 @@ export default function AboutUs() {
                   <h5 className="font-bold text-liberation-pride-purple mb-2">Financial Transparency</h5>
                   <ul className="text-sm text-gray-300 space-y-1">
                     <li>• Monthly financial reports published to community</li>
-                    <li>• Real-time creator revenue sharing tracking</li>
+                    <li>• Transparent creator compensation tracking</li>
                     <li>• Annual community audit and budget approval</li>
                     <li>• Open-book accounting with member access</li>
                   </ul>
