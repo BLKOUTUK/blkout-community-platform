@@ -305,7 +305,7 @@ const BLKOUTHUBBenefitsDisplay: React.FC<BLKOUTHUBBenefitsDisplayProps> = ({
         )}
 
         <button
-          onClick={() => window.open('https://help.heartbeat.chat/hc/en-us/articles/33257679789841-Managing-Community-Access-and-Visibility', '_blank')}
+          onClick={() => window.open('https://www.heartbeat.chat/', '_blank')}
           className="px-6 py-3 border border-liberation-silver border-opacity-30 text-liberation-silver rounded-lg hover:bg-liberation-silver hover:bg-opacity-10 transition-colors text-sm"
         >
           Learn More

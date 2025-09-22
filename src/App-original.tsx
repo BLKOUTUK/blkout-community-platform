@@ -1086,7 +1086,7 @@ export default function App(): React.JSX.Element {
 
                     <div className="space-y-3">
                       <a
-                        href="/dist/Fallback%20images/green%20images/blkout-extension-v1.0.1"
+                        href="/Fallback images/green images/blkout-extension-v1.0.1.tar.gz"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="block w-full bg-liberation-sovereignty-gold/10 hover:bg-liberation-sovereignty-gold/20 border border-liberation-sovereignty-gold/30 text-liberation-sovereignty-gold py-3 rounded-xl font-bold text-center transition-colors"

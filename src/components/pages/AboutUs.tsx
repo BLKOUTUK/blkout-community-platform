@@ -245,7 +245,7 @@ export default function AboutUs() {
                 <p className="text-sm text-gray-300">
                   Our platform architecture is open source to ensure transparency and community oversight.
                   Community members can review, audit, and contribute to the codebase.
-                  Repository: <a href="https://github.com/blkout-liberation/blkout-community-platform" target="_blank" rel="noopener noreferrer" className="text-liberation-sovereignty-gold hover:underline">github.com/blkout-liberation</a>
+                  Repository: <a href="https://github.com/BLKOUTUK/blkout-liberation-frontend" target="_blank" rel="noopener noreferrer" className="text-liberation-sovereignty-gold hover:underline">github.com/BLKOUTUK</a>
                 </p>
               </div>
             </div>
@@ -348,8 +348,8 @@ export default function AboutUs() {
               <div className="bg-gray-800 p-4 rounded-lg">
                 <p className="text-sm text-gray-300">
                   <strong className="text-liberation-sovereignty-gold">Full Community Guidelines:</strong>
-                  <a href="https://blkouthub.com/community-guidelines" target="_blank" rel="noopener noreferrer" className="text-liberation-sovereignty-gold hover:underline ml-1">
-                    View complete community guidelines document
+                  <a href="https://blkouthub.com/invitation?code=BE862C" target="_blank" rel="noopener noreferrer" className="text-liberation-sovereignty-gold hover:underline ml-1">
+                    Join BLKOUTHUB to access community guidelines
                   </a>
                 </p>
               </div>
