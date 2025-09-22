@@ -28,7 +28,7 @@ const VideoHero: React.FC<VideoHeroProps> = ({
   description,
   videos,
   textColor = 'light',
-  overlayOpacity = 0.3,
+  overlayOpacity = 0.15,
   height = 'lg',
   className,
   children,
@@ -46,7 +46,7 @@ const VideoHero: React.FC<VideoHeroProps> = ({
 
     const interval = setInterval(() => {
       setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
-    }, 8000); // Change video every 8 seconds
+    }, 15000); // Change video every 15 seconds
 
     return () => clearInterval(interval);
   }, [videos.length]);
