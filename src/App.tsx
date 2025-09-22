@@ -29,7 +29,7 @@ import { CreatorSovereigntyDashboard } from '@/components/liberation/creator-sov
 import { useBLKOUTHUBMembership } from '@/services/blkouthub-integration';
 
 // API Configuration - Working backend
-const LIBERATION_API = import.meta.env.VITE_API_URL || 'https://blkout-api.vercel.app/api';
+const LIBERATION_API = import.meta.env.VITE_API_URL || 'https://blkout.vercel.app/api';
 
 // Import live events API at the top level
 import { eventsAPI } from './services/events-api';

@@ -21,7 +21,7 @@ import type {
  */
 
 // API Configuration (Layer 2 API Gateway endpoint)
-const API_BASE_URL = 'https://api.blkoutcollective.org/v1/community'; // Layer 2 API Gateway
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://blkout.vercel.app/api'; // Layer 2 API Gateway
 
 // API Client Class implementing CommunityAPIContract
 export class CommunityAPIClient implements CommunityAPIContract {
