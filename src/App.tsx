@@ -493,7 +493,11 @@ export default function App() {
 
         {/* Admin Authentication Modal */}
         {!isAdminAuthenticated && (
-          <AdminAuth onAuthenticated={setIsAdminAuthenticated} />
+          <AdminAuth
+            onAuthenticated={setIsAdminAuthenticated}
+            onCancel={() => {}}
+            requiredAction="admin_access"
+          />
         )}
 
         {/* PWA Install Prompt */}
