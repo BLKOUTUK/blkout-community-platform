@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Heart, Info, Play, Vote, Calendar } from 'lucide-react';
+import { Menu, X, Heart, Info, Play, Vote, Calendar, Brain } from 'lucide-react';
 import { cn } from '@/lib/liberation-utils';
 
 interface MobileNavProps {
@@ -19,6 +19,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
 
   const navigationItems = [
     { id: 'liberation', label: 'Liberation', icon: Heart },
+    { id: 'intro', label: 'Meet IVOR', icon: Brain },
     { id: 'about', label: 'About', icon: Info },
     { id: 'news', label: 'News', icon: Play },
     { id: 'stories', label: 'Stories', icon: Heart },

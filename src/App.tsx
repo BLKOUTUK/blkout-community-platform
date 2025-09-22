@@ -3,7 +3,7 @@
 // STRICT SEPARATION: Application shell only - NO business logic
 
 import React, { useState, useEffect } from 'react';
-import { Heart, DollarSign, Vote, Shield, Info, Play, Users } from 'lucide-react';
+import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain } from 'lucide-react';
 import {
   cn,
   culturalUtils,
@@ -16,6 +16,7 @@ import AboutUs from '@/components/pages/AboutUs';
 import NewsPage from '@/components/pages/NewsPage';
 import StoryArchive from '@/components/pages/StoryArchive';
 import EventsCalendar from '@/components/pages/EventsCalendar';
+import IVORIntroduction from '@/components/pages/IVORIntroduction';
 import IVORAssistant from './components/ivor/IVORAssistant';
 import MobileNav from '@/components/ui/MobileNav';
 import InstallPrompt from '@/components/ui/InstallPrompt';
@@ -153,6 +154,8 @@ export default function App() {
         return <StoryArchive />;
       case 'events':
         return <EventsCalendar />;
+      case 'intro':
+        return <IVORIntroduction />;
       case 'governance':
         return <DemocraticGovernanceInterface />;
       case 'community':
@@ -407,6 +410,7 @@ export default function App() {
                 <div className="flex items-baseline space-x-4">
                   {[
                     { id: 'liberation', label: 'Liberation', icon: Heart },
+                    { id: 'intro', label: 'Meet IVOR', icon: Brain },
                     { id: 'governance', label: 'Governance', icon: Vote },
                     { id: 'community', label: 'Community', icon: Users },
                     { id: 'about', label: 'About', icon: Info },
