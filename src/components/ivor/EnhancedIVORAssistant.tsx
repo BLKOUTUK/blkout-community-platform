@@ -420,7 +420,18 @@ Remember: You are in control of this conversation and your healing journey. 💜
       }));
     }
 
+    // Hide tools panel on mobile to show the conversation
+    if (window.innerWidth < 768) {
+      setShowLiberationTools(false);
+    }
+
+    // Send the message and then scroll to show the new conversation
     handleSendMessage(tool.prompt);
+
+    // Small delay to ensure the message is added before scrolling
+    setTimeout(() => {
+      scrollToBottom();
+    }, 100);
   };
 
   const getSafetyIndicator = (safetyLevel?: string) => {
@@ -503,10 +514,10 @@ Remember: You are in control of this conversation and your healing journey. 💜
                   <button
                     key={tool.id}
                     onClick={() => handleLiberationToolSelect(tool)}
-                    className={`w-full text-left p-2 md:p-3 bg-white rounded-lg border transition-all touch-friendly ${
+                    className={`w-full text-left p-2 md:p-3 bg-white rounded-lg border transition-all duration-200 touch-friendly transform hover:scale-[1.02] ${
                       tool.category === 'crisis-support'
-                        ? 'border-red-300 hover:border-red-500 hover:bg-red-50'
-                        : 'border-liberation-gold/20 hover:border-liberation-gold hover:bg-liberation-gold/5'
+                        ? 'border-red-300 hover:border-red-500 hover:bg-red-50 active:bg-red-100'
+                        : 'border-liberation-gold/20 hover:border-liberation-gold hover:bg-liberation-gold/5 active:bg-liberation-gold/10'
                     }`}
                   >
                     <div className="flex items-start space-x-2 md:space-x-3">
@@ -517,7 +528,8 @@ Remember: You are in control of this conversation and your healing journey. 💜
                           {tool.traumaInformed && <span className="text-green-600">🌸</span>}
                           {tool.category === 'crisis-support' && <span className="text-red-600">🆘</span>}
                         </h4>
-                        <p className="text-xs text-gray-600 mt-1 hidden sm:block">{tool.description}</p>
+                        <p className="text-xs text-gray-600 mt-1">{tool.description}</p>
+                        <p className="text-xs text-liberation-black/60 mt-1 italic">Click to start conversation →</p>
                         {tool.culturallySpecific && (
                           <p className="text-xs text-purple-600 mt-1">
                             {tool.culturallySpecific.join(', ')} focused
