@@ -103,10 +103,15 @@ const IVORIntroduction: React.FC = () => {
             </div>
 
             <div className="text-center">
-              <h1 className="text-3xl font-black text-white mb-2">
-                Meet <span className="text-liberation-sovereignty-gold">IVOR</span>
+              <h1 className="text-3xl font-black text-white mb-2 uppercase" style={{
+                textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+                WebkitTextStroke: '1px #000'
+              }}>
+                MEET <span className="text-liberation-sovereignty-gold">IVOR</span>
               </h1>
-              <p className="text-gray-400">Your Liberation AI Assistant</p>
+              <p className="text-gray-400 uppercase font-semibold" style={{
+                textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
+              }}>YOUR LIBERATION AI ASSISTANT</p>
             </div>
 
             <div className="w-32"></div>
@@ -121,8 +126,11 @@ const IVORIntroduction: React.FC = () => {
             {/* Left: Video Player */}
             <div className="order-2 lg:order-1">
               <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-6 border border-liberation-sovereignty-gold/20">
-                <h2 className="text-2xl font-bold text-white mb-6 text-center">
-                  Watch the Introduction
+                <h2 className="text-2xl font-bold text-white mb-6 text-center uppercase" style={{
+                  textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+                  WebkitTextStroke: '1px #000'
+                }}>
+                  WATCH THE INTRODUCTION
                 </h2>
 
                 {/* Video Container */}
@@ -190,9 +198,14 @@ const IVORIntroduction: React.FC = () => {
                   className="h-16 w-16 rounded-full border-2 border-liberation-sovereignty-gold"
                 />
                 <div>
-                  <h2 className="text-4xl font-black text-white">IVOR</h2>
-                  <p className="text-liberation-sovereignty-gold font-semibold">
-                    Intelligent Virtual Organizing Resource
+                  <h2 className="text-4xl font-black text-white uppercase" style={{
+                    textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+                    WebkitTextStroke: '1px #000'
+                  }}>IVOR</h2>
+                  <p className="text-liberation-sovereignty-gold font-semibold uppercase" style={{
+                    textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
+                  }}>
+                    INTELLIGENT VIRTUAL ORGANIZING RESOURCE
                   </p>
                 </div>
               </div>
@@ -205,8 +218,10 @@ const IVORIntroduction: React.FC = () => {
                 </p>
 
                 <div className="bg-liberation-sovereignty-gold/10 border border-liberation-sovereignty-gold/20 rounded-2xl p-6">
-                  <h3 className="text-liberation-sovereignty-gold font-bold text-lg mb-4">
-                    Community-Owned AI
+                  <h3 className="text-liberation-sovereignty-gold font-bold text-lg mb-4 uppercase" style={{
+                    textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
+                  }}>
+                    COMMUNITY-OWNED AI
                   </h3>
                   <p className="text-gray-300">
                     Unlike corporate AI systems, IVOR is democratically governed by our community.
@@ -233,8 +248,11 @@ const IVORIntroduction: React.FC = () => {
       <section className="py-16 px-8 border-t border-gray-800">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-4">
-              Why IVOR is <span className="text-liberation-sovereignty-gold">Different</span>
+            <h2 className="text-3xl font-bold text-white mb-4 uppercase" style={{
+              textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+              WebkitTextStroke: '1px #000'
+            }}>
+              WHY IVOR IS <span className="text-liberation-sovereignty-gold">DIFFERENT</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
               Built by the community, for the community. IVOR represents a new paradigm in AI assistance—
@@ -262,8 +280,11 @@ const IVORIntroduction: React.FC = () => {
       {/* Call to Action */}
       <section className="py-16 px-8 border-t border-gray-800">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
-            Ready to Experience <span className="text-liberation-sovereignty-gold">Liberation AI</span>?
+          <h2 className="text-3xl font-bold text-white mb-6 uppercase" style={{
+            textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+            WebkitTextStroke: '1px #000'
+          }}>
+            READY TO EXPERIENCE <span className="text-liberation-sovereignty-gold">LIBERATION AI</span>?
           </h2>
           <p className="text-xl text-gray-400 mb-8">
             Join thousands of community members already using IVOR for organizing, support, and collective liberation.

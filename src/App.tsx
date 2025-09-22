@@ -16,6 +16,8 @@ import AboutUs from '@/components/pages/AboutUs';
 import NewsPage from '@/components/pages/NewsPage';
 import StoryArchive from '@/components/pages/StoryArchive';
 import EventsCalendar from '@/components/pages/EventsCalendar';
+import PlatformPage from '@/components/pages/PlatformPage';
+import Footer from '@/components/ui/Footer';
 import IVORIntroduction from '@/components/pages/IVORIntroduction';
 import IVORAssistant from './components/ivor/IVORAssistant';
 import MobileNav from '@/components/ui/MobileNav';
@@ -151,9 +153,9 @@ export default function App() {
       case 'news':
         return <NewsPage />;
       case 'stories':
-        return <StoryArchive />;
-      case 'events':
         return <EventsCalendar />;
+      case 'events':
+        return renderLiberationDashboard();
       case 'intro':
         return <IVORIntroduction />;
       case 'governance':
@@ -172,8 +174,8 @@ export default function App() {
     <div className="space-y-8">
       {/* Hero Section with Three Background Videos */}
       <VideoHero
-        title="LIBERATION PLATFORM"
-        description={`"${LIBERATION_QUOTES[currentQuote].quote}" — ${LIBERATION_QUOTES[currentQuote].author}`}
+        title="WELCOME"
+        description="Your home for Black queer liberation technology"
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
@@ -205,6 +207,22 @@ export default function App() {
         </div>
       </VideoHero>
 
+      {/* Rotating Liberation Quotes */}
+      <section className="bg-liberation-black-power rounded-xl p-6 md:p-8 border border-liberation-sovereignty-gold/20 mb-8">
+        <div className="text-center">
+          <blockquote className="text-2xl md:text-3xl lg:text-4xl font-black text-liberation-sovereignty-gold mb-4 leading-tight" style={{
+            textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+          }}>
+            "{LIBERATION_QUOTES[currentQuote].quote}"
+          </blockquote>
+          <cite className="text-lg md:text-xl font-bold text-liberation-silver uppercase" style={{
+            textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
+          }}>
+            — {LIBERATION_QUOTES[currentQuote].author}
+          </cite>
+        </div>
+      </section>
+
       {/* Liberation Values Grid */}
       <section className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <div className="bg-liberation-red-liberation rounded-xl p-4 md:p-6 text-white">
@@ -234,30 +252,30 @@ export default function App() {
 
       {/* Quick Actions */}
       <section className="bg-liberation-black-power rounded-xl p-4 md:p-6">
-        <h2 className="text-xl md:text-2xl font-bold text-liberation-gold-divine mb-4 md:mb-6">Liberation Actions</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-liberation-gold-divine mb-4 md:mb-6">Get Started</h2>
         <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-3 md:gap-4">
           <button
-            onClick={() => setActiveTab('stories')}
+            onClick={() => setActiveTab('intro')}
             className="bg-liberation-purple-spirit text-white p-4 rounded-lg hover:bg-opacity-80 transition-colors text-left touch-friendly"
           >
-            <h4 className="font-semibold mb-2 text-sm md:text-base">Share Your Story</h4>
-            <p className="text-xs md:text-sm text-liberation-silver">Add your voice to our community archive of Black queer experiences.</p>
+            <h4 className="font-semibold mb-2 text-sm md:text-base">Meet IVOR</h4>
+            <p className="text-xs md:text-sm text-liberation-silver">Your AI liberation assistant for organizing and support.</p>
           </button>
 
           <button
-            onClick={() => setActiveTab('events')}
+            onClick={() => setActiveTab('community')}
             className="bg-liberation-red-liberation text-white p-4 rounded-lg hover:bg-opacity-80 transition-colors text-left touch-friendly"
           >
-            <h4 className="font-semibold mb-2 text-sm md:text-base">Join Events</h4>
-            <p className="text-xs md:text-sm text-liberation-silver">Connect with community members at local and virtual gatherings.</p>
+            <h4 className="font-semibold mb-2 text-sm md:text-base">Join Community</h4>
+            <p className="text-xs md:text-sm text-liberation-silver">Connect with Black queer organizers on BLKOUTHUB.</p>
           </button>
 
           <button
-            onClick={() => setShowIVOR(true)}
+            onClick={() => setActiveTab('stories')}
             className="bg-liberation-green-africa text-white p-4 rounded-lg hover:bg-opacity-80 transition-colors text-left touch-friendly"
           >
-            <h4 className="font-semibold mb-2 text-sm md:text-base">Ask IVOR</h4>
-            <p className="text-xs md:text-sm text-liberation-silver">Get personalized guidance from our AI liberation assistant.</p>
+            <h4 className="font-semibold mb-2 text-sm md:text-base">Explore Events</h4>
+            <p className="text-xs md:text-sm text-liberation-silver">Find community gatherings and liberation organizing.</p>
           </button>
         </div>
       </section>
@@ -274,8 +292,8 @@ export default function App() {
       <div className="space-y-8">
         {/* Community Header with Video Background */}
         <VideoHero
-          title="COMMUNITY HUB"
-          description="Connect with liberation organizers, access secure community spaces, and unlock enhanced governance participation through BLKOUTHUB membership."
+          title="COMMUNITY"
+          description="Join BLKOUTHUB - Your gateway to Black queer liberation organizing"
           videos={[
             '/videos/hero/PLATFORM HERO 1.mp4',
             '/videos/hero/PLATFORM HERO 2.mp4',
@@ -287,10 +305,80 @@ export default function App() {
           className="mb-8"
         />
 
+        {/* BLKOUTHUB Introduction */}
+        <section className="max-w-4xl mx-auto px-6 text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-black text-white mb-6 uppercase" style={{
+            textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+            WebkitTextStroke: '1px #000'
+          }}>
+            WELCOME TO BLKOUTHUB
+          </h2>
+
+          <p className="text-xl text-gray-300 mb-8 leading-relaxed">
+            BLKOUTHUB is our secure community platform where Black queer organizers connect,
+            collaborate, and build liberation together. A space designed by us, for us -
+            with privacy, safety, and collective power at its core.
+          </p>
+
+          <div className="bg-liberation-sovereignty-gold/10 border border-liberation-sovereignty-gold/20 rounded-2xl p-8 mb-8">
+            <h3 className="text-2xl font-bold text-liberation-sovereignty-gold mb-4">
+              What BLKOUTHUB Offers
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6 text-left">
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-liberation-sovereignty-gold text-xl">🔒</span>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Secure Community Spaces</h4>
+                    <p className="text-gray-400 text-sm">Verified members only. Your data, your sovereignty.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-liberation-sovereignty-gold text-xl">🗳️</span>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Democratic Governance</h4>
+                    <p className="text-gray-400 text-sm">Vote on platform decisions and resource allocation.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-liberation-sovereignty-gold text-xl">💬</span>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Heartbeat.chat Integration</h4>
+                    <p className="text-gray-400 text-sm">Real-time organizing and community support.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <span className="text-liberation-sovereignty-gold text-xl">✊🏾</span>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Organizing Tools</h4>
+                    <p className="text-gray-400 text-sm">Coordinate actions, events, and mutual aid.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-liberation-sovereignty-gold text-xl">💜</span>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Trauma-Informed Support</h4>
+                    <p className="text-gray-400 text-sm">Healing-centered spaces and crisis resources.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-liberation-sovereignty-gold text-xl">🌟</span>
+                  <div>
+                    <h4 className="font-bold text-white mb-1">Member Benefits</h4>
+                    <p className="text-gray-400 text-sm">Exclusive content, events, and opportunities.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* BLKOUTHUB Membership Status */}
         <section className="space-y-6">
           <h2 className="text-2xl md:text-3xl font-bold text-liberation-gold-divine text-center">
-            Your Community Status
+            Your Membership Status
           </h2>
 
           {membershipLoading ? (
@@ -409,14 +497,13 @@ export default function App() {
               <div className="hidden md:block">
                 <div className="flex items-baseline space-x-4">
                   {[
-                    { id: 'liberation', label: 'Liberation', icon: Heart },
-                    { id: 'intro', label: 'Meet IVOR', icon: Brain },
-                    { id: 'governance', label: 'Governance', icon: Vote },
+                    { id: 'liberation', label: 'Platform', icon: Heart },
+                    { id: 'intro', label: 'IVOR', icon: Brain },
+                    { id: 'news', label: 'Newsroom', icon: Play },
+                    { id: 'stories', label: 'Events', icon: Vote },
                     { id: 'community', label: 'Community', icon: Users },
-                    { id: 'about', label: 'About', icon: Info },
-                    { id: 'news', label: 'News', icon: Play },
-                    { id: 'stories', label: 'Stories', icon: Heart },
-                    { id: 'events', label: 'Events', icon: Vote }
+                    { id: 'governance', label: 'Governance', icon: Vote },
+                    { id: 'about', label: 'About', icon: Info }
                   ].map(({ id, label, icon: Icon }) => (
                     <button
                       key={id}
@@ -502,6 +589,11 @@ export default function App() {
 
         {/* PWA Install Prompt */}
         <InstallPrompt />
+
+        {/* Footer Navigation */}
+        {activeTab !== 'liberation' && (
+          <Footer onNavigate={setActiveTab} currentTab={activeTab} />
+        )}
       </div>
     </ErrorBoundary>
   );

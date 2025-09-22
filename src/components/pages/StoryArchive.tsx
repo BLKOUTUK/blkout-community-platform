@@ -1,125 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Calendar, User, ArrowRight, ArrowLeft, BookOpen, Tag, ChevronLeft, ChevronRight, Play, Volume2, Image, ExternalLink, Star, Clock } from 'lucide-react';
+import { Search, ArrowLeft, BookOpen, Tag, Clock, User, Calendar } from 'lucide-react';
 import VideoHero from '@/components/ui/VideoHero';
-
-interface StoryArchiveItem {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  category: string;
-  author: string;
-  publishedAt: string;
-  readTime: string;
-  tags: string[];
-  imageUrl?: string;
-  originalUrl?: string; // For blkoutuk.com articles
-  contentType?: 'article' | 'audio' | 'video' | 'gallery' | 'multimedia';
-  audioUrl?: string;
-  videoUrl?: string;
-  galleryImages?: string[];
-  blkoutTheme?: 'CONNECT' | 'CREATE' | 'CARE'; // Original blkoutuk.com themes
-}
-
-interface StoryDetail {
-  id: string;
-  title: string;
-  content: string;
-  category: string;
-  author: string;
-  publishedAt: string;
-  readTime: string;
-  tags: string[];
-  imageUrl?: string;
-  contentType?: 'article' | 'audio' | 'video' | 'gallery' | 'multimedia';
-  audioUrl?: string;
-  videoUrl?: string;
-  galleryImages?: string[];
-  blkoutTheme?: 'CONNECT' | 'CREATE' | 'CARE';
-  originalUrl?: string;
-}
+import { storyArchiveAPI, Story } from '@/services/story-archive-api';
 
 const StoryArchive: React.FC = () => {
-  const [stories, setStories] = useState<StoryArchiveItem[]>([]);
-  const [selectedStory, setSelectedStory] = useState<StoryDetail | null>(null);
+  const [stories, setStories] = useState<Story[]>([]);
+  const [selectedStory, setSelectedStory] = useState<Story | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedTheme, setSelectedTheme] = useState<string>('all');
-  const [selectedContentType, setSelectedContentType] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [categories, setCategories] = useState<string[]>(['all']);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageLoading, setPageLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalStories, setTotalStories] = useState(0);
 
-  const themes = ['all', 'CONNECT', 'CREATE', 'CARE'];
-  const contentTypes = ['all', 'article', 'audio', 'video', 'gallery', 'multimedia'];
   const storiesPerPage = 12;
 
   useEffect(() => {
+    loadCategories();
     loadStories();
-  }, []);
+  }, [searchQuery, selectedCategory, currentPage]);
+
+  const loadCategories = async () => {
+    const cats = await storyArchiveAPI.getCategories();
+    setCategories(['all', ...cats]);
+  };
 
   const loadStories = async () => {
     setLoading(true);
     try {
-      // TODO: Replace with actual API call to story archive endpoint
-      const response = await fetch('https://api.blkoutcollective.org/v1/story-archive');
-      if (response.ok) {
-        const data = await response.json();
-        setStories(data.articles || []);
-      } else {
-        // Empty state for now - waiting for 270+ articles migration
-        setStories([]);
-      }
-    } catch (error) {
-      console.error('Failed to load stories:', error);
-      setStories([]);
+      const result = await storyArchiveAPI.searchStories(
+        searchQuery,
+        selectedCategory,
+        currentPage,
+        storiesPerPage
+      );
+
+      setStories(result.stories);
+      setTotalPages(result.totalPages);
+      setTotalStories(result.total);
     } finally {
       setLoading(false);
     }
   };
 
-  const loadStoryDetail = async (storyId: string) => {
-    setPageLoading(true);
-    try {
-      // TODO: Replace with actual API call for full story content
-      const response = await fetch(`https://api.blkoutcollective.org/v1/story-archive/${storyId}`);
-      if (response.ok) {
-        const story = await response.json();
-        setSelectedStory(story);
-      }
-    } catch (error) {
-      console.error('Failed to load story detail:', error);
-    } finally {
-      setPageLoading(false);
+  const loadFullStory = async (storyId: string) => {
+    setLoading(true);
+    const story = await storyArchiveAPI.getStory(storyId);
+    if (story) {
+      setSelectedStory(story);
     }
+    setLoading(false);
   };
 
-  const getContentTypeIcon = (type?: string) => {
-    switch (type) {
-      case 'audio':
-        return <Volume2 className="h-4 w-4" />;
-      case 'video':
-        return <Play className="h-4 w-4" />;
-      case 'gallery':
-        return <Image className="h-4 w-4" />;
-      case 'multimedia':
-        return <Star className="h-4 w-4" />;
-      default:
-        return <BookOpen className="h-4 w-4" />;
-    }
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    setCurrentPage(1);
+    loadStories();
   };
-
-  const filteredStories = stories.filter(story => {
-    const themeMatch = selectedTheme === 'all' || story.blkoutTheme === selectedTheme;
-    const contentTypeMatch = selectedContentType === 'all' || story.contentType === selectedContentType;
-    return themeMatch && contentTypeMatch;
-  });
-
-  const totalPages = Math.ceil(filteredStories.length / storiesPerPage);
-  const startIndex = (currentPage - 1) * storiesPerPage;
-  const currentStories = filteredStories.slice(startIndex, startIndex + storiesPerPage);
-
-  // Find featured story (first story or specific featured story)
-  const featuredStory = filteredStories[0];
-  const regularStories = currentStories.filter(story => story.id !== featuredStory?.id);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -129,155 +67,112 @@ const StoryArchive: React.FC = () => {
     });
   };
 
-  // Full-page story view for reading, listening, or watching
+  // Full story view
   if (selectedStory) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
         {/* Story Header */}
-        <header className="border-b border-white/10 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
+        <header className="border-b border-liberation-sovereignty-gold/20 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
           <div className="max-w-4xl mx-auto px-4 md:px-8 py-4">
-            <div className="flex items-center justify-between">
-              <button
-                onClick={() => setSelectedStory(null)}
-                className="flex items-center text-gray-400 hover:text-liberation-sovereignty-gold transition-colors"
-              >
-                <ArrowLeft className="h-5 w-5 mr-2" />
-                Back to Archive
-              </button>
-
-              <div className="flex items-center gap-4">
-                {selectedStory.originalUrl && (
-                  <a
-                    href={selectedStory.originalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-liberation-sovereignty-gold hover:text-liberation-sovereignty-gold/80 transition-colors text-sm"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    Original on blkoutuk.com
-                  </a>
-                )}
-              </div>
-            </div>
+            <button
+              onClick={() => setSelectedStory(null)}
+              className="flex items-center text-gray-400 hover:text-liberation-sovereignty-gold transition-colors"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Back to Archive
+            </button>
           </div>
         </header>
 
         {/* Story Content */}
-        <main className="py-8 px-4 md:px-8">
-          <div className="max-w-4xl mx-auto">
-            {pageLoading ? (
-              <div className="text-center py-20">
-                <div className="w-16 h-16 border-4 border-liberation-sovereignty-gold/30 border-t-liberation-sovereignty-gold rounded-full animate-spin mx-auto mb-4"></div>
-                <div className="text-liberation-sovereignty-gold font-medium">Loading story...</div>
-              </div>
-            ) : (
-              <article className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-                <div className="p-8 md:p-12">
-                  {/* Story Meta */}
-                  <div className="flex items-center gap-3 mb-6">
-                    <span className="text-xs bg-liberation-sovereignty-gold text-black px-3 py-1 rounded-full font-semibold">
-                      {selectedStory.blkoutTheme?.toUpperCase() || selectedStory.category.toUpperCase()}
-                    </span>
-                    {selectedStory.contentType && selectedStory.contentType !== 'article' && (
-                      <div className="flex items-center gap-2 text-liberation-sovereignty-gold text-sm">
-                        {getContentTypeIcon(selectedStory.contentType)}
-                        <span className="capitalize font-medium">{selectedStory.contentType}</span>
-                      </div>
-                    )}
-                    <span className="text-gray-400 text-sm">{selectedStory.readTime}</span>
-                  </div>
+        <article className="max-w-4xl mx-auto px-4 md:px-8 py-12">
+          {/* Story Meta */}
+          <div className="mb-8">
+            {selectedStory.category && (
+              <span className="inline-block px-3 py-1 bg-liberation-sovereignty-gold/20 text-liberation-sovereignty-gold rounded-full text-sm font-semibold mb-4">
+                {selectedStory.category}
+              </span>
+            )}
 
-                  {/* Story Title */}
-                  <h1 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
-                    {selectedStory.title}
-                  </h1>
+            <h1 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
+              {selectedStory.title}
+            </h1>
 
-                  {/* Story Byline */}
-                  <div className="flex items-center gap-4 text-sm text-gray-400 mb-8 pb-8 border-b border-white/10">
-                    <span>By {selectedStory.author}</span>
-                    <span>•</span>
-                    <span>{formatDate(selectedStory.publishedAt)}</span>
-                  </div>
-
-                  {/* Multimedia Content */}
-                  {selectedStory.contentType === 'audio' && selectedStory.audioUrl && (
-                    <div className="mb-8">
-                      <div className="bg-liberation-sovereignty-gold/10 border border-liberation-sovereignty-gold/20 rounded-xl p-6">
-                        <div className="flex items-center gap-3 mb-4">
-                          <Volume2 className="h-5 w-5 text-liberation-sovereignty-gold" />
-                          <h3 className="text-liberation-sovereignty-gold font-semibold">Audio Story</h3>
-                        </div>
-                        <audio controls className="w-full">
-                          <source src={selectedStory.audioUrl} type="audio/mpeg" />
-                          Your browser does not support the audio element.
-                        </audio>
-                      </div>
-                    </div>
-                  )}
-
-                  {selectedStory.contentType === 'video' && selectedStory.videoUrl && (
-                    <div className="mb-8">
-                      <div className="bg-liberation-sovereignty-gold/10 border border-liberation-sovereignty-gold/20 rounded-xl overflow-hidden">
-                        <video controls className="w-full" poster={selectedStory.imageUrl}>
-                          <source src={selectedStory.videoUrl} type="video/mp4" />
-                          Your browser does not support the video element.
-                        </video>
-                      </div>
-                    </div>
-                  )}
-
-                  {selectedStory.contentType === 'gallery' && selectedStory.galleryImages && (
-                    <div className="mb-8">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {selectedStory.galleryImages.map((imageUrl, index) => (
-                          <div key={index} className="bg-liberation-sovereignty-gold/10 border border-liberation-sovereignty-gold/20 rounded-xl overflow-hidden">
-                            <img src={imageUrl} alt={`Gallery image ${index + 1}`} className="w-full h-auto" />
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Story Content */}
-                  <div className="prose prose-lg prose-invert max-w-none">
-                    <div
-                      className="text-gray-300 leading-relaxed"
-                      dangerouslySetInnerHTML={{ __html: selectedStory.content }}
-                    />
-                  </div>
-
-                  {/* Story Tags */}
-                  {selectedStory.tags && selectedStory.tags.length > 0 && (
-                    <div className="mt-12 pt-8 border-t border-white/10">
-                      <h4 className="text-liberation-sovereignty-gold font-semibold text-sm mb-4 uppercase tracking-wide">Tags</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedStory.tags.map((tag, index) => (
-                          <span
-                            key={index}
-                            className="text-xs bg-white/10 text-gray-300 px-3 py-1 rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400 mb-6">
+              {selectedStory.author && (
+                <div className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  <span>{selectedStory.author}</span>
                 </div>
-              </article>
+              )}
+              <div className="flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                <span>{formatDate(selectedStory.publishedAt)}</span>
+              </div>
+              {selectedStory.readTime && (
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  <span>{selectedStory.readTime}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Tags */}
+            {selectedStory.tags && selectedStory.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-6">
+                {selectedStory.tags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="px-3 py-1 bg-gray-800 text-gray-300 rounded-lg text-sm"
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              </div>
             )}
           </div>
-        </main>
+
+          {/* Featured Image */}
+          {selectedStory.imageUrl && (
+            <img
+              src={selectedStory.imageUrl}
+              alt={selectedStory.title}
+              className="w-full h-auto rounded-2xl mb-8"
+            />
+          )}
+
+          {/* Story Content */}
+          <div
+            className="prose prose-invert prose-lg max-w-none"
+            dangerouslySetInnerHTML={{ __html: selectedStory.content }}
+          />
+
+          {/* Original Source Link */}
+          {selectedStory.originalUrl && (
+            <div className="mt-12 p-6 bg-liberation-sovereignty-gold/10 border border-liberation-sovereignty-gold/20 rounded-xl">
+              <p className="text-sm text-gray-400 mb-2">Originally published on blkoutuk.com</p>
+              <a
+                href={selectedStory.originalUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-liberation-sovereignty-gold hover:underline"
+              >
+                View original article →
+              </a>
+            </div>
+          )}
+        </article>
       </div>
     );
   }
 
+  // Archive listing view
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
-      {/* Video Hero Section */}
+      {/* Video Hero */}
       <VideoHero
         title="STORY ARCHIVE"
-        subtitle="270+ stories from blkoutuk.com"
-        description="Preserving our community's rich history of creative expression, cultural commentary, and liberation narratives. Read, listen, and watch stories that shaped our movement."
+        description="270+ stories from the BLKOUT community. Your voices, your experiences, your liberation."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
@@ -285,269 +180,181 @@ const StoryArchive: React.FC = () => {
         ]}
         height="md"
         textColor="light"
-        overlayOpacity={0.8}
+        overlayOpacity={0.7}
         className="mb-8"
       />
 
-      {/* Header */}
-      <header className="border-b border-white/10 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+      {/* Search and Filters */}
+      <section className="max-w-6xl mx-auto px-4 md:px-8 py-8">
+        <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-6 border border-liberation-sovereignty-gold/20">
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} className="mb-6">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search stories..."
+                className="w-full pl-12 pr-4 py-3 bg-gray-900 border border-gray-700 rounded-xl text-white placeholder-gray-400 focus:border-liberation-sovereignty-gold focus:outline-none"
+              />
               <button
-                onClick={() => window.history.back()}
-                className="flex items-center text-gray-400 hover:text-liberation-sovereignty-gold transition-colors"
+                type="submit"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-1.5 bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black rounded-lg font-semibold transition-colors"
               >
-                <ArrowLeft className="h-5 w-5 mr-2" />
-                Back to Platform
+                Search
               </button>
             </div>
+          </form>
 
-            <div className="text-center">
-              <h1 className="text-2xl md:text-3xl font-black text-white mb-1">
-                STORY <span className="text-liberation-sovereignty-gold">ARCHIVE</span>
-              </h1>
-              <p className="text-gray-400 text-sm">270+ stories from blkoutuk.com • Read, Listen, Watch</p>
-            </div>
-
-            <div className="w-32"></div> {/* Spacer for centering */}
+          {/* Category Filters */}
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => {
+                  setSelectedCategory(category);
+                  setCurrentPage(1);
+                }}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                  selectedCategory === category
+                    ? 'bg-liberation-sovereignty-gold text-black'
+                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                }`}
+              >
+                {category === 'all' ? 'All Stories' : category}
+              </button>
+            ))}
           </div>
-        </div>
-      </header>
 
-      {/* Filters - Vox-inspired minimal design */}
-      <section className="py-6 px-4 md:px-8 border-b border-white/10">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row gap-6 lg:items-center lg:justify-between">
-            {/* Theme Filters */}
-            <div>
-              <h3 className="text-liberation-sovereignty-gold font-semibold text-sm mb-3 uppercase tracking-wide">Themes</h3>
-              <div className="flex flex-wrap gap-2">
-                {themes.map((theme) => (
-                  <button
-                    key={theme}
-                    onClick={() => setSelectedTheme(theme)}
-                    className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                      selectedTheme === theme
-                        ? 'bg-liberation-sovereignty-gold text-black'
-                        : 'bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white'
-                    }`}
-                  >
-                    {theme === 'all' ? 'All Stories' : theme.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Content Type Filters */}
-            <div>
-              <h3 className="text-liberation-sovereignty-gold font-semibold text-sm mb-3 uppercase tracking-wide">Content Type</h3>
-              <div className="flex flex-wrap gap-2">
-                {contentTypes.map((type) => (
-                  <button
-                    key={type}
-                    onClick={() => setSelectedContentType(type)}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                      selectedContentType === type
-                        ? 'bg-liberation-sovereignty-gold text-black'
-                        : 'bg-white/10 text-gray-300 hover:bg-white/20 hover:text-white'
-                    }`}
-                  >
-                    {getContentTypeIcon(type)}
-                    {type === 'all' ? 'All' : type.charAt(0).toUpperCase() + type.slice(1)}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stories Grid - Vox-Inspired Layout */}
-      <main className="py-8 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto">
-          {loading ? (
-            /* Loading State */
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-6 animate-pulse">
-                  <div className="w-12 h-12 bg-gray-700 rounded-xl mb-4"></div>
-                  <div className="h-6 bg-gray-700 rounded mb-3"></div>
-                  <div className="h-4 bg-gray-700 rounded mb-2"></div>
-                  <div className="h-4 bg-gray-700 rounded w-3/4"></div>
-                </div>
-              ))}
-            </div>
-          ) : filteredStories.length === 0 ? (
-            /* Empty State */
-            <div className="text-center py-16">
-              <div className="w-16 h-16 bg-liberation-sovereignty-gold/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <BookOpen className="h-8 w-8 text-liberation-sovereignty-gold" />
-              </div>
-              <h2 className="text-2xl font-bold text-white mb-4">Story Archive Coming Soon</h2>
-              <p className="text-lg text-gray-400 mb-8 max-w-xl mx-auto">
-                We're preparing the migration of 270+ stories from blkoutuk.com. This archive will preserve our community's rich history.
-              </p>
-              <div className="bg-white/5 border border-white/10 rounded-xl p-6 max-w-2xl mx-auto">
-                <h3 className="text-liberation-sovereignty-gold font-semibold text-base mb-4">Migration In Progress</h3>
-                <div className="text-gray-300 text-sm space-y-2">
-                  <div>→ Preserving original publication dates and author credits</div>
-                  <div>→ Migrating multimedia content (audio, video, galleries)</div>
-                  <div>→ Maintaining blkoutuk.com theme categorization</div>
-                  <div>→ Creating enhanced reading, listening, and viewing experiences</div>
-                  <div>→ Building connections to current platform features</div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            /* Vox-Inspired Stories Layout */
-            <div className="space-y-8">
-              {/* Featured Story (if any) */}
-              {featuredStory && (
-                <div className="mb-12">
-                  <div className="flex items-center gap-3 mb-6">
-                    <Star className="h-5 w-5 text-liberation-sovereignty-gold" />
-                    <h2 className="text-lg font-bold text-liberation-sovereignty-gold uppercase tracking-wide">Featured Story</h2>
-                  </div>
-
-                  <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-liberation-sovereignty-gold/30 transition-all duration-300 group cursor-pointer"
-                       onClick={() => loadStoryDetail(featuredStory.id)}>
-                    <div className="p-8">
-                      {/* Content Type Badge */}
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-3">
-                          <span className="text-xs bg-liberation-sovereignty-gold text-black px-3 py-1 rounded-full font-semibold">
-                            {featuredStory.blkoutTheme?.toUpperCase() || featuredStory.category.toUpperCase()}
-                          </span>
-                          {featuredStory.contentType && featuredStory.contentType !== 'article' && (
-                            <div className="flex items-center gap-2 text-liberation-sovereignty-gold text-sm">
-                              {getContentTypeIcon(featuredStory.contentType)}
-                              <span className="capitalize font-medium">{featuredStory.contentType}</span>
-                            </div>
-                          )}
-                        </div>
-                        <span className="text-gray-400 text-sm">{featuredStory.readTime}</span>
-                      </div>
-
-                      <h2 className="text-3xl font-bold text-white mb-4 group-hover:text-liberation-sovereignty-gold transition-colors leading-tight">
-                        {featuredStory.title}
-                      </h2>
-
-                      <p className="text-gray-300 text-lg leading-relaxed mb-6">
-                        {featuredStory.excerpt}
-                      </p>
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4 text-sm text-gray-400">
-                          <span>By {featuredStory.author}</span>
-                          <span>•</span>
-                          <span>{formatDate(featuredStory.publishedAt)}</span>
-                        </div>
-
-                        <div className="flex items-center gap-3">
-                          <span className="text-liberation-sovereignty-gold text-sm font-medium">Read Story</span>
-                          <ArrowRight className="h-5 w-5 text-liberation-sovereignty-gold group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Regular Stories Grid */}
-              <div>
-                <h2 className="text-lg font-bold text-white mb-6 uppercase tracking-wide">Story Archive</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {regularStories.map((story) => (
-                    <article
-                      key={story.id}
-                      className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-liberation-sovereignty-gold/30 transition-all duration-300 group cursor-pointer"
-                      onClick={() => loadStoryDetail(story.id)}
-                    >
-                      <div className="p-6">
-                        {/* Story Header */}
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs bg-liberation-sovereignty-gold/20 text-liberation-sovereignty-gold px-2 py-1 rounded font-medium">
-                              {story.blkoutTheme?.toUpperCase() || story.category.toUpperCase()}
-                            </span>
-                          </div>
-
-                          {/* Content Type Indicator */}
-                          {story.contentType && story.contentType !== 'article' && (
-                            <div className="flex items-center gap-1 text-liberation-sovereignty-gold text-sm">
-                              {getContentTypeIcon(story.contentType)}
-                            </div>
-                          )}
-                        </div>
-
-                        <h3 className="text-lg font-semibold text-white mb-3 group-hover:text-liberation-sovereignty-gold transition-colors line-clamp-2 leading-tight">
-                          {story.title}
-                        </h3>
-
-                        <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-3">
-                          {story.excerpt}
-                        </p>
-
-                        <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                          <div className="flex items-center gap-4 text-xs text-gray-500">
-                            <span>By {story.author}</span>
-                            <span>•</span>
-                            <span>{formatDate(story.publishedAt)}</span>
-                          </div>
-
-                          <div className="flex items-center gap-1 text-xs text-gray-500">
-                            <Clock className="h-3 w-3" />
-                            <span>{story.readTime}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </div>
-
-              {/* Pagination */}
-              {totalPages > 1 && (
-                <div className="flex items-center justify-center gap-4 pt-8">
-                  <button
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-gray-300 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                    Previous
-                  </button>
-
-                  <div className="flex items-center gap-2">
-                    {[...Array(totalPages)].map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentPage(index + 1)}
-                        className={`w-10 h-10 rounded-lg font-medium transition-colors ${
-                          currentPage === index + 1
-                            ? 'bg-liberation-sovereignty-gold text-black'
-                            : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                        }`}
-                      >
-                        {index + 1}
-                      </button>
-                    ))}
-                  </div>
-
-                  <button
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-gray-300 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                  >
-                    Next
-                    <ChevronRight className="h-4 w-4" />
-                  </button>
-                </div>
-              )}
+          {/* Results Count */}
+          {!loading && (
+            <div className="mt-4 text-sm text-gray-400">
+              Found {totalStories} {totalStories === 1 ? 'story' : 'stories'}
+              {searchQuery && ` for "${searchQuery}"`}
+              {selectedCategory !== 'all' && ` in ${selectedCategory}`}
             </div>
           )}
         </div>
+      </section>
+
+      {/* Stories Grid */}
+      <main className="max-w-6xl mx-auto px-4 md:px-8 py-8">
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <div className="text-center">
+              <div className="w-16 h-16 border-4 border-liberation-sovereignty-gold/30 border-t-liberation-sovereignty-gold rounded-full animate-spin mx-auto mb-4"></div>
+              <div className="text-liberation-sovereignty-gold font-bold">Loading stories...</div>
+            </div>
+          </div>
+        ) : stories.length === 0 ? (
+          <div className="text-center py-20">
+            <BookOpen className="h-16 w-16 text-gray-600 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-white mb-2">No stories found</h2>
+            <p className="text-gray-400">Try adjusting your search or filters</p>
+          </div>
+        ) : (
+          <>
+            {/* Stories Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {stories.map((story) => (
+                <article
+                  key={story.id}
+                  className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border border-liberation-sovereignty-gold/10 hover:border-liberation-sovereignty-gold/30 transition-all duration-300 cursor-pointer group"
+                  onClick={() => loadFullStory(story.id)}
+                >
+                  {story.imageUrl && (
+                    <div className="aspect-video overflow-hidden">
+                      <img
+                        src={story.imageUrl}
+                        alt={story.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                  )}
+
+                  <div className="p-6">
+                    {story.category && (
+                      <span className="inline-block px-2 py-1 bg-liberation-sovereignty-gold/20 text-liberation-sovereignty-gold rounded text-xs font-semibold mb-3">
+                        {story.category}
+                      </span>
+                    )}
+
+                    <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-liberation-sovereignty-gold transition-colors">
+                      {story.title}
+                    </h3>
+
+                    <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                      {story.excerpt}
+                    </p>
+
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                      <div className="flex items-center gap-4">
+                        {story.author && (
+                          <span className="flex items-center gap-1">
+                            <User className="h-3 w-3" />
+                            {story.author}
+                          </span>
+                        )}
+                        <span className="flex items-center gap-1">
+                          <Calendar className="h-3 w-3" />
+                          {formatDate(story.publishedAt)}
+                        </span>
+                      </div>
+                      {story.readTime && (
+                        <span className="flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          {story.readTime}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex justify-center gap-2">
+                <button
+                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Previous
+                </button>
+
+                <div className="flex items-center gap-2">
+                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                    const page = currentPage - 2 + i;
+                    if (page < 1 || page > totalPages) return null;
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentPage(page)}
+                        className={`px-3 py-2 rounded-lg font-semibold transition-colors ${
+                          page === currentPage
+                            ? 'bg-liberation-sovereignty-gold text-black'
+                            : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <button
+                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            )}
+          </>
+        )}
       </main>
     </div>
   );

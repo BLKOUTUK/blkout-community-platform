@@ -27,14 +27,14 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
   const steps = [
     {
       id: 'welcome',
-      title: '🏴‍☠️ Welcome to the BLKOUT Ecosystem',
-      content: 'A complete digital liberation infrastructure by and for Black queer communities. Discover our interconnected platforms designed with your sovereignty in mind.',
+      title: '🏴‍☠️ Welcome to BLKOUT Platform',
+      content: 'Your home for Black queer liberation technology. Built by and for our communities with sovereignty, safety, and collective power at the core.',
       action: 'next'
     },
     {
       id: 'ecosystem',
-      title: 'Explore Our Liberation Ecosystem',
-      content: 'Choose how you want to begin your journey through our integrated platform experience.',
+      title: 'Choose Your Path',
+      content: 'Start your journey through our liberation platform.',
       action: 'ecosystem'
     },
     {

@@ -18,12 +18,13 @@ const MobileNav: React.FC<MobileNavProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const navigationItems = [
-    { id: 'liberation', label: 'Liberation', icon: Heart },
-    { id: 'intro', label: 'Meet IVOR', icon: Brain },
-    { id: 'about', label: 'About', icon: Info },
-    { id: 'news', label: 'News', icon: Play },
-    { id: 'stories', label: 'Stories', icon: Heart },
-    { id: 'events', label: 'Events', icon: Calendar }
+    { id: 'liberation', label: 'Platform', icon: Heart },
+    { id: 'intro', label: 'IVOR', icon: Brain },
+    { id: 'news', label: 'Newsroom', icon: Play },
+    { id: 'stories', label: 'Events', icon: Calendar },
+    { id: 'community', label: 'Community', icon: Heart },
+    { id: 'governance', label: 'Governance', icon: Vote },
+    { id: 'about', label: 'About', icon: Info }
   ];
 
   const handleTabChange = (tabId: string) => {
