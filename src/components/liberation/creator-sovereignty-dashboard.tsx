@@ -329,7 +329,7 @@ export const CreatorSovereigntyDashboard: React.FC<CreatorSovereigntyDashboardPr
     <div className={cn('space-y-8', className)} data-testid={testId} {...props}>
       {/* Hero Section with Video Background */}
       <VideoHero
-        title="💰 CREATOR SOVEREIGNTY"
+        title="CREATOR SOVEREIGNTY"
         subtitle="Economic empowerment and creative control"
         description="You maintain 75% revenue share and complete creative control. Your content, your rules, your liberation."
         videos={[

@@ -18,6 +18,8 @@ interface VideoHeroProps {
   height?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
   children?: React.ReactNode;
+  showLogo?: boolean;
+  logoSrc?: string;
 }
 
 const VideoHero: React.FC<VideoHeroProps> = ({
@@ -26,10 +28,12 @@ const VideoHero: React.FC<VideoHeroProps> = ({
   description,
   videos,
   textColor = 'light',
-  overlayOpacity = 0.6,
+  overlayOpacity = 0.3,
   height = 'lg',
   className,
-  children
+  children,
+  showLogo = true,
+  logoSrc = "/Branding and logos/BLKOUT25INV.png"
 }) => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -148,12 +152,39 @@ const VideoHero: React.FC<VideoHeroProps> = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
+          {/* BLKOUT Logo */}
+          {showLogo && (
+            <motion.div
+              className="mb-6 md:mb-8"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.3 }}
+            >
+              <img
+                src={logoSrc}
+                alt="BLKOUT Logo"
+                className="h-16 md:h-20 lg:h-24 w-auto mx-auto filter drop-shadow-lg"
+                loading="eager"
+              />
+            </motion.div>
+          )}
+
           <h1 className={cn(
             'text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 md:mb-6',
             'leading-tight tracking-tight',
-            textColor === 'light' ? 'text-liberation-gold-divine' : 'text-liberation-black-power',
-            'drop-shadow-2xl'
-          )}>
+            // Outline text styles for better video visibility
+            textColor === 'light'
+              ? 'text-liberation-gold-divine'
+              : 'text-liberation-black-power',
+            'drop-shadow-2xl',
+            // Add text stroke for outline effect
+            'text-outline-white'
+          )}
+          style={{
+            WebkitTextStroke: '2px rgba(255, 255, 255, 0.8)',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8), -1px -1px 2px rgba(255, 255, 255, 0.3)'
+          }}
+          >
             {title}
           </h1>
 
@@ -165,6 +196,10 @@ const VideoHero: React.FC<VideoHeroProps> = ({
                 textColorClasses[textColor],
                 'drop-shadow-lg'
               )}
+              style={{
+                WebkitTextStroke: '1px rgba(255, 255, 255, 0.6)',
+                textShadow: '1px 1px 2px rgba(0, 0, 0, 0.7)'
+              }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.7 }}
@@ -181,6 +216,10 @@ const VideoHero: React.FC<VideoHeroProps> = ({
                 textColorClasses[textColor],
                 'drop-shadow-md'
               )}
+              style={{
+                WebkitTextStroke: '0.5px rgba(255, 255, 255, 0.5)',
+                textShadow: '1px 1px 2px rgba(0, 0, 0, 0.6)'
+              }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.9 }}

@@ -523,7 +523,7 @@ export const IVORFeedbackCollection: React.FC<IVORFeedbackCollectionProps> = ({
     <div className={cn('space-y-8', className)}>
       {/* Hero Section */}
       <VideoHero
-        title="🧠 IVOR LEARNING LAB"
+        title="IVOR LEARNING LAB"
         subtitle="Community feedback for AI improvement"
         description="Help train IVOR to better serve our community. Your feedback teaches our AI assistant to provide more accurate, culturally-sensitive, and helpful responses to community needs."
         videos={[

@@ -278,7 +278,7 @@ export const ProposalSubmissionForm: React.FC<ProposalSubmissionFormProps> = ({
           <option value="community_guidelines">Community Guidelines</option>
           <option value="resource_allocation">Resource Allocation</option>
           <option value="policy_change">Policy Change</option>
-          <option value="creator_sovereignty">Creator Sovereignty</option>
+          <option value="creator_compensation">Creator Compensation</option>
           <option value="safety_measures">Safety Measures</option>
         </select>
         <p id="category-help" className="text-xs text-gray-500">

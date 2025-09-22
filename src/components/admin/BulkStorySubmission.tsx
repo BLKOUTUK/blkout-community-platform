@@ -447,7 +447,7 @@ export const BulkStorySubmission: React.FC<BulkStorySubmissionProps> = ({
     <div className={cn('space-y-8', className)}>
       {/* Hero Section */}
       <VideoHero
-        title="📚 BULK STORY SUBMISSION"
+        title="BULK STORY SUBMISSION"
         subtitle="Community curator content management"
         description="Submit multiple stories, articles, and events efficiently. Help build our community knowledge base by curating content from across the liberation movement."
         videos={[

@@ -275,7 +275,7 @@ const StoryArchive: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
       {/* Video Hero Section */}
       <VideoHero
-        title="📚 STORY ARCHIVE"
+        title="STORY ARCHIVE"
         subtitle="270+ stories from blkoutuk.com"
         description="Preserving our community's rich history of creative expression, cultural commentary, and liberation narratives. Read, listen, and watch stories that shaped our movement."
         videos={[

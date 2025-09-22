@@ -169,7 +169,7 @@ export default function App() {
     <div className="space-y-8">
       {/* Hero Section with Three Background Videos */}
       <VideoHero
-        title="🏴‍☠️ LIBERATION PLATFORM"
+        title="LIBERATION PLATFORM"
         description={`"${LIBERATION_QUOTES[currentQuote].quote}" — ${LIBERATION_QUOTES[currentQuote].author}`}
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
@@ -271,7 +271,7 @@ export default function App() {
       <div className="space-y-8">
         {/* Community Header with Video Background */}
         <VideoHero
-          title="🏘️ COMMUNITY HUB"
+          title="COMMUNITY HUB"
           description="Connect with liberation organizers, access secure community spaces, and unlock enhanced governance participation through BLKOUTHUB membership."
           videos={[
             '/videos/hero/PLATFORM HERO 1.mp4',

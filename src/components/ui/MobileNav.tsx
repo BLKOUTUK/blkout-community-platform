@@ -57,7 +57,14 @@ const MobileNav: React.FC<MobileNavProps> = ({
             {/* Header */}
             <div className="p-6 border-b border-liberation-silver border-opacity-20">
               <div className="flex items-center justify-between">
-                <span className="text-xl font-bold text-liberation-gold-divine">🏴‍☠️ BLKOUT</span>
+                <div className="flex items-center space-x-2">
+                  <img
+                    src="/Branding and logos/BLKOUT25INV.png"
+                    alt="BLKOUT"
+                    className="h-6 w-auto"
+                  />
+                  <span className="text-xl font-bold text-liberation-gold-divine">BLKOUT</span>
+                </div>
                 <button
                   onClick={() => setIsOpen(false)}
                   className="touch-friendly p-2 text-liberation-silver hover:text-liberation-gold-divine transition-colors"

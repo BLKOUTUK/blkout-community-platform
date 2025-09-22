@@ -41,7 +41,7 @@ export default function AboutUs() {
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section with Video Background */}
       <VideoHero
-        title="ℹ️ ABOUT BLKOUT"
+        title="ABOUT BLKOUT"
         subtitle="Liberation Platform"
         description="The world's first technically implemented liberation platform with community benefit society governance, fair creator compensation, and trauma-informed community protection for Black queer communities."
         videos={[
