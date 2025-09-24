@@ -47,7 +47,7 @@ const ModerationQueue: React.FC = () => {
     }
   }, []);
 
-  // Load submissions from API endpoint
+  // Load submissions from API endpoint - Updated 2025-01-24
   const loadSubmissions = async () => {
     setLoading(true);
     try {
@@ -73,6 +73,7 @@ const ModerationQueue: React.FC = () => {
         }));
 
         setSubmissions(apiSubmissions);
+        console.log('Moderation queue loaded successfully:', apiSubmissions.length, 'submissions');
       } else {
         console.error('API returned invalid data:', result);
         setSubmissions([]);
