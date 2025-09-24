@@ -1,7 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { ArrowLeft, Play, Pause, Volume2, VolumeX } from 'lucide-react';
 
-const IVORIntroduction: React.FC = () => {
+interface IVORIntroductionProps {
+  onStartChat: () => void;
+  onJoinCommunity: () => void;
+  onLearnMore: () => void;
+}
+
+const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoinCommunity, onLearnMore }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -225,10 +231,16 @@ const IVORIntroduction: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black py-3 px-6 rounded-2xl font-bold transition-colors">
+                  <button
+                    onClick={onStartChat}
+                    className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black py-3 px-6 rounded-2xl font-bold transition-colors"
+                  >
                     Start Chatting with IVOR
                   </button>
-                  <button className="bg-transparent border-2 border-liberation-sovereignty-gold text-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold hover:text-black py-3 px-6 rounded-2xl font-bold transition-colors">
+                  <button
+                    onClick={onLearnMore}
+                    className="bg-transparent border-2 border-liberation-sovereignty-gold text-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold hover:text-black py-3 px-6 rounded-2xl font-bold transition-colors"
+                  >
                     Learn More
                   </button>
                 </div>
@@ -284,10 +296,16 @@ const IVORIntroduction: React.FC = () => {
             Join thousands of community members already using IVOR for organizing, support, and collective liberation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black py-4 px-8 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105">
+            <button
+              onClick={onStartChat}
+              className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black py-4 px-8 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105"
+            >
               Chat with IVOR Now
             </button>
-            <button className="bg-transparent border-2 border-liberation-sovereignty-gold text-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold hover:text-black py-4 px-8 rounded-2xl font-bold text-lg transition-all duration-300">
+            <button
+              onClick={onJoinCommunity}
+              className="bg-transparent border-2 border-liberation-sovereignty-gold text-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold hover:text-black py-4 px-8 rounded-2xl font-bold text-lg transition-all duration-300"
+            >
               Join Our Community
             </button>
           </div>

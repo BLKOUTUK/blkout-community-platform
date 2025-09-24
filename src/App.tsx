@@ -10,7 +10,7 @@ import {
   traumaInformedUtils,
   liberationColors
 } from '@/lib/liberation-utils';
-import AdminAuth, { checkAdminAuth } from '@/components/admin/AdminAuth';
+// import AdminAuth, { checkAdminAuth } from '@/components/admin/AdminAuth';  // REMOVED - NO AUTH
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import AboutUs from '@/components/pages/AboutUs';
 import NewsPage from '@/components/pages/NewsPage';
@@ -26,8 +26,9 @@ import FirstTimeUserFlow from '@/components/onboarding/FirstTimeUserFlow';
 import BLKOUTHUBInvitation from '@/components/community/BLKOUTHUBInvitation';
 import BLKOUTHUBBenefitsDisplay from '@/components/community/BLKOUTHUBBenefitsDisplay';
 import VideoHero from '@/components/ui/VideoHero';
-import { DemocraticGovernanceInterface } from '@/components/liberation/democratic-governance-interface';
+// import { DemocraticGovernanceInterface } from '@/components/liberation/democratic-governance-interface';
 import { useBLKOUTHUBMembership } from '@/services/blkouthub-integration';
+// import { AuthProvider } from '@/hooks/useAuth';  // REMOVED - NO AUTH
 
 // API Configuration - Working backend
 const LIBERATION_API = import.meta.env.VITE_API_URL || 'https://blkout.vercel.app/api';
@@ -67,11 +68,28 @@ const LIBERATION_QUOTES = [
 class ErrorBoundary extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
+  static getDerivedStateFromError(error: Error) {
+    console.error('BLKOUT Platform Error:', error);
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('BLKOUT Platform Error Details:', error);
+    console.error('Error message:', error.message);
+    console.error('Error stack:', error.stack);
+    console.error('Component stack:', errorInfo.componentStack);
+
+    // Store error details in window for debugging
+    if (typeof window !== 'undefined') {
+      (window as any).BLKOUT_ERROR = {
+        message: error.message,
+        stack: error.stack,
+        componentStack: errorInfo.componentStack
+      };
+    }
   }
 
   render() {
@@ -80,7 +98,8 @@ class ErrorBoundary extends React.Component<any, any> {
         <div className="min-h-screen bg-liberation-black-power text-liberation-gold-divine flex items-center justify-center p-4">
           <div className="text-center max-w-md">
             <h1 className="text-2xl font-bold mb-4">🏴‍☠️ BLKOUT Liberation Platform</h1>
-            <p className="text-liberation-silver mb-4">Platform temporarily unavailable. Liberation continues.</p>
+            <p className="text-liberation-silver mb-4">Loading error occurred. Check console for details.</p>
+            <p className="text-xs text-gray-500 mb-4">Error: {this.state.error?.message || this.state.error?.toString() || 'Unknown error'}</p>
             <button
               className="px-6 py-3 bg-liberation-red-liberation text-white rounded-lg hover:bg-opacity-80 transition-colors"
               onClick={() => window.location.reload()}
@@ -95,11 +114,23 @@ class ErrorBoundary extends React.Component<any, any> {
   }
 }
 
+// Function to get initial tab from URL path
+function getInitialTabFromURL(): NavigationTab {
+  const path = window.location.pathname.slice(1); // Remove leading slash
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'community', 'about', 'news', 'stories', 'events', 'intro', 'admin'];
+
+  if (validTabs.includes(path as NavigationTab)) {
+    return path as NavigationTab;
+  }
+
+  return 'liberation'; // Default fallback
+}
+
 export default function App() {
   // State for navigation and platform functionality
-  const [activeTab, setActiveTab] = useState<NavigationTab>('liberation');
+  const [activeTab, setActiveTab] = useState<NavigationTab>(getInitialTabFromURL());
   const [currentQuote, setCurrentQuote] = useState(0);
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(true); // Admin always accessible
   const [showIVOR, setShowIVOR] = useState(false);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
   const [showBLKOUTHUBInvitation, setShowBLKOUTHUBInvitation] = useState(false);
@@ -110,6 +141,12 @@ export default function App() {
     liberationActions: 156
   });
 
+  // Custom function to change tab and update URL
+  const changeActiveTab = (tab: NavigationTab) => {
+    setActiveTab(tab);
+    window.history.pushState({}, '', `/${tab === 'liberation' ? '' : tab}`);
+  };
+
   // Quote rotation effect
   useEffect(() => {
     const quoteInterval = setInterval(() => {
@@ -118,13 +155,19 @@ export default function App() {
     return () => clearInterval(quoteInterval);
   }, []);
 
-  // Check admin authentication and first visit on mount
+  // Handle browser back/forward navigation
   useEffect(() => {
-    const checkAuth = async () => {
-      const isAuthenticated = await checkAdminAuth();
-      setIsAdminAuthenticated(isAuthenticated);
+    const handlePopState = () => {
+      setActiveTab(getInitialTabFromURL());
     };
-    checkAuth();
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // NO AUTHENTICATION - Admin is always accessible
+  useEffect(() => {
+    // Admin is open - no auth needed
 
     // Check if this is user's first visit
     const hasVisited = localStorage.getItem('blkout-has-visited');
@@ -156,9 +199,18 @@ export default function App() {
       case 'events':
         return renderLiberationDashboard();
       case 'intro':
-        return <IVORIntroduction />;
+        return <IVORIntroduction
+          onStartChat={() => setShowIVOR(true)}
+          onJoinCommunity={() => changeActiveTab('community')}
+          onLearnMore={() => changeActiveTab('about')}
+        />;
       case 'governance':
-        return <DemocraticGovernanceInterface />;
+        return (
+          <div className="min-h-screen bg-white text-black p-8">
+            <h1 className="text-3xl font-bold mb-4">Democratic Governance</h1>
+            <p>Governance interface temporarily under maintenance.</p>
+          </div>
+        );
       case 'community':
         return renderCommunityDashboard();
       case 'admin':
@@ -223,7 +275,7 @@ export default function App() {
         </button>
 
         <button
-          onClick={() => setActiveTab('intro')}
+          onClick={() => changeActiveTab('intro')}
           className="group bg-gradient-to-br from-liberation-green-africa to-liberation-gold-divine text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
         >
           <div className="flex items-center mb-4">
@@ -240,7 +292,7 @@ export default function App() {
         </button>
 
         <button
-          onClick={() => setActiveTab('community')}
+          onClick={() => changeActiveTab('community')}
           className="group bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
         >
           <div className="flex items-center mb-4">
@@ -291,7 +343,7 @@ export default function App() {
         </button>
 
         <button
-          onClick={() => setActiveTab('governance')}
+          onClick={() => changeActiveTab('governance')}
           className="group bg-gradient-to-br from-liberation-black-power to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 border-2 border-liberation-gold-divine text-left"
         >
           <div className="flex items-center mb-4">
@@ -313,316 +365,191 @@ export default function App() {
 
   // Community Dashboard with BLKOUTHUB Integration
   const renderCommunityDashboard = () => {
-    // Mock user email for testing - in production this would come from auth
-    const userEmail = "demo@blkout.org";
-    const { member: blkouthubMember, permissions: governancePermissions, loading: membershipLoading } = useBLKOUTHUBMembership(userEmail);
+    const { member, permissions, loading } = useBLKOUTHUBMembership();
 
     return (
       <div className="space-y-8">
-        {/* Community Header with Video Background */}
-        <VideoHero
-          title="COMMUNITY"
-          description="Join BLKOUTHUB - Your gateway to Black queer liberation organizing"
-          videos={[
-            '/videos/hero/PLATFORM HERO 1.mp4',
-            '/videos/hero/PLATFORM HERO 2.mp4',
-            '/videos/hero/PLATFORM HERO 3.mp4'
-          ]}
-          height="md"
-          textColor="light"
-          overlayOpacity={0.7}
-          className="mb-8"
-        />
+        {/* Platform Page Features */}
+        <PlatformPage />
 
-        {/* BLKOUTHUB Introduction */}
-        <section className="max-w-4xl mx-auto px-6 text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-black text-white mb-6 uppercase" style={{
-            textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
-            WebkitTextStroke: '1px #000'
-          }}>
-            WELCOME TO BLKOUTHUB
-          </h2>
-
-          <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-            BLKOUTHUB is our secure community platform where Black queer organizers connect,
-            collaborate, and build liberation together. A space designed by us, for us -
-            with privacy, safety, and collective power at its core.
-          </p>
-
-          <div className="bg-liberation-sovereignty-gold/10 border border-liberation-sovereignty-gold/20 rounded-2xl p-8 mb-8">
-            <h3 className="text-2xl font-bold text-liberation-sovereignty-gold mb-4">
-              What BLKOUTHUB Offers
-            </h3>
-            <div className="grid md:grid-cols-2 gap-6 text-left">
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <span className="text-liberation-sovereignty-gold text-xl">🔒</span>
-                  <div>
-                    <h4 className="font-bold text-white mb-1">Secure Community Spaces</h4>
-                    <p className="text-gray-400 text-sm">Verified members only. Your data, your sovereignty.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-liberation-sovereignty-gold text-xl">🗳️</span>
-                  <div>
-                    <h4 className="font-bold text-white mb-1">Democratic Governance</h4>
-                    <p className="text-gray-400 text-sm">Vote on platform decisions and resource allocation.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-liberation-sovereignty-gold text-xl">💬</span>
-                  <div>
-                    <h4 className="font-bold text-white mb-1">Heartbeat.chat Integration</h4>
-                    <p className="text-gray-400 text-sm">Real-time organizing and community support.</p>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <span className="text-liberation-sovereignty-gold text-xl">✊🏾</span>
-                  <div>
-                    <h4 className="font-bold text-white mb-1">Organizing Tools</h4>
-                    <p className="text-gray-400 text-sm">Coordinate actions, events, and mutual aid.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-liberation-sovereignty-gold text-xl">💜</span>
-                  <div>
-                    <h4 className="font-bold text-white mb-1">Trauma-Informed Support</h4>
-                    <p className="text-gray-400 text-sm">Healing-centered spaces and crisis resources.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="text-liberation-sovereignty-gold text-xl">🌟</span>
-                  <div>
-                    <h4 className="font-bold text-white mb-1">Member Benefits</h4>
-                    <p className="text-gray-400 text-sm">Exclusive content, events, and opportunities.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+        {/* BLKOUTHUB Integration */}
+        {loading ? (
+          <div className="text-center text-liberation-silver">
+            Loading BLKOUTHUB membership status...
           </div>
-        </section>
-
-        {/* BLKOUTHUB Membership Status */}
-        <section className="space-y-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-liberation-gold-divine text-center">
-            Your Membership Status
-          </h2>
-
-          {membershipLoading ? (
-            <div className="text-center p-8">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-liberation-gold-divine mx-auto"></div>
-              <p className="text-liberation-silver mt-4">Checking BLKOUTHUB membership...</p>
-            </div>
-          ) : blkouthubMember && governancePermissions ? (
-            <BLKOUTHUBBenefitsDisplay
-              member={blkouthubMember}
-              permissions={governancePermissions}
-              displayMode="full"
-              onViewProfile={() => window.open(blkouthubMember.profileUrl, '_blank')}
-              className="max-w-4xl mx-auto"
-            />
-          ) : (
-            <BLKOUTHUBBenefitsDisplay
-              member={blkouthubMember!}
-              permissions={governancePermissions!}
-              displayMode="full"
-              showJoinButton={true}
-              onJoinBLKOUTHUB={() => setShowBLKOUTHUBInvite(true)}
-              className="max-w-4xl mx-auto"
-            />
-          )}
-        </section>
-
-        {/* Community Actions Grid */}
-        <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="bg-liberation-purple-spirit rounded-xl p-6 text-white">
-            <Users className="h-8 w-8 mb-4" />
-            <h3 className="text-xl font-bold mb-2">Secure Community</h3>
-            <p className="text-liberation-silver mb-4">Join verified members in protected discussions on Heartbeat.chat platform.</p>
-            <button
-              onClick={() => window.open('https://blkouthub.com', '_blank')}
-              className="bg-white text-liberation-purple-spirit px-4 py-2 rounded font-semibold hover:bg-opacity-90 transition-colors"
-            >
-              Visit BLKOUTHUB
-            </button>
-          </div>
-
-          <div className="bg-liberation-red-liberation rounded-xl p-6 text-white">
-            <Vote className="h-8 w-8 mb-4" />
-            <h3 className="text-xl font-bold mb-2">Enhanced Governance</h3>
-            <p className="text-liberation-silver mb-4">Unlock voting rights and proposal creation through community membership.</p>
-            <button
-              onClick={() => setActiveTab('governance')}
-              className="bg-white text-liberation-red-liberation px-4 py-2 rounded font-semibold hover:bg-opacity-90 transition-colors"
-            >
-              View Governance
-            </button>
-          </div>
-
-          <div className="bg-liberation-green-africa rounded-xl p-6 text-white">
-            <Heart className="h-8 w-8 mb-4" />
-            <h3 className="text-xl font-bold mb-2">Member Benefits</h3>
-            <p className="text-liberation-silver mb-4">Access exclusive content, events, and democratic participation opportunities.</p>
-            <button
-              onClick={() => {
-                if (blkouthubMember) {
-                  window.open(blkouthubMember.profileUrl, '_blank');
-                } else {
-                  setShowBLKOUTHUBInvite(true);
-                }
-              }}
-              className="bg-white text-liberation-green-africa px-4 py-2 rounded font-semibold hover:bg-opacity-90 transition-colors"
-            >
-              {blkouthubMember ? 'View Profile' : 'Join Now'}
-            </button>
-          </div>
-        </section>
-
-        {/* Community Stats */}
-        <section className="bg-liberation-black-power rounded-xl p-6">
-          <h2 className="text-xl md:text-2xl font-bold text-liberation-gold-divine mb-6 text-center">Community Impact</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-liberation-gold-divine">850+</div>
-              <div className="text-liberation-silver text-sm">Active Members</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-liberation-gold-divine">240+</div>
-              <div className="text-liberation-silver text-sm">Governance Participants</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-liberation-gold-divine">95%</div>
-              <div className="text-liberation-silver text-sm">Member Satisfaction</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-liberation-gold-divine">24/7</div>
-              <div className="text-liberation-silver text-sm">Community Support</div>
-            </div>
-          </div>
-        </section>
+        ) : member ? (
+          <BLKOUTHUBBenefitsDisplay
+            member={member}
+            permissions={permissions}
+            displayMode="card"
+            onViewProfile={() => window.open('https://www.heartbeat.chat/', '_blank')}
+          />
+        ) : (
+          <button
+            onClick={() => setShowBLKOUTHUBInvitation(true)}
+            className="w-full max-w-md mx-auto bg-gradient-to-r from-liberation-gold-divine to-liberation-red-liberation text-liberation-black-power p-4 rounded-lg hover:opacity-90 transition-opacity"
+          >
+            🏴‍☠️ Join BLKOUTHUB for Enhanced Governance Access
+          </button>
+        )}
       </div>
     );
   };
 
+  // Complete first visit flow
+  const handleFirstVisitComplete = () => {
+    localStorage.setItem('blkout-has-visited', 'true');
+    setIsFirstVisit(false);
+  };
+
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-liberation-black-power text-liberation-silver">
-        {/* Navigation Header */}
-        <nav className="bg-liberation-black-power border-b border-liberation-silver border-opacity-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div className="flex items-center space-x-3">
-                <img
-                  src="/blkout-logo.png"
-                  alt="BLKOUT Logo"
-                  className="h-10 w-10 rounded-full"
-                />
-                <span className="text-xl font-bold text-liberation-gold-divine">BLKOUT</span>
-              </div>
+      <div className="min-h-screen bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white">
+          {/* Install Prompt Banner */}
+          <InstallPrompt />
 
-              {/* Desktop Navigation */}
-              <div className="hidden md:block">
-                <div className="flex items-baseline space-x-4">
-                  {[
-                    { id: 'liberation', label: 'Platform', icon: Heart },
-                    { id: 'intro', label: 'IVOR', icon: Brain },
-                    { id: 'news', label: 'Newsroom', icon: Play },
-                    { id: 'stories', label: 'Events', icon: Vote },
-                    { id: 'community', label: 'Community', icon: Users },
-                    { id: 'governance', label: 'Governance', icon: Vote },
-                    { id: 'about', label: 'About', icon: Info }
-                  ].map(({ id, label, icon: Icon }) => (
-                    <button
-                      key={id}
-                      onClick={() => setActiveTab(id as NavigationTab)}
-                      className={cn(
-                        'px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2 touch-friendly',
-                        activeTab === id
-                          ? 'bg-liberation-gold-divine text-liberation-black-power'
-                          : 'text-liberation-silver hover:bg-liberation-silver hover:bg-opacity-10'
-                      )}
-                    >
-                      <Icon className="h-4 w-4" />
-                      {label}
-                    </button>
-                  ))}
+          {/* First Time User Flow */}
+          {isFirstVisit && (
+            <FirstTimeUserFlow onComplete={handleFirstVisitComplete} />
+          )}
+
+          {/* Main Navigation */}
+          <nav className="sticky top-0 z-40 bg-liberation-black-power border-b-2 border-liberation-gold-divine shadow-2xl">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center justify-between h-16 md:h-20">
+                {/* Logo and Brand */}
+                <div className="flex items-center space-x-4">
+                  <img 
+                    src="/blkout-logo.png" 
+                    alt="BLKOUT" 
+                    className="h-10 md:h-12 w-auto cursor-pointer hover:scale-110 transition-transform"
+                    onClick={() => changeActiveTab('liberation')}
+                  />
+                  <div className="hidden sm:block">
+                    <div className="text-liberation-gold-divine font-black text-lg md:text-xl">
+                      LIBERATION PLATFORM
+                    </div>
+                    <div className="text-liberation-silver text-xs">
+                      Black Queer Liberation Technology
+                    </div>
+                  </div>
+                </div>
+
+                {/* Desktop Navigation */}
+                <div className="hidden lg:flex items-center space-x-2">
+                  <button
+                    onClick={() => changeActiveTab('liberation')}
+                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
+                      activeTab === 'liberation' 
+                        ? 'bg-liberation-red-liberation text-white' 
+                        : 'text-liberation-silver hover:text-liberation-gold-divine'
+                    }`}
+                  >
+                    Home
+                  </button>
+                  <button
+                    onClick={() => changeActiveTab('community')}
+                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
+                      activeTab === 'community' 
+                        ? 'bg-liberation-red-liberation text-white' 
+                        : 'text-liberation-silver hover:text-liberation-gold-divine'
+                    }`}
+                  >
+                    Platform
+                  </button>
+                  <button
+                    onClick={() => changeActiveTab('governance')}
+                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
+                      activeTab === 'governance' 
+                        ? 'bg-liberation-red-liberation text-white' 
+                        : 'text-liberation-silver hover:text-liberation-gold-divine'
+                    }`}
+                  >
+                    Governance
+                  </button>
+                  <button
+                    onClick={() => changeActiveTab('stories')}
+                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
+                      activeTab === 'stories' 
+                        ? 'bg-liberation-red-liberation text-white' 
+                        : 'text-liberation-silver hover:text-liberation-gold-divine'
+                    }`}
+                  >
+                    Events
+                  </button>
+                  <button
+                    onClick={() => changeActiveTab('news')}
+                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
+                      activeTab === 'news' 
+                        ? 'bg-liberation-red-liberation text-white' 
+                        : 'text-liberation-silver hover:text-liberation-gold-divine'
+                    }`}
+                  >
+                    News
+                  </button>
+                  <button
+                    onClick={() => changeActiveTab('intro')}
+                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
+                      activeTab === 'intro' 
+                        ? 'bg-liberation-red-liberation text-white' 
+                        : 'text-liberation-silver hover:text-liberation-gold-divine'
+                    }`}
+                  >
+                    IVOR
+                  </button>
+                  <button
+                    onClick={() => changeActiveTab('about')}
+                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
+                      activeTab === 'about' 
+                        ? 'bg-liberation-red-liberation text-white' 
+                        : 'text-liberation-silver hover:text-liberation-gold-divine'
+                    }`}
+                  >
+                    About
+                  </button>
+                </div>
+
+                {/* IVOR and Mobile Menu Toggle */}
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => setShowIVOR(true)}
+                    className="p-2 bg-liberation-gold-divine text-liberation-black-power rounded-lg hover:bg-opacity-90 transition-all duration-300"
+                  >
+                    <Brain className="h-5 w-5 md:h-6 md:w-6" />
+                  </button>
+                  <MobileNav
+                    activeTab={activeTab}
+                    setActiveTab={changeActiveTab}
+                    isAdminAuthenticated={isAdminAuthenticated}
+                  />
                 </div>
               </div>
-
-              {/* Desktop IVOR and Admin */}
-              <div className="hidden md:flex items-center space-x-4">
-                <button
-                  onClick={() => setShowIVOR(true)}
-                  className="bg-liberation-green-africa text-white px-4 py-2 rounded-lg hover:bg-opacity-80 transition-colors touch-friendly"
-                >
-                  Ask IVOR
-                </button>
-                {isAdminAuthenticated && (
-                  <button
-                    onClick={() => setActiveTab('admin')}
-                    className={cn(
-                      'px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-2 touch-friendly',
-                      activeTab === 'admin'
-                        ? 'bg-liberation-gold-divine text-liberation-black-power'
-                        : 'text-liberation-gold-divine hover:bg-liberation-gold-divine hover:bg-opacity-10'
-                    )}
-                  >
-                    <Shield className="h-4 w-4" />
-                    Admin
-                  </button>
-                )}
-              </div>
-
-              {/* Mobile Navigation */}
-              <MobileNav
-                activeTab={activeTab}
-                onTabChange={(tab) => setActiveTab(tab as NavigationTab)}
-                onIVOROpen={() => setShowIVOR(true)}
-                isAdminAuthenticated={isAdminAuthenticated}
-              />
             </div>
-          </div>
-        </nav>
+          </nav>
 
-        {/* Main Content */}
-        <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          <div className="px-4 py-6 sm:px-0">
+          {/* Main Content Area */}
+          <main className="container mx-auto px-4 py-8">
             {renderContent()}
-          </div>
-        </main>
+          </main>
 
-        {/* IVOR Assistant Modal */}
-        {showIVOR && (
-          <IVORAssistant onClose={() => setShowIVOR(false)} />
-        )}
+          {/* Footer */}
+          <Footer />
 
-        {/* First Time User Flow */}
-        {isFirstVisit && (
-          <FirstTimeUserFlow
-            onComplete={() => setIsFirstVisit(false)}
-            onSkip={() => setIsFirstVisit(false)}
-            onOpenIVOR={() => setShowIVOR(true)}
-          />
-        )}
+          {/* IVOR Assistant Overlay */}
+          {showIVOR && (
+            <IVORAssistant onClose={() => setShowIVOR(false)} />
+          )}
 
-        {/* Admin Authentication Modal */}
-        {!isAdminAuthenticated && (
-          <AdminAuth
-            onAuthenticated={setIsAdminAuthenticated}
-            onCancel={() => {}}
-            requiredAction="admin_access"
-          />
-        )}
-
-        {/* PWA Install Prompt */}
-        <InstallPrompt />
-
-        {/* Footer Navigation */}
-        {activeTab !== 'liberation' && (
-          <Footer onNavigate={setActiveTab} currentTab={activeTab} />
-        )}
+          {/* BLKOUTHUB Invitation Modal */}
+          {showBLKOUTHUBInvitation && (
+            <BLKOUTHUBInvitation
+              onClose={() => setShowBLKOUTHUBInvitation(false)}
+              onJoinSuccess={() => {
+                setShowBLKOUTHUBInvitation(false);
+                window.open('https://www.heartbeat.chat/', '_blank');
+              }}
+            />
+          )}
       </div>
     </ErrorBoundary>
   );

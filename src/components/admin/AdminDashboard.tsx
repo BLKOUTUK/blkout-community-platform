@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Shield, Users, FileText, Download, Plus, Eye, CheckCircle, XCircle, BarChart3, Settings, Chrome, Key, UserCheck, Calendar, MapPin, Clock, Upload, Mail, Lock, EyeOff } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+// import { useAuth } from '@/hooks/useAuth';  // REMOVED - NO AUTH
 import { communityAPI } from '@/services/community-api';
 import { BulkStorySubmission } from './BulkStorySubmission';
 import { IVORFeedbackCollection } from './IVORFeedbackCollection';
@@ -33,7 +33,9 @@ interface ModerationItem {
 }
 
 export const AdminDashboard: React.FC = () => {
-  const { user, isAdmin, signIn, signOut, error } = useAuth();
+  // NO AUTH - Admin is always accessible
+  const user = { email: 'admin@blkout.uk', role: 'admin' };
+  const isAdmin = true;
   const [activeTab, setActiveTab] = useState('overview');
   const [stats, setStats] = useState<AdminStats>({
     pendingStories: 0,
@@ -57,13 +59,9 @@ export const AdminDashboard: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSigningIn(true);
-    try {
-      await signIn(email, password);
-    } catch (error) {
-      console.error('Login failed:', error);
-    } finally {
-      setIsSigningIn(false);
-    }
+    // NO AUTH - Admin access is open
+    console.log('No authentication required - admin access is open');
+    setIsSigningIn(false);
   };
 
   // Admin Authentication Guard
@@ -246,10 +244,10 @@ export const AdminDashboard: React.FC = () => {
                 <span className="text-sm font-medium">{user.name}</span>
               </div>
               <button
-                onClick={signOut}
-                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm font-medium"
+                onClick={() => console.log('No auth - logout not needed')}
+                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors text-sm font-medium"
               >
-                Sign Out
+                Admin Mode
               </button>
             </div>
           </div>
@@ -419,6 +417,7 @@ export const AdminDashboard: React.FC = () => {
                     <p className="text-sm text-gray-300">Download & configure</p>
                   </div>
                 </button>
+
               </div>
             </div>
           </div>
@@ -796,6 +795,7 @@ const SingleStorySubmission: React.FC<{ onSubmit: () => void }> = ({ onSubmit })
   );
 };
 
+
 // Chrome Extension Manager Component
 const ChromeExtensionManager: React.FC = () => {
   return (
@@ -813,15 +813,14 @@ const ChromeExtensionManager: React.FC = () => {
         </div>
 
         <div className="flex gap-4">
-          <button className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors">
+          <a
+            href="/blkout-extension.zip"
+            download="blkout-extension.zip"
+            className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+          >
             <Download className="w-5 h-5" />
             Download Extension (.zip)
-          </button>
-
-          <button className="flex items-center gap-2 px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors">
-            <FileText className="w-5 h-5" />
-            Installation Guide
-          </button>
+          </a>
         </div>
       </div>
 
@@ -833,8 +832,8 @@ const ChromeExtensionManager: React.FC = () => {
           <div className="flex gap-4">
             <div className="flex-shrink-0 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold">1</div>
             <div>
-              <h4 className="font-semibold text-white">Download Extension</h4>
-              <p className="text-gray-300">Click the download button above to get the extension package</p>
+              <h4 className="font-semibold text-white">Download & Extract Extension</h4>
+              <p className="text-gray-300">Click the download button above to get the extension package, then extract the zip file</p>
             </div>
           </div>
 
@@ -857,31 +856,9 @@ const ChromeExtensionManager: React.FC = () => {
           <div className="flex gap-4">
             <div className="flex-shrink-0 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold">4</div>
             <div>
-              <h4 className="font-semibold text-white">Configure API Key</h4>
-              <p className="text-gray-300">Right-click the extension icon and enter your curator API key in settings</p>
+              <h4 className="font-semibold text-white">Start Using</h4>
+              <p className="text-gray-300">Extension will use your existing admin credentials automatically</p>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* API Key Management */}
-      <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
-        <h3 className="text-xl font-semibold text-white mb-4">API Key Management</h3>
-
-        <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-black/20 rounded-lg">
-            <div>
-              <h4 className="font-semibold text-white">Current API Key</h4>
-              <p className="text-gray-300 font-mono text-sm">blk_curator_••••••••••••••••••••••••••</p>
-            </div>
-            <button className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-medium rounded-lg transition-colors">
-              Regenerate
-            </button>
-          </div>
-
-          <div className="p-4 bg-yellow-500/20 border border-yellow-500/30 rounded-lg">
-            <h4 className="font-semibold text-yellow-400 mb-2">Security Notice</h4>
-            <p className="text-yellow-200 text-sm">Keep your API key secure. It provides access to submit stories on behalf of the community. If compromised, regenerate immediately.</p>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 // BLKOUT Liberation Platform - Authentication Hook
 // Provides admin authentication and role-based access control
 
-import { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 
 interface User {
   id: string;
@@ -21,9 +21,10 @@ interface AuthContextType {
   error: string | null;
 }
 
+// Create the context before using it
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = (): AuthContextType => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -173,7 +174,7 @@ export const useAuth = (): AuthContextType => {
   const isAdmin = user?.role === 'admin';
   const isCurator = user?.role === 'curator' || isAdmin;
 
-  return {
+  const value: AuthContextType = {
     user,
     isAdmin,
     isCurator,
@@ -182,7 +183,21 @@ export const useAuth = (): AuthContextType => {
     loading,
     error
   };
-};;
+
+  return React.createElement(
+    AuthContext.Provider,
+    { value },
+    children
+  );
+};
+
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};;;
 
 // Helper function to validate authentication token
 const validateToken = async (token: string): Promise<User> => {
