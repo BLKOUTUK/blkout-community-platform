@@ -47,51 +47,42 @@ const ModerationQueue: React.FC = () => {
     }
   }, []);
 
-  // Mock data for demonstration - replace with API calls
-  const loadSubmissions = () => {
+  // Load submissions from API
+  const loadSubmissions = async () => {
     setLoading(true);
-    // Mock pending submissions
-    const mockSubmissions: PendingSubmission[] = [
-      {
-        id: 'sub-001',
-        type: 'article',
-        title: 'Community Organizing in South London: Building Black Power',
-        content: 'This article explores grassroots organizing strategies that have been effective in building community power in South London...',
-        author: 'Amara Johnson',
-        submittedAt: '2024-01-15T14:30:00Z',
-        category: 'community',
-        status: 'pending',
-        priority: 'high',
-        flaggedReasons: ['requires_cultural_authenticity_review']
-      },
-      {
-        id: 'sub-002',
-        type: 'event',
-        title: 'Liberation Tech Workshop: Digital Security for Activists',
-        content: 'Join us for a hands-on workshop covering digital security, privacy tools, and safe communication methods for community organizers...',
-        author: 'Tech Collective',
-        submittedAt: '2024-01-15T12:15:00Z',
-        category: 'education',
-        status: 'pending',
-        priority: 'medium'
-      },
-      {
-        id: 'sub-003',
-        type: 'article',
-        title: 'Decolonizing Mental Health: Community Healing Practices',
-        content: 'An examination of traditional healing practices and community-based mental health support systems...',
-        author: 'Dr. Keisha Williams',
-        submittedAt: '2024-01-14T16:45:00Z',
-        category: 'health',
-        status: 'pending',
-        priority: 'high'
+    try {
+      const response = await fetch('/api/moderation-queue');
+      if (!response.ok) {
+        throw new Error(`Failed to fetch submissions: ${response.status}`);
       }
-    ];
 
-    setTimeout(() => {
-      setSubmissions(mockSubmissions);
+      const result = await response.json();
+      if (result.success && result.data) {
+        // Convert API data to component format
+        const apiSubmissions: PendingSubmission[] = result.data.map((item: any) => ({
+          id: item.id,
+          type: item.content_table === 'event' ? 'event' : 'article',
+          title: item.metadata?.original?.title || item.metadata?.title || 'Untitled',
+          content: item.metadata?.original?.summary || item.metadata?.summary || item.reason || 'No content available',
+          author: item.moderator_id || 'Anonymous',
+          submittedAt: item.timestamp,
+          category: item.content_table,
+          status: item.action === 'submitted' ? 'pending' : item.action as 'pending' | 'approved' | 'rejected',
+          priority: 'medium',
+          moderationNotes: item.reason
+        }));
+
+        setSubmissions(apiSubmissions);
+      } else {
+        console.error('API returned invalid data:', result);
+        setSubmissions([]);
+      }
+    } catch (error) {
+      console.error('Failed to load submissions:', error);
+      setSubmissions([]);
+    } finally {
       setLoading(false);
-    }, 1000);
+    }
   };
 
   const handleApprove = async (submissionId: string, notes: string = '') => {
