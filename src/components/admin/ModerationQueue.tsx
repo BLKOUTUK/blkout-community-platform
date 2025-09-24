@@ -47,7 +47,7 @@ const ModerationQueue: React.FC = () => {
     }
   }, []);
 
-  // Load submissions from API
+  // Load submissions from API endpoint
   const loadSubmissions = async () => {
     setLoading(true);
     try {
