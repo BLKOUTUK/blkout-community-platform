@@ -3,7 +3,7 @@
 // STRICT SEPARATION: Application shell only - NO business logic
 
 import React, { useState, useEffect } from 'react';
-import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain, ArrowRight, ExternalLink, Globe, Mail } from 'lucide-react';
+import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain, ArrowRight, ExternalLink, Globe, Mail, Trophy, Camera } from 'lucide-react';
 import {
   cn,
   culturalUtils,
@@ -29,6 +29,9 @@ import VideoHero from '@/components/ui/VideoHero';
 // import { DemocraticGovernanceInterface } from '@/components/liberation/democratic-governance-interface';
 import { useBLKOUTHUBMembership } from '@/services/blkouthub-integration';
 // import { AuthProvider } from '@/hooks/useAuth';  // REMOVED - NO AUTH
+
+// Photo Competition Integration
+import { PhotoCompetitionModal } from '@/components/competition/PhotoCompetitionModal';
 
 // API Configuration - Working backend
 const LIBERATION_API = import.meta.env.VITE_API_URL || 'https://blkout.vercel.app/api';
@@ -134,6 +137,8 @@ export default function App() {
   const [showIVOR, setShowIVOR] = useState(false);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
   const [showBLKOUTHUBInvitation, setShowBLKOUTHUBInvitation] = useState(false);
+  const [showCompetitionModal, setShowCompetitionModal] = useState(false);
+  const [competitionInitialView, setCompetitionInitialView] = useState<'landing' | 'submit' | 'gallery' | 'voting' | 'results'>('landing');
   const [platformStats, setPlatformStats] = useState({
     membersServed: 847,
     storiesShared: 234,
@@ -223,20 +228,29 @@ export default function App() {
   // Main liberation dashboard
   const renderLiberationDashboard = () => (
     <div className="space-y-8">
-      {/* Hero Section with Three Background Videos */}
+      {/* Hero Section with Photo Competition Video */}
       <VideoHero
-        title="WELCOME"
-        description="Your home for Black queer liberation technology"
+        title="CAPTURE LIBERATION"
+        description="Join our October Photo Competition celebrating Black queer joy and creativity"
         videos={[
+          '/videos/hero/Photo Comp Oct25 (Video).mp4',
           '/videos/hero/PLATFORM HERO 1.mp4',
-          '/videos/hero/PLATFORM HERO 2.mp4',
-          '/videos/hero/PLATFORM HERO 3.mp4'
+          '/videos/hero/PLATFORM HERO 2.mp4'
         ]}
         height="lg"
         textColor="light"
         overlayOpacity={0.7}
         className="mb-8"
       >
+        <button
+          onClick={() => {
+            setCompetitionInitialView('landing');
+            setShowCompetitionModal(true);
+          }}
+          className="mt-6 px-8 py-4 bg-liberation-pride-purple text-white rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+        >
+          Enter Photo Competition
+        </button>
       </VideoHero>
 
       {/* Rotating Liberation Quotes */}
@@ -271,6 +285,26 @@ export default function App() {
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
             Watch Story
             <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </button>
+
+        <button
+          onClick={() => {
+            setCompetitionInitialView('landing');
+            setShowCompetitionModal(true);
+          }}
+          className="group bg-gradient-to-br from-liberation-pride-purple to-liberation-pride-pink text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left border-2 border-liberation-gold-divine"
+        >
+          <div className="flex items-center mb-4">
+            <Trophy className="h-8 w-8 text-liberation-gold-divine" />
+          </div>
+          <h3 className="text-lg font-bold mb-2">Photo Competition</h3>
+          <p className="text-liberation-silver text-sm mb-4">
+            October 2025: Capture Liberation through your lens. Win prizes & recognition!
+          </p>
+          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
+            Enter Now
+            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
 
@@ -550,6 +584,14 @@ export default function App() {
               }}
             />
           )}
+
+          {/* Photo Competition Modal */}
+          <PhotoCompetitionModal
+            isOpen={showCompetitionModal}
+            onClose={() => setShowCompetitionModal(false)}
+            initialView={competitionInitialView}
+            competitionId="oct-2025"
+          />
       </div>
     </ErrorBoundary>
   );
