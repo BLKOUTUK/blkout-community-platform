@@ -16,7 +16,7 @@ import AboutUs from '@/components/pages/AboutUs';
 import NewsPage from '@/components/pages/NewsPage';
 import StoryArchive from '@/components/pages/StoryArchive';
 import EventsCalendar from '@/components/pages/EventsCalendar';
-import PlatformPage from '@/components/pages/PlatformPage';
+import DiscoverPage from '@/components/pages/DiscoverPage';
 import Footer from '@/components/ui/Footer';
 import IVORIntroduction from '@/components/pages/IVORIntroduction';
 import IVORAssistant from './components/ivor/IVORAssistant';
@@ -215,7 +215,7 @@ export default function App() {
       case 'community':
         return renderCommunityDashboard();
       case 'platform':
-        return <PlatformPage />;
+        return <DiscoverPage />;
       case 'admin':
         return <AdminDashboard />;
       default:
@@ -402,7 +402,7 @@ export default function App() {
     return (
       <div className="space-y-8">
         {/* Platform Page Features */}
-        <PlatformPage />
+        <DiscoverPage />
 
         {/* BLKOUTHUB Integration */}
         {loading ? (
@@ -497,7 +497,7 @@ export default function App() {
                         : 'text-liberation-silver hover:text-liberation-gold-divine'
                     }`}
                   >
-                    Platform
+                    Discover
                   </button>
                   <button
                     onClick={() => changeActiveTab('governance')}
