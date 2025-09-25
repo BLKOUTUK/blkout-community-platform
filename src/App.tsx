@@ -3,7 +3,7 @@
 // STRICT SEPARATION: Application shell only - NO business logic
 
 import React, { useState, useEffect } from 'react';
-import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain, ArrowRight, ExternalLink, Globe, Mail, Trophy, Camera } from 'lucide-react';
+import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain, ArrowRight, ExternalLink, Globe, Mail, Trophy, Camera, Calendar } from 'lucide-react';
 import {
   cn,
   culturalUtils,
@@ -24,11 +24,7 @@ import GovernancePage from '@/components/pages/GovernancePage';
 import MobileNav from '@/components/ui/MobileNav';
 import InstallPrompt from '@/components/ui/InstallPrompt';
 import FirstTimeUserFlow from '@/components/onboarding/FirstTimeUserFlow';
-import BLKOUTHUBInvitation from '@/components/community/BLKOUTHUBInvitation';
-import BLKOUTHUBBenefitsDisplay from '@/components/community/BLKOUTHUBBenefitsDisplay';
 import VideoHero from '@/components/ui/VideoHero';
-// import { DemocraticGovernanceInterface } from '@/components/liberation/democratic-governance-interface';
-import { useBLKOUTHUBMembership } from '@/services/blkouthub-integration';
 // import { AuthProvider } from '@/hooks/useAuth';  // REMOVED - NO AUTH
 
 // Photo Competition Integration
@@ -137,7 +133,6 @@ export default function App() {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(true); // Admin always accessible
   const [showIVOR, setShowIVOR] = useState(false);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
-  const [showBLKOUTHUBInvitation, setShowBLKOUTHUBInvitation] = useState(false);
   const [showCompetitionModal, setShowCompetitionModal] = useState(false);
   const [competitionInitialView, setCompetitionInitialView] = useState<'landing' | 'submit' | 'gallery' | 'voting' | 'results'>('landing');
   const [platformStats, setPlatformStats] = useState({
@@ -395,35 +390,78 @@ export default function App() {
     </div>
   );
 
-  // Community Dashboard with BLKOUTHUB Integration
+  // Community Dashboard - Simple community hub
   const renderCommunityDashboard = () => {
-    const { member, permissions, loading } = useBLKOUTHUBMembership();
-
     return (
       <div className="space-y-8">
-        {/* Platform Page Features */}
-        <DiscoverPage />
+        {/* Community Welcome */}
+        <section className="text-center py-12">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+            Welcome to Our Community
+          </h1>
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+            Connect with others, share your story, and be part of something bigger.
+          </p>
+        </section>
 
-        {/* BLKOUTHUB Integration */}
-        {loading ? (
-          <div className="text-center text-liberation-silver">
-            Loading BLKOUTHUB membership status...
+        {/* Community Features Grid */}
+        <section className="grid md:grid-cols-3 gap-6 px-6">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+            <Users className="w-12 h-12 text-purple-600 mb-4" />
+            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100">Join Discussions</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Connect with community members in our forums and chat spaces.
+            </p>
+            <button
+              onClick={() => window.open('https://blkouthub.com', '_blank')}
+              className="text-purple-600 hover:text-purple-700 font-semibold"
+            >
+              Visit BLKOUTHUB →
+            </button>
           </div>
-        ) : member ? (
-          <BLKOUTHUBBenefitsDisplay
-            member={member}
-            permissions={permissions}
-            displayMode="card"
-            onViewProfile={() => window.open('https://www.heartbeat.chat/', '_blank')}
-          />
-        ) : (
+
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+            <Calendar className="w-12 h-12 text-blue-600 mb-4" />
+            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100">Attend Events</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Find gatherings, workshops, and celebrations near you.
+            </p>
+            <button
+              onClick={() => changeActiveTab('events')}
+              className="text-blue-600 hover:text-blue-700 font-semibold"
+            >
+              Browse Events →
+            </button>
+          </div>
+
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg">
+            <Heart className="w-12 h-12 text-red-600 mb-4" />
+            <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100">Get Support</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Connect with IVOR or find community resources and support.
+            </p>
+            <button
+              onClick={() => setShowIVOR(true)}
+              className="text-red-600 hover:text-red-700 font-semibold"
+            >
+              Chat with IVOR →
+            </button>
+          </div>
+        </section>
+
+        {/* Newsletter Signup */}
+        <section className="bg-gradient-to-r from-purple-600 to-pink-600 p-8 rounded-2xl mx-6 text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">Stay Connected</h2>
+          <p className="text-white/90 mb-6">
+            Get community updates and never miss what matters to you.
+          </p>
           <button
-            onClick={() => setShowBLKOUTHUBInvitation(true)}
-            className="w-full max-w-md mx-auto bg-gradient-to-r from-liberation-gold-divine to-liberation-red-liberation text-liberation-black-power p-4 rounded-lg hover:opacity-90 transition-opacity"
+            onClick={() => window.open('https://sendfox.com/blkoutuk', '_blank')}
+            className="px-8 py-3 bg-white text-purple-600 rounded-lg font-bold hover:bg-gray-100 transition-colors"
           >
-            🏴‍☠️ Join BLKOUTHUB for Enhanced Governance Access
+            Subscribe to Newsletter
           </button>
-        )}
+        </section>
       </div>
     );
   };
@@ -590,17 +628,6 @@ export default function App() {
           {/* IVOR Assistant Overlay */}
           {showIVOR && (
             <IVORAssistant onClose={() => setShowIVOR(false)} />
-          )}
-
-          {/* BLKOUTHUB Invitation Modal */}
-          {showBLKOUTHUBInvitation && (
-            <BLKOUTHUBInvitation
-              onClose={() => setShowBLKOUTHUBInvitation(false)}
-              onJoinSuccess={() => {
-                setShowBLKOUTHUBInvitation(false);
-                window.open('https://www.heartbeat.chat/', '_blank');
-              }}
-            />
           )}
 
           {/* Photo Competition Modal */}
