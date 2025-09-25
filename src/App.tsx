@@ -20,6 +20,7 @@ import PlatformPage from '@/components/pages/PlatformPage';
 import Footer from '@/components/ui/Footer';
 import IVORIntroduction from '@/components/pages/IVORIntroduction';
 import IVORAssistant from './components/ivor/IVORAssistant';
+import GovernancePage from '@/components/pages/GovernancePage';
 import MobileNav from '@/components/ui/MobileNav';
 import InstallPrompt from '@/components/ui/InstallPrompt';
 import FirstTimeUserFlow from '@/components/onboarding/FirstTimeUserFlow';
@@ -48,7 +49,7 @@ import { eventsAPI } from './services/events-api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'community' | 'about' | 'news' | 'stories' | 'events' | 'intro' | 'admin';
+type NavigationTab = 'liberation' | 'governance' | 'community' | 'about' | 'news' | 'stories' | 'events' | 'intro' | 'admin' | 'platform';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -210,14 +211,11 @@ export default function App() {
           onLearnMore={() => changeActiveTab('about')}
         />;
       case 'governance':
-        return (
-          <div className="min-h-screen bg-white text-black p-8">
-            <h1 className="text-3xl font-bold mb-4">Democratic Governance</h1>
-            <p>Governance interface temporarily under maintenance.</p>
-          </div>
-        );
+        return <GovernancePage />;
       case 'community':
         return renderCommunityDashboard();
+      case 'platform':
+        return <PlatformPage />;
       case 'admin':
         return <AdminDashboard />;
       default:
@@ -230,8 +228,8 @@ export default function App() {
     <div className="space-y-8">
       {/* Hero Section with Photo Competition Video */}
       <VideoHero
-        title="CAPTURE LIBERATION"
-        description="Join our October Photo Competition celebrating Black queer joy and creativity"
+        title="Share Your Story"
+        description="Join our community celebrating Black queer joy through photography"
         videos={[
           '/videos/hero/Photo Comp Oct25 (Video).mp4',
           '/videos/hero/PLATFORM HERO 1.mp4',
@@ -249,7 +247,7 @@ export default function App() {
           }}
           className="mt-6 px-8 py-4 bg-liberation-pride-purple text-white rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
         >
-          Enter Photo Competition
+          Join the Competition
         </button>
       </VideoHero>
 
@@ -278,12 +276,12 @@ export default function App() {
           <div className="flex items-center mb-4">
             <Play className="h-8 w-8 text-liberation-gold-divine" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Liberation Story</h3>
+          <h3 className="text-lg font-bold mb-2">Our Journey Together</h3>
           <p className="text-liberation-silver text-sm mb-4">
-            Experience our immersive scrollytelling journey through Black queer liberation.
+            Experience stories from our community that celebrate who we are and where we're going.
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Watch Story
+            Explore Stories
             <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
@@ -298,12 +296,12 @@ export default function App() {
           <div className="flex items-center mb-4">
             <Trophy className="h-8 w-8 text-liberation-gold-divine" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Photo Competition</h3>
+          <h3 className="text-lg font-bold mb-2">Photo of the Year 2025</h3>
           <p className="text-liberation-silver text-sm mb-4">
-            October 2025: Capture Liberation through your lens. Win prizes & recognition!
+            Share your vision. Connect with others. Celebrate our stories together.
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Enter Now
+            Share Your Photos
             <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
@@ -317,7 +315,7 @@ export default function App() {
           </div>
           <h3 className="text-lg font-bold mb-2">Meet IVOR</h3>
           <p className="text-liberation-black-power opacity-80 text-sm mb-4">
-            Chat with our trauma-informed AI assistant built for our community.
+            Connect with a companion who understands. IVOR listens and supports our community.
           </p>
           <div className="flex items-center text-liberation-black-power font-semibold text-sm">
             Start Chat
@@ -349,12 +347,12 @@ export default function App() {
           <div className="flex items-center mb-4">
             <Globe className="h-8 w-8 text-liberation-black-power" />
           </div>
-          <h3 className="text-lg font-bold mb-2">BLKOUTHUB</h3>
+          <h3 className="text-lg font-bold mb-2">Join Our Community</h3>
           <p className="text-liberation-black-power opacity-80 text-sm mb-4">
-            Join our secure community on Heartbeat.chat with enhanced governance access.
+            Connect with others in our secure community space. Share, support, and grow together.
           </p>
           <div className="flex items-center text-liberation-black-power font-semibold text-sm">
-            Visit Hub
+            Connect Now
             <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
@@ -366,9 +364,9 @@ export default function App() {
           <div className="flex items-center mb-4">
             <Mail className="h-8 w-8 text-liberation-black-power" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Liberation Newsletter</h3>
+          <h3 className="text-lg font-bold mb-2">Stay Connected</h3>
           <p className="text-liberation-black-power opacity-80 text-sm mb-4">
-            Stay connected with our liberation updates and community news.
+            Get updates from our community and never miss what matters to you.
           </p>
           <div className="flex items-center text-liberation-black-power font-semibold text-sm">
             Subscribe
@@ -383,12 +381,12 @@ export default function App() {
           <div className="flex items-center mb-4">
             <Heart className="h-8 w-8 text-liberation-gold-divine" />
           </div>
-          <h3 className="text-lg font-bold mb-2">I Want It All</h3>
+          <h3 className="text-lg font-bold mb-2">Get Involved</h3>
           <p className="text-liberation-silver text-sm mb-4">
-            Start here and explore the entire ecosystem at your own pace.
+            Ready to be part of something bigger? Let's build this together.
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Full Access
+            Start Here
             <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
@@ -484,8 +482,18 @@ export default function App() {
                   <button
                     onClick={() => changeActiveTab('community')}
                     className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
-                      activeTab === 'community' 
-                        ? 'bg-liberation-red-liberation text-white' 
+                      activeTab === 'community'
+                        ? 'bg-liberation-red-liberation text-white'
+                        : 'text-liberation-silver hover:text-liberation-gold-divine'
+                    }`}
+                  >
+                    Community
+                  </button>
+                  <button
+                    onClick={() => changeActiveTab('platform')}
+                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
+                      activeTab === 'platform'
+                        ? 'bg-liberation-red-liberation text-white'
                         : 'text-liberation-silver hover:text-liberation-gold-divine'
                     }`}
                   >
@@ -494,8 +502,8 @@ export default function App() {
                   <button
                     onClick={() => changeActiveTab('governance')}
                     className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
-                      activeTab === 'governance' 
-                        ? 'bg-liberation-red-liberation text-white' 
+                      activeTab === 'governance'
+                        ? 'bg-liberation-red-liberation text-white'
                         : 'text-liberation-silver hover:text-liberation-gold-divine'
                     }`}
                   >
