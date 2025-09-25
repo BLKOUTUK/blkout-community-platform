@@ -121,7 +121,7 @@ class ErrorBoundary extends React.Component<any, any> {
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'governance', 'community', 'about', 'news', 'stories', 'events', 'intro', 'admin'];
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'community', 'about', 'news', 'stories', 'events', 'intro', 'admin', 'platform'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
@@ -201,9 +201,9 @@ export default function App() {
       case 'news':
         return <NewsPage />;
       case 'stories':
-        return <EventsCalendar />;
+        return <StoryArchive />;
       case 'events':
-        return renderLiberationDashboard();
+        return <EventsCalendar />;
       case 'intro':
         return <IVORIntroduction
           onStartChat={() => setShowIVOR(true)}
@@ -459,10 +459,10 @@ export default function App() {
                   />
                   <div className="hidden sm:block">
                     <div className="text-liberation-gold-divine font-black text-lg md:text-xl">
-                      LIBERATION PLATFORM
+                      BLKOUT
                     </div>
                     <div className="text-liberation-silver text-xs">
-                      Black Queer Liberation Technology
+                      Community Platform
                     </div>
                   </div>
                 </div>
@@ -512,8 +512,18 @@ export default function App() {
                   <button
                     onClick={() => changeActiveTab('stories')}
                     className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
-                      activeTab === 'stories' 
-                        ? 'bg-liberation-red-liberation text-white' 
+                      activeTab === 'stories'
+                        ? 'bg-liberation-red-liberation text-white'
+                        : 'text-liberation-silver hover:text-liberation-gold-divine'
+                    }`}
+                  >
+                    Stories
+                  </button>
+                  <button
+                    onClick={() => changeActiveTab('events')}
+                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
+                      activeTab === 'events'
+                        ? 'bg-liberation-red-liberation text-white'
                         : 'text-liberation-silver hover:text-liberation-gold-divine'
                     }`}
                   >

@@ -113,8 +113,8 @@ const NewsPage: React.FC = () => {
       {/* Video Hero Section */}
       <VideoHero
         title="NEWSROOM"
-        subtitle="Stories that matter to our community"
-        description="Phase 1: Community curators aggregate relevant stories from across the internet. Your votes create our shared news agenda and train IVOR to find stories that matter to us."
+        subtitle="Stories from our community"
+        description="Share what matters. Read what inspires. Connect through our stories."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
