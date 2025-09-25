@@ -222,7 +222,7 @@ export default function App() {
       {/* Hero Section with Photo Competition Video */}
       <VideoHero
         title="Share Your Story"
-        description="Join our community celebrating Black queer joy through photography"
+        description="BLKOUT is an organisation for and by Black queer men and the communities of which they are part"
         videos={[
           '/videos/hero/Photo Comp Oct25 (Video).mp4',
           '/videos/hero/PLATFORM HERO 1.mp4',
@@ -423,7 +423,7 @@ export default function App() {
                       BLKOUT
                     </div>
                     <div className="text-liberation-silver text-xs">
-                      Community Platform
+                      For Black queer men & community
                     </div>
                   </div>
                 </div>

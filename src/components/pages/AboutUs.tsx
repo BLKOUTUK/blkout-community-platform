@@ -42,8 +42,8 @@ export default function AboutUs() {
       {/* Hero Section with Video Background */}
       <VideoHero
         title="ABOUT"
-        subtitle="Welcome to our liberation community"
-        description="The world's first technically implemented liberation platform with community benefit society governance, fair creator compensation, and trauma-informed community protection for Black queer communities."
+        subtitle="For and by Black queer men"
+        description="BLKOUT is an organisation for and by Black queer men and the communities of which they are part. We create spaces for connection, support, and celebration of Black queer joy."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
