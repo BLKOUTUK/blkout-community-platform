@@ -1,6 +1,6 @@
 // BLKOUT Governance Page - Community-Centered Decision Making
 import React from 'react';
-import { Vote, Users, Shield, Heart, Info, ArrowRight, HandshakeIcon } from 'lucide-react';
+import { Vote, Users, Shield, Heart, Info, ArrowRight, HandshakeIcon, Building, UserPlus } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const GovernancePage: React.FC = () => {
@@ -74,6 +74,93 @@ const GovernancePage: React.FC = () => {
                 without fear. Your voice is protected here.
               </p>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Community Benefit Society Structure */}
+      <section className="py-16 px-6 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <Building className="w-16 h-16 text-green-600 mx-auto mb-6" />
+            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+              Community Benefit Society
+            </h2>
+            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+              BLKOUT is structured as a Community Benefit Society - a legal form that ensures
+              community ownership, democratic governance, and benefits for our members and society.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            {/* Membership */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
+            >
+              <div className="flex items-center mb-6">
+                <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded-lg mr-4">
+                  <UserPlus className="w-8 h-8 text-purple-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  Become a Member
+                </h3>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-6">
+                As a Community Benefit Society member, you get a real say in how BLKOUT develops.
+                Members vote on key decisions, elect the board, and help shape our future together.
+              </p>
+              <ul className="text-gray-700 dark:text-gray-300 mb-6 space-y-2">
+                <li>• Voting rights on major decisions</li>
+                <li>• Elect board members</li>
+                <li>• Shape platform direction</li>
+                <li>• Priority access to events and resources</li>
+                <li>• Annual member meetings</li>
+              </ul>
+              <button className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors">
+                Apply for Membership
+              </button>
+            </motion.div>
+
+            {/* Partnership */}
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
+            >
+              <div className="flex items-center mb-6">
+                <div className="bg-green-100 dark:bg-green-900 p-3 rounded-lg mr-4">
+                  <HandshakeIcon className="w-8 h-8 text-green-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  Partner with Us
+                </h3>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-6">
+                Organizations, businesses, and institutions can partner with BLKOUT to support
+                Black queer communities while aligning with our community benefit mission.
+              </p>
+              <ul className="text-gray-700 dark:text-gray-300 mb-6 space-y-2">
+                <li>• Support community initiatives</li>
+                <li>• Collaborative projects</li>
+                <li>• Ethical partnership framework</li>
+                <li>• Community-led priorities</li>
+                <li>• Transparent impact reporting</li>
+              </ul>
+              <button className="w-full px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                Explore Partnership
+              </button>
+            </motion.div>
+          </div>
+
+          <div className="text-center bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
+            <Info className="w-6 h-6 text-blue-600 mx-auto mb-3" />
+            <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-2">
+              What makes us different?
+            </h4>
+            <p className="text-gray-700 dark:text-gray-300">
+              Unlike traditional companies, we're owned by our community, not shareholders.
+              Profits are reinvested to benefit Black queer communities, not extracted for private gain.
+            </p>
           </div>
         </div>
       </section>
