@@ -1,6 +1,6 @@
 // BLKOUT Discovery Page - What's New & How to Get Involved
 import React from 'react';
-import { Sparkles, Calendar, MessageCircle, Trophy, Heart, Users, TrendingUp, BookOpen, Camera, Mic, ArrowRight, Star, Gift } from 'lucide-react';
+import { Sparkles, Calendar, MessageCircle, Trophy, Heart, Users, TrendingUp, ArrowRight, Star, Gift } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const DiscoverPage: React.FC = () => {
@@ -71,16 +71,19 @@ const DiscoverPage: React.FC = () => {
                   <Users className="w-6 h-6 text-yellow-600" />
                 </div>
                 <div className="flex-1">
-                  <span className="text-sm text-yellow-600 font-semibold">COMMUNITY UPDATE</span>
+                  <span className="text-sm text-yellow-600 font-semibold">NEW ON BLKOUTUK.COM</span>
                   <h3 className="text-xl font-bold mt-1 mb-2 text-gray-900 dark:text-gray-100">
-                    New Governance Tools
+                    Latest Article Published
                   </h3>
                   <p className="text-gray-700 dark:text-gray-300 mb-4">
-                    Your voice matters more than ever. Check out our new voting system
-                    and submit your ideas for platform improvements.
+                    Check out our newest article exploring Black queer experiences and
+                    community stories on our main website.
                   </p>
-                  <button className="flex items-center space-x-2 text-yellow-600 hover:text-yellow-700 font-semibold">
-                    <span>Join Discussion</span>
+                  <button
+                    onClick={() => window.open('https://blkoutuk.com', '_blank')}
+                    className="flex items-center space-x-2 text-yellow-600 hover:text-yellow-700 font-semibold"
+                  >
+                    <span>Read Article</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -99,62 +102,20 @@ const DiscoverPage: React.FC = () => {
           </h2>
 
           <div className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 p-8 rounded-2xl mb-8">
-            <div className="grid md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-3xl font-bold text-blue-600 mb-2">23</div>
-                <p className="text-gray-700 dark:text-gray-300">Active Discussions</p>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-cyan-600 mb-2">156</div>
-                <p className="text-gray-700 dark:text-gray-300">Members Online</p>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-blue-600 mb-2">8</div>
-                <p className="text-gray-700 dark:text-gray-300">Events This Week</p>
-              </div>
+            <div className="text-center">
+              <p className="text-lg text-blue-600 dark:text-blue-400 font-semibold mb-2">Join the conversation</p>
+              <p className="text-gray-700 dark:text-gray-300">
+                Connect with our community on BLKOUTHUB - share your thoughts, get support, and be part of the movement.
+              </p>
+              <button
+                onClick={() => window.open('https://blkouthub.com', '_blank')}
+                className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Visit BLKOUTHUB →
+              </button>
             </div>
           </div>
 
-          <div className="space-y-4">
-            <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <Mic className="w-5 h-5 text-purple-500" />
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-gray-100">Weekly Community Call</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Every Thursday 7pm GMT</p>
-                </div>
-              </div>
-              <span className="bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-3 py-1 rounded-full text-sm">
-                Happening Now
-              </span>
-            </div>
-
-            <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <BookOpen className="w-5 h-5 text-blue-500" />
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-gray-100">Book Club: "Pleasure Activism"</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Discussion thread open</p>
-                </div>
-              </div>
-              <span className="text-blue-600 hover:text-blue-700 font-semibold text-sm">
-                Join →
-              </span>
-            </div>
-
-            <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <Camera className="w-5 h-5 text-pink-500" />
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-gray-100">Photo Competition Tips</p>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Community sharing session</p>
-                </div>
-              </div>
-              <span className="text-pink-600 hover:text-pink-700 font-semibold text-sm">
-                View →
-              </span>
-            </div>
-          </div>
 
           <button className="w-full mt-6 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors">
             Join BLKOUTHUB Community
