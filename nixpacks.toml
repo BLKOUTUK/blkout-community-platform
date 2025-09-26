@@ -1,0 +1,17 @@
+[providers]
+node = "18"
+
+[variables]
+NIXPACKS_NODE_VERSION = "18"
+
+[phases.build]
+cmds = [
+  "npm ci --include=dev",
+  "npm run build"
+]
+
+[phases.start]
+cmd = "npm start"
+
+[staticAssets]
+"dist" = "/"

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build --mode production",
+    "start": "vite preview --host --port ${PORT:-3000}",
     "preview": "vite preview",
     "test": "vitest",
     "test:accessibility": "echo 'Running accessibility tests...' && exit 0",
