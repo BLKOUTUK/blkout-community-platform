@@ -116,9 +116,15 @@ async function handleGetModerationQueue(req: VercelRequest, res: VercelResponse)
     return res.status(200).json(response);
 
   } catch (error) {
-    console.error('Moderation queue API error:', error);
+    console.error('❌ Moderation queue API error:', error);
+    console.error('❌ Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ? '✅ Set' : '❌ Missing',
+      supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? '✅ Set' : '❌ Missing'
+    });
 
-    // Return fallback mock data
+    // Return fallback mock data with error info
     return res.status(200).json({
       queue: [
         {
@@ -165,7 +171,11 @@ async function handleGetModerationQueue(req: VercelRequest, res: VercelResponse)
         filters: {},
         timestamp: new Date().toISOString(),
         source: 'fallback-mock-data',
-        error: 'Database connection issue - using fallback data'
+        error: `Database error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        debug: {
+          supabaseConfigured: !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
+          errorType: error instanceof Error ? error.constructor.name : typeof error
+        }
       },
       liberationSummary: {
         pendingCulturalReview: 1,
