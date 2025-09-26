@@ -28,9 +28,17 @@ const GovernancePage: React.FC = () => {
       {/* Core Values */}
       <section className="py-16 px-6 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-gray-100">
+          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-gray-100">
             Our Shared Values Guide Us
           </h2>
+
+          <div className="flex justify-center mb-8">
+            <img
+              src="/Branding and logos/blkoutvalues.png"
+              alt="BLKOUT Values"
+              className="max-w-full h-auto max-w-md rounded-lg shadow-lg"
+            />
+          </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             <motion.div

@@ -636,29 +636,29 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
       return data.queue || [];
     } catch (error) {
       console.error('Moderation queue fetch error:', error);
-      // Return mock data for development
+      // 🚨 DEVELOPMENT MODE: Return mock data for development - REPLACE WITH LIVE API
       return [
         {
-          id: 'story-001',
-          title: 'Breaking: Community Garden Initiative Receives Major Funding',
-          url: 'https://example.com/community-garden-funding',
-          submittedBy: 'community_curator_001',
+          id: 'MOCK-story-001',
+          title: '[DEMO] Breaking: Community Garden Initiative Receives Major Funding',
+          url: 'https://dev-example.blkout.org/community-garden-funding',
+          submittedBy: 'demo_curator_001',
           submittedAt: '2024-01-15T14:30:00Z',
           category: 'community',
           status: 'pending',
           votes: 5,
-          excerpt: 'Local Black-owned community garden receives substantial grant funding for expansion, creating more green space and food security for the community...'
+          excerpt: '[DEVELOPMENT DATA] Local Black-owned community garden receives substantial grant funding for expansion, creating more green space and food security for the community...'
         },
         {
-          id: 'story-002',
-          title: 'New Mutual Aid Network Launches in Southeast',
-          url: 'https://example.com/mutual-aid-network',
-          submittedBy: 'liberation_journalist',
+          id: 'MOCK-story-002',
+          title: '[DEMO] New Mutual Aid Network Launches in Southeast',
+          url: 'https://dev-example.blkout.org/mutual-aid-network',
+          submittedBy: 'demo_liberation_journalist',
           submittedAt: '2024-01-14T09:15:00Z',
           category: 'organizing',
           status: 'pending',
           votes: 12,
-          excerpt: 'Community organizers establish comprehensive mutual aid network to address housing insecurity and food access challenges...'
+          excerpt: '[DEVELOPMENT DATA] Community organizers establish comprehensive mutual aid network to address housing insecurity and food access challenges...'
         }
       ];
     }
@@ -681,30 +681,30 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
       return data.events || [];
     } catch (error) {
       console.error('Event moderation queue fetch error:', error);
-      // Return mock data for development
+      // 🚨 DEVELOPMENT MODE: Return mock data for development - REPLACE WITH LIVE API
       return [
         {
-          id: 'event-001',
-          title: 'Black Queer Youth Mental Health Workshop',
-          submittedBy: 'community_organizer_001',
+          id: 'MOCK-event-001',
+          title: '[DEMO] Black Queer Youth Mental Health Workshop',
+          submittedBy: 'demo_organizer_001',
           submittedAt: '2024-01-15T10:00:00Z',
           category: 'education',
           type: 'hybrid',
           date: '2024-02-01T18:00:00Z',
-          description: 'Trauma-informed mental health workshop specifically designed for Black queer youth.',
-          organizer: 'Liberation Mental Health Collective',
+          description: '[DEVELOPMENT DATA] Trauma-informed mental health workshop specifically designed for Black queer youth.',
+          organizer: 'Demo Liberation Mental Health Collective',
           status: 'pending'
         },
         {
-          id: 'event-002',
-          title: 'Community Mutual Aid Distribution',
-          submittedBy: 'mutual_aid_coord',
+          id: 'MOCK-event-002',
+          title: '[DEMO] Community Mutual Aid Distribution',
+          submittedBy: 'demo_mutual_aid_coord',
           submittedAt: '2024-01-14T15:30:00Z',
           category: 'mutual-aid',
           type: 'in-person',
           date: '2024-01-25T14:00:00Z',
-          description: 'Weekly food and resource distribution for community members in need.',
-          organizer: 'BLKOUT Mutual Aid Network',
+          description: '[DEVELOPMENT DATA] Weekly food and resource distribution for community members in need.',
+          organizer: 'DEMO BLKOUT Mutual Aid Network',
           status: 'pending'
         }
       ];
@@ -814,16 +814,16 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
       };
     } catch (error) {
       console.error('Admin stats fetch error:', error);
-      // Return mock data for development
+      // 🚨 DEVELOPMENT MODE: Return mock data for development - REPLACE WITH LIVE API
       return {
-        pendingStories: 12,
-        approvedToday: 8,
-        totalCurators: 45,
-        weeklySubmissions: 28,
-        pendingEvents: 5,
-        eventsApprovedToday: 3,
-        totalEventOrganizers: 8,
-        weeklyEventSubmissions: 15
+        pendingStories: 12, // [DEMO DATA]
+        approvedToday: 8, // [DEMO DATA]
+        totalCurators: 45, // [DEMO DATA]
+        weeklySubmissions: 28, // [DEMO DATA]
+        pendingEvents: 5, // [DEMO DATA]
+        eventsApprovedToday: 3, // [DEMO DATA]
+        totalEventOrganizers: 8, // [DEMO DATA]
+        weeklyEventSubmissions: 15 // [DEMO DATA]
       };
     }
   }

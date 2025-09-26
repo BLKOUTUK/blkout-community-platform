@@ -1037,6 +1037,77 @@ const SingleEventSubmission: React.FC<{ onSubmit: () => void }> = ({ onSubmit })
   );
 };
 
+// Recurring Event Expansion Logic
+const expandRecurringEvent = (eventData: any): any[] => {
+  const { recurrencePattern, startDate, endDate, recurrenceInterval = 1, daysOfWeek } = eventData;
+
+  if (!recurrencePattern || recurrencePattern === 'none' || !endDate) {
+    // Single occurrence event
+    return [{
+      title: eventData.title,
+      description: eventData.description,
+      excerpt: eventData.excerpt,
+      category: eventData.category,
+      type: eventData.type,
+      date: eventData.startDate,
+      organizer: eventData.organizer,
+      location: { type: eventData.type },
+      registration: { required: false },
+      accessibilityFeatures: [],
+      tags: []
+    }];
+  }
+
+  const events: any[] = [];
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  let currentDate = new Date(start);
+
+  // Generate recurring events
+  while (currentDate <= end) {
+    events.push({
+      title: eventData.title,
+      description: eventData.description,
+      excerpt: eventData.excerpt,
+      category: eventData.category,
+      type: eventData.type,
+      date: currentDate.toISOString(),
+      organizer: eventData.organizer,
+      location: { type: eventData.type },
+      registration: { required: false },
+      accessibilityFeatures: [],
+      tags: [`recurring-${recurrencePattern}`]
+    });
+
+    // Calculate next occurrence
+    switch (recurrencePattern.toLowerCase()) {
+      case 'daily':
+        currentDate.setDate(currentDate.getDate() + recurrenceInterval);
+        break;
+      case 'weekly':
+        currentDate.setDate(currentDate.getDate() + (7 * recurrenceInterval));
+        break;
+      case 'monthly':
+        currentDate.setMonth(currentDate.getMonth() + recurrenceInterval);
+        break;
+      case 'yearly':
+        currentDate.setFullYear(currentDate.getFullYear() + recurrenceInterval);
+        break;
+      default:
+        // Unknown pattern, break to avoid infinite loop
+        break;
+    }
+
+    // Safety check to prevent infinite loops
+    if (events.length > 100) {
+      console.warn('Stopping event generation at 100 occurrences to prevent infinite loop');
+      break;
+    }
+  }
+
+  return events;
+};
+
 // Bulk Event Submission Component
 const BulkEventSubmission: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
   const [bulkEventFile, setBulkEventFile] = useState<File | null>(null);
@@ -1065,27 +1136,34 @@ const BulkEventSubmission: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) =
         const parsed = JSON.parse(text);
         events = Array.isArray(parsed) ? parsed : parsed.events || [];
       } else if (bulkEventFile.name.endsWith('.csv')) {
-        // Simple CSV parsing for events
+        // Enhanced CSV parsing for events with recurrence support
         const lines = text.split('\n').slice(1); // Skip header
-        events = lines.filter(line => line.trim()).map(line => {
-          const [title, description, excerpt, category, type, date, organizerName, organizerEmail] = line.split(',');
+        const parsedEvents = lines.filter(line => line.trim()).map(line => {
+          const [title, description, excerpt, category, type, startDate, endDate, recurrencePattern, recurrenceInterval, daysOfWeek, organizerName, organizerEmail] = line.split(',');
           return {
-            title: title?.trim(),
-            description: description?.trim(),
-            excerpt: excerpt?.trim(),
+            title: title?.trim().replace(/^"|"$/g, ''),
+            description: description?.trim().replace(/^"|"$/g, ''),
+            excerpt: excerpt?.trim().replace(/^"|"$/g, ''),
             category: category?.trim() as any,
             type: type?.trim() as any,
-            date: date?.trim(),
+            startDate: startDate?.trim().replace(/^"|"$/g, ''),
+            endDate: endDate?.trim().replace(/^"|"$/g, '') || null,
+            recurrencePattern: recurrencePattern?.trim() || 'none',
+            recurrenceInterval: parseInt(recurrenceInterval?.trim() || '1'),
+            daysOfWeek: daysOfWeek?.trim().replace(/^"|"$/g, '') || '',
             organizer: {
-              name: organizerName?.trim(),
-              email: organizerEmail?.trim(),
+              name: organizerName?.trim().replace(/^"|"$/g, ''),
+              email: organizerEmail?.trim().replace(/^"|"$/g, ''),
               communityMember: true
-            },
-            location: { type: type?.trim() as any },
-            registration: { required: false },
-            accessibilityFeatures: [],
-            tags: []
+            }
           };
+        });
+
+        // Expand recurring events into individual occurrences
+        events = [];
+        parsedEvents.forEach(eventData => {
+          const expandedEvents = expandRecurringEvent(eventData);
+          events.push(...expandedEvents);
         });
       }
 
@@ -1120,6 +1198,24 @@ const BulkEventSubmission: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) =
       </p>
 
       <div className="space-y-6">
+        {/* Template Downloads */}
+        <div className="flex flex-wrap gap-3 mb-4 p-4 bg-orange-50 border border-orange-200 rounded-lg">
+          <div className="flex items-center gap-2 text-orange-800">
+            <Download className="h-4 w-4" />
+            <span className="text-sm font-medium">Download CSV Templates:</span>
+          </div>
+          <a
+            href="/templates/event-submission-template.csv"
+            download="event-submission-template.csv"
+            className="flex items-center gap-1 px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded transition-colors"
+          >
+            <FileText className="h-3 w-3" />
+            Events Template
+          </a>
+          <div className="text-orange-700 text-xs ml-2">
+            Use this format: title, description, excerpt, category, type, startDate, endDate, recurrencePattern, recurrenceInterval, daysOfWeek, organizerName, organizerEmail
+          </div>
+        </div>
         {/* File Upload */}
         <div className="border-2 border-dashed border-white/30 rounded-lg p-6 text-center">
           <Upload className="w-12 h-12 text-white/50 mx-auto mb-4" />
@@ -1191,11 +1287,26 @@ const BulkEventSubmission: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) =
 
         {/* CSV Format Example */}
         <div className="bg-black/20 rounded-lg p-4">
-          <h4 className="text-white font-medium mb-2">CSV Format Example:</h4>
-          <pre className="text-xs text-gray-300 overflow-x-auto">
-{`title,description,excerpt,category,type,date,organizerName,organizerEmail
-"Community Workshop","Full description","Brief excerpt","education","virtual","2024-02-01T18:00:00Z","Organizer Name","email@example.com"`}
-          </pre>
+          <h4 className="text-white font-medium mb-2">CSV Format Examples:</h4>
+          <div className="space-y-3">
+            <div>
+              <p className="text-xs text-gray-400 mb-1">Single Event:</p>
+              <pre className="text-xs text-gray-300 overflow-x-auto">
+{`title,description,excerpt,category,type,startDate,endDate,recurrencePattern,recurrenceInterval,daysOfWeek,organizerName,organizerEmail
+"Community Workshop","Full description","Brief excerpt","education","virtual","2024-02-01T18:00","","none","1","","Organizer","email@example.com"`}
+              </pre>
+            </div>
+            <div>
+              <p className="text-xs text-gray-400 mb-1">Recurring Event (Weekly for 3 months):</p>
+              <pre className="text-xs text-gray-300 overflow-x-auto">
+{`"Weekly Healing Circle","Trauma-informed healing space","Weekly healing circle","health","support-group","2025-10-20T14:00","2025-12-20T14:00","weekly","1","","Community Healing","healing@community.org"`}
+              </pre>
+            </div>
+            <div className="text-xs text-gray-400">
+              <p><strong>Recurrence Patterns:</strong> none, daily, weekly, monthly, yearly</p>
+              <p><strong>Leave endDate empty for single events</strong></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

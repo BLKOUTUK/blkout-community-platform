@@ -110,6 +110,71 @@ export default function AboutUs() {
             </div>
           </CollapsibleSection>
 
+          {/* Leadership & Transparency */}
+          <CollapsibleSection title="Leadership & Transparency" defaultOpen={true}>
+            <div className="space-y-6">
+              <div>
+                <h4 className="text-lg font-bold text-liberation-sovereignty-gold mb-3">Transparent Leadership</h4>
+                <p className="text-gray-300 leading-relaxed mb-6">
+                  True to our values of transparency and accountability, we believe you should know who's behind BLKOUT
+                  and what drives our work. Leadership isn't about hierarchy—it's about responsibility to the community.
+                </p>
+              </div>
+
+              <div className="bg-gray-800 p-6 rounded-xl border-l-4 border-liberation-sovereignty-gold">
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                  <div className="flex-shrink-0">
+                    <img
+                      src="/Branding and logos/site_editor.png"
+                      alt="Dr Rob Berkeley - Site Editor & Creator"
+                      className="w-32 h-32 md:w-40 md:h-40 rounded-lg object-cover shadow-lg"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div className="mb-4">
+                      <h5 className="text-xl font-bold text-liberation-sovereignty-gold mb-1">Dr Rob Berkeley</h5>
+                      <p className="text-liberation-pride-pink font-semibold mb-3">Site Editor & Creator</p>
+                    </div>
+                    <p className="text-gray-300 leading-relaxed mb-4">
+                      Award-winning busybody and recovering academic, Dr Rob Berkeley leads the development of BLKOUT Media.
+                      He was director of the racial justice think-tank, Runnymede Trust (2009-14), before a stint advising
+                      the BBC on audience accountability. He serves on the boards of Stanley Arts (SE25), the Black Boy Joy
+                      Club CIC, and is a Chair of Doc Society, and the Black Researcher Consortium. Rob was awarded an MBE
+                      in 2015 for services to equality.
+                    </p>
+                    <div className="text-sm text-gray-400">
+                      <p className="mb-2"><strong>Why we share this:</strong> Transparency builds trust. You have a right to know who makes decisions
+                      that affect your community experience.</p>
+                      <p><strong>Accountability:</strong> Questions, feedback, or concerns can be directed to the community governance
+                      processes or through our democratic decision-making channels.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="bg-gray-800 p-4 rounded-lg">
+                  <h5 className="font-bold text-liberation-healing-sage mb-2">🌟 Our Transparency Commitments</h5>
+                  <ul className="text-sm text-gray-300 space-y-1">
+                    <li>• Open-source platform development</li>
+                    <li>• Public financial reporting for Community Benefit Society</li>
+                    <li>• Democratic governance processes with community oversight</li>
+                    <li>• Regular community feedback sessions and accountability check-ins</li>
+                  </ul>
+                </div>
+                <div className="bg-gray-800 p-4 rounded-lg">
+                  <h5 className="font-bold text-liberation-pride-purple mb-2">⚖️ Accountability Mechanisms</h5>
+                  <ul className="text-sm text-gray-300 space-y-1">
+                    <li>• Community governance board with elected representatives</li>
+                    <li>• Annual general meetings open to all community members</li>
+                    <li>• Transparent decision-making processes and community voting</li>
+                    <li>• Clear channels for community concerns and feedback</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </CollapsibleSection>
+
           {/* Trauma-Informed Practices */}
           <CollapsibleSection title="Trauma-Informed Practices Explained">
             <div className="space-y-6">
