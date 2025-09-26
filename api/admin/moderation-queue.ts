@@ -36,8 +36,8 @@ async function handleGetModerationQueue(req: VercelRequest, res: VercelResponse)
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Build query with filters
-    let query = supabase.from('moderation_queue').select('*');
+    // Build query with filters - using moderation_log table
+    let query = supabase.from('moderation_log').select('*');
 
     if (type && typeof type === 'string') {
       query = query.eq('type', type);
@@ -54,7 +54,7 @@ async function handleGetModerationQueue(req: VercelRequest, res: VercelResponse)
     }
 
     // Order by newest first
-    query = query.order('submitted_at', { ascending: false });
+    query = query.order('created_at', { ascending: false });
 
     const { data: queueData, error: queueError } = await query;
 
@@ -62,28 +62,31 @@ async function handleGetModerationQueue(req: VercelRequest, res: VercelResponse)
       throw queueError;
     }
 
-    // Transform data for admin dashboard compatibility
+    // Transform moderation_log data for admin dashboard compatibility
     const transformedData = (queueData || []).map(item => ({
       id: item.id,
-      title: item.title || 'Untitled',
-      url: item.url || '#',
-      submittedBy: item.submitted_by || 'unknown',
-      submittedAt: item.submitted_at,
-      category: item.category || 'general',
-      status: item.status || 'pending',
-      votes: item.votes || 0,
-      excerpt: item.excerpt || item.content?.substring(0, 200) + '...' || 'No preview available',
-      type: item.type || 'story',
-      priority: 'medium',
+      title: item.metadata?.title || 'Untitled',
+      url: item.metadata?.url || '#',
+      submittedBy: item.moderator_id || 'unknown',
+      submittedAt: item.created_at || new Date().toISOString(),
+      category: item.metadata?.category || 'general',
+      status: item.action?.includes('approved') ? 'approved' :
+              item.action?.includes('rejected') ? 'rejected' : 'pending',
+      votes: 0,
+      excerpt: item.metadata?.description || item.metadata?.content?.substring(0, 200) + '...' || 'No preview available',
+      type: item.metadata?.contentType || item.content_table || 'story',
+      priority: item.metadata?.priority || 'medium',
       assignedModerator: null,
-      reviewNotes: null,
+      reviewNotes: item.reason,
 
       // Liberation values metadata
       liberationMetadata: {
-        requiresCulturalReview: item.category === 'culture' || item.category === 'identity',
+        requiresCulturalReview: item.metadata?.category === 'culture' || item.metadata?.category === 'identity',
         requiresTraumaExpertise: false,
-        communityInputRequested: (item.votes || 0) > 0,
-        ivorAnalysisComplete: false
+        communityInputRequested: false,
+        ivorAnalysisComplete: false,
+        submissionSource: item.metadata?.submittedVia || 'unknown',
+        liberationCompliant: item.metadata?.liberation_compliance?.democratic_oversight || false
       }
     }));
 
@@ -200,24 +203,24 @@ async function handleModerationAction(req: VercelRequest, res: VercelResponse) {
       case 'approve_to_newsroom':
       case 'approve_to_calendar':
         result = await supabase
-          .from('moderation_queue')
+          .from('moderation_log')
           .update({
-            status: 'approved',
-            reviewed_at: now,
+            action: 'approved',
+            updated_at: now,
             moderator_id: 'admin-system',
-            content: reviewNotes || null
+            reason: reviewNotes || 'Approved by admin'
           })
           .eq('id', submissionId);
         break;
 
       case 'reject':
         result = await supabase
-          .from('moderation_queue')
+          .from('moderation_log')
           .update({
-            status: 'rejected',
-            reviewed_at: now,
+            action: 'rejected',
+            updated_at: now,
             moderator_id: 'admin-system',
-            content: reviewNotes || null
+            reason: reviewNotes || 'Rejected by admin'
           })
           .eq('id', submissionId);
         break;
