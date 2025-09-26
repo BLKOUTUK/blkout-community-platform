@@ -614,7 +614,54 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('blkout_admin_token')}`,
       'X-Liberation-Layer': 'admin-interface',
+      'X-Democratic-Governance': 'enabled',
+      'X-Creator-Sovereignty': '75-percent-minimum'
     };
+  }
+
+  // Add method to get regular moderation queue for stories
+  async getModerationQueue(): Promise<ModerationItem[]> {
+    try {
+      const response = await fetch(`${this.baseURL}/admin/moderation-queue?type=story`, {
+        headers: this.getHeaders()
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch moderation queue: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      // Transform API response to expected format
+      return data.queue || [];
+    } catch (error) {
+      console.error('Moderation queue fetch error:', error);
+      // Return mock data for development
+      return [
+        {
+          id: 'story-001',
+          title: 'Breaking: Community Garden Initiative Receives Major Funding',
+          url: 'https://example.com/community-garden-funding',
+          submittedBy: 'community_curator_001',
+          submittedAt: '2024-01-15T14:30:00Z',
+          category: 'community',
+          status: 'pending',
+          votes: 5,
+          excerpt: 'Local Black-owned community garden receives substantial grant funding for expansion, creating more green space and food security for the community...'
+        },
+        {
+          id: 'story-002',
+          title: 'New Mutual Aid Network Launches in Southeast',
+          url: 'https://example.com/mutual-aid-network',
+          submittedBy: 'liberation_journalist',
+          submittedAt: '2024-01-14T09:15:00Z',
+          category: 'organizing',
+          status: 'pending',
+          votes: 12,
+          excerpt: 'Community organizers establish comprehensive mutual aid network to address housing insecurity and food access challenges...'
+        }
+      ];
+    }
   }
 
   // Event-specific admin methods
@@ -623,12 +670,15 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
       const response = await fetch(`${this.baseURL}/admin/events/moderation-queue`, {
         headers: this.getHeaders()
       });
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch event moderation queue: ${response.statusText}`);
       }
-      
-      return await response.json();
+
+      const data = await response.json();
+
+      // Return events from API response
+      return data.events || [];
     } catch (error) {
       console.error('Event moderation queue fetch error:', error);
       // Return mock data for development
@@ -735,17 +785,33 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
     approvedToday: number;
     totalCurators: number;
     weeklySubmissions: number;
+    pendingEvents?: number;
+    eventsApprovedToday?: number;
+    totalEventOrganizers?: number;
+    weeklyEventSubmissions?: number;
   }> {
     try {
       const response = await fetch(`${this.baseURL}/admin/stats`, {
         headers: this.getHeaders()
       });
-      
+
       if (!response.ok) {
         throw new Error(`Failed to fetch admin stats: ${response.statusText}`);
       }
-      
-      return await response.json();
+
+      const data = await response.json();
+
+      // Map API response to expected format
+      return {
+        pendingStories: data.pendingStories || 0,
+        approvedToday: data.approvedToday || 0,
+        totalCurators: data.totalCurators || 0,
+        weeklySubmissions: data.weeklySubmissions || 0,
+        pendingEvents: data.pendingEvents || 0,
+        eventsApprovedToday: data.eventsApprovedToday || 0,
+        totalEventOrganizers: data.totalEventOrganizers || 0,
+        weeklyEventSubmissions: data.weeklyEventSubmissions || 0
+      };
     } catch (error) {
       console.error('Admin stats fetch error:', error);
       // Return mock data for development
@@ -753,7 +819,11 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
         pendingStories: 12,
         approvedToday: 8,
         totalCurators: 45,
-        weeklySubmissions: 28
+        weeklySubmissions: 28,
+        pendingEvents: 5,
+        eventsApprovedToday: 3,
+        totalEventOrganizers: 8,
+        weeklyEventSubmissions: 15
       };
     }
   }

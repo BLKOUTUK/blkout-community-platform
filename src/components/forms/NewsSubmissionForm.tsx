@@ -1,10 +1,34 @@
-// BLKOUT Liberation Platform - News Submission Form
+// BLKOUT Liberation Platform - Enhanced News Submission Form
 // Layer 1: Community Frontend Presentation Layer
-// STRICT SEPARATION: Form UI only - NO business logic
+// LIBERATION VALUES: Trauma-informed news/content submission with community consent
 
-import React, { useState } from 'react';
-import { X, Send, AlertCircle } from 'lucide-react';
-import { cn } from '@/lib/liberation-utils';
+import React, { useState, useEffect } from 'react';
+import {
+  X,
+  Send,
+  AlertCircle,
+  CheckCircle,
+  Heart,
+  Shield,
+  Info,
+  ArrowRight,
+  ArrowLeft,
+  Eye,
+  EyeOff,
+  ExternalLink,
+  FileText,
+  Globe
+} from 'lucide-react';
+import { TraumaInformedContainer } from '@/components/protection/trauma-informed-container';
+import { LiberationButton } from '@/components/ui/liberation-button';
+import {
+  cn,
+  traumaInformedUtils,
+  accessibilityUtils,
+  liberationColors,
+  dateUtils
+} from '@/lib/liberation-utils';
+import type { BaseComponentProps } from '@/types/liberation';
 
 interface NewsSubmissionFormProps {
   onSubmit: (formData: NewsFormData) => void;

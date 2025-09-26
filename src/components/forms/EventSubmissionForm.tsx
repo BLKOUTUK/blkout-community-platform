@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+// BLKOUT Liberation Platform - Enhanced Event Submission Form
+// Layer 1: Community Frontend Presentation Layer
+// LIBERATION VALUES: Trauma-informed, community-centered event submission UX
+
+import React, { useState, useEffect } from 'react';
 import {
   Send,
   Calendar,
@@ -13,14 +17,66 @@ import {
   Globe,
   Home,
   Monitor,
-  ExternalLink
+  ExternalLink,
+  ArrowRight,
+  ArrowLeft,
+  Info,
+  Eye,
+  EyeOff
 } from 'lucide-react';
-import { EventSubmission } from '../../services/events-api';
+import { TraumaInformedContainer } from '@/components/protection/trauma-informed-container';
+import { LiberationButton } from '@/components/ui/liberation-button';
+import {
+  cn,
+  traumaInformedUtils,
+  accessibilityUtils,
+  liberationColors,
+  dateUtils
+} from '@/lib/liberation-utils';
+import { eventsAPI, type EventSubmission } from '@/services/events-api';
+import type { BaseComponentProps } from '@/types/liberation';
 
-interface EventSubmissionFormProps {
-  onSubmitSuccess?: () => void;
-  onCancel?: () => void;
+/**
+ * LIBERATION VALUES: Community-Empowering Event Submission Form
+ * TRAUMA-INFORMED: 3-step gentle process with consent and support
+ * ACCESSIBILITY: WCAG 2.1 AAA compliance with healing-centered design
+ * MOBILE-FIRST: Touch-optimized interfaces for community accessibility
+ */
+
+interface EventSubmissionFormProps extends BaseComponentProps {
+  readonly onSubmissionSuccess?: (eventId: string) => void;
+  readonly onSubmissionCancel?: () => void;
+  readonly initialData?: Partial<EventSubmission>;
+  readonly communityGuidelines?: boolean;
 }
+
+interface FormStep {
+  id: string;
+  title: string;
+  description: string;
+  icon: React.ComponentType<any>;
+}
+
+const FORM_STEPS: FormStep[] = [
+  {
+    id: 'content',
+    title: 'Share Your Event',
+    description: 'Tell our community about your event with love and care',
+    icon: Heart
+  },
+  {
+    id: 'details',
+    title: 'Event Details',
+    description: 'Help community members know what to expect',
+    icon: Info
+  },
+  {
+    id: 'review',
+    title: 'Review & Consent',
+    description: 'Preview your submission and set community sharing preferences',
+    icon: CheckCircle
+  }
+];
 
 const EventSubmissionForm: React.FC<EventSubmissionFormProps> = ({
   onSubmitSuccess,
