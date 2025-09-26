@@ -2,7 +2,7 @@
 // Real-time moderation queue data from Supabase database
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { liberationDB } from '../../lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS headers for admin dashboard
@@ -27,46 +27,63 @@ async function handleGetModerationQueue(req: VercelRequest, res: VercelResponse)
   try {
     const { type, status, limit = '50' } = req.query;
 
-    // Get moderation queue from Supabase
-    let queueData = await liberationDB.getModerationQueue();
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    // Apply filters
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing Supabase configuration');
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Build query with filters
+    let query = supabase.from('moderation_queue').select('*');
+
     if (type && typeof type === 'string') {
-      queueData = queueData.filter(item => item.type === type);
+      query = query.eq('type', type);
     }
 
     if (status && typeof status === 'string') {
-      queueData = queueData.filter(item => item.status === status);
+      query = query.eq('status', status);
     }
 
     // Apply limit
     const limitNum = parseInt(limit as string, 10);
     if (!isNaN(limitNum) && limitNum > 0) {
-      queueData = queueData.slice(0, limitNum);
+      query = query.limit(limitNum);
+    }
+
+    // Order by newest first
+    query = query.order('submitted_at', { ascending: false });
+
+    const { data: queueData, error: queueError } = await query;
+
+    if (queueError) {
+      throw queueError;
     }
 
     // Transform data for admin dashboard compatibility
-    const transformedData = queueData.map(item => ({
+    const transformedData = (queueData || []).map(item => ({
       id: item.id,
-      title: item.title,
+      title: item.title || 'Untitled',
       url: item.url || '#',
-      submittedBy: item.moderator_id || 'unknown',
+      submittedBy: item.submitted_by || 'unknown',
       submittedAt: item.submitted_at,
-      category: item.category,
-      status: item.status,
-      votes: 0, // TODO: Get from community_votes JSONB
-      excerpt: item.description?.substring(0, 200) + '...',
-      type: item.type,
-      priority: item.priority || 'medium',
-      assignedModerator: item.content_data?.assigned_moderator,
-      reviewNotes: item.content_data?.review_notes,
+      category: item.category || 'general',
+      status: item.status || 'pending',
+      votes: item.votes || 0,
+      excerpt: item.excerpt || item.content?.substring(0, 200) + '...' || 'No preview available',
+      type: item.type || 'story',
+      priority: 'medium',
+      assignedModerator: null,
+      reviewNotes: null,
 
       // Liberation values metadata
       liberationMetadata: {
         requiresCulturalReview: item.category === 'culture' || item.category === 'identity',
-        requiresTraumaExpertise: item.content_data?.trauma_content || false,
-        communityInputRequested: item.community_votes ? Object.keys(item.community_votes).length > 0 : false,
-        ivorAnalysisComplete: !!item.content_data?.ivor_analysis
+        requiresTraumaExpertise: false,
+        communityInputRequested: (item.votes || 0) > 0,
+        ivorAnalysisComplete: false
       }
     }));
 
@@ -166,23 +183,53 @@ async function handleModerationAction(req: VercelRequest, res: VercelResponse) {
       });
     }
 
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error('Missing Supabase configuration');
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
     let result;
+    const now = new Date().toISOString();
 
     switch (action) {
       case 'approve':
       case 'approve_to_newsroom':
       case 'approve_to_calendar':
-        result = await liberationDB.approveSubmission(submissionId, reviewNotes);
+        result = await supabase
+          .from('moderation_queue')
+          .update({
+            status: 'approved',
+            reviewed_at: now,
+            moderator_id: 'admin-system',
+            content: reviewNotes || null
+          })
+          .eq('id', submissionId);
         break;
 
       case 'reject':
-        result = await liberationDB.rejectSubmission(submissionId, reviewNotes);
+        result = await supabase
+          .from('moderation_queue')
+          .update({
+            status: 'rejected',
+            reviewed_at: now,
+            moderator_id: 'admin-system',
+            content: reviewNotes || null
+          })
+          .eq('id', submissionId);
         break;
 
       default:
         return res.status(400).json({
           error: 'Invalid action. Must be approve, approve_to_newsroom, approve_to_calendar, or reject'
         });
+    }
+
+    if (result.error) {
+      throw result.error;
     }
 
     // Log liberation values compliance
