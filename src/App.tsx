@@ -31,7 +31,7 @@ import VideoHero from '@/components/ui/VideoHero';
 import { PhotoCompetitionModal } from '@/components/competition/PhotoCompetitionModal';
 
 // API Configuration - Working backend
-const LIBERATION_API = import.meta.env.VITE_API_URL || 'https://blkout.vercel.app/api';
+const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
 
 // Import live events API at the top level
 import { eventsAPI } from './services/events-api';
