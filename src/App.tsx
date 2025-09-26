@@ -385,22 +385,16 @@ export default function App() {
           <p className="text-xl mb-6 opacity-90">
             Photo of the Year 2025 Competition - Share your vision of Black queer joy
           </p>
-          <div className="relative rounded-xl overflow-hidden mb-6 max-w-4xl mx-auto">
+          <div className="relative rounded-xl overflow-hidden mb-6 max-w-5xl mx-auto" style={{ aspectRatio: '16/9' }}>
             <video
               autoPlay
               loop
               muted
               playsInline
-              className="w-full h-64 md:h-96 object-cover"
+              className="w-full h-full object-cover"
             >
-              <source src="/videos/hero/Photo Comp Oct25 (Video).mp4" type="video/mp4" />
+              <source src="/videos/hero/Photo Comp Oct25 Updated.mp4" type="video/mp4" />
             </video>
-            <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
-              <div className="text-center text-white">
-                <div className="text-6xl font-bold mb-2">£500</div>
-                <div className="text-xl font-semibold">Prize Winner</div>
-              </div>
-            </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
