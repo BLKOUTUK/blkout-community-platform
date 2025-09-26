@@ -3,14 +3,12 @@
   "name": "BLKOUT Community Submission Tool",
   "version": "1.0.2",
   "description": "Submit events and stories to BLKOUT platform with enhanced content detection",
-  
   "permissions": [
     "activeTab",
     "storage",
     "contextMenus",
     "scripting"
   ],
-  
   "host_permissions": [
     "https://blkout-community-platform.vercel.app/*",
     "https://blkout.vercel.app/*",
@@ -34,12 +32,9 @@
     "https://*.meetup.com/*",
     "<all_urls>"
   ],
-  
   "background": {
     "service_worker": "background.js"
   },
-  
-  
   "action": {
     "default_popup": "popup/popup.html",
     "default_title": "Submit to BLKOUT",
@@ -50,7 +45,6 @@
       "128": "assets/icon128.png"
     }
   },
-  
   "icons": {
     "16": "assets/icon16.png",
     "32": "assets/icon32.png",
