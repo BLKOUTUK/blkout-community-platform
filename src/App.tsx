@@ -274,7 +274,7 @@ export default function App() {
             Experience stories from our community that celebrate who we are and where we're going.
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Explore Stories
+            Browse Archive
             <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
@@ -468,7 +468,7 @@ export default function App() {
                         : 'text-liberation-silver hover:text-liberation-gold-divine'
                     }`}
                   >
-                    Stories
+                    Archive
                   </button>
                   <button
                     onClick={() => changeActiveTab('events')}

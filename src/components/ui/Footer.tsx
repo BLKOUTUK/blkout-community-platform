@@ -11,7 +11,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
     { id: 'liberation', label: 'Platform', icon: Home },
     { id: 'intro', label: 'IVOR', icon: Brain },
     { id: 'news', label: 'Newsroom', icon: Play },
-    { id: 'stories', label: 'Stories', icon: Calendar },
+    { id: 'stories', label: 'Archive', icon: Calendar },
     { id: 'community', label: 'Community', icon: Users },
     { id: 'governance', label: 'Governance', icon: Vote },
     { id: 'about', label: 'About', icon: Info }

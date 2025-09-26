@@ -21,7 +21,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
     { id: 'liberation', label: 'Home', icon: Heart },
     { id: 'platform', label: 'Discover', icon: Play },
     { id: 'governance', label: 'Governance', icon: Vote },
-    { id: 'stories', label: 'Stories', icon: Calendar },
+    { id: 'stories', label: 'Archive', icon: Calendar },
     { id: 'events', label: 'Events', icon: Calendar },
     { id: 'news', label: 'News', icon: Play },
     { id: 'intro', label: 'IVOR', icon: Brain },
