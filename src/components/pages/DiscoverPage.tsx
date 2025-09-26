@@ -1,6 +1,6 @@
 // BLKOUT Discovery Page - What's New & How to Get Involved
 import React from 'react';
-import { Sparkles, Calendar, MessageCircle, Trophy, Heart, Users, TrendingUp, ArrowRight, Star, Gift } from 'lucide-react';
+import { Sparkles, Calendar, MessageCircle, Trophy, Heart, Users, TrendingUp, ArrowRight, Star, Gift, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const DiscoverPage: React.FC = () => {
@@ -90,6 +90,49 @@ const DiscoverPage: React.FC = () => {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Archive Highlight */}
+      <section className="py-12 px-6 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100 flex items-center">
+            <BookOpen className="w-8 h-8 text-green-600 mr-3" />
+            From The Archive
+          </h2>
+
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
+          >
+            <div className="flex items-start space-x-6">
+              <div className="bg-green-100 dark:bg-green-900 p-4 rounded-xl">
+                <BookOpen className="w-8 h-8 text-green-600" />
+              </div>
+              <div className="flex-1">
+                <span className="text-sm text-green-600 font-semibold">ARCHIVE HIGHLIGHT</span>
+                <h3 className="text-2xl font-bold mt-2 mb-4 text-gray-900 dark:text-gray-100">
+                  Long Read: Counted As Warriors
+                </h3>
+                <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                  An in-depth exploration of Black queer men's experiences, resilience, and the ways we've been
+                  counted as warriors throughout history. A powerful piece that connects our past to our present struggles and triumphs.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button
+                    onClick={() => window.open('https://blkoutuk.com', '_blank')}
+                    className="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center space-x-2"
+                  >
+                    <span>Read Full Article</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                  <button className="px-6 py-3 bg-transparent border-2 border-green-600 text-green-600 rounded-lg font-semibold hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors">
+                    Browse Archive
+                  </button>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
