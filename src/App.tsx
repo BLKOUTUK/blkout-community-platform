@@ -219,30 +219,20 @@ export default function App() {
   // Main liberation dashboard
   const renderLiberationDashboard = () => (
     <div className="space-y-8">
-      {/* Hero Section with Photo Competition Video */}
+      {/* Hero Section */}
       <VideoHero
-        title="Share Your Story"
+        title="Welcome to BLKOUT"
         description="BLKOUT is an organisation for and by Black queer men and the communities of which they are part"
         videos={[
-          '/videos/hero/Photo Comp Oct25 (Video).mp4',
           '/videos/hero/PLATFORM HERO 1.mp4',
-          '/videos/hero/PLATFORM HERO 2.mp4'
+          '/videos/hero/PLATFORM HERO 2.mp4',
+          '/videos/hero/PLATFORM HERO 3.mp4'
         ]}
         height="lg"
         textColor="light"
         overlayOpacity={0.7}
         className="mb-8"
-      >
-        <button
-          onClick={() => {
-            setCompetitionInitialView('landing');
-            setShowCompetitionModal(true);
-          }}
-          className="mt-6 px-8 py-4 bg-liberation-pride-purple text-white rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-        >
-          Join the Competition
-        </button>
-      </VideoHero>
+      />
 
       {/* Rotating Liberation Quotes */}
       <section className="bg-liberation-black-power rounded-xl p-6 md:p-8 border border-liberation-sovereignty-gold/20 mb-8">
@@ -383,6 +373,59 @@ export default function App() {
             <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
+      </section>
+
+      {/* Photo Competition Widget */}
+      <section className="bg-gradient-to-br from-liberation-pride-purple to-liberation-gold-divine text-liberation-black-power p-8 rounded-2xl shadow-2xl mb-8">
+        <div className="text-center">
+          <div className="flex justify-center mb-6">
+            <Trophy className="w-16 h-16 text-liberation-black-power" />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Enter and Win</h2>
+          <p className="text-xl mb-6 opacity-90">
+            Photo of the Year 2025 Competition - Share your vision of Black queer joy
+          </p>
+          <div className="relative rounded-xl overflow-hidden mb-6 max-w-4xl mx-auto">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-64 md:h-96 object-cover"
+            >
+              <source src="/videos/hero/Photo Comp Oct25 (Video).mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+              <div className="text-center text-white">
+                <div className="text-6xl font-bold mb-2">£500</div>
+                <div className="text-xl font-semibold">Prize Winner</div>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => {
+                setCompetitionInitialView('landing');
+                setShowCompetitionModal(true);
+              }}
+              className="px-8 py-4 bg-liberation-black-power text-liberation-gold-divine rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-liberation-black-power hover:border-liberation-red-liberation"
+            >
+              Enter Competition
+            </button>
+            <button
+              onClick={() => {
+                setCompetitionInitialView('guidelines');
+                setShowCompetitionModal(true);
+              }}
+              className="px-8 py-4 bg-transparent border-2 border-liberation-black-power text-liberation-black-power rounded-lg font-bold text-lg hover:bg-liberation-black-power hover:text-liberation-gold-divine transition-all duration-300"
+            >
+              View Guidelines
+            </button>
+          </div>
+          <p className="text-sm mt-4 opacity-75">
+            Submissions open until October 31st • Be featured in our community gallery
+          </p>
+        </div>
       </section>
 
     </div>
