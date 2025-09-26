@@ -1,5 +1,5 @@
 // BLKOUT Extension Popup Logic
-const API_BASE = 'https://blkout-beta.vercel.app/api';
+const API_BASE = 'https://blkout-community-platform.vercel.app/api';
 
 class BlkoutPopup {
   constructor() {
@@ -338,16 +338,25 @@ class BlkoutPopup {
     this.showStatus('Submitting...', 'info');
     
     try {
-      const endpoint = type === 'event' ? '/events' : '/articles';
+      // Use the public content API endpoint
+      const endpoint = '/content';
       console.log('Submitting to:', API_BASE + endpoint);
-      console.log('Submit data:', submitData);
-      
+
+      // Prepare data for the content API
+      const apiData = {
+        contentType: type,
+        ...submitData
+      };
+
+      console.log('Submit data:', apiData);
+
       const response = await fetch(API_BASE + endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-Liberation-Source': 'chrome-extension'
         },
-        body: JSON.stringify(submitData)
+        body: JSON.stringify(apiData)
       });
       
       console.log('Response status:', response.status);

@@ -807,20 +807,39 @@ const ChromeExtensionManager: React.FC = () => {
         <div className="flex items-center gap-4 mb-4">
           <Chrome className="w-8 h-8 text-blue-400" />
           <div>
-            <h3 className="text-xl font-semibold text-white">BLKOUT Community Curator Extension</h3>
-            <p className="text-gray-300">Quick story submission directly from any website</p>
+            <h3 className="text-xl font-semibold text-white">BLKOUT Community Submission Tool v1.0.1</h3>
+            <p className="text-gray-300">✅ Fixed: No admin credentials required - public community submissions</p>
           </div>
         </div>
 
         <div className="flex gap-4">
           <a
-            href="/blkout-extension.zip"
-            download="blkout-extension.zip"
+            href="/blkout-extension-v1.0.1-fixed.zip"
+            download="blkout-extension-v1.0.1-fixed.zip"
+            className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors"
+          >
+            <Download className="w-5 h-5" />
+            Download Fixed Extension (.zip)
+          </a>
+          <a
+            href="/blkout-extension-fixed.tar.gz"
+            download="blkout-extension-fixed.tar.gz"
             className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
           >
             <Download className="w-5 h-5" />
-            Download Extension (.zip)
+            Download (.tar.gz)
           </a>
+        </div>
+      </div>
+
+      {/* What's Fixed */}
+      <div className="bg-green-900/20 backdrop-blur-md rounded-lg p-6 border border-green-500/30 mb-6">
+        <h3 className="text-xl font-semibold text-white mb-4">✅ Authentication Issue Fixed!</h3>
+        <div className="space-y-2 text-gray-300">
+          <p>• ✅ Updated API endpoints to production URLs</p>
+          <p>• ✅ Removed admin credential dependency</p>
+          <p>• ✅ Uses public content submission endpoint</p>
+          <p>• ✅ All submissions go to community moderation queue</p>
         </div>
       </div>
 
@@ -854,10 +873,10 @@ const ChromeExtensionManager: React.FC = () => {
           </div>
 
           <div className="flex gap-4">
-            <div className="flex-shrink-0 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold">4</div>
+            <div className="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-black font-bold">4</div>
             <div>
-              <h4 className="font-semibold text-white">Start Using</h4>
-              <p className="text-gray-300">Extension will use your existing admin credentials automatically</p>
+              <h4 className="font-semibold text-white">Start Using - No Auth Required! ✅</h4>
+              <p className="text-gray-300">Extension now works without admin credentials - supports public community submissions</p>
             </div>
           </div>
         </div>

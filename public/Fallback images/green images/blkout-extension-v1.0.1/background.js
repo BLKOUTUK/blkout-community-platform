@@ -1,5 +1,5 @@
 // BLKOUT Extension Background Service Worker
-const API_BASE = 'https://blkout-website.vercel.app/api';
+const API_BASE = 'https://blkout-community-platform.vercel.app/api';
 
 // Create context menu on installation
 chrome.runtime.onInstalled.addListener(() => {
@@ -104,13 +104,20 @@ function showSubmissionOverlay(info) {
     }
     
     try {
-      const endpoint = type === 'event' ? '/events' : '/articles';
-      const response = await fetch('https://blkout-website.vercel.app/api' + endpoint, {
+      // Use the public content API endpoint
+      const endpoint = '/content';
+      const apiData = {
+        contentType: type,
+        ...submitData
+      };
+
+      const response = await fetch(API_BASE + endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-Liberation-Source': 'chrome-extension-context-menu'
         },
-        body: JSON.stringify(submitData)
+        body: JSON.stringify(apiData)
       });
       
       if (response.ok) {

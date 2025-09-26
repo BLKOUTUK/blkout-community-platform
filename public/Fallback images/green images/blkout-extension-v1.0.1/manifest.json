@@ -12,8 +12,8 @@
   ],
   
   "host_permissions": [
-    "https://blkout-website.vercel.app/*",
-    "https://blkout-beta.vercel.app/*",
+    "https://blkout-community-platform.vercel.app/*",
+    "https://blkout.vercel.app/*",
     "https://*.theguardian.com/*",
     "https://*.bbc.co.uk/*",
     "https://*.bbc.com/*",
