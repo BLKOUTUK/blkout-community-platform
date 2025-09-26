@@ -1,11 +1,20 @@
 # BLKOUT Community Submission Tool - Installation Guide
 
-## Fixed Version 1.0.1
-**✅ Authentication Issue Resolved** - Now works without admin credentials!
+## Enhanced Version 1.0.2
+**✅ Enhanced Content Detection** - Much better scraping and platform support!
 
-This Chrome extension allows you to submit events and articles to the BLKOUT Liberation Platform directly from any webpage.
+This Chrome extension allows you to submit events and articles to the BLKOUT Liberation Platform directly from any webpage with intelligent content detection.
 
-## What's Fixed
+## What's New in 1.0.2
+- ✅ Enhanced content detection with better selectors
+- ✅ Added support for Reuters, Al Jazeera, HuffPost
+- ✅ Improved Twitter/X, LinkedIn, Instagram detection
+- ✅ Added Sky News, Channel 4, ITV support
+- ✅ Smarter generic content extraction
+- ✅ Better event detection with enhanced keywords
+- ✅ Meta description fallback for better content quality
+
+## Previous Fixes (1.0.1)
 - ✅ Updated API endpoints to use correct production URLs
 - ✅ Removed authentication dependency (no admin credentials required)
 - ✅ Uses public content submission endpoint
@@ -42,14 +51,33 @@ This extension is located in your BLKOUT platform repository:
 
 ## Supported Platforms
 The extension automatically detects content from:
+
+**News Sources:**
 - The Guardian
 - BBC News
 - The Independent
-- Twitter/X
+- Reuters
+- Al Jazeera
+- HuffPost
+- Sky News
+- Channel 4 News
+- ITV News
+
+**Social Media:**
+- Twitter/X (enhanced detection)
+- LinkedIn
+- Instagram (public posts)
+
+**Event Platforms:**
 - Eventbrite
 - Facebook Events
 - Meetup
-- Generic websites (articles and events)
+
+**Generic Detection:**
+- Any website with article content
+- Enhanced event keyword detection
+- Meta description extraction
+- Multiple content selector fallbacks
 
 ## Content Processing
 All submissions:
@@ -89,6 +117,6 @@ This extension supports BLKOUT's liberation values:
 - 🌱 **Democratic Process**: All content subject to community review
 
 ---
-**Status**: ✅ Ready for use (Fixed authentication issue)
-**Version**: 1.0.1
+**Status**: ✅ Ready for use (Enhanced content detection)
+**Version**: 1.0.2
 **Last Updated**: 2025-09-26

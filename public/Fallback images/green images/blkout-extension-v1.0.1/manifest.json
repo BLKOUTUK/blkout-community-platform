@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "BLKOUT Community Submission Tool",
-  "version": "1.0.1",
-  "description": "Submit events and stories to BLKOUT platform with one click",
+  "version": "1.0.2",
+  "description": "Submit events and stories to BLKOUT platform with enhanced content detection",
   
   "permissions": [
     "activeTab",
@@ -18,8 +18,17 @@
     "https://*.bbc.co.uk/*",
     "https://*.bbc.com/*",
     "https://*.independent.co.uk/*",
+    "https://*.reuters.com/*",
+    "https://*.aljazeera.com/*",
+    "https://*.huffpost.com/*",
+    "https://*.huffingtonpost.com/*",
+    "https://*.news.sky.com/*",
+    "https://*.channel4.com/*",
+    "https://*.itv.com/*",
     "https://*.twitter.com/*",
     "https://*.x.com/*",
+    "https://*.linkedin.com/*",
+    "https://*.instagram.com/*",
     "https://*.eventbrite.com/*",
     "https://*.facebook.com/*",
     "https://*.meetup.com/*",

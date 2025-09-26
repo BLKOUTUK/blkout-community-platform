@@ -832,14 +832,16 @@ const ChromeExtensionManager: React.FC = () => {
         </div>
       </div>
 
-      {/* What's Fixed */}
+      {/* What's New */}
       <div className="bg-green-900/20 backdrop-blur-md rounded-lg p-6 border border-green-500/30 mb-6">
-        <h3 className="text-xl font-semibold text-white mb-4">✅ Authentication Issue Fixed!</h3>
+        <h3 className="text-xl font-semibold text-white mb-4">🚀 Enhanced Content Detection (v1.0.2)!</h3>
         <div className="space-y-2 text-gray-300">
-          <p>• ✅ Updated API endpoints to production URLs</p>
-          <p>• ✅ Removed admin credential dependency</p>
-          <p>• ✅ Uses public content submission endpoint</p>
-          <p>• ✅ All submissions go to community moderation queue</p>
+          <p>• ✅ Enhanced scraping with better content selectors</p>
+          <p>• ✅ Added Reuters, Al Jazeera, HuffPost support</p>
+          <p>• ✅ Improved Twitter/X, LinkedIn, Instagram detection</p>
+          <p>• ✅ Added Sky News, Channel 4, ITV support</p>
+          <p>• ✅ Smarter event detection with enhanced keywords</p>
+          <p>• ✅ Meta description fallback for better content quality</p>
         </div>
       </div>
 
