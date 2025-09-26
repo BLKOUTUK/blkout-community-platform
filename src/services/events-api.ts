@@ -50,8 +50,8 @@ class EventsAPIService {
   private fallbackEvents: LiberationEvent[];
 
   constructor() {
-    // Layer 2 API Gateway - external backend service
-    this.baseURL = 'https://api.blkoutcollective.org/v1/events';
+    // Use local content API for events
+    this.baseURL = '/api/content?type=events';
     this.fallbackEvents = this.generateLiveEvents();
   }
 

@@ -36,8 +36,8 @@ async function handleGetModerationQueue(req: VercelRequest, res: VercelResponse)
 
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Build query with filters - using moderation_log table
-    let query = supabase.from('moderation_log').select('*');
+    // Build query with filters - using moderation_queue table
+    let query = supabase.from('moderation_queue').select('*');
 
     if (type && typeof type === 'string') {
       query = query.eq('type', type);
@@ -53,8 +53,8 @@ async function handleGetModerationQueue(req: VercelRequest, res: VercelResponse)
       query = query.limit(limitNum);
     }
 
-    // Order by newest first
-    query = query.order('created_at', { ascending: false });
+    // Order by newest first (moderation_queue uses submitted_at)
+    query = query.order('submitted_at', { ascending: false });
 
     const { data: queueData, error: queueError } = await query;
 
@@ -62,31 +62,30 @@ async function handleGetModerationQueue(req: VercelRequest, res: VercelResponse)
       throw queueError;
     }
 
-    // Transform moderation_log data for admin dashboard compatibility
+    // Transform moderation_queue data for admin dashboard compatibility
     const transformedData = (queueData || []).map(item => ({
       id: item.id,
-      title: item.metadata?.title || 'Untitled',
-      url: item.metadata?.url || '#',
-      submittedBy: item.moderator_id || 'unknown',
-      submittedAt: item.created_at || new Date().toISOString(),
-      category: item.metadata?.category || 'general',
-      status: item.action?.includes('approved') ? 'approved' :
-              item.action?.includes('rejected') ? 'rejected' : 'pending',
-      votes: 0,
-      excerpt: item.metadata?.description || item.metadata?.content?.substring(0, 200) + '...' || 'No preview available',
-      type: item.metadata?.contentType || item.content_table || 'story',
-      priority: item.metadata?.priority || 'medium',
-      assignedModerator: null,
-      reviewNotes: item.reason,
+      title: item.title || 'Untitled',
+      url: item.url || '#',
+      submittedBy: item.submitted_by || 'unknown',
+      submittedAt: item.submitted_at || new Date().toISOString(),
+      category: item.category || 'general',
+      status: item.status || 'pending',
+      votes: item.votes || 0,
+      excerpt: item.excerpt || (item.content ? item.content.substring(0, 200) + '...' : 'No preview available'),
+      type: item.type || 'story',
+      priority: 'medium', // moderation_queue doesn't have priority field
+      assignedModerator: item.moderator_id,
+      reviewNotes: null,
 
       // Liberation values metadata
       liberationMetadata: {
-        requiresCulturalReview: item.metadata?.category === 'culture' || item.metadata?.category === 'identity',
+        requiresCulturalReview: item.category === 'culture' || item.category === 'identity',
         requiresTraumaExpertise: false,
         communityInputRequested: false,
         ivorAnalysisComplete: false,
-        submissionSource: item.metadata?.submittedVia || 'unknown',
-        liberationCompliant: item.metadata?.liberation_compliance?.democratic_oversight || false
+        submissionSource: item.submitted_by || 'unknown',
+        liberationCompliant: false
       }
     }));
 
