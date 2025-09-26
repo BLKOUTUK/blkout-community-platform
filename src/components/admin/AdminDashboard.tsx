@@ -814,16 +814,16 @@ const ChromeExtensionManager: React.FC = () => {
 
         <div className="flex gap-4">
           <a
-            href="/blkout-extension-v1.0.1-fixed.zip"
-            download="blkout-extension-v1.0.1-fixed.zip"
+            href="/blkout-extension-v1.0.2-clean.zip"
+            download="blkout-extension-v1.0.2-clean.zip"
             className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors"
           >
             <Download className="w-5 h-5" />
-            Download Fixed Extension (.zip)
+            Download v1.0.2 Enhanced (.zip)
           </a>
           <a
-            href="/blkout-extension-fixed.tar.gz"
-            download="blkout-extension-fixed.tar.gz"
+            href="/blkout-extension-v1.0.2-clean.tar.gz"
+            download="blkout-extension-v1.0.2-clean.tar.gz"
             className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
           >
             <Download className="w-5 h-5" />
@@ -880,6 +880,17 @@ const ChromeExtensionManager: React.FC = () => {
               <h4 className="font-semibold text-white">Start Using - No Auth Required! ✅</h4>
               <p className="text-gray-300">Extension now works without admin credentials - supports public community submissions</p>
             </div>
+          </div>
+        </div>
+
+        {/* Troubleshooting Section */}
+        <div className="mt-6 p-4 bg-orange-900/20 border border-orange-500/30 rounded-lg">
+          <h4 className="font-semibold text-white mb-2">⚠️ Troubleshooting "Cannot Load Extension"</h4>
+          <div className="space-y-1 text-sm text-gray-300">
+            <p>• Make sure you select the extracted folder (not the .zip file)</p>
+            <p>• The folder must contain manifest.json file</p>
+            <p>• This v1.0.2 clean package removes problematic Zone.Identifier files</p>
+            <p>• Try refreshing the chrome://extensions/ page if needed</p>
           </div>
         </div>
       </div>
