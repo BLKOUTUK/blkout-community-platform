@@ -1,6 +1,7 @@
 // BLKOUT Liberation Platform - Content Approval Endpoint
 // Handles approval of stories and events from moderation queue
 // Moves content to published tables and updates status
+// Fixed: Schema mapping to match actual published_news/published_events tables
 
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
