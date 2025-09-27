@@ -112,48 +112,62 @@ async function handleApproval(supabase: any, contentId: string, contentType: str
 
     if (contentType === 'story' || contentType === 'article' || queueItem.type === 'article' || queueItem.type === 'story') {
       targetTable = 'published_news';
+      // Explicitly construct clean object to avoid any field leakage
+      const title = queueItem.title || '';
+      const content = queueItem.content || queueItem.excerpt || '';
+      const author = queueItem.submitted_by || queueItem.submittedBy || 'Community Curator';
+      const now = new Date().toISOString();
+      const metadata = {
+        category: queueItem.category || 'General',
+        excerpt: queueItem.excerpt || '',
+        tags: queueItem.tags || [],
+        submitted_at: queueItem.submitted_at,
+        approved_from_queue: true,
+        original_submission_id: contentId,
+        read_time: estimateReadTime(content),
+        original_url: queueItem.url
+      };
+
       publishedData = {
-        title: queueItem.title,
-        content: queueItem.content || queueItem.excerpt || '',
-        author: queueItem.submitted_by || queueItem.submittedBy || 'Community Curator',
-        published_at: new Date().toISOString(),
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
+        title,
+        content,
+        author,
+        published_at: now,
+        created_at: now,
+        updated_at: now,
         source: 'moderation_queue_approval',
         status: 'published',
-        metadata: {
-          category: queueItem.category || 'General',
-          excerpt: queueItem.excerpt || '',
-          tags: queueItem.tags || [],
-          submitted_at: queueItem.submitted_at,
-          approved_from_queue: true,
-          original_submission_id: contentId,
-          read_time: estimateReadTime(queueItem.content || queueItem.excerpt || ''),
-          original_url: queueItem.url
-        }
+        metadata
       };
     } else if (contentType === 'event' || queueItem.type === 'event') {
       targetTable = 'published_events';
+      // Explicitly construct clean object to avoid any field leakage
+      const title = queueItem.title || '';
+      const content = queueItem.content || queueItem.excerpt || '';
+      const author = queueItem.submitted_by || queueItem.submittedBy || 'Community Organizer';
+      const now = new Date().toISOString();
+      const metadata = {
+        category: queueItem.category || 'community',
+        tags: queueItem.tags || [],
+        submitted_at: queueItem.submitted_at,
+        approved_from_queue: true,
+        original_submission_id: contentId,
+        original_url: queueItem.url,
+        organizer: queueItem.submitted_by || queueItem.submittedBy || 'Community Organizer'
+      };
+
       publishedData = {
-        title: queueItem.title,
-        content: queueItem.content || queueItem.excerpt || '',
-        author: queueItem.submitted_by || queueItem.submittedBy || 'Community Organizer',
-        event_date: queueItem.event_date || new Date().toISOString(),
+        title,
+        content,
+        author,
+        event_date: queueItem.event_date || now,
         location: queueItem.location || 'TBD',
-        published_at: new Date().toISOString(),
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
+        published_at: now,
+        created_at: now,
+        updated_at: now,
         source: 'moderation_queue_approval',
         status: 'published',
-        metadata: {
-          category: queueItem.category || 'community',
-          tags: queueItem.tags || [],
-          submitted_at: queueItem.submitted_at,
-          approved_from_queue: true,
-          original_submission_id: contentId,
-          original_url: queueItem.url,
-          organizer: queueItem.submitted_by || queueItem.submittedBy || 'Community Organizer'
-        }
+        metadata
       };
     }
 
