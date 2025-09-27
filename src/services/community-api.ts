@@ -20,8 +20,8 @@ import type {
  * NO business logic, NO data transformation, NO direct backend calls
  */
 
-// API Configuration (Railway Backend endpoint)
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://blkout-api-railway-production.up.railway.app/api'; // Railway backend v1.1.0
+// API Configuration (Vercel Proxy to Railway Backend)
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'; // Vercel proxy to Railway backend v1.1.0
 
 // API Client Class implementing CommunityAPIContract
 export class CommunityAPIClient implements CommunityAPIContract {
@@ -81,9 +81,7 @@ export class CommunityAPIClient implements CommunityAPIContract {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          'X-Liberation-Layer': 'frontend-presentation', // Layer identification
-          'X-API-Contract': 'community-api-v1', // Contract versioning
+          'Content-Type': 'application/json'
         },
         credentials: 'include', // Community authentication
       });
@@ -106,9 +104,7 @@ export class CommunityAPIClient implements CommunityAPIContract {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'X-Liberation-Layer': 'frontend-presentation',
-          'X-API-Contract': 'community-api-v1',
+          'Content-Type': 'application/json'
         },
         credentials: 'include',
         body: JSON.stringify(data),
@@ -612,10 +608,7 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
   private getHeaders() {
     return {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('blkout_admin_token')}`,
-      'X-Liberation-Layer': 'admin-interface',
-      'X-Democratic-Governance': 'enabled',
-      'X-Creator-Sovereignty': '75-percent-minimum'
+      'Authorization': `Bearer ${localStorage.getItem('blkout_admin_token')}`
     };
   }
 
@@ -667,7 +660,7 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
   // Event-specific admin methods
   async getEventModerationQueue(): Promise<EventModerationItem[]> {
     try {
-      const response = await fetch(`${this.baseURL}/admin/events/moderation-queue`, {
+      const response = await fetch(`${this.baseURL}/admin/moderation-queue?type=event`, {
         headers: this.getHeaders()
       });
 
