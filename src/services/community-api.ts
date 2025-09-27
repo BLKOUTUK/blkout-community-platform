@@ -20,8 +20,8 @@ import type {
  * NO business logic, NO data transformation, NO direct backend calls
  */
 
-// API Configuration (Layer 2 API Gateway endpoint)
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api'; // Local API routes
+// API Configuration (Railway Backend endpoint)
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://blkout-api-railway.up.railway.app/api'; // Railway backend
 
 // API Client Class implementing CommunityAPIContract
 export class CommunityAPIClient implements CommunityAPIContract {
