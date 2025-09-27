@@ -55,7 +55,7 @@ class ModerationBackground {
         maxSummaryLength: 200
       },
       apiSettings: {
-        endpoint: 'https://blkout-backend-ppl502bwq-robs-projects-54d653d3.vercel.app/api',
+        endpoint: 'https://blkout-api-railway-production.up.railway.app/api',
         timeout: 10000
       }
     };
@@ -302,9 +302,9 @@ class ModerationBackground {
     try {
       const settings = await chrome.storage.local.get(['apiSettings']);
       const apiEndpoint = settings.apiSettings?.endpoint ||
-        'https://blkout-backend-ppl502bwq-robs-projects-54d653d3.vercel.app/api';
+        'https://blkout-api-railway-production.up.railway.app/api';
 
-      const response = await fetch(`${apiEndpoint}/moderation-queue`, {
+      const response = await fetch(`${apiEndpoint}/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

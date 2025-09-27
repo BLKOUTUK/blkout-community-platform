@@ -12,7 +12,7 @@
 
   "host_permissions": [
     "https://liberation.blkoutcollective.org/*",
-    "https://blkout-backend-ppl502bwq-robs-projects-54d653d3.vercel.app/*"
+    "https://blkout-api-railway-production.up.railway.app/*"
   ],
 
   "action": {

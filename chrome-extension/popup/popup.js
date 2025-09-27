@@ -5,7 +5,7 @@ class ModeratorTool {
   constructor() {
     this.extractedData = {};
     this.selectedType = 'event';
-    this.apiEndpoint = 'https://blkout-backend-ppl502bwq-robs-projects-54d653d3.vercel.app/api';
+    this.apiEndpoint = 'https://blkout-api-railway-production.up.railway.app/api';
     this.init();
   }
 
@@ -266,7 +266,7 @@ class ModeratorTool {
     const contentData = this.gatherContentData();
 
     try {
-      const response = await fetch(`${this.apiEndpoint}/moderation-queue`, {
+      const response = await fetch(`${this.apiEndpoint}/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
