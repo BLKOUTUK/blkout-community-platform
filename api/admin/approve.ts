@@ -90,21 +90,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
 async function handleApproval(supabase: any, contentId: string, contentType: string, res: VercelResponse) {
   try {
-    // Get content from Railway moderation queue first
-    const railwayResponse = await fetch(`${process.env.RAILWAY_API_URL || 'https://blkout-backend-ppl502bwq-robs-projects-54d653d3.vercel.app'}/api/moderation-queue`);
+    // Get content from Supabase moderation queue
+    const { data: queueItem, error: fetchError } = await supabase
+      .from('moderation_queue')
+      .select('*')
+      .eq('id', contentId)
+      .single();
 
-    if (!railwayResponse.ok) {
-      throw new Error('Failed to fetch from Railway moderation queue');
-    }
-
-    const railwayData = await railwayResponse.json();
-    const queueItem = railwayData.queue?.find((item: any) => item.id === contentId);
-
-    if (!queueItem) {
+    if (fetchError || !queueItem) {
       return res.status(404).json({
         success: false,
         error: 'Content not found',
-        message: 'Content not found in Railway moderation queue'
+        message: 'Content not found in moderation queue'
       });
     }
 
@@ -117,49 +114,44 @@ async function handleApproval(supabase: any, contentId: string, contentType: str
       publishedData = {
         title: queueItem.title,
         content: queueItem.content || queueItem.excerpt || '',
-        excerpt: queueItem.excerpt || '',
-        author: queueItem.submittedBy || 'Community Curator',
-        category: queueItem.category || 'General',
-        tags: queueItem.tags || [],
-        image_url: queueItem.image_url,
-        original_url: queueItem.url,
+        author: queueItem.submitted_by || queueItem.submittedBy || 'Community Curator',
         published_at: new Date().toISOString(),
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-        source: 'railway_approval',
+        source: 'moderation_queue_approval',
         status: 'published',
-        content_type: 'article',
-        read_time: estimateReadTime(queueItem.content || queueItem.excerpt || ''),
         metadata: {
-          submitted_at: queueItem.submittedAt,
+          category: queueItem.category || 'General',
+          excerpt: queueItem.excerpt || '',
+          tags: queueItem.tags || [],
+          submitted_at: queueItem.submitted_at,
           approved_from_queue: true,
           original_submission_id: contentId,
-          railway_id: queueItem.id
+          read_time: estimateReadTime(queueItem.content || queueItem.excerpt || ''),
+          original_url: queueItem.url
         }
       };
     } else if (contentType === 'event' || queueItem.type === 'event') {
       targetTable = 'published_events';
       publishedData = {
         title: queueItem.title,
-        description: queueItem.content || queueItem.excerpt || '',
-        category: queueItem.category || 'community',
-        author: queueItem.submittedBy || 'Community Organizer',
-        tags: queueItem.tags || [],
-        image_url: queueItem.image_url,
-        original_url: queueItem.url,
+        content: queueItem.content || queueItem.excerpt || '',
+        author: queueItem.submitted_by || queueItem.submittedBy || 'Community Organizer',
+        event_date: queueItem.event_date || new Date().toISOString(),
+        location: queueItem.location || 'TBD',
         published_at: new Date().toISOString(),
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-        source: 'railway_approval',
+        source: 'moderation_queue_approval',
         status: 'published',
-        event_date: queueItem.event_date || new Date().toISOString(),
-        location: queueItem.location || 'TBD',
-        organizer: queueItem.submittedBy || 'Community Organizer',
         metadata: {
-          submitted_at: queueItem.submittedAt,
+          category: queueItem.category || 'community',
+          tags: queueItem.tags || [],
+          submitted_at: queueItem.submitted_at,
           approved_from_queue: true,
           original_submission_id: contentId,
-          railway_id: queueItem.id
+          original_url: queueItem.url,
+          organizer: queueItem.submitted_by || queueItem.submittedBy || 'Community Organizer'
         }
       };
     }
