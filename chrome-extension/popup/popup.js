@@ -6,6 +6,7 @@ class ModeratorTool {
     this.extractedData = {};
     this.selectedType = 'event';
     this.apiEndpoint = 'https://blkout-api-railway-production.up.railway.app/api';
+    this.version = '1.1.0';
     this.init();
   }
 

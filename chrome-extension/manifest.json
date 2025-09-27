@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "BLKOUT Liberation Moderator Tools",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Content curation tool for volunteer moderators - Quick scraping and moderation queue submission",
 
   "permissions": [

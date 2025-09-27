@@ -21,7 +21,7 @@ import type {
  */
 
 // API Configuration (Railway Backend endpoint)
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://blkout-api-railway.up.railway.app/api'; // Railway backend
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://blkout-api-railway-production.up.railway.app/api'; // Railway backend v1.1.0
 
 // API Client Class implementing CommunityAPIContract
 export class CommunityAPIClient implements CommunityAPIContract {

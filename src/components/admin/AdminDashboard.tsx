@@ -368,6 +368,20 @@ export const AdminDashboard: React.FC = () => {
                   <Calendar className="w-8 h-8 text-pink-400" />
                 </div>
               </div>
+
+              {/* System Status Card */}
+              <div className="bg-gradient-to-r from-green-500/20 to-blue-500/20 backdrop-blur-md rounded-lg p-6 border border-green-400/30">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-green-300 text-sm font-medium">Backend API</p>
+                    <p className="text-lg font-bold text-white">Railway v1.1.0</p>
+                    <p className="text-xs text-green-400">✅ Chrome Extension Ready</p>
+                  </div>
+                  <div className="text-green-400">
+                    <Settings className="w-8 h-8" />
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Quick Actions */}
