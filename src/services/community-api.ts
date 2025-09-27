@@ -284,7 +284,7 @@ export class CommunityAPIClient implements CommunityAPIContract {
     extractedImages?: string[];
     metadata?: Record<string, any>;
   }): Promise<{ success: boolean; id?: string; message: string }> {
-    const response = await this.postToAPIGateway('/story-submissions', {
+    const response = await this.postToAPIGateway('/submissions', {
       ...storyData,
       submittedVia: 'chrome-extension',
       submittedAt: new Date().toISOString(),
@@ -324,7 +324,7 @@ export class CommunityAPIClient implements CommunityAPIContract {
     extractedImages?: string[];
     metadata?: Record<string, any>;
   }): Promise<{ success: boolean; id?: string; message: string }> {
-    const response = await this.postToAPIGateway('/event-submissions', {
+    const response = await this.postToAPIGateway('/submissions?type=event', {
       ...eventData,
       submittedVia: 'chrome-extension',
       submittedAt: new Date().toISOString(),
@@ -838,7 +838,7 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
 
   async approveStoryForNewsroom(storyId: string): Promise<void> {
     try {
-      const response = await fetch(`${this.baseURL}/admin/stories/${storyId}/approve`, {
+      const response = await fetch(`${this.baseURL}/admin/stories/${storyId}/moderate`, {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify({ action: 'approve_to_newsroom' })
@@ -855,7 +855,7 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
 
   async rejectStory(storyId: string): Promise<void> {
     try {
-      const response = await fetch(`${this.baseURL}/admin/stories/${storyId}/reject`, {
+      const response = await fetch(`${this.baseURL}/admin/stories/${storyId}/moderate`, {
         method: 'POST',
         headers: this.getHeaders(),
         body: JSON.stringify({ action: 'reject' })
