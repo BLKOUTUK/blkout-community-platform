@@ -1,8 +1,9 @@
 // BLKOUT Liberation Platform - Stories API Endpoint
 // Fetches approved stories for News page and Story Archive
-// Proxy to Railway backend with fallback to migrated data
+// Connects to Supabase published_news table with fallback to migrated data
 
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { createClient } from '@supabase/supabase-js';
 
 // CORS headers
 const corsHeaders = {
@@ -140,65 +141,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const limitNum = parseInt(limit as string, 10);
     const offsetNum = parseInt(offset as string, 10);
 
-    // Filter stories based on parameters
-    let filteredStories = [...MIGRATED_STORIES];
+    // Try to fetch from Supabase first
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    // Filter by status (for now, all are published)
-    if (status === 'published') {
-      filteredStories = filteredStories.filter(s => s.status === 'published');
+    if (supabaseUrl && supabaseServiceKey) {
+      return await fetchFromSupabase(req, res, supabaseUrl, supabaseServiceKey, {
+        category: category as string,
+        status: status as string,
+        limit: limitNum,
+        offset: offsetNum,
+        search: search as string,
+        sortBy: sortBy as string
+      });
     }
 
-    // Filter by category
-    if (category && category !== 'all') {
-      filteredStories = filteredStories.filter(s =>
-        s.category.toLowerCase() === (category as string).toLowerCase()
-      );
-    }
-
-    // Search filter
-    if (search) {
-      const searchLower = (search as string).toLowerCase();
-      filteredStories = filteredStories.filter(s =>
-        s.title.toLowerCase().includes(searchLower) ||
-        s.excerpt.toLowerCase().includes(searchLower) ||
-        s.tags.some(tag => tag.toLowerCase().includes(searchLower))
-      );
-    }
-
-    // Sort stories
-    if (sortBy === 'interest') {
-      filteredStories.sort((a, b) => b.interestScore - a.interestScore);
-    } else if (sortBy === 'recent') {
-      filteredStories.sort((a, b) =>
-        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-      );
-    } else if (sortBy === 'votes') {
-      filteredStories.sort((a, b) => b.totalVotes - a.totalVotes);
-    }
-
-    // Apply pagination
-    const paginatedStories = filteredStories.slice(offsetNum, offsetNum + limitNum);
-
-    return res.status(200).json({
-      success: true,
-      data: {
-        stories: paginatedStories,
-        pagination: {
-          total: filteredStories.length,
-          limit: limitNum,
-          offset: offsetNum,
-          hasMore: offsetNum + limitNum < filteredStories.length,
-          page: Math.floor(offsetNum / limitNum) + 1,
-          totalPages: Math.ceil(filteredStories.length / limitNum)
-        },
-        categories: [...new Set(MIGRATED_STORIES.map(s => s.category))],
-        stats: {
-          totalPublished: MIGRATED_STORIES.filter(s => s.status === 'published').length,
-          averageInterestScore: Math.round(
-            MIGRATED_STORIES.reduce((sum, s) => sum + s.interestScore, 0) / MIGRATED_STORIES.length
-          )
-        }
-      }
+    // Fallback to migrated data if Supabase not configured
+    console.log('Supabase not configured, using fallback data');
+    return await fallbackToMigratedData(req, res, {
+      category: category as string,
+      status: status as string,
+      limit: limitNum,
+      offset: offsetNum,
+      search: search as string,
+      sortBy: sortBy as string
     });
 
   } catch (error) {
@@ -209,4 +175,166 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       message: 'Failed to fetch stories'
     });
   }
+}
+
+async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supabaseUrl: string, supabaseServiceKey: string, params: any) {
+  try {
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    // Build query
+    let query = supabase
+      .from('published_news')
+      .select('*', { count: 'exact' });
+
+    // Apply filters
+    if (params.status === 'published') {
+      query = query.eq('status', 'published');
+    }
+
+    if (params.category && params.category !== 'all') {
+      query = query.ilike('category', params.category);
+    }
+
+    if (params.search) {
+      const searchTerm = `%${params.search}%`;
+      query = query.or(`title.ilike.${searchTerm},excerpt.ilike.${searchTerm},content.ilike.${searchTerm}`);
+    }
+
+    // Apply sorting
+    if (params.sortBy === 'recent') {
+      query = query.order('published_at', { ascending: false });
+    } else if (params.sortBy === 'title') {
+      query = query.order('title', { ascending: true });
+    } else {
+      query = query.order('created_at', { ascending: false });
+    }
+
+    // Apply pagination
+    query = query.range(params.offset, params.offset + params.limit - 1);
+
+    const { data: stories, error, count } = await query;
+
+    if (error) {
+      console.error('Supabase query error:', error);
+      throw error;
+    }
+
+    // Transform data to match expected interface
+    const transformedStories = (stories || []).map((story: any) => ({
+      id: story.id,
+      title: story.title,
+      excerpt: story.excerpt || '',
+      content: story.content || '',
+      category: story.category || 'General',
+      author: story.author || 'Anonymous',
+      publishedAt: story.published_at || story.created_at,
+      readTime: story.read_time || '5 min read',
+      tags: story.tags || [],
+      imageUrl: story.image_url,
+      originalUrl: story.original_url,
+      contentType: story.content_type || 'article',
+      blkoutTheme: story.blkout_theme,
+      interestScore: 85, // Default score
+      totalVotes: 0, // Default votes
+      status: story.status || 'published'
+    }));
+
+    // Get unique categories
+    const categoriesQuery = await supabase
+      .from('published_news')
+      .select('category')
+      .not('category', 'is', null);
+
+    const categories = [...new Set((categoriesQuery.data || []).map((item: any) => item.category))];
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        stories: transformedStories,
+        pagination: {
+          total: count || 0,
+          limit: params.limit,
+          offset: params.offset,
+          hasMore: params.offset + params.limit < (count || 0),
+          page: Math.floor(params.offset / params.limit) + 1,
+          totalPages: Math.ceil((count || 0) / params.limit)
+        },
+        categories: categories.length > 0 ? categories : ['General'],
+        stats: {
+          totalPublished: count || 0,
+          averageInterestScore: 85
+        },
+        source: 'supabase'
+      }
+    });
+
+  } catch (error) {
+    console.error('Error fetching from Supabase:', error);
+    // Fallback to migrated data on error
+    return await fallbackToMigratedData(req, res, params);
+  }
+}
+
+async function fallbackToMigratedData(req: VercelRequest, res: VercelResponse, params: any) {
+  // Filter stories based on parameters
+  let filteredStories = [...MIGRATED_STORIES];
+
+  // Filter by status (for now, all are published)
+  if (params.status === 'published') {
+    filteredStories = filteredStories.filter(s => s.status === 'published');
+  }
+
+  // Filter by category
+  if (params.category && params.category !== 'all') {
+    filteredStories = filteredStories.filter(s =>
+      s.category.toLowerCase() === params.category.toLowerCase()
+    );
+  }
+
+  // Search filter
+  if (params.search) {
+    const searchLower = params.search.toLowerCase();
+    filteredStories = filteredStories.filter(s =>
+      s.title.toLowerCase().includes(searchLower) ||
+      s.excerpt.toLowerCase().includes(searchLower) ||
+      s.tags.some(tag => tag.toLowerCase().includes(searchLower))
+    );
+  }
+
+  // Sort stories
+  if (params.sortBy === 'interest') {
+    filteredStories.sort((a, b) => b.interestScore - a.interestScore);
+  } else if (params.sortBy === 'recent') {
+    filteredStories.sort((a, b) =>
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
+  } else if (params.sortBy === 'votes') {
+    filteredStories.sort((a, b) => b.totalVotes - a.totalVotes);
+  }
+
+  // Apply pagination
+  const paginatedStories = filteredStories.slice(params.offset, params.offset + params.limit);
+
+  return res.status(200).json({
+    success: true,
+    data: {
+      stories: paginatedStories,
+      pagination: {
+        total: filteredStories.length,
+        limit: params.limit,
+        offset: params.offset,
+        hasMore: params.offset + params.limit < filteredStories.length,
+        page: Math.floor(params.offset / params.limit) + 1,
+        totalPages: Math.ceil(filteredStories.length / params.limit)
+      },
+      categories: [...new Set(MIGRATED_STORIES.map(s => s.category))],
+      stats: {
+        totalPublished: MIGRATED_STORIES.filter(s => s.status === 'published').length,
+        averageInterestScore: Math.round(
+          MIGRATED_STORIES.reduce((sum, s) => sum + s.interestScore, 0) / MIGRATED_STORIES.length
+        )
+      },
+      source: 'fallback'
+    }
+  });
 }

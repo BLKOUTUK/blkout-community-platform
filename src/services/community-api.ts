@@ -838,15 +838,22 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
 
   async approveStoryForNewsroom(storyId: string): Promise<void> {
     try {
-      const response = await fetch(`${this.baseURL}/admin/stories/${storyId}/moderate`, {
+      const response = await fetch(`${this.baseURL}/admin/approve`, {
         method: 'POST',
         headers: this.getHeaders(),
-        body: JSON.stringify({ action: 'approve_to_newsroom' })
+        body: JSON.stringify({
+          contentId: storyId,
+          contentType: 'story',
+          action: 'approve'
+        })
       });
-      
+
       if (!response.ok) {
         throw new Error(`Failed to approve story: ${response.statusText}`);
       }
+
+      const result = await response.json();
+      console.log('Story approved successfully:', result);
     } catch (error) {
       console.error('Story approval error:', error);
       throw error;
@@ -855,15 +862,22 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
 
   async rejectStory(storyId: string): Promise<void> {
     try {
-      const response = await fetch(`${this.baseURL}/admin/stories/${storyId}/moderate`, {
+      const response = await fetch(`${this.baseURL}/admin/approve`, {
         method: 'POST',
         headers: this.getHeaders(),
-        body: JSON.stringify({ action: 'reject' })
+        body: JSON.stringify({
+          contentId: storyId,
+          contentType: 'story',
+          action: 'reject'
+        })
       });
-      
+
       if (!response.ok) {
         throw new Error(`Failed to reject story: ${response.statusText}`);
       }
+
+      const result = await response.json();
+      console.log('Story rejected successfully:', result);
     } catch (error) {
       console.error('Story rejection error:', error);
       throw error;

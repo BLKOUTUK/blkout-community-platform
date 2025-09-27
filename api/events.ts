@@ -1,8 +1,9 @@
 // BLKOUT Liberation Platform - Events API Endpoint
 // Fetches approved events for Events Calendar page
-// Returns migrated event data
+// Connects to Supabase published_events table with fallback to migrated data
 
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { createClient } from '@supabase/supabase-js';
 
 // CORS headers
 const corsHeaders = {
@@ -214,54 +215,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const limitNum = parseInt(limit as string, 10);
     const offsetNum = parseInt(offset as string, 10);
 
-    // Filter events
-    let filteredEvents = [...MIGRATED_EVENTS];
+    // Try to fetch from Supabase first
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    // Filter by category
-    if (category && category !== 'all') {
-      filteredEvents = filteredEvents.filter(e =>
-        e.category === (category as string)
-      );
+    if (supabaseUrl && supabaseServiceKey) {
+      return await fetchEventsFromSupabase(req, res, supabaseUrl, supabaseServiceKey, {
+        category: category as string,
+        type: type as string,
+        upcoming: upcoming as string,
+        limit: limitNum,
+        offset: offsetNum
+      });
     }
 
-    // Filter by type
-    if (type && type !== 'all') {
-      filteredEvents = filteredEvents.filter(e =>
-        e.type === (type as string)
-      );
-    }
-
-    // Filter upcoming events
-    if (upcoming === 'true') {
-      const now = new Date();
-      filteredEvents = filteredEvents.filter(e =>
-        new Date(e.date) >= now
-      );
-    }
-
-    // Sort by date
-    filteredEvents.sort((a, b) =>
-      new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
-
-    // Apply pagination
-    const paginatedEvents = filteredEvents.slice(offsetNum, offsetNum + limitNum);
-
-    return res.status(200).json({
-      success: true,
-      data: {
-        events: paginatedEvents,
-        pagination: {
-          total: filteredEvents.length,
-          limit: limitNum,
-          offset: offsetNum,
-          hasMore: offsetNum + limitNum < filteredEvents.length,
-          page: Math.floor(offsetNum / limitNum) + 1,
-          totalPages: Math.ceil(filteredEvents.length / limitNum)
-        },
-        categories: ['mutual-aid', 'organizing', 'education', 'celebration', 'support', 'action'],
-        featured: filteredEvents.find(e => e.featured) || null
-      }
+    // Fallback to migrated data if Supabase not configured
+    console.log('Supabase not configured, using fallback event data');
+    return await fallbackToMigratedEvents(req, res, {
+      category: category as string,
+      type: type as string,
+      upcoming: upcoming as string,
+      limit: limitNum,
+      offset: offsetNum
     });
 
   } catch (error) {
@@ -272,4 +247,163 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       message: 'Failed to fetch events'
     });
   }
+}
+
+async function fetchEventsFromSupabase(req: VercelRequest, res: VercelResponse, supabaseUrl: string, supabaseServiceKey: string, params: any) {
+  try {
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    // Build query
+    let query = supabase
+      .from('published_events')
+      .select('*', { count: 'exact' });
+
+    // Apply filters
+    query = query.eq('status', 'published');
+
+    if (params.category && params.category !== 'all') {
+      query = query.ilike('category', params.category);
+    }
+
+    if (params.type && params.type !== 'all') {
+      query = query.eq('type', params.type);
+    }
+
+    // Filter upcoming events
+    if (params.upcoming === 'true') {
+      const now = new Date().toISOString();
+      query = query.gte('event_date', now);
+    }
+
+    // Sort by event date
+    query = query.order('event_date', { ascending: true });
+
+    // Apply pagination
+    query = query.range(params.offset, params.offset + params.limit - 1);
+
+    const { data: events, error, count } = await query;
+
+    if (error) {
+      console.error('Supabase events query error:', error);
+      throw error;
+    }
+
+    // Transform data to match expected interface
+    const transformedEvents = (events || []).map((event: any) => ({
+      id: event.id,
+      title: event.title,
+      description: event.description || '',
+      category: event.category || 'community',
+      type: event.type || 'in-person',
+      date: event.event_date || event.created_at,
+      endDate: event.end_date,
+      location: {
+        type: event.type || 'in-person',
+        details: event.location || 'TBD',
+        address: event.address,
+        virtualLink: event.virtual_link
+      },
+      organizer: {
+        name: event.organizer || event.author || 'Community Organizer',
+        email: event.organizer_email,
+        organization: event.organization || 'BLKOUT Community'
+      },
+      registration: {
+        required: event.registration_required || false,
+        capacity: event.capacity,
+        registrationUrl: event.registration_url,
+        deadline: event.registration_deadline,
+        cost: event.cost || 'Free'
+      },
+      accessibilityFeatures: event.accessibility_features || [],
+      tags: event.tags || [],
+      imageUrl: event.image_url,
+      status: event.status || 'published',
+      featured: event.featured || false
+    }));
+
+    // Get unique categories
+    const categoriesQuery = await supabase
+      .from('published_events')
+      .select('category')
+      .not('category', 'is', null);
+
+    const categories = [...new Set((categoriesQuery.data || []).map((item: any) => item.category))];
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        events: transformedEvents,
+        pagination: {
+          total: count || 0,
+          limit: params.limit,
+          offset: params.offset,
+          hasMore: params.offset + params.limit < (count || 0),
+          page: Math.floor(params.offset / params.limit) + 1,
+          totalPages: Math.ceil((count || 0) / params.limit)
+        },
+        categories: categories.length > 0 ? categories : ['community', 'education', 'celebration'],
+        featured: transformedEvents.find(e => e.featured) || null,
+        source: 'supabase'
+      }
+    });
+
+  } catch (error) {
+    console.error('Error fetching events from Supabase:', error);
+    // Fallback to migrated data on error
+    return await fallbackToMigratedEvents(req, res, params);
+  }
+}
+
+async function fallbackToMigratedEvents(req: VercelRequest, res: VercelResponse, params: any) {
+  // Filter events
+  let filteredEvents = [...MIGRATED_EVENTS];
+
+  // Filter by category
+  if (params.category && params.category !== 'all') {
+    filteredEvents = filteredEvents.filter(e =>
+      e.category === params.category
+    );
+  }
+
+  // Filter by type
+  if (params.type && params.type !== 'all') {
+    filteredEvents = filteredEvents.filter(e =>
+      e.type === params.type
+    );
+  }
+
+  // Filter upcoming events
+  if (params.upcoming === 'true') {
+    const now = new Date();
+    filteredEvents = filteredEvents.filter(e =>
+      new Date(e.date) >= now
+    );
+  }
+
+  // Sort by date
+  filteredEvents.sort((a, b) =>
+    new Date(a.date).getTime() - new Date(b.date).getTime()
+  );
+
+  // Apply pagination
+  const paginatedEvents = filteredEvents.slice(params.offset, params.offset + params.limit);
+
+  return res.status(200).json({
+    success: true,
+    data: {
+      events: paginatedEvents,
+      pagination: {
+        total: filteredEvents.length,
+        limit: params.limit,
+        offset: params.offset,
+        hasMore: params.offset + params.limit < filteredEvents.length,
+        page: Math.floor(params.offset / params.limit) + 1,
+        totalPages: Math.ceil(filteredEvents.length / params.limit)
+      },
+      categories: ['mutual-aid', 'organizing', 'education', 'celebration', 'support', 'action'],
+      featured: filteredEvents.find(e => e.featured) || null,
+      source: 'fallback'
+    }
+  });
 }
