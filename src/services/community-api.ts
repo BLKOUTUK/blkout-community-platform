@@ -801,7 +801,22 @@ export class CommunityAPIAdmin extends CommunityAPIClient {
 
       const data = await response.json();
 
-      // Map API response to expected format
+      // Map Railway API response to expected frontend format
+      if (data.success && data.data) {
+        const railwayData = data.data;
+        return {
+          pendingStories: railwayData.overview?.total_submissions || 0,
+          approvedToday: railwayData.status_breakdown?.approved || 0,
+          totalCurators: 8, // Fixed value for now
+          weeklySubmissions: railwayData.recent_activity?.last_7_days || 0,
+          pendingEvents: railwayData.status_breakdown?.pending || 0,
+          eventsApprovedToday: 0, // Not in Railway response yet
+          totalEventOrganizers: 5, // Fixed value for now
+          weeklyEventSubmissions: 0 // Not in Railway response yet
+        };
+      }
+
+      // Handle old format for backward compatibility
       return {
         pendingStories: data.pendingStories || 0,
         approvedToday: data.approvedToday || 0,
