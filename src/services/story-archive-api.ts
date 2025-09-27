@@ -34,20 +34,17 @@ class StoryArchiveAPI {
         return await this.fetchStoriesFromSupabase(query, category, page, limit);
       }
 
-      // Try real stories API first, then fallback to local API
-      let response = await fetch(`${this.baseUrl}/stories-real?q=${encodeURIComponent(query)}&category=${encodeURIComponent(category)}&page=${page}&limit=${limit}`);
+      // Fetch from stories API
+      const params = new URLSearchParams({
+        category: category !== 'all' ? category : '',
+        search: query || '',
+        limit: limit.toString(),
+        offset: ((page - 1) * limit).toString(),
+        sortBy: 'recent',
+        status: 'published'
+      });
 
-      if (!response.ok) {
-        // Fallback to local content API
-        const params = new URLSearchParams({
-          type: 'articles',
-          category: category !== 'all' ? category : '',
-          limit: limit.toString(),
-          offset: ((page - 1) * limit).toString()
-        });
-
-        response = await fetch(`${this.baseUrl}/content?${params}`);
-      }
+      const response = await fetch(`${this.baseUrl}/stories?${params}`);
 
       if (!response.ok) {
         throw new Error('Failed to fetch stories');
@@ -57,25 +54,14 @@ class StoryArchiveAPI {
 
       // Transform the response to match our expected format
       if (result.success && result.data) {
-        const stories = result.data.articles || [];
-        const pagination = result.data.pagination || { total: 0, limit: 12, offset: 0 };
-
-        // Filter by search query if provided
-        let filteredStories = stories;
-        if (query) {
-          const searchLower = query.toLowerCase();
-          filteredStories = stories.filter((story: any) =>
-            story.title?.toLowerCase().includes(searchLower) ||
-            story.excerpt?.toLowerCase().includes(searchLower) ||
-            story.tags?.some((tag: string) => tag.toLowerCase().includes(searchLower))
-          );
-        }
+        const stories = result.data.stories || [];
+        const pagination = result.data.pagination || { total: 0, limit: 12, offset: 0, page: 1, totalPages: 0 };
 
         return {
-          stories: filteredStories,
-          total: pagination.total || filteredStories.length,
-          page: page,
-          totalPages: Math.ceil((pagination.total || filteredStories.length) / limit)
+          stories: stories,
+          total: pagination.total || stories.length,
+          page: pagination.page || page,
+          totalPages: pagination.totalPages || Math.ceil(stories.length / limit)
         };
       }
 

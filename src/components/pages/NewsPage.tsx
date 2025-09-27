@@ -41,17 +41,30 @@ const NewsPage: React.FC = () => {
   const [sortBy, setSortBy] = useState<'interest' | 'recent' | 'weekly'>('interest');
 
   useEffect(() => {
-    // TODO: Replace with actual API call when backend is ready
-    // For now, return empty array to show empty state
     const loadArticles = async () => {
       setLoading(true);
       try {
-        // Mock API call - replace with actual endpoint
-        // const response = await fetch('/api/articles');
-        // const data = await response.json();
+        // Fetch from stories API
+        const params = new URLSearchParams({
+          category: selectedCategory !== 'all' ? selectedCategory : '',
+          sortBy: sortBy,
+          status: 'published',
+          limit: '20'
+        });
 
-        // Return empty for now until real articles are added
-        setArticles([]);
+        const response = await fetch(`/api/stories?${params}`);
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.data) {
+            setArticles(data.data.stories || []);
+          } else {
+            setArticles([]);
+          }
+        } else {
+          console.error('Failed to fetch articles');
+          setArticles([]);
+        }
         setLoading(false);
       } catch (error) {
         console.error('Failed to load articles:', error);
