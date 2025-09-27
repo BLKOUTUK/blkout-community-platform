@@ -48,61 +48,39 @@ const ModerationQueue: React.FC = () => {
     }
   }, []);
 
-  // Load submissions from Railway API - Updated 2025-01-27
+  // Load submissions from Railway API - Updated 2025-01-27 (Working!)
   const loadSubmissions = async () => {
     setLoading(true);
     try {
-      // Use communityAPI to fetch from Railway backend
-      const result = await communityAPI.getModerationQueue();
+      // Direct Railway admin API call - this is the working endpoint!
+      const response = await fetch('https://blkout-api-railway-production.up.railway.app/api/admin/moderation-queue');
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.data) {
+          const railwaySubmissions: PendingSubmission[] = result.data.map((item: any) => ({
+            id: item.id,
+            type: item.type === 'event' ? 'event' : 'article',
+            title: item.title || 'Untitled',
+            content: item.excerpt || item.content || 'No content available',
+            author: item.submitted_by || 'Anonymous',
+            submittedAt: item.submitted_at,
+            category: item.category || 'general',
+            status: item.status as 'pending' | 'approved' | 'rejected',
+            priority: 'medium',
+            moderationNotes: item.moderator_notes || ''
+          }));
+          setSubmissions(railwaySubmissions);
+          console.log('✅ Railway admin moderation queue loaded:', railwaySubmissions.length, 'submissions');
+          return;
+        }
+      }
 
-      // Convert Railway API data to component format
-      const apiSubmissions: PendingSubmission[] = result.submissions.map((item: any) => ({
-        id: item.id,
-        type: item.contentType === 'event' ? 'event' : 'article',
-        title: item.title || 'Untitled',
-        content: item.excerpt || item.content || 'No content available',
-        author: item.curatorId || 'Anonymous',
-        submittedAt: item.submittedAt,
-        category: item.category || 'general',
-        status: item.status as 'pending' | 'approved' | 'rejected',
-        priority: 'medium',
-        moderationNotes: item.moderatorFeedback
-      }));
-
-      setSubmissions(apiSubmissions);
-      console.log('✅ Railway moderation queue loaded:', apiSubmissions.length, 'submissions');
+      // This should not happen now that we have the correct endpoint
+      console.error('❌ Railway admin endpoint failed');
+      setSubmissions([]);
     } catch (error) {
       console.error('❌ Failed to load Railway moderation queue:', error);
-      // Fallback: Try direct Railway API call
-      try {
-        const response = await fetch('https://blkout-api-railway-production.up.railway.app/api/moderation-queue');
-        if (response.ok) {
-          const result = await response.json();
-          if (result.success && result.data) {
-            const fallbackSubmissions: PendingSubmission[] = result.data.map((item: any) => ({
-              id: item.id,
-              type: item.content_table === 'event' ? 'event' : 'article',
-              title: item.metadata?.original?.title || item.metadata?.title || 'Untitled',
-              content: item.metadata?.original?.summary || item.metadata?.summary || item.reason || 'No content available',
-              author: item.moderator_id || 'Anonymous',
-              submittedAt: item.timestamp,
-              category: item.content_table || 'general',
-              status: item.action === 'submitted' ? 'pending' : item.action as 'pending' | 'approved' | 'rejected',
-              priority: 'medium',
-              moderationNotes: item.reason
-            }));
-            setSubmissions(fallbackSubmissions);
-            console.log('✅ Direct Railway API fallback successful:', fallbackSubmissions.length, 'submissions');
-          } else {
-            setSubmissions([]);
-          }
-        } else {
-          setSubmissions([]);
-        }
-      } catch (fallbackError) {
-        console.error('❌ Railway fallback also failed:', fallbackError);
-        setSubmissions([]);
-      }
+      setSubmissions([]);
     } finally {
       setLoading(false);
     }
