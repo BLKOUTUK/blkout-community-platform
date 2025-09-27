@@ -329,22 +329,14 @@ async function handleContentSubmission(req: VercelRequest, res: VercelResponse) 
       },
       body: JSON.stringify({
         type: contentType,
-        data: {
-          original: contentData,
-          edited: {
-            title: contentData.title || 'Untitled',
-            summary: contentData.description || contentData.excerpt || '',
-            tags: contentData.tags || [],
-          },
-          metadata: {
-            url: contentData.sourceUrl || contentData.originalUrl || '#',
-            submittedVia: 'vercel-proxy',
-            extractedAt: new Date().toISOString(),
-          }
-        },
-        moderatorId: 'vercel-proxy',
-        status: 'pending',
-        submittedAt: new Date().toISOString()
+        title: contentData.title || 'Untitled',
+        url: contentData.sourceUrl || contentData.originalUrl || contentData.url || '#',
+        excerpt: contentData.description || contentData.excerpt || '',
+        category: contentData.category || 'general',
+        content: contentData.content || '',
+        tags: contentData.tags || [],
+        submitted_by: 'vercel-proxy',
+        source: 'vercel-proxy'
       })
     });
 
@@ -366,6 +358,9 @@ async function handleContentSubmission(req: VercelRequest, res: VercelResponse) 
 
   } catch (error) {
     console.error('❌ Railway proxy error:', error);
+    console.error('❌ Error name:', error?.name);
+    console.error('❌ Error message:', error?.message);
+    console.error('❌ Error stack:', error?.stack);
 
     // Fallback to mock response on error
     const mockId = `${contentType}_${Date.now()}`;
@@ -377,7 +372,7 @@ async function handleContentSubmission(req: VercelRequest, res: VercelResponse) 
       submittedAt: new Date().toISOString(),
       reviewRequired: true,
       estimatedReviewTime: '24-48 hours',
-      error: 'Railway backend temporarily unavailable - using fallback storage'
+      error: `Railway backend error: ${error?.message || 'Unknown error'} - using fallback storage`
     });
   }
 }
