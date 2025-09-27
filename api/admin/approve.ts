@@ -83,7 +83,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(500).json({
       success: false,
       error: 'Content approval failed',
-      message: error?.message || 'Unknown error occurred'
+      message: (error as Error)?.message || 'Unknown error occurred'
     });
   }
 }
@@ -106,8 +106,8 @@ async function handleApproval(supabase: any, contentId: string, contentType: str
     }
 
     // Determine target table and prepare data
-    let targetTable: string;
-    let publishedData: any;
+    let targetTable: string = '';
+    let publishedData: any = {};
 
     if (contentType === 'story' || contentType === 'article') {
       targetTable = 'published_news';
@@ -220,7 +220,7 @@ async function handleApproval(supabase: any, contentId: string, contentType: str
     return res.status(500).json({
       success: false,
       error: 'Approval failed',
-      message: error?.message || 'Unknown error during approval'
+      message: (error as Error)?.message || 'Unknown error during approval'
     });
   }
 }
@@ -296,7 +296,7 @@ async function handleRejection(supabase: any, contentId: string, contentType: st
     return res.status(500).json({
       success: false,
       error: 'Rejection failed',
-      message: error?.message || 'Unknown error during rejection'
+      message: (error as Error)?.message || 'Unknown error during rejection'
     });
   }
 }
