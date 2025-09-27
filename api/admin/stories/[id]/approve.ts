@@ -45,16 +45,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     console.log(`🔍 Approving story ${id} with action:`, action);
 
-    // Proxy request to Railway backend
-    const railwayResponse = await fetch(`https://blkout-api-railway-production.up.railway.app/api/admin/moderation-queue/${id}/approve`, {
-      method: 'POST',
+    // Proxy request to Railway backend using general update endpoint
+    const railwayResponse = await fetch(`https://blkout-api-railway-production.up.railway.app/api/admin/moderation-queue/${id}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        status: 'approved',
         action: action || 'approve_to_newsroom',
-        approved_by: 'admin_interface',
-        approved_at: new Date().toISOString()
+        moderator_id: 'admin_interface',
+        reviewed_at: new Date().toISOString()
       })
     });
 
