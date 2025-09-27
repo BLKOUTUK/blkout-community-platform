@@ -90,18 +90,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
 async function handleApproval(supabase: any, contentId: string, contentType: string, res: VercelResponse) {
   try {
-    // Get content from moderation queue
-    const { data: queueItem, error: fetchError } = await supabase
-      .from('moderation_queue')
-      .select('*')
-      .eq('id', contentId)
-      .single();
+    // Get content from Railway moderation queue first
+    const railwayResponse = await fetch(`${process.env.RAILWAY_API_URL || 'https://blkout-backend-ppl502bwq-robs-projects-54d653d3.vercel.app'}/api/moderation-queue`);
 
-    if (fetchError || !queueItem) {
+    if (!railwayResponse.ok) {
+      throw new Error('Failed to fetch from Railway moderation queue');
+    }
+
+    const railwayData = await railwayResponse.json();
+    const queueItem = railwayData.queue?.find((item: any) => item.id === contentId);
+
+    if (!queueItem) {
       return res.status(404).json({
         success: false,
         error: 'Content not found',
-        message: 'Content not found in moderation queue'
+        message: 'Content not found in Railway moderation queue'
       });
     }
 
@@ -109,13 +112,13 @@ async function handleApproval(supabase: any, contentId: string, contentType: str
     let targetTable: string = '';
     let publishedData: any = {};
 
-    if (contentType === 'story' || contentType === 'article') {
+    if (contentType === 'story' || contentType === 'article' || queueItem.type === 'article' || queueItem.type === 'story') {
       targetTable = 'published_news';
       publishedData = {
         title: queueItem.title,
         content: queueItem.content || queueItem.excerpt || '',
         excerpt: queueItem.excerpt || '',
-        author: queueItem.submitted_by || 'Community Curator',
+        author: queueItem.submittedBy || 'Community Curator',
         category: queueItem.category || 'General',
         tags: queueItem.tags || [],
         image_url: queueItem.image_url,
@@ -123,38 +126,40 @@ async function handleApproval(supabase: any, contentId: string, contentType: str
         published_at: new Date().toISOString(),
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-        source: 'moderation_approval',
+        source: 'railway_approval',
         status: 'published',
         content_type: 'article',
         read_time: estimateReadTime(queueItem.content || queueItem.excerpt || ''),
         metadata: {
-          submitted_at: queueItem.submitted_at,
+          submitted_at: queueItem.submittedAt,
           approved_from_queue: true,
-          original_submission_id: contentId
+          original_submission_id: contentId,
+          railway_id: queueItem.id
         }
       };
-    } else if (contentType === 'event') {
+    } else if (contentType === 'event' || queueItem.type === 'event') {
       targetTable = 'published_events';
       publishedData = {
         title: queueItem.title,
         description: queueItem.content || queueItem.excerpt || '',
         category: queueItem.category || 'community',
-        author: queueItem.submitted_by || 'Community Organizer',
+        author: queueItem.submittedBy || 'Community Organizer',
         tags: queueItem.tags || [],
         image_url: queueItem.image_url,
         original_url: queueItem.url,
         published_at: new Date().toISOString(),
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-        source: 'moderation_approval',
+        source: 'railway_approval',
         status: 'published',
         event_date: queueItem.event_date || new Date().toISOString(),
         location: queueItem.location || 'TBD',
-        organizer: queueItem.submitted_by || 'Community Organizer',
+        organizer: queueItem.submittedBy || 'Community Organizer',
         metadata: {
-          submitted_at: queueItem.submitted_at,
+          submitted_at: queueItem.submittedAt,
           approved_from_queue: true,
-          original_submission_id: contentId
+          original_submission_id: contentId,
+          railway_id: queueItem.id
         }
       };
     }
