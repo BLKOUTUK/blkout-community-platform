@@ -129,15 +129,12 @@ async function handleApproval(supabase: any, contentId: string, contentType: str
       };
 
       publishedData = {
-        title,
-        content,
-        author,
-        published_at: now,
-        created_at: now,
-        updated_at: now,
+        title: title,
+        content: content,
+        author: author,
         source: 'moderation_queue_approval',
         status: 'published',
-        metadata
+        metadata: metadata
       };
     } else if (contentType === 'event' || queueItem.type === 'event') {
       targetTable = 'published_events';
@@ -157,17 +154,14 @@ async function handleApproval(supabase: any, contentId: string, contentType: str
       };
 
       publishedData = {
-        title,
-        content,
-        author,
+        title: title,
+        content: content,
+        author: author,
         event_date: queueItem.event_date || now,
         location: queueItem.location || 'TBD',
-        published_at: now,
-        created_at: now,
-        updated_at: now,
         source: 'moderation_queue_approval',
         status: 'published',
-        metadata
+        metadata: metadata
       };
     }
 
