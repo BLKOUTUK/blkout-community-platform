@@ -496,7 +496,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
                         : 'bg-liberation-cream text-liberation-black border border-liberation-gold/20'
                     }`}
                   >
-                    <p className="whitespace-pre-line text-sm md:text-base">{message.content}</p>
+                    <p className="whitespace-pre-line text-sm md:text-base text-current">{message.content}</p>
                     <p className="text-xs opacity-60 mt-1 md:mt-2">
                       {message.timestamp.toLocaleTimeString()}
                     </p>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Heart, Brain, Vote, Users, Info, Play, Calendar } from 'lucide-react';
+import { Home, Heart, Brain, Vote, Users, Info, Play, Calendar, Instagram, Twitter, Facebook, Youtube, Mail } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (tab: string) => void;
@@ -73,6 +73,53 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
                 <span>Economic Justice</span>
               </div>
             </div>
+          </div>
+
+          {/* Social Media Links */}
+          <div className="flex justify-center gap-6 mb-6">
+            <a
+              href="https://instagram.com/blkoutuk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-liberation-sovereignty-gold transition-colors"
+              aria-label="BLKOUT Instagram"
+            >
+              <Instagram className="h-5 w-5" />
+            </a>
+            <a
+              href="https://twitter.com/blkoutuk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-liberation-sovereignty-gold transition-colors"
+              aria-label="BLKOUT Twitter"
+            >
+              <Twitter className="h-5 w-5" />
+            </a>
+            <a
+              href="https://facebook.com/blkoutuk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-liberation-sovereignty-gold transition-colors"
+              aria-label="BLKOUT Facebook"
+            >
+              <Facebook className="h-5 w-5" />
+            </a>
+            <a
+              href="https://youtube.com/@blkoutuk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-liberation-sovereignty-gold transition-colors"
+              aria-label="BLKOUT YouTube"
+            >
+              <Youtube className="h-5 w-5" />
+            </a>
+            <a
+              href="mailto:info@blkout.org"
+              className="text-white hover:text-liberation-sovereignty-gold transition-colors"
+              aria-label="Contact BLKOUT"
+            >
+              <Mail className="h-5 w-5" />
+            </a>
           </div>
 
           {/* Copyright and Info */}

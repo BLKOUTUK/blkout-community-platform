@@ -560,7 +560,7 @@ Remember: You are in control of this conversation and your healing journey. 💜
                     }`}
                   >
                     <div className="flex items-start justify-between mb-1">
-                      <p className="whitespace-pre-line text-sm md:text-base flex-1">{message.content}</p>
+                      <p className="whitespace-pre-line text-sm md:text-base text-current flex-1">{message.content}</p>
                       {message.type === 'ivor' && message.safetyLevel && (
                         <span className="ml-2 text-lg">{getSafetyIndicator(message.safetyLevel)}</span>
                       )}
