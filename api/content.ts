@@ -1,10 +1,7 @@
 // BLKOUT Liberation Platform - Content API Endpoint
-// Layer 2: API Gateway for Content Management
-// STRICT SEPARATION: API layer only - NO business logic
+// Proxy to Railway backend for content management
 
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { createClient } from '@supabase/supabase-js';
-import { randomUUID } from 'crypto';
 
 // Content data structures
 interface ContentItem {
@@ -324,108 +321,51 @@ async function handleContentSubmission(req: VercelRequest, res: VercelResponse) 
   }
 
   try {
-    // Initialize Supabase client
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+    // Proxy request to Railway backend
+    const railwayResponse = await fetch('https://blkout-api-railway-production.up.railway.app/api/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        type: contentType,
+        data: {
+          original: contentData,
+          edited: {
+            title: contentData.title || 'Untitled',
+            summary: contentData.description || contentData.excerpt || '',
+            tags: contentData.tags || [],
+          },
+          metadata: {
+            url: contentData.sourceUrl || contentData.originalUrl || '#',
+            submittedVia: 'vercel-proxy',
+            extractedAt: new Date().toISOString(),
+          }
+        },
+        moderatorId: 'vercel-proxy',
+        status: 'pending',
+        submittedAt: new Date().toISOString()
+      })
+    });
 
-    if (!supabaseUrl || !supabaseKey) {
-      console.warn('⚠️  Supabase not configured, using mock response');
-      // Fallback to mock if Supabase not configured
-      const mockId = `${contentType}_${Date.now()}`;
+    if (railwayResponse.ok) {
+      const railwayData = await railwayResponse.json();
       return res.status(201).json({
         success: true,
-        id: mockId,
-        message: `${contentType} submitted successfully (mock)`,
+        id: railwayData.id || `${contentType}_${Date.now()}`,
+        message: `${contentType} submitted successfully to moderation queue`,
         status: 'pending',
         submittedAt: new Date().toISOString(),
         reviewRequired: true,
-        estimatedReviewTime: '24-48 hours'
+        estimatedReviewTime: '24-48 hours',
+        source: 'railway-proxy'
       });
+    } else {
+      throw new Error(`Railway API error: ${railwayResponse.status}`);
     }
-
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    const contentId = randomUUID();
-
-    // Save to moderation_log table (same table that admin dashboard reads from)
-    const submission = {
-      content_id: contentId,
-      content_table: contentType === 'event' ? 'events' : 'articles',
-      action: 'chrome-extension-submission',
-      moderator_id: 'chrome-extension',
-      reason: `Community submission via Chrome extension: ${contentType}`,
-      metadata: {
-        title: contentData.title || 'Untitled',
-        description: contentData.description || contentData.excerpt || '',
-        content: contentData.content || contentData.description || '',
-        category: contentData.category || (contentType === 'event' ? 'Community' : 'Community Response'),
-        author: contentData.author || 'Community Submitted',
-        url: contentData.sourceUrl || contentData.originalUrl || '#',
-        submittedVia: contentData.submittedVia || 'chrome-extension',
-        detectedAt: contentData.detectedAt || new Date().toISOString(),
-        contentType: contentType,
-
-        // Event-specific fields
-        ...(contentType === 'event' && {
-          date: contentData.date,
-          time: contentData.time,
-          duration: contentData.duration || 120,
-          organizer: contentData.organizer || contentData.author || 'Community Submitted',
-          location: contentData.location || { type: 'physical', address: 'TBD' },
-          capacity: contentData.capacity || 50,
-          tags: contentData.tags || ['community-submitted'],
-        }),
-
-        // Article-specific fields
-        ...(contentType === 'article' && {
-          excerpt: contentData.excerpt || contentData.description || '',
-          priority: contentData.priority || 'medium',
-          tags: contentData.tags || ['community-submitted'],
-        }),
-
-        // Liberation values metadata
-        liberation_compliance: {
-          community_submitted: true,
-          requires_review: true,
-          submission_source: 'chrome-extension',
-          democratic_oversight: true
-        },
-
-        submissionTime: new Date().toISOString()
-      }
-    };
-
-    const { data: insertedData, error } = await supabase
-      .from('moderation_log')
-      .insert([submission])
-      .select()
-      .single();
-
-    if (error) {
-      console.error('❌ Database error:', error);
-      throw error;
-    }
-
-    console.log(`✅ Chrome extension ${contentType} submission saved to moderation queue:`, {
-      id: insertedData?.id,
-      content_id: contentId,
-      title: contentData.title
-    });
-
-    return res.status(201).json({
-      success: true,
-      id: insertedData?.id || contentId,
-      content_id: contentId,
-      message: `${contentType} submitted successfully to moderation queue`,
-      status: 'pending',
-      submittedAt: new Date().toISOString(),
-      reviewRequired: true,
-      estimatedReviewTime: '24-48 hours',
-      moderationId: insertedData?.id,
-      source: 'chrome-extension'
-    });
 
   } catch (error) {
-    console.error('❌ Content submission error:', error);
+    console.error('❌ Railway proxy error:', error);
 
     // Fallback to mock response on error
     const mockId = `${contentType}_${Date.now()}`;
@@ -437,7 +377,7 @@ async function handleContentSubmission(req: VercelRequest, res: VercelResponse) 
       submittedAt: new Date().toISOString(),
       reviewRequired: true,
       estimatedReviewTime: '24-48 hours',
-      error: 'Database temporarily unavailable - using fallback storage'
+      error: 'Railway backend temporarily unavailable - using fallback storage'
     });
   }
 }

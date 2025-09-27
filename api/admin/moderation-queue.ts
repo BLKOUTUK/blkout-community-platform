@@ -1,8 +1,7 @@
 // BLKOUT Liberation Platform - Moderation Queue API Endpoint
-// Real-time moderation queue data from Supabase database
+// Proxy to Railway backend for real-time moderation queue data
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { createClient } from '@supabase/supabase-js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS headers for admin dashboard
@@ -27,92 +26,85 @@ async function handleGetModerationQueue(req: VercelRequest, res: VercelResponse)
   try {
     const { type, status, limit = '50' } = req.query;
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    // Proxy request to Railway backend
+    let railwayUrl = 'https://blkout-api-railway-production.up.railway.app/api/admin/moderation-queue';
 
-    if (!supabaseUrl || !supabaseKey) {
-      throw new Error('Missing Supabase configuration');
+    // Add query parameters if provided
+    const queryParams = new URLSearchParams();
+    if (type) queryParams.append('type', type as string);
+    if (status) queryParams.append('status', status as string);
+    if (limit) queryParams.append('limit', limit as string);
+
+    if (queryParams.toString()) {
+      railwayUrl += '?' + queryParams.toString();
     }
 
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    // Build query with filters - using moderation_queue table
-    let query = supabase.from('moderation_queue').select('*');
-
-    if (type && typeof type === 'string') {
-      query = query.eq('type', type);
-    }
-
-    if (status && typeof status === 'string') {
-      query = query.eq('status', status);
-    }
-
-    // Apply limit
-    const limitNum = parseInt(limit as string, 10);
-    if (!isNaN(limitNum) && limitNum > 0) {
-      query = query.limit(limitNum);
-    }
-
-    // Order by newest first (moderation_queue uses submitted_at)
-    query = query.order('submitted_at', { ascending: false });
-
-    const { data: queueData, error: queueError } = await query;
-
-    if (queueError) {
-      throw queueError;
-    }
-
-    // Transform moderation_queue data for admin dashboard compatibility
-    const transformedData = (queueData || []).map(item => ({
-      id: item.id,
-      title: item.title || 'Untitled',
-      url: item.url || '#',
-      submittedBy: item.submitted_by || 'unknown',
-      submittedAt: item.submitted_at || new Date().toISOString(),
-      category: item.category || 'general',
-      status: item.status || 'pending',
-      votes: item.votes || 0,
-      excerpt: item.excerpt || (item.content ? item.content.substring(0, 200) + '...' : 'No preview available'),
-      type: item.type || 'story',
-      priority: 'medium', // moderation_queue doesn't have priority field
-      assignedModerator: item.moderator_id,
-      reviewNotes: null,
-
-      // Liberation values metadata
-      liberationMetadata: {
-        requiresCulturalReview: item.category === 'culture' || item.category === 'identity',
-        requiresTraumaExpertise: false,
-        communityInputRequested: false,
-        ivorAnalysisComplete: false,
-        submissionSource: item.submitted_by || 'unknown',
-        liberationCompliant: false
+    const railwayResponse = await fetch(railwayUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
       }
-    }));
+    });
 
-    const response = {
-      queue: transformedData,
-      metadata: {
-        total: transformedData.length,
-        filters: { type, status },
-        timestamp: new Date().toISOString(),
-        source: 'real-database-supabase'
-      },
+    if (railwayResponse.ok) {
+      const railwayData = await railwayResponse.json();
 
-      // Liberation values summary
-      liberationSummary: {
-        pendingCulturalReview: transformedData.filter(item =>
-          item.liberationMetadata.requiresCulturalReview && item.status === 'pending'
-        ).length,
-        pendingTraumaExpertise: transformedData.filter(item =>
-          item.liberationMetadata.requiresTraumaExpertise && item.status === 'pending'
-        ).length,
-        communityInputItems: transformedData.filter(item =>
-          item.liberationMetadata.communityInputRequested
-        ).length
+      // Transform Railway data to match Vercel API contract
+      if (railwayData.success && railwayData.data) {
+        const transformedData = railwayData.data.map((item: any) => ({
+          id: item.id,
+          title: item.title || 'Untitled',
+          url: item.url || '#',
+          submittedBy: item.submitted_by || 'unknown',
+          submittedAt: item.submitted_at || new Date().toISOString(),
+          category: item.category || 'general',
+          status: item.status || 'pending',
+          votes: item.votes || 0,
+          excerpt: item.excerpt || (item.content ? item.content.substring(0, 200) + '...' : 'No preview available'),
+          type: item.type || 'story',
+          priority: 'medium',
+          assignedModerator: item.moderator_id,
+          reviewNotes: null,
+
+          // Liberation values metadata
+          liberationMetadata: {
+            requiresCulturalReview: item.category === 'culture' || item.category === 'identity',
+            requiresTraumaExpertise: false,
+            communityInputRequested: false,
+            ivorAnalysisComplete: false,
+            submissionSource: item.submitted_by || 'unknown',
+            liberationCompliant: false
+          }
+        }));
+
+        const response = {
+          queue: transformedData,
+          metadata: {
+            total: transformedData.length,
+            filters: { type, status },
+            timestamp: new Date().toISOString(),
+            source: 'railway-backend'
+          },
+
+          // Liberation values summary
+          liberationSummary: {
+            pendingCulturalReview: transformedData.filter(item =>
+              item.liberationMetadata.requiresCulturalReview && item.status === 'pending'
+            ).length,
+            pendingTraumaExpertise: transformedData.filter(item =>
+              item.liberationMetadata.requiresTraumaExpertise && item.status === 'pending'
+            ).length,
+            communityInputItems: transformedData.filter(item =>
+              item.liberationMetadata.communityInputRequested
+            ).length
+          }
+        };
+
+        return res.status(200).json(response);
       }
-    };
+    }
 
-    return res.status(200).json(response);
+    throw new Error(`Railway API error: ${railwayResponse.status}`);
 
   } catch (error) {
     console.error('❌ Moderation queue API error:', error);

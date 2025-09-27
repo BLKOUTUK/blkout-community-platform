@@ -1,11 +1,4 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { createClient } from '@supabase/supabase-js';
-import { randomUUID } from 'crypto';
-
-// Initialize Supabase client with proper data governance
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl || '', supabaseKey || '');
 
 // N8N Authentication - Liberation Values: Secure but transparent
 const N8N_WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET;
@@ -308,44 +301,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                              analysis.safety_assessment.anti_oppression &&
                              !analysis.duplicate_check.is_duplicate;
 
-          // Create moderation log entry
-          const contentId = randomUUID();
-          const submission = {
-            content_id: contentId,
-            content_table: webhookData.content_type,
-            action: autoApprove ? 'auto-approved' : 'automated-submission',
-            moderator_id: 'n8n-automation',
-            reason: `Automated submission via N8N: ${analysis.category_recommendation} (quality: ${analysis.quality_score.toFixed(2)})`,
-            metadata: {
-              ...webhookData.extracted_data,
-              url: webhookData.source_url,
-              automation_source: webhookData.automation_source,
-              workflow_id: webhookData.workflow_id,
-              ivor_analysis: analysis,
-              liberation_compliance: {
-                community_aligned: analysis.community_alignment > 0.7,
-                trauma_informed: analysis.safety_assessment.trauma_informed,
-                anti_oppression: analysis.safety_assessment.anti_oppression,
-                quality_threshold_met: analysis.quality_score > 0.6
-              },
-              submissionTime: new Date().toISOString(),
-              n8n_timestamp: webhookData.timestamp
-            }
-          };
+          // Proxy to Railway backend
+          const railwayResponse = await fetch('https://blkout-api-railway-production.up.railway.app/api/webhooks/n8n', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-N8N-Signature': req.headers['x-n8n-signature'] as string || '',
+              'X-Liberation-Source': req.headers['x-liberation-source'] as string || ''
+            },
+            body: JSON.stringify({
+              ...webhookData,
+              analysis,
+              autoApprove,
+              processed_at: new Date().toISOString()
+            })
+          });
 
-          const { data: insertedData, error } = await supabase
-            .from('moderation_log')
-            .insert([submission])
-            .select()
-            .single();
-
-          if (error) {
-            console.error('❌ Database error:', error);
-            return res.status(500).json({ success: false, error: error.message });
+          if (!railwayResponse.ok) {
+            throw new Error(`Railway API error: ${railwayResponse.status}`);
           }
 
-          console.log(`✅ N8N content processed: ${autoApprove ? 'auto-approved' : 'queued for review'}`, {
-            id: insertedData?.id,
+          const railwayData = await railwayResponse.json();
+
+          console.log(`✅ N8N content processed via Railway: ${autoApprove ? 'auto-approved' : 'queued for review'}`, {
             content_type: webhookData.content_type,
             quality_score: analysis.quality_score,
             auto_approved: autoApprove
@@ -354,7 +332,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           return res.status(201).json({
             success: true,
             message: autoApprove ? 'Content auto-approved and published' : 'Content submitted for community review',
-            submissionId: insertedData?.id,
+            submissionId: railwayData.id || railwayData.submissionId,
             auto_approved: autoApprove,
             analysis: {
               quality_score: analysis.quality_score,
@@ -363,6 +341,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               category: analysis.category_recommendation,
               liberation_compliant: analysis.safety_assessment.anti_oppression && analysis.safety_assessment.trauma_informed
             },
+            source: 'railway-proxy',
             liberation_message: autoApprove
               ? 'Content meets liberation values criteria and community standards'
               : 'Content submitted for democratic community review process'

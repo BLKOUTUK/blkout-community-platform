@@ -1,11 +1,4 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { createClient } from '@supabase/supabase-js';
-import { randomUUID } from 'crypto';
-
-// Initialize Supabase client with proper data governance
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl || '', supabaseKey || '');
 
 // BLKOUTHUB Authentication - Liberation Values: Secure community API access
 const BLKOUTHUB_API_SECRET = process.env.BLKOUTHUB_API_SECRET;
@@ -266,40 +259,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           // Classify content for appropriate handling
           const classification = classifyBLKOUTHUBContent(webhookData);
 
-          // Create moderation log entry
-          const contentId = randomUUID();
-          const submission = {
-            content_id: contentId,
-            content_table: webhookData.content_type,
-            action: classification.auto_approve ? 'auto-approved' : 'community-submission',
-            moderator_id: webhookData.member_id || 'blkouthub-community',
-            reason: `BLKOUTHUB community submission: ${classification.category} (priority: ${classification.priority})`,
-            metadata: {
-              ...webhookData.payload,
-              blkouthub_source: webhookData.source,
-              member_id: webhookData.member_id,
-              verification_status: webhookData.verification_status,
-              classification: classification,
-              community_validation: validation,
-              priority: classification.priority,
-              submissionTime: new Date().toISOString(),
-              blkouthub_timestamp: webhookData.timestamp
-            }
-          };
+          // Proxy to Railway backend
+          const railwayResponse = await fetch('https://blkout-api-railway-production.up.railway.app/api/webhooks/blkouthub', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': req.headers.authorization || '',
+              'X-BLKOUT-Signature': req.headers['x-blkout-signature'] as string || '',
+              'X-Community-Source': req.headers['x-community-source'] as string || ''
+            },
+            body: JSON.stringify({
+              ...webhookData,
+              classification,
+              validation,
+              processed_at: new Date().toISOString()
+            })
+          });
 
-          const { data: insertedData, error } = await supabase
-            .from('moderation_log')
-            .insert([submission])
-            .select()
-            .single();
-
-          if (error) {
-            console.error('❌ BLKOUTHUB database error:', error);
-            return res.status(500).json({ success: false, error: error.message });
+          if (!railwayResponse.ok) {
+            throw new Error(`Railway API error: ${railwayResponse.status}`);
           }
 
-          console.log(`✅ BLKOUTHUB content processed: ${classification.auto_approve ? 'auto-approved' : 'queued for community review'}`, {
-            id: insertedData?.id,
+          const railwayData = await railwayResponse.json();
+
+          console.log(`✅ BLKOUTHUB content processed via Railway: ${classification.auto_approve ? 'auto-approved' : 'queued for community review'}`, {
             content_type: webhookData.content_type,
             priority: classification.priority,
             auto_approved: classification.auto_approve
@@ -310,11 +293,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             message: classification.auto_approve
               ? 'Community content auto-approved and published'
               : 'Content submitted for community democratic review',
-            submissionId: insertedData?.id,
+            submissionId: railwayData.id || railwayData.submissionId,
             auto_approved: classification.auto_approve,
             priority: classification.priority,
             classification: classification.category,
             warnings: validation.warnings,
+            source: 'railway-proxy',
             liberation_message: classification.auto_approve
               ? 'Content meets community guidelines and liberation values'
               : 'Content submitted to democratic community review process for collective decision-making'
