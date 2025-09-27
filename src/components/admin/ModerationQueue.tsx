@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import AdminAuth, { checkAdminAuth } from './AdminAuth';
 import { ivorIntegration } from '../../services/ivor-integration';
+import { communityAPI } from '../../services/community-api';
 
 interface PendingSubmission {
   id: string;
@@ -47,40 +48,61 @@ const ModerationQueue: React.FC = () => {
     }
   }, []);
 
-  // Load submissions from API endpoint - Updated 2025-01-24
+  // Load submissions from Railway API - Updated 2025-01-27
   const loadSubmissions = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/moderation-queue');
-      if (!response.ok) {
-        throw new Error(`Failed to fetch submissions: ${response.status}`);
-      }
+      // Use communityAPI to fetch from Railway backend
+      const result = await communityAPI.getModerationQueue();
 
-      const result = await response.json();
-      if (result.success && result.data) {
-        // Convert API data to component format
-        const apiSubmissions: PendingSubmission[] = result.data.map((item: any) => ({
-          id: item.id,
-          type: item.content_table === 'event' ? 'event' : 'article',
-          title: item.metadata?.original?.title || item.metadata?.title || 'Untitled',
-          content: item.metadata?.original?.summary || item.metadata?.summary || item.reason || 'No content available',
-          author: item.moderator_id || 'Anonymous',
-          submittedAt: item.timestamp,
-          category: item.content_table,
-          status: item.action === 'submitted' ? 'pending' : item.action as 'pending' | 'approved' | 'rejected',
-          priority: 'medium',
-          moderationNotes: item.reason
-        }));
+      // Convert Railway API data to component format
+      const apiSubmissions: PendingSubmission[] = result.submissions.map((item: any) => ({
+        id: item.id,
+        type: item.contentType === 'event' ? 'event' : 'article',
+        title: item.title || 'Untitled',
+        content: item.excerpt || item.content || 'No content available',
+        author: item.curatorId || 'Anonymous',
+        submittedAt: item.submittedAt,
+        category: item.category || 'general',
+        status: item.status as 'pending' | 'approved' | 'rejected',
+        priority: 'medium',
+        moderationNotes: item.moderatorFeedback
+      }));
 
-        setSubmissions(apiSubmissions);
-        console.log('Moderation queue loaded successfully:', apiSubmissions.length, 'submissions');
-      } else {
-        console.error('API returned invalid data:', result);
+      setSubmissions(apiSubmissions);
+      console.log('✅ Railway moderation queue loaded:', apiSubmissions.length, 'submissions');
+    } catch (error) {
+      console.error('❌ Failed to load Railway moderation queue:', error);
+      // Fallback: Try direct Railway API call
+      try {
+        const response = await fetch('https://blkout-api-railway-production.up.railway.app/api/moderation-queue');
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success && result.data) {
+            const fallbackSubmissions: PendingSubmission[] = result.data.map((item: any) => ({
+              id: item.id,
+              type: item.content_table === 'event' ? 'event' : 'article',
+              title: item.metadata?.original?.title || item.metadata?.title || 'Untitled',
+              content: item.metadata?.original?.summary || item.metadata?.summary || item.reason || 'No content available',
+              author: item.moderator_id || 'Anonymous',
+              submittedAt: item.timestamp,
+              category: item.content_table || 'general',
+              status: item.action === 'submitted' ? 'pending' : item.action as 'pending' | 'approved' | 'rejected',
+              priority: 'medium',
+              moderationNotes: item.reason
+            }));
+            setSubmissions(fallbackSubmissions);
+            console.log('✅ Direct Railway API fallback successful:', fallbackSubmissions.length, 'submissions');
+          } else {
+            setSubmissions([]);
+          }
+        } else {
+          setSubmissions([]);
+        }
+      } catch (fallbackError) {
+        console.error('❌ Railway fallback also failed:', fallbackError);
         setSubmissions([]);
       }
-    } catch (error) {
-      console.error('Failed to load submissions:', error);
-      setSubmissions([]);
     } finally {
       setLoading(false);
     }
