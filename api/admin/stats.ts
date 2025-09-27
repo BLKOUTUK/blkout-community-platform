@@ -1,8 +1,7 @@
 // BLKOUT Liberation Platform - Admin Stats API Endpoint
-// Real-time statistics for admin dashboard from Supabase database
+// Proxy to Railway backend for real-time statistics
 
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { liberationDB } from '../../lib/supabase';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS headers for admin dashboard
@@ -19,94 +18,60 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    // Get real admin statistics from Supabase
-    const stats = await liberationDB.getAdminStats();
+    // Proxy request to Railway backend
+    const railwayResponse = await fetch('https://blkout-api-railway-production.up.railway.app/api/admin/stats', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
 
-    // Add liberation values compliance data
-    const sovereigntyCheck = await liberationDB.checkCreatorSovereignty();
-    const governanceMetrics = await liberationDB.getDemocraticGovernanceMetrics();
-
-    const response = {
-      // Story moderation stats
-      pendingStories: stats.pending_submissions,
-      approvedToday: stats.approved_today,
-      totalCurators: stats.total_moderators,
-      weeklySubmissions: stats.weekly_submissions,
-
-      // Event moderation stats
-      pendingEvents: stats.pending_events,
-      eventsApprovedToday: stats.events_approved_today,
-      totalEventOrganizers: stats.total_event_organizers,
-      weeklyEventSubmissions: stats.weekly_event_submissions,
-
-      // Performance metrics
-      avgProcessingTimeHours: stats.avg_processing_time,
-
-      // Liberation values compliance
-      liberationCompliance: {
-        creatorSovereigntyPercentage: sovereigntyCheck.percentage,
-        creatorSovereigntyCompliant: sovereigntyCheck.compliant,
-        democraticParticipation: {
-          activeMembers: governanceMetrics.active_members,
-          votingMembers: governanceMetrics.voting_members,
-          recentParticipationRate: governanceMetrics.recent_participation
-        }
-      },
-
-      // System health
-      systemHealth: {
-        databaseConnected: true,
-        moderationQueueHealthy: stats.pending_submissions < 50,
-        averageResponseTime: '< 2 hours',
-        lastUpdated: new Date().toISOString()
-      },
-
-      // Metadata
-      timestamp: new Date().toISOString(),
-      source: 'real-database-supabase'
-    };
-
-    return res.status(200).json(response);
+    if (railwayResponse.ok) {
+      const railwayData = await railwayResponse.json();
+      return res.status(200).json(railwayData);
+    } else {
+      throw new Error(`Railway API error: ${railwayResponse.status}`);
+    }
 
   } catch (error) {
-    console.error('Admin stats API error:', error);
+    console.error('Railway proxy error:', error);
 
-    // Return fallback stats with error indication
+    // Return fallback stats when Railway is unavailable
     return res.status(200).json({
-      // Fallback stats
-      pendingStories: 12,
-      approvedToday: 8,
-      totalCurators: 12,
-      weeklySubmissions: 28,
-      pendingEvents: 5,
-      eventsApprovedToday: 3,
-      totalEventOrganizers: 8,
-      weeklyEventSubmissions: 15,
+      // Fallback stats showing Railway connection issue
+      pendingStories: 11, // We know there are 11 submissions
+      approvedToday: 0,
+      totalCurators: 8,
+      weeklySubmissions: 15,
+      pendingEvents: 2,
+      eventsApprovedToday: 0,
+      totalEventOrganizers: 5,
+      weeklyEventSubmissions: 3,
       avgProcessingTimeHours: 24,
 
       // Liberation values fallback
       liberationCompliance: {
-        creatorSovereigntyPercentage: 75.5,
+        creatorSovereigntyPercentage: 75.0,
         creatorSovereigntyCompliant: true,
         democraticParticipation: {
-          activeMembers: 12,
-          votingMembers: 8,
+          activeMembers: 8,
+          votingMembers: 5,
           recentParticipationRate: 85
         }
       },
 
-      // System health with error
+      // System health with Railway proxy status
       systemHealth: {
         databaseConnected: false,
         moderationQueueHealthy: true,
-        averageResponseTime: 'unknown',
+        averageResponseTime: 'Railway API unavailable',
         lastUpdated: new Date().toISOString(),
-        error: 'Database connection issue - using fallback data'
+        error: 'Railway backend connection failed - using fallback data'
       },
 
       timestamp: new Date().toISOString(),
-      source: 'fallback-mock-data',
-      error: error instanceof Error ? error.message : 'Unknown error'
+      source: 'vercel-fallback-railway-proxy',
+      error: error instanceof Error ? error.message : 'Railway connection error'
     });
   }
 }
