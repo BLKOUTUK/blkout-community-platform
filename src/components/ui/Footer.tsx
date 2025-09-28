@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // Force rebuild
 import { Home, Heart, Brain, Vote, Users, Info, Play, Calendar, Instagram, Twitter, Facebook, Youtube, Mail } from 'lucide-react';
 
 interface FooterProps {
