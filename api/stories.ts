@@ -106,6 +106,14 @@ const MIGRATED_STORIES = [
   }
 ];
 
+// Helper function to estimate read time
+function estimateReadTime(content: string): string {
+  const wordsPerMinute = 200;
+  const wordCount = content.split(/\s+/).length;
+  const minutes = Math.ceil(wordCount / wordsPerMinute);
+  return `${minutes} min read`;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -181,9 +189,9 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
   try {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Build query
+    // Build query - use archived_articles table (migrated blkoutuk.com content)
     let query = supabase
-      .from('published_news')
+      .from('archived_articles')
       .select('*', { count: 'exact' });
 
     // Apply filters
@@ -191,9 +199,8 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
       query = query.eq('status', 'published');
     }
 
-    if (params.category && params.category !== 'all') {
-      query = query.ilike('category', params.category);
-    }
+    // Note: newsroom_articles uses category_id instead of category
+    // Skip category filtering for now since it requires a join with categories table
 
     if (params.search) {
       const searchTerm = `%${params.search}%`;
@@ -225,27 +232,26 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
       title: story.title,
       excerpt: story.excerpt || '',
       content: story.content || '',
-      category: story.category || 'General',
-      author: story.author || 'Anonymous',
+      category: 'Community', // Default category for now
+      author: 'BLKOUT Community', // Default author for now
       publishedAt: story.published_at || story.created_at,
-      readTime: story.read_time || '5 min read',
-      tags: story.tags || [],
-      imageUrl: story.image_url,
-      originalUrl: story.original_url,
-      contentType: story.content_type || 'article',
-      blkoutTheme: story.blkout_theme,
-      interestScore: 85, // Default score
-      totalVotes: 0, // Default votes
+      readTime: estimateReadTime(story.content || ''),
+      tags: [],
+      imageUrl: story.featured_image,
+      originalUrl: story.source_url,
+      contentType: 'article',
+      blkoutTheme: 'CONNECT', // Default theme
+      interestScore: story.liberation_score || 85,
+      totalVotes: 0,
       status: story.status || 'published'
     }));
 
-    // Get unique categories
+    // Get categories from categories table
     const categoriesQuery = await supabase
-      .from('published_news')
-      .select('category')
-      .not('category', 'is', null);
+      .from('categories')
+      .select('name');
 
-    const categories = [...new Set((categoriesQuery.data || []).map((item: any) => item.category))];
+    const categories = (categoriesQuery.data || []).map((item: any) => item.name);
 
     return res.status(200).json({
       success: true,

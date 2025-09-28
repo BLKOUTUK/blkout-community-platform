@@ -25,7 +25,7 @@ const AdminEventsInterface: React.FC = () => {
   const [currentView, setCurrentView] = useState<'list' | 'create' | 'edit'>('list');
   const [events, setEvents] = useState<LiberationEvent[]>([]);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState<'all' | 'upcoming' | 'completed' | 'cancelled'>('all');
+  const [filter, setFilter] = useState<'all' | 'pending' | 'upcoming' | 'completed' | 'cancelled'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedEvent, setSelectedEvent] = useState<LiberationEvent | null>(null);
 
@@ -96,8 +96,9 @@ const AdminEventsInterface: React.FC = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
+      case 'pending': return 'text-yellow-400 border-yellow-400';
       case 'upcoming': return 'text-green-400 border-green-400';
-      case 'happening-now': return 'text-yellow-400 border-yellow-400';
+      case 'happening-now': return 'text-blue-400 border-blue-400';
       case 'completed': return 'text-gray-400 border-gray-400';
       case 'cancelled': return 'text-red-400 border-red-400';
       default: return 'text-gray-400 border-gray-400';
@@ -167,8 +168,39 @@ const AdminEventsInterface: React.FC = () => {
           </div>
         </header>
         <EventSubmissionForm
-          onSubmitSuccess={handleEventSubmitSuccess}
-          onCancel={() => setCurrentView('list')}
+          onSubmissionSuccess={handleEventSubmitSuccess}
+          onSubmissionCancel={() => setCurrentView('list')}
+        />
+      </div>
+    );
+  }
+
+  // Edit Event View
+  if (currentView === 'edit' && selectedEvent) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+        <header className="border-b border-liberation-sovereignty-gold/20 bg-black/50 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-6 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-black text-white">
+                  EDIT <span className="text-liberation-sovereignty-gold">EVENT</span>
+                </h1>
+                <p className="text-gray-400 mt-1">Edit community liberation event</p>
+              </div>
+              <button
+                onClick={() => setCurrentView('list')}
+                className="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-all duration-300"
+              >
+                Back to Events
+              </button>
+            </div>
+          </div>
+        </header>
+        <EventSubmissionForm
+          initialData={selectedEvent}
+          onSubmissionSuccess={handleEventSubmitSuccess}
+          onSubmissionCancel={() => setCurrentView('list')}
         />
       </div>
     );
@@ -210,7 +242,7 @@ const AdminEventsInterface: React.FC = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
             <div className="flex gap-2">
-              {(['all', 'upcoming', 'completed', 'cancelled'] as const).map((filterOption) => (
+              {(['all', 'pending', 'upcoming', 'completed', 'cancelled'] as const).map((filterOption) => (
                 <button
                   key={filterOption}
                   onClick={() => setFilter(filterOption)}
@@ -354,13 +386,29 @@ const AdminEventsInterface: React.FC = () => {
                       >
                         <Eye className="h-4 w-4" />
                       </button>
-                      <button
-                        onClick={() => handleEditEvent(event)}
-                        className="bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-lg transition-all duration-300"
-                        title="Edit Event"
-                      >
-                        <Edit className="h-4 w-4" />
-                      </button>
+
+                      {/* Edit Before Approval for pending events */}
+                      {event.status === 'pending' && (
+                        <button
+                          onClick={() => handleEditEvent(event)}
+                          className="bg-yellow-600 hover:bg-yellow-500 text-white p-2 rounded-lg transition-all duration-300"
+                          title="Edit Before Approval"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </button>
+                      )}
+
+                      {/* Regular edit for non-pending events */}
+                      {event.status !== 'pending' && (
+                        <button
+                          onClick={() => handleEditEvent(event)}
+                          className="bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-lg transition-all duration-300"
+                          title="Edit Event"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </button>
+                      )}
+
                       <button
                         onClick={() => handleDeleteEvent(event.id)}
                         className="bg-red-600 hover:bg-red-500 text-white p-2 rounded-lg transition-all duration-300"

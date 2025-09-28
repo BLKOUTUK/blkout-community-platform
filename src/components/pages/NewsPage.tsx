@@ -44,7 +44,7 @@ const NewsPage: React.FC = () => {
     const loadArticles = async () => {
       setLoading(true);
       try {
-        // Fetch from stories API
+        // Fetch from news API (community-curated news, not archive)
         const params = new URLSearchParams({
           category: selectedCategory !== 'all' ? selectedCategory : '',
           sortBy: sortBy,
@@ -52,12 +52,12 @@ const NewsPage: React.FC = () => {
           limit: '20'
         });
 
-        const response = await fetch(`/api/stories?${params}`);
+        const response = await fetch(`/api/news?${params}`);
 
         if (response.ok) {
           const data = await response.json();
           if (data.success && data.data) {
-            setArticles(data.data.stories || []);
+            setArticles(data.data.articles || []);
           } else {
             setArticles([]);
           }

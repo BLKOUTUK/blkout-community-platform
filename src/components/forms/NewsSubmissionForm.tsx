@@ -34,6 +34,8 @@ interface NewsSubmissionFormProps {
   onSubmit: (formData: NewsFormData) => void;
   onClose: () => void;
   isSubmitting?: boolean;
+  initialData?: Partial<NewsFormData>;
+  editMode?: boolean;
 }
 
 interface NewsFormData {
@@ -55,17 +57,19 @@ interface NewsFormData {
 const NewsSubmissionForm: React.FC<NewsSubmissionFormProps> = ({
   onSubmit,
   onClose,
-  isSubmitting = false
+  isSubmitting = false,
+  initialData,
+  editMode = false
 }) => {
   // QI COMPLIANCE: Form state for presentation only - NO business logic
   const [formData, setFormData] = useState<NewsFormData>({
-    title: '',
-    content: '',
-    excerpt: '',
-    category: 'community-news',
-    tags: [],
-    traumaInformed: true,
-    accessibilityFeatures: []
+    title: initialData?.title || '',
+    content: initialData?.content || '',
+    excerpt: initialData?.excerpt || '',
+    category: initialData?.category || 'community-news',
+    tags: initialData?.tags || [],
+    traumaInformed: initialData?.traumaInformed ?? true,
+    accessibilityFeatures: initialData?.accessibilityFeatures || []
   });
 
   const [tagInput, setTagInput] = useState('');
@@ -98,7 +102,7 @@ const NewsSubmissionForm: React.FC<NewsSubmissionFormProps> = ({
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b">
           <h2 className="text-2xl font-bold text-liberation-black-power">
-            Submit Community News
+            {editMode ? 'Edit Article' : 'Submit Community News'}
           </h2>
           <button
             onClick={onClose}

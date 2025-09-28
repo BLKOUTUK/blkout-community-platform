@@ -161,30 +161,49 @@ class StoryArchiveAPI {
 
   async getStory(id: string): Promise<Story | null> {
     try {
-      // First try the stories endpoint
-      let response = await fetch(`${this.baseUrl}/stories/${id}`);
+      // Search for the specific story using the stories API
+      const params = new URLSearchParams({
+        limit: '100',  // Get enough stories to find the one we want
+        offset: '0'
+      });
 
-      // If that fails, try to get from content API
+      const response = await fetch(`${this.baseUrl}/stories?${params}`);
+
       if (!response.ok) {
-        const contentResponse = await fetch(`${this.baseUrl}/content?type=articles`);
-        if (contentResponse.ok) {
-          const result = await contentResponse.json();
-          if (result.success && result.data?.articles) {
-            const story = result.data.articles.find((a: any) => a.id === id);
-            if (story) {
-              return story;
+        throw new Error('Failed to fetch stories');
+      }
+
+      const result = await response.json();
+
+      if (result.success && result.data) {
+        const stories = result.data.stories || [];
+        const story = stories.find((s: any) => s.id === id);
+
+        if (story) {
+          return story;
+        }
+
+        // If not found in first 100, try searching all stories
+        const allParams = new URLSearchParams({
+          limit: result.data.pagination?.total?.toString() || '500',
+          offset: '0'
+        });
+
+        const allResponse = await fetch(`${this.baseUrl}/stories?${allParams}`);
+
+        if (allResponse.ok) {
+          const allResult = await allResponse.json();
+          if (allResult.success && allResult.data) {
+            const allStories = allResult.data.stories || [];
+            const foundStory = allStories.find((s: any) => s.id === id);
+            if (foundStory) {
+              return foundStory;
             }
           }
         }
-        throw new Error('Failed to fetch story');
       }
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch story');
-      }
-
-      const story = await response.json();
-      return story;
+      return null;
     } catch (error) {
       console.error('Error fetching story:', error);
       return null;

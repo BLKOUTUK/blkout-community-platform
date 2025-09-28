@@ -229,6 +229,13 @@ const AdminNewsInterface: React.FC = () => {
         return (
           <>
             <button
+              onClick={() => handleEditArticle(article)}
+              className="bg-yellow-600 hover:bg-yellow-500 text-white p-2 rounded-lg transition-all duration-300"
+              title="Edit Before Approval"
+            >
+              <Edit className="h-4 w-4" />
+            </button>
+            <button
               onClick={() => handlePublishArticle(article.id)}
               className="bg-green-600 hover:bg-green-500 text-white p-2 rounded-lg transition-all duration-300"
               title="Approve & Publish"
@@ -310,8 +317,48 @@ const AdminNewsInterface: React.FC = () => {
           </div>
         </header>
         <NewsSubmissionForm
-          onSubmitSuccess={handleArticleSubmitSuccess}
-          onCancel={() => setCurrentView('list')}
+          onSubmit={handleArticleSubmitSuccess}
+          onClose={() => setCurrentView('list')}
+        />
+      </div>
+    );
+  }
+
+  // Edit Article View
+  if (currentView === 'edit' && selectedArticle) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+        <header className="border-b border-liberation-sovereignty-gold/20 bg-black/50 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-6 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-black text-white">
+                  EDIT <span className="text-liberation-sovereignty-gold">ARTICLE</span>
+                </h1>
+                <p className="text-gray-400 mt-1">Edit article before approval</p>
+              </div>
+              <button
+                onClick={() => setCurrentView('list')}
+                className="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-all duration-300"
+              >
+                Back to Articles
+              </button>
+            </div>
+          </div>
+        </header>
+        <NewsSubmissionForm
+          initialData={{
+            title: selectedArticle.title,
+            content: selectedArticle.content,
+            excerpt: selectedArticle.excerpt,
+            category: selectedArticle.category,
+            tags: selectedArticle.tags,
+            traumaInformed: true,
+            accessibilityFeatures: []
+          }}
+          onSubmit={handleArticleSubmitSuccess}
+          onClose={() => setCurrentView('list')}
+          editMode={true}
         />
       </div>
     );

@@ -15,6 +15,7 @@ import AdminDashboard from '@/components/admin/AdminDashboard';
 import AboutUs from '@/components/pages/AboutUs';
 import NewsPage from '@/components/pages/NewsPage';
 import StoryArchive from '@/components/pages/StoryArchive';
+import ArticleDetail from '@/components/pages/ArticleDetail';
 import EventsCalendar from '@/components/pages/EventsCalendar';
 import DiscoverPage from '@/components/pages/DiscoverPage';
 import Footer from '@/components/ui/Footer';
@@ -208,7 +209,7 @@ export default function App() {
       case 'governance':
         return <GovernancePage />;
       case 'platform':
-        return <DiscoverPage />;
+        return <DiscoverPage onNavigate={changeActiveTab} />;
       case 'admin':
         return <AdminDashboard />;
       default:

@@ -25,7 +25,7 @@ export interface LiberationEvent {
   traumaInformed: boolean;
   accessibilityFeatures: string[];
   communityValue: 'education' | 'mutual-aid' | 'organizing' | 'celebration' | 'healing';
-  status: 'upcoming' | 'happening-now' | 'completed' | 'cancelled';
+  status: 'pending' | 'upcoming' | 'happening-now' | 'completed' | 'cancelled';
   sourceUrl?: string; // Link back to the original source of the event
   created: string;
   updated: string;
