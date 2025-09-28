@@ -393,8 +393,8 @@ What would feel most helpful for you right now? I'm here to listen and support y
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 md:p-4">
-      <div className="bg-white rounded-lg w-full max-w-4xl h-[95vh] md:h-[80vh] flex flex-col max-h-screen">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 md:p-4 overflow-y-auto">
+      <div className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] md:max-h-[85vh] flex flex-col overflow-hidden my-auto">
         {/* Header */}
         <div className="bg-liberation-gold text-gray-900 p-3 md:p-4 rounded-t-lg flex justify-between items-center">
           <div className="flex items-center space-x-2 md:space-x-3">
@@ -415,7 +415,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
           </button>
         </div>
 
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-1 min-h-0">
           {/* Learning Tools Sidebar */}
           {showLearningTools && (
             <div className="w-full md:w-1/3 bg-gray-50 border-r border-liberation-gold/20 p-3 md:p-4 overflow-y-auto">
@@ -481,7 +481,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
           )}
 
           {/* Chat Area */}
-          <div className={`${showLearningTools ? 'hidden md:flex md:w-2/3' : 'w-full'} flex-col`}>
+          <div className={`${showLearningTools ? 'hidden md:flex md:w-2/3' : 'w-full'} flex flex-col min-h-0`}>
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 md:space-y-4">
               {messages.map(message => (
