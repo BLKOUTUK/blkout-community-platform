@@ -29,12 +29,7 @@ class StoryArchiveAPI {
     totalPages: number;
   }> {
     try {
-      // Try to fetch from Supabase first if configured
-      if (this.supabaseUrl && this.supabaseAnonKey) {
-        return await this.fetchStoriesFromSupabase(query, category, page, limit);
-      }
-
-      // Fetch from stories API
+      // Always use the API endpoint (which handles Supabase internally)
       const params = new URLSearchParams({
         category: category !== 'all' ? category : '',
         search: query || '',
