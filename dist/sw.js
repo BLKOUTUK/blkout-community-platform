@@ -94,6 +94,11 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
+  // Ignore chrome-extension and other non-http(s) schemes
+  if (!url.protocol.startsWith('http')) {
+    return;
+  }
+
   // Only handle GET requests for liberation platform
   if (request.method !== 'GET') {
     return;
@@ -216,6 +221,13 @@ async function handleAPIRequest(request) {
 
 // Handle static liberation platform assets
 async function handleStaticAsset(request) {
+  // Safety check: don't cache chrome-extension or other non-http schemes
+  const url = new URL(request.url);
+  if (!url.protocol.startsWith('http')) {
+    console.log('🚫 Ignoring non-http request:', request.url);
+    return fetch(request);
+  }
+
   // Cache-first for static liberation platform assets
   const cache = await caches.open(STATIC_CACHE_NAME);
   const cachedResponse = await cache.match(request);

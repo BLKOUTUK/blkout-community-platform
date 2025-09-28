@@ -81,44 +81,44 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
               href="https://instagram.com/blkoutuk"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-liberation-sovereignty-gold transition-colors"
+              className="text-white hover:text-liberation-sovereignty-gold transition-colors duration-200"
               aria-label="BLKOUT Instagram"
             >
-              <Instagram className="h-5 w-5" />
+              <Instagram className="h-6 w-6" />
             </a>
             <a
               href="https://twitter.com/blkoutuk"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-liberation-sovereignty-gold transition-colors"
+              className="text-white hover:text-liberation-sovereignty-gold transition-colors duration-200"
               aria-label="BLKOUT Twitter"
             >
-              <Twitter className="h-5 w-5" />
+              <Twitter className="h-6 w-6" />
             </a>
             <a
               href="https://facebook.com/blkoutuk"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-liberation-sovereignty-gold transition-colors"
+              className="text-white hover:text-liberation-sovereignty-gold transition-colors duration-200"
               aria-label="BLKOUT Facebook"
             >
-              <Facebook className="h-5 w-5" />
+              <Facebook className="h-6 w-6" />
             </a>
             <a
               href="https://youtube.com/@blkoutuk"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-liberation-sovereignty-gold transition-colors"
+              className="text-white hover:text-liberation-sovereignty-gold transition-colors duration-200"
               aria-label="BLKOUT YouTube"
             >
-              <Youtube className="h-5 w-5" />
+              <Youtube className="h-6 w-6" />
             </a>
             <a
               href="mailto:info@blkout.org"
-              className="text-white hover:text-liberation-sovereignty-gold transition-colors"
+              className="text-white hover:text-liberation-sovereignty-gold transition-colors duration-200"
               aria-label="Contact BLKOUT"
             >
-              <Mail className="h-5 w-5" />
+              <Mail className="h-6 w-6" />
             </a>
           </div>
 

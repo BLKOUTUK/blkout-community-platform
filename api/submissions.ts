@@ -105,17 +105,17 @@ async function handleStorySubmission(req: VercelRequest, res: VercelResponse) {
 
   } catch (error) {
     console.error('❌ Railway story submission error:', error);
-    console.error('❌ Error name:', error?.name);
-    console.error('❌ Error message:', error?.message);
+    console.error('❌ Error name:', (error as Error)?.name);
+    console.error('❌ Error message:', (error as Error)?.message);
 
     // Fallback to mock response on error
     const mockId = `story_${Date.now()}`;
     return res.status(201).json({
       success: false,
       id: mockId,
-      message: `Story submission failed: ${error?.message || 'Unknown error'}`,
+      message: `Story submission failed: ${(error as Error)?.message || 'Unknown error'}`,
       submittedAt: new Date().toISOString(),
-      error: `Railway backend error: ${error?.message || 'Unknown error'} - please try again`
+      error: `Railway backend error: ${(error as Error)?.message || 'Unknown error'} - please try again`
     });
   }
 }
@@ -186,17 +186,17 @@ async function handleEventSubmission(req: VercelRequest, res: VercelResponse) {
 
   } catch (error) {
     console.error('❌ Railway event submission error:', error);
-    console.error('❌ Error name:', error?.name);
-    console.error('❌ Error message:', error?.message);
+    console.error('❌ Error name:', (error as Error)?.name);
+    console.error('❌ Error message:', (error as Error)?.message);
 
     // Fallback to mock response on error
     const mockId = `event_${Date.now()}`;
     return res.status(201).json({
       success: false,
       id: mockId,
-      message: `Event submission failed: ${error?.message || 'Unknown error'}`,
+      message: `Event submission failed: ${(error as Error)?.message || 'Unknown error'}`,
       submittedAt: new Date().toISOString(),
-      error: `Railway backend error: ${error?.message || 'Unknown error'} - please try again`
+      error: `Railway backend error: ${(error as Error)?.message || 'Unknown error'} - please try again`
     });
   }
 }

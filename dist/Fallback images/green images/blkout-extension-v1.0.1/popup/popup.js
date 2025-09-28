@@ -1,5 +1,5 @@
 // BLKOUT Extension Popup Logic
-const API_BASE = 'https://blkout-beta.vercel.app/api';
+const API_BASE = 'https://blkout-community-platform.vercel.app/api';
 
 class BlkoutPopup {
   constructor() {
@@ -67,77 +67,256 @@ class BlkoutPopup {
     }
   }
   
-  // Content detection function (injected into page)
+  // Enhanced content detection function (injected into page)
   detectPageContent() {
     const url = window.location.href;
     const hostname = window.location.hostname;
-    const title = document.querySelector('h1')?.textContent?.trim() || 
+    const title = document.querySelector('h1')?.textContent?.trim() ||
                  document.title?.trim();
-    
-    // News platform detection
+
+    // Helper function to extract clean text
+    const cleanText = (text) => text?.replace(/\s+/g, ' ').trim();
+
+    // Helper function to find content using multiple selectors
+    const findContent = (selectors) => {
+      for (const selector of selectors) {
+        const element = document.querySelector(selector);
+        if (element) return cleanText(element.textContent);
+      }
+      return null;
+    };
+
+    // Helper function to find author
+    const findAuthor = (selectors) => {
+      for (const selector of selectors) {
+        const element = document.querySelector(selector);
+        if (element) {
+          const text = cleanText(element.textContent);
+          if (text && text.length > 0 && text.length < 100) return text;
+        }
+      }
+      return null;
+    };
+
+    // Enhanced Guardian detection
     if (hostname.includes('theguardian.com')) {
-      const headline = document.querySelector('h1[data-gu-name="headline"]')?.textContent?.trim() ||
-                      document.querySelector('.content__headline')?.textContent?.trim() ||
-                      document.querySelector('h1')?.textContent?.trim();
-      
-      const standfirst = document.querySelector('[data-gu-name="standfirst"]')?.textContent?.trim();
-      const content = document.querySelector('[data-gu-name="body"]')?.textContent?.trim();
-      const author = document.querySelector('[data-gu-name="author"]')?.textContent?.trim();
-      
+      const headline = findContent([
+        'h1[data-gu-name="headline"]',
+        '.content__headline',
+        '[data-component="headline"]',
+        'h1.headline',
+        'h1'
+      ]);
+
+      const standfirst = findContent([
+        '[data-gu-name="standfirst"]',
+        '.content__standfirst',
+        '[data-component="standfirst"]',
+        '.standfirst'
+      ]);
+
+      const content = findContent([
+        '[data-gu-name="body"]',
+        '.content__article-body',
+        '[data-component="text-block"]',
+        'article .content',
+        '.article-body'
+      ]);
+
+      const author = findAuthor([
+        '[data-gu-name="author"]',
+        '.byline',
+        '[data-component="contributor-byline"]',
+        '.contributor__name'
+      ]);
+
       if (headline && (content || standfirst)) {
         return {
           type: 'article',
           platform: 'guardian',
           title: headline,
-          description: standfirst || content?.substring(0, 300),
+          description: standfirst || content?.substring(0, 400),
           author: author || 'The Guardian',
           url
         };
       }
     }
     
+    // Enhanced BBC detection
     if (hostname.includes('bbc.co.uk') || hostname.includes('bbc.com')) {
-      const headline = document.querySelector('h1[data-testid="headline"]')?.textContent?.trim() ||
-                      document.querySelector('[data-component="headline"]')?.textContent?.trim() ||
-                      document.querySelector('h1')?.textContent?.trim();
-      
-      const content = document.querySelector('[data-component="text-block"]')?.textContent?.trim() ||
-                     document.querySelector('[data-testid="article-body"]')?.textContent?.trim();
-      
+      const headline = findContent([
+        'h1[data-testid="headline"]',
+        '[data-component="headline"]',
+        'h1[class*="headline"]',
+        'h1.story-headline',
+        'h1'
+      ]);
+
+      const content = findContent([
+        '[data-component="text-block"]',
+        '[data-testid="article-body"]',
+        '.story-body__inner',
+        'article [class*="text"]',
+        '.article-body'
+      ]);
+
+      const author = findAuthor([
+        '[data-testid="author-name"]',
+        '.byline',
+        '.author-name',
+        '[class*="byline"]'
+      ]);
+
       if (headline && content) {
         return {
           type: 'article',
           platform: 'bbc',
           title: headline,
-          description: content.substring(0, 300),
-          author: 'BBC News',
+          description: content.substring(0, 400),
+          author: author || 'BBC News',
           url
         };
       }
     }
     
+    // Enhanced Independent detection
     if (hostname.includes('independent.co.uk')) {
-      const headline = document.querySelector('h1')?.textContent?.trim();
-      const content = document.querySelector('.sc-1tw5ko3-3')?.textContent?.trim() ||
-                     document.querySelector('article')?.textContent?.trim();
-      const author = document.querySelector('[data-testid="author-name"]')?.textContent?.trim();
-      
+      const headline = findContent([
+        'h1[data-testid="headline"]',
+        'h1.headline',
+        'h1',
+        '[data-testid="article-headline"]'
+      ]);
+
+      const content = findContent([
+        '.sc-1tw5ko3-3',
+        'article [class*="text"]',
+        '.article-content',
+        '[data-testid="article-content"]',
+        'article'
+      ]);
+
+      const author = findAuthor([
+        '[data-testid="author-name"]',
+        '.byline',
+        '.author-name',
+        '[class*="byline"]'
+      ]);
+
       if (headline && content) {
         return {
           type: 'article',
           platform: 'independent',
           title: headline,
-          description: content.substring(0, 300),
+          description: content.substring(0, 400),
           author: author || 'The Independent',
           url
         };
       }
     }
+
+    // Sky News detection
+    if (hostname.includes('news.sky.com')) {
+      const headline = findContent([
+        'h1[data-testid="headline"]',
+        'h1.headline',
+        'h1',
+        '.article__headline'
+      ]);
+
+      const content = findContent([
+        '[data-testid="article-content"]',
+        '.article__body',
+        'article [class*="text"]',
+        '.story-body'
+      ]);
+
+      const author = findAuthor([
+        '.author',
+        '.byline',
+        '[data-testid="author"]'
+      ]);
+
+      if (headline && content) {
+        return {
+          type: 'article',
+          platform: 'sky-news',
+          title: headline,
+          description: content.substring(0, 400),
+          author: author || 'Sky News',
+          url
+        };
+      }
+    }
+
+    // Channel 4 News detection
+    if (hostname.includes('channel4.com')) {
+      const headline = findContent([
+        'h1.article__headline',
+        'h1',
+        '.headline'
+      ]);
+
+      const content = findContent([
+        '.article__body',
+        'article [class*="content"]',
+        '.story-content'
+      ]);
+
+      if (headline && content) {
+        return {
+          type: 'article',
+          platform: 'channel4',
+          title: headline,
+          description: content.substring(0, 400),
+          author: 'Channel 4 News',
+          url
+        };
+      }
+    }
+
+    // ITV News detection
+    if (hostname.includes('itv.com')) {
+      const headline = findContent([
+        'h1.article__title',
+        'h1',
+        '.headline'
+      ]);
+
+      const content = findContent([
+        '.article__body',
+        'article [class*="content"]',
+        '.story-body'
+      ]);
+
+      if (headline && content) {
+        return {
+          type: 'article',
+          platform: 'itv',
+          title: headline,
+          description: content.substring(0, 400),
+          author: 'ITV News',
+          url
+        };
+      }
+    }
     
+    // Enhanced Twitter/X detection
     if (hostname.includes('twitter.com') || hostname.includes('x.com')) {
-      const tweetText = document.querySelector('[data-testid="tweetText"]')?.textContent?.trim();
-      const userName = document.querySelector('[data-testid="User-Name"]')?.textContent?.trim();
-      
+      const tweetText = findContent([
+        '[data-testid="tweetText"]',
+        '[data-testid="tweet-text"]',
+        '.tweet-text',
+        '[class*="tweet"][class*="text"]'
+      ]);
+
+      const userName = findAuthor([
+        '[data-testid="User-Name"]',
+        '[data-testid="username"]',
+        '.username',
+        '[class*="username"]'
+      ]);
+
       if (tweetText && tweetText.length > 20) {
         return {
           type: 'article',
@@ -149,8 +328,162 @@ class BlkoutPopup {
         };
       }
     }
-    
-    // Platform-specific detection
+
+    // LinkedIn detection
+    if (hostname.includes('linkedin.com')) {
+      const content = findContent([
+        '.feed-shared-text',
+        '[data-testid="main-feed-activity-card"] .feed-shared-text',
+        '.article-content',
+        'article'
+      ]);
+
+      const author = findAuthor([
+        '.feed-shared-actor__name',
+        '.author-name',
+        '[data-testid="post-author-name"]'
+      ]);
+
+      if (content && content.length > 50) {
+        return {
+          type: 'article',
+          platform: 'linkedin',
+          title: content.length > 100 ? content.substring(0, 100) + '...' : content,
+          description: content,
+          author: author || 'LinkedIn User',
+          url
+        };
+      }
+    }
+
+    // Instagram detection (for public posts)
+    if (hostname.includes('instagram.com')) {
+      const content = findContent([
+        'article [class*="caption"]',
+        '[class*="caption"]',
+        'meta[property="og:description"]'
+      ]);
+
+      const author = findAuthor([
+        'header [class*="username"]',
+        '[class*="username"]'
+      ]);
+
+      if (content && content.length > 20) {
+        return {
+          type: 'article',
+          platform: 'instagram',
+          title: content.length > 100 ? content.substring(0, 100) + '...' : content,
+          description: content,
+          author: author || 'Instagram User',
+          url
+        };
+      }
+    }
+
+    // Reuters detection
+    if (hostname.includes('reuters.com')) {
+      const headline = findContent([
+        'h1[data-testid="headline"]',
+        'h1.ArticleHeader_headline',
+        'h1',
+        '.headline'
+      ]);
+
+      const content = findContent([
+        '[data-testid="paragraph"]',
+        '.ArticleBodyWrapper',
+        '.StandardArticleBody_body',
+        'article [data-testid="body"]'
+      ]);
+
+      const author = findAuthor([
+        '.Attribution_container',
+        '.byline',
+        '[data-testid="author-name"]'
+      ]);
+
+      if (headline && content) {
+        return {
+          type: 'article',
+          platform: 'reuters',
+          title: headline,
+          description: content.substring(0, 400),
+          author: author || 'Reuters',
+          url
+        };
+      }
+    }
+
+    // Al Jazeera detection
+    if (hostname.includes('aljazeera.com')) {
+      const headline = findContent([
+        'h1.article-heading',
+        'h1[data-testid="post-title"]',
+        'h1',
+        '.headline'
+      ]);
+
+      const content = findContent([
+        '.wysiwyg',
+        '.article-p-wrapper',
+        'article .content',
+        '[data-testid="article-body"]'
+      ]);
+
+      const author = findAuthor([
+        '.article-author-name',
+        '.byline',
+        '[data-testid="author-name"]'
+      ]);
+
+      if (headline && content) {
+        return {
+          type: 'article',
+          platform: 'aljazeera',
+          title: headline,
+          description: content.substring(0, 400),
+          author: author || 'Al Jazeera',
+          url
+        };
+      }
+    }
+
+    // HuffPost detection
+    if (hostname.includes('huffpost.com') || hostname.includes('huffingtonpost')) {
+      const headline = findContent([
+        'h1.headline__title',
+        'h1[data-testid="card-headline"]',
+        'h1',
+        '.headline'
+      ]);
+
+      const content = findContent([
+        '.entry__text',
+        '.yr-entry-text',
+        'article .content',
+        '[data-testid="card-text"]'
+      ]);
+
+      const author = findAuthor([
+        '.entry-wirepartner__byline',
+        '.author-card__details',
+        '.byline'
+      ]);
+
+      if (headline && content) {
+        return {
+          type: 'article',
+          platform: 'huffpost',
+          title: headline,
+          description: content.substring(0, 400),
+          author: author || 'HuffPost',
+          url
+        };
+      }
+    }
+
+    // Platform-specific event detection
     if (hostname.includes('eventbrite.com')) {
       const eventTitle = document.querySelector('h1[data-automation="event-title"]')?.textContent?.trim();
       const description = document.querySelector('[data-automation="event-description"]')?.textContent?.trim();
@@ -202,25 +535,75 @@ class BlkoutPopup {
       }
     }
     
-    // Generic content detection
-    const content = document.querySelector('article')?.textContent?.trim() ||
-                   document.querySelector('main')?.textContent?.trim() ||
-                   document.querySelector('.content')?.textContent?.trim() ||
-                   document.body?.textContent?.trim();
-    
+    // Enhanced generic content detection
+    const content = findContent([
+      'article',
+      '[role="main"]',
+      'main',
+      '.post-content',
+      '.article-content',
+      '.content',
+      '.story',
+      '[class*="content"]',
+      '[class*="article"]',
+      '.entry-content'
+    ]);
+
+    const author = findAuthor([
+      '.author',
+      '.byline',
+      '.writer',
+      '[class*="author"]',
+      '[class*="byline"]',
+      '.post-author',
+      'meta[name="author"]'
+    ]) || findContent(['meta[name="author"]']);
+
     if (title && content && content.length > 200) {
-      // Check for event keywords
-      const eventKeywords = ['event', 'workshop', 'conference', 'meetup', 'gathering', 'protest', 'march', 'rally', 'celebration'];
-      const isEvent = eventKeywords.some(keyword => 
-        title.toLowerCase().includes(keyword) || 
-        content.toLowerCase().substring(0, 500).includes(keyword)
+      // Enhanced event keyword detection
+      const eventKeywords = [
+        'event', 'workshop', 'conference', 'meetup', 'gathering',
+        'protest', 'march', 'rally', 'celebration', 'seminar',
+        'webinar', 'summit', 'festival', 'exhibition', 'performance',
+        'concert', 'screening', 'talk', 'panel', 'discussion',
+        'fundraiser', 'vigil', 'demonstration', 'action'
+      ];
+
+      const timeKeywords = [
+        'date:', 'time:', 'when:', 'registration:', 'tickets:',
+        'rsvp', 'book now', 'register', 'attend', 'join us'
+      ];
+
+      const titleLower = title.toLowerCase();
+      const contentLower = content.toLowerCase().substring(0, 800);
+
+      const hasEventKeywords = eventKeywords.some(keyword =>
+        titleLower.includes(keyword) || contentLower.includes(keyword)
       );
-      
+
+      const hasTimeIndicators = timeKeywords.some(keyword =>
+        contentLower.includes(keyword)
+      );
+
+      const isEvent = hasEventKeywords || hasTimeIndicators;
+
+      // Try to extract better description for articles
+      let description = content.substring(0, 300);
+
+      // Look for meta description as backup
+      const metaDescription = document.querySelector('meta[name="description"]')?.getAttribute('content') ||
+                             document.querySelector('meta[property="og:description"]')?.getAttribute('content');
+
+      if (metaDescription && metaDescription.length > 100) {
+        description = metaDescription.length > 300 ? metaDescription.substring(0, 300) : metaDescription;
+      }
+
       return {
         type: isEvent ? 'event' : 'article',
         platform: 'generic',
         title,
-        description: content.substring(0, 300),
+        description,
+        author: author || 'Unknown',
         url
       };
     }
@@ -338,16 +721,25 @@ class BlkoutPopup {
     this.showStatus('Submitting...', 'info');
     
     try {
-      const endpoint = type === 'event' ? '/events' : '/articles';
+      // Use the public content API endpoint
+      const endpoint = '/content';
       console.log('Submitting to:', API_BASE + endpoint);
-      console.log('Submit data:', submitData);
-      
+
+      // Prepare data for the content API
+      const apiData = {
+        contentType: type,
+        ...submitData
+      };
+
+      console.log('Submit data:', apiData);
+
       const response = await fetch(API_BASE + endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'X-Liberation-Source': 'chrome-extension'
         },
-        body: JSON.stringify(submitData)
+        body: JSON.stringify(apiData)
       });
       
       console.log('Response status:', response.status);

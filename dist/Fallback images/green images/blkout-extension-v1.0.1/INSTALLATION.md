@@ -1,124 +1,122 @@
-# BLKOUT Chrome Extension - Installation Guide
+# BLKOUT Community Submission Tool - Installation Guide
 
-## 🚀 Quick Installation (5 minutes)
+## Enhanced Version 1.0.2
+**✅ Enhanced Content Detection** - Much better scraping and platform support!
 
-### Step 1: Download the Extension
-1. **Download the extension folder** from the project maintainer
-2. **Or clone from repository**: The extension is located in `blkout-extension/` folder
+This Chrome extension allows you to submit events and articles to the BLKOUT Liberation Platform directly from any webpage with intelligent content detection.
 
-### Step 2: Install in Chrome
-1. **Open Chrome** and go to: `chrome://extensions/`
-2. **Enable Developer Mode** (toggle switch in top-right corner)
-3. **Click "Load unpacked"** button
-4. **Select the `blkout-extension` folder** from your downloads
-5. **Extension installs** - you'll see the BLKOUT icon in your toolbar
+## What's New in 1.0.2
+- ✅ Enhanced content detection with better selectors
+- ✅ Added support for Reuters, Al Jazeera, HuffPost
+- ✅ Improved Twitter/X, LinkedIn, Instagram detection
+- ✅ Added Sky News, Channel 4, ITV support
+- ✅ Smarter generic content extraction
+- ✅ Better event detection with enhanced keywords
+- ✅ Meta description fallback for better content quality
 
-### Step 3: Test It Works
-1. **Visit the test page**: Open `test-page.html` in your browser
-2. **Look for floating button**: "📤 Submit event to BLKOUT" should appear
-3. **Click the extension icon** in toolbar to see the popup interface
-4. **Try submitting**: Fill out the form and submit a test event
+## Previous Fixes (1.0.1)
+- ✅ Updated API endpoints to use correct production URLs
+- ✅ Removed authentication dependency (no admin credentials required)
+- ✅ Uses public content submission endpoint
+- ✅ Fixed domain permissions in manifest
 
-## 📤 Sharing with Your Community
+## Installation Steps
 
-### For Community Moderators/Organizers:
-
-#### Option 1: Direct File Sharing
-```bash
-# Create a zip file for easy sharing
-zip -r blkout-extension.zip blkout-extension/
+### 1. Download Extension
+This extension is located in your BLKOUT platform repository:
 ```
-**Share via:**
-- Email attachment
-- Google Drive/Dropbox link
-- Community messaging platforms
-- GitHub repository
-
-#### Option 2: GitHub Repository
-1. **Upload to GitHub** (recommended for version control)
-2. **Create release** with zip download
-3. **Share repository link** with installation instructions
-
-#### Option 3: Internal Distribution
-1. **Host on community website** as downloadable zip
-2. **Include in onboarding materials** for new volunteers
-3. **Add to community documentation**
-
-### Installation Instructions for Community Members:
-
-**Send this to your community:**
-
----
-
-## 📥 Install BLKOUT Submission Tool
-
-**What it does**: Submit events and articles to BLKOUT with one click from any website
-
-**Installation (Chrome only, 2 minutes):**
-
-1. **Download** the extension folder (ask organizer for link)
-2. **Open Chrome** → Type `chrome://extensions/` in address bar
-3. **Turn on "Developer mode"** (top right toggle)
-4. **Click "Load unpacked"** → Select the downloaded folder
-5. **Done!** Look for BLKOUT icon in your toolbar
-
-**How to use:**
-- Browse to any event page (Eventbrite, Facebook Events, etc.)
-- Click the floating "Submit to BLKOUT" button that appears
-- Fill in any missing details and submit
-- Articles from news sites work the same way!
-
-**Need help?** Contact: [your-contact]
-
----
-
-## 🔧 Advanced Setup
-
-### For Technical Users:
-
-#### Development Installation:
-```bash
-git clone [repository-url]
-cd blkout-website/blkout-extension
-# Load unpacked in Chrome Developer Mode
+/public/Fallback images/green images/blkout-extension-v1.0.1/
 ```
 
-#### Customization:
-- **API endpoint**: Edit `API_BASE` in `background.js` and `popup.js`
-- **Supported sites**: Add new platforms in `content-scripts/detector.js`
-- **Styling**: Modify `popup/popup.css`
+### 2. Install in Chrome
+1. Open Chrome and go to `chrome://extensions/`
+2. Enable **Developer mode** (toggle in top right)
+3. Click **Load unpacked**
+4. Select the `blkout-extension-v1.0.1` folder
+5. The BLKOUT extension should now appear in your extensions
 
-## 🌐 Browser Compatibility
+### 3. How to Use
 
-- ✅ **Chrome** (recommended)
-- ✅ **Edge** (Chromium-based)
-- ✅ **Brave** 
-- ❌ **Firefox** (requires conversion to WebExtensions format)
-- ❌ **Safari** (requires different manifest format)
+#### Quick Submission (Popup)
+1. Click the BLKOUT extension icon in your browser toolbar
+2. The extension will automatically scan the current page for content
+3. Choose **Submit Event** or **Submit Article**
+4. Fill in the form and click **Submit to BLKOUT**
 
-## 🔒 Privacy & Security
+#### Context Menu Submission
+1. Right-click on any page, link, or selected text
+2. Choose **Submit to BLKOUT** from the context menu
+3. Fill in the quick form that appears
+4. Click **Submit**
 
-**Data Collection**: None - extension only accesses pages when you use it
-**Permissions**: Minimal - only active tab and BLKOUT API
-**Storage**: Local only - no cloud sync
-**Source Code**: Open source - inspect before installing
+## Supported Platforms
+The extension automatically detects content from:
 
-## 📞 Support
+**News Sources:**
+- The Guardian
+- BBC News
+- The Independent
+- Reuters
+- Al Jazeera
+- HuffPost
+- Sky News
+- Channel 4 News
+- ITV News
 
-**Issues or questions?**
-- Check the README.md file
-- Contact community tech team
-- Report bugs via community channels
+**Social Media:**
+- Twitter/X (enhanced detection)
+- LinkedIn
+- Instagram (public posts)
 
-## 🎯 Success Metrics
+**Event Platforms:**
+- Eventbrite
+- Facebook Events
+- Meetup
 
-**Target Usage:**
-- 20+ community members using extension
-- 50+ submissions per week
-- 80%+ approval rate for submitted content
+**Generic Detection:**
+- Any website with article content
+- Enhanced event keyword detection
+- Meta description extraction
+- Multiple content selector fallbacks
 
-**Track your impact**: Check BLKOUT admin dashboard to see your contributions!
+## Content Processing
+All submissions:
+- ✅ Go through community moderation process
+- ✅ Are reviewed by moderators before publishing
+- ✅ Maintain liberation values and community standards
+- ✅ Support community-submitted content without admin credentials
+
+## Troubleshooting
+
+### Extension Not Loading
+- Ensure Developer mode is enabled in Chrome extensions
+- Check that all files are present in the extension folder
+- Try reloading the extension
+
+### Submission Fails
+- Check your internet connection
+- The extension now uses `https://blkout-community-platform.vercel.app/api/content`
+- All submissions are reviewed by moderators (24-48 hours)
+
+### Permission Errors
+- The extension may request permissions for various news sites
+- These are used for content detection only
+- No personal data is collected or transmitted
+
+## Technical Details
+- **API Endpoint**: `https://blkout-community-platform.vercel.app/api/content`
+- **Authentication**: None required (public submissions)
+- **Content Review**: All submissions go to moderation queue
+- **Response Time**: Confirmation immediate, review within 24-48 hours
+
+## Community Values
+This extension supports BLKOUT's liberation values:
+- 🏠 **Community First**: No admin barriers, accessible submissions
+- 🤝 **Collective Wisdom**: Community moderation and review
+- 🛡️ **Protected Spaces**: Content reviewed for safety and appropriateness
+- 🌱 **Democratic Process**: All content subject to community review
 
 ---
-
-*Ready to crowd out mock data with real community content!* 🚀
+**Status**: ✅ Ready for use (Enhanced content detection)
+**Version**: 1.0.2
+**Last Updated**: 2025-09-26

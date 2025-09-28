@@ -1,6 +1,6 @@
 // BLKOUT Discovery Page - What's New & How to Get Involved
 import React from 'react';
-import { Sparkles, Calendar, MessageCircle, Trophy, Heart, Users, TrendingUp, ArrowRight, Star, Gift, BookOpen } from 'lucide-react';
+import { Sparkles, Calendar, MessageCircle, Trophy, Heart, Users, TrendingUp, ArrowRight, Star, Gift, BookOpen, Instagram } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const DiscoverPage: React.FC = () => {
@@ -89,6 +89,273 @@ const DiscoverPage: React.FC = () => {
                 </div>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Instagram Feed Section */}
+      <section className="py-12 px-6 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100 flex items-center">
+            <Instagram className="w-8 h-8 text-pink-500 mr-3" />
+            Follow Our Journey on Instagram
+          </h2>
+
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg">
+            <div className="text-center mb-8">
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-4">
+                Stay connected with our community through daily stories, event highlights, and moments of Black queer joy.
+              </p>
+              <a
+                href="https://instagram.com/blkoutuk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-600 text-white rounded-lg font-semibold hover:from-pink-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105"
+              >
+                <Instagram className="w-5 h-5" />
+                <span>Follow @blkoutuk</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            {/* Instagram Embed */}
+            <div className="flex justify-center">
+              <div className="w-full max-w-md">
+                <blockquote
+                  className="instagram-media"
+                  data-instgrm-permalink="https://www.instagram.com/blkoutuk/?utm_source=ig_embed&amp;utm_campaign=loading"
+                  data-instgrm-version="14"
+                  style={{
+                    background: '#FFF',
+                    border: '0',
+                    borderRadius: '3px',
+                    boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
+                    margin: '1px',
+                    maxWidth: '540px',
+                    minWidth: '326px',
+                    padding: '0',
+                    width: '99.375%'
+                  }}
+                >
+                  <div style={{ padding: '16px' }}>
+                    <a
+                      href="https://www.instagram.com/blkoutuk/?utm_source=ig_embed&amp;utm_campaign=loading"
+                      style={{
+                        background: '#FFFFFF',
+                        lineHeight: '0',
+                        padding: '0 0',
+                        textAlign: 'center',
+                        textDecoration: 'none',
+                        width: '100%'
+                      }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center'
+                      }}>
+                        <div style={{
+                          backgroundColor: '#F4F4F4',
+                          borderRadius: '50%',
+                          flexGrow: '0',
+                          height: '40px',
+                          marginRight: '14px',
+                          width: '40px'
+                        }}></div>
+                        <div style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          flexGrow: '1',
+                          justifyContent: 'center'
+                        }}>
+                          <div style={{
+                            backgroundColor: '#F4F4F4',
+                            borderRadius: '4px',
+                            flexGrow: '0',
+                            height: '14px',
+                            marginBottom: '6px',
+                            width: '100px'
+                          }}></div>
+                          <div style={{
+                            backgroundColor: '#F4F4F4',
+                            borderRadius: '4px',
+                            flexGrow: '0',
+                            height: '14px',
+                            width: '60px'
+                          }}></div>
+                        </div>
+                      </div>
+                      <div style={{ padding: '19% 0' }}></div>
+                      <div style={{
+                        display: 'block',
+                        height: '50px',
+                        margin: '0 auto 12px',
+                        width: '50px'
+                      }}>
+                        <Instagram className="w-12 h-12 text-pink-500" />
+                      </div>
+                      <div style={{ paddingTop: '8px' }}>
+                        <div style={{
+                          color: '#3897f0',
+                          fontFamily: 'Arial,sans-serif',
+                          fontSize: '14px',
+                          fontStyle: 'normal',
+                          fontWeight: '550',
+                          lineHeight: '18px'
+                        }}>
+                          View this profile on Instagram
+                        </div>
+                      </div>
+                      <div style={{ padding: '12.5% 0' }}></div>
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        marginBottom: '14px',
+                        alignItems: 'center'
+                      }}>
+                        <div>
+                          <div style={{
+                            backgroundColor: '#F4F4F4',
+                            borderRadius: '50%',
+                            height: '12.5px',
+                            width: '12.5px',
+                            transform: 'translateX(0px) translateY(7px)'
+                          }}></div>
+                          <div style={{
+                            backgroundColor: '#F4F4F4',
+                            height: '12.5px',
+                            transform: 'rotate(-45deg) translateX(3px) translateY(1px)',
+                            width: '12.5px',
+                            flexGrow: '0',
+                            marginRight: '14px',
+                            marginLeft: '2px'
+                          }}></div>
+                          <div style={{
+                            backgroundColor: '#F4F4F4',
+                            borderRadius: '50%',
+                            height: '12.5px',
+                            width: '12.5px',
+                            transform: 'translateX(9px) translateY(-18px)'
+                          }}></div>
+                        </div>
+                        <div style={{ marginLeft: '8px' }}>
+                          <div style={{
+                            backgroundColor: '#F4F4F4',
+                            borderRadius: '50%',
+                            flexGrow: '0',
+                            height: '20px',
+                            width: '20px'
+                          }}></div>
+                          <div style={{
+                            width: '0',
+                            height: '0',
+                            borderTop: '2px solid transparent',
+                            borderLeft: '6px solid #f4f4f4',
+                            borderBottom: '2px solid transparent',
+                            transform: 'translateX(16px) translateY(-4px) rotate(30deg)'
+                          }}></div>
+                        </div>
+                        <div style={{ marginLeft: 'auto' }}>
+                          <div style={{
+                            width: '0px',
+                            borderTop: '8px solid #F4F4F4',
+                            borderRight: '8px solid transparent',
+                            transform: 'translateY(16px)'
+                          }}></div>
+                          <div style={{
+                            backgroundColor: '#F4F4F4',
+                            flexGrow: '0',
+                            height: '12px',
+                            width: '16px',
+                            transform: 'translateY(-4px)'
+                          }}></div>
+                          <div style={{
+                            width: '0',
+                            height: '0',
+                            borderTop: '8px solid #F4F4F4',
+                            borderLeft: '8px solid transparent',
+                            transform: 'translateY(-4px) translateX(8px)'
+                          }}></div>
+                        </div>
+                      </div>
+                      <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        flexGrow: '1',
+                        justifyContent: 'center',
+                        marginBottom: '24px'
+                      }}>
+                        <div style={{
+                          backgroundColor: '#F4F4F4',
+                          borderRadius: '4px',
+                          flexGrow: '0',
+                          height: '14px',
+                          marginBottom: '6px',
+                          width: '224px'
+                        }}></div>
+                        <div style={{
+                          backgroundColor: '#F4F4F4',
+                          borderRadius: '4px',
+                          flexGrow: '0',
+                          height: '14px',
+                          width: '144px'
+                        }}></div>
+                      </div>
+                    </a>
+                    <p style={{
+                      color: '#c9c8cd',
+                      fontFamily: 'Arial,sans-serif',
+                      fontSize: '14px',
+                      lineHeight: '17px',
+                      marginBottom: '0',
+                      marginTop: '8px',
+                      overflow: 'hidden',
+                      padding: '8px 0 7px',
+                      textAlign: 'center',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      <a
+                        href="https://www.instagram.com/blkoutuk/?utm_source=ig_embed&amp;utm_campaign=loading"
+                        style={{
+                          color: '#c9c8cd',
+                          fontFamily: 'Arial,sans-serif',
+                          fontSize: '14px',
+                          fontStyle: 'normal',
+                          fontWeight: 'normal',
+                          lineHeight: '17px',
+                          textDecoration: 'none'
+                        }}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        A profile shared by BLKOUT (@blkoutuk)
+                      </a>
+                    </p>
+                  </div>
+                </blockquote>
+              </div>
+            </div>
+
+            {/* Alternative: Simple Instagram grid preview */}
+            <div className="mt-8 text-center">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                Latest from our Instagram stories and community highlights
+              </p>
+              <div className="grid grid-cols-3 gap-2 max-w-md mx-auto">
+                <div className="aspect-square bg-gradient-to-br from-pink-400 to-purple-500 rounded-lg flex items-center justify-center">
+                  <Instagram className="w-8 h-8 text-white" />
+                </div>
+                <div className="aspect-square bg-gradient-to-br from-yellow-400 to-pink-500 rounded-lg flex items-center justify-center">
+                  <Heart className="w-8 h-8 text-white" />
+                </div>
+                <div className="aspect-square bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                  <Users className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
