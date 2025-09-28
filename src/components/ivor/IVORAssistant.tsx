@@ -91,6 +91,14 @@ const LEARNING_TOOLS: LearningTool[] = [
     icon: '🗺️',
     category: 'learning',
     prompt: 'I need help finding resources or connecting with community support. Can you guide me?'
+  },
+  {
+    id: 'staying-healthy',
+    name: 'Staying Healthy',
+    description: 'Sexual health, wellness, and care resources for Black queer men',
+    icon: '💪🏾',
+    category: 'emotional-support',
+    prompt: 'I have questions about sexual health, wellness, or staying healthy. Can you share resources and information?'
   }
 ];
 
@@ -347,6 +355,37 @@ What aspect of liberation wisdom resonates with you today? I'm here to explore t
 - Design something that brings joy to your neighbors
 
 What kind of creative work calls to you? I'm here to help you reconnect with your artistic power!`;
+    }
+
+    // Staying healthy responses
+    if (message.includes('health') || message.includes('sexual health') || message.includes('wellness') || message.includes('staying healthy') || message.includes('sti') || message.includes('hiv') || message.includes('prep') || message.includes('medical')) {
+      return `Your health and wellness matter deeply to our community. Here's some trusted information and resources:
+
+**Sexual Health & Wellness Resources:**
+- **MenRUS.co.uk** - GMHC's comprehensive sexual health resource for Black queer men: https://menrus.co.uk
+- **PrEP Information** - Pre-exposure prophylaxis for HIV prevention
+- **STI Testing** - Regular testing as part of self-care and community care
+- **Mental Health Support** - Holistic wellness includes emotional wellbeing
+
+**Community-Centered Health Principles:**
+- Your body, your choices - informed consent in all healthcare
+- Healthcare is a human right, not a privilege
+- Cultural competency matters - seek providers who understand your identity
+- Community knowledge and medical expertise both have value
+
+**Key Health Topics:**
+- **Sexual Health**: Regular testing, safer sex practices, communication with partners
+- **Mental Wellness**: Trauma-informed care, therapy, community support
+- **Substance Use**: Harm reduction, non-judgmental support
+- **Healthcare Access**: Finding affirming providers, navigating systems
+
+**Important Reminders:**
+- This is general information, not medical advice
+- Always consult with healthcare providers for personal health decisions
+- You deserve respectful, culturally competent healthcare
+- Community support complements professional medical care
+
+Would you like specific information about any of these health topics? I'm here to provide resources and support your wellness journey.`;
     }
 
     // Resource navigator responses
