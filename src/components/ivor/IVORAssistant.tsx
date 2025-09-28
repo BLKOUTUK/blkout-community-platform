@@ -396,7 +396,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 md:p-4">
       <div className="bg-white rounded-lg w-full max-w-4xl h-[95vh] md:h-[80vh] flex flex-col max-h-screen">
         {/* Header */}
-        <div className="bg-liberation-gold text-liberation-black p-3 md:p-4 rounded-t-lg flex justify-between items-center">
+        <div className="bg-liberation-gold text-gray-900 p-3 md:p-4 rounded-t-lg flex justify-between items-center">
           <div className="flex items-center space-x-2 md:space-x-3">
             <div className="w-8 h-8 md:w-10 md:h-10 bg-liberation-black rounded-full flex items-center justify-center">
               <span className="text-liberation-gold font-bold text-sm md:text-base">I</span>
@@ -408,7 +408,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
           </div>
           <button
             onClick={onClose}
-            className="text-liberation-black hover:text-liberation-black/70 text-xl md:text-2xl font-bold touch-friendly p-1"
+            className="text-gray-900 hover:text-gray-700 text-xl md:text-2xl font-bold touch-friendly p-1"
             aria-label="Close IVOR Assistant"
           >
             ×
@@ -418,12 +418,12 @@ What would feel most helpful for you right now? I'm here to listen and support y
         <div className="flex flex-1 overflow-hidden">
           {/* Learning Tools Sidebar */}
           {showLearningTools && (
-            <div className="w-full md:w-1/3 bg-liberation-cream border-r border-liberation-gold/20 p-3 md:p-4 overflow-y-auto">
+            <div className="w-full md:w-1/3 bg-gray-50 border-r border-liberation-gold/20 p-3 md:p-4 overflow-y-auto">
               <div className="flex justify-between items-center mb-3 md:mb-4">
-                <h3 className="font-bold text-liberation-black text-sm md:text-base">Learning Tools</h3>
+                <h3 className="font-bold text-gray-900 text-sm md:text-base">Learning Tools</h3>
                 <button
                   onClick={() => setShowLearningTools(false)}
-                  className="md:hidden text-liberation-black/60 hover:text-liberation-black touch-friendly"
+                  className="md:hidden text-gray-600 hover:text-gray-900 touch-friendly"
                   aria-label="Close learning tools"
                 >
                   ×
@@ -437,7 +437,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
                     onClick={() => setSelectedCategory(null)}
                     className={`px-2 md:px-3 py-1 rounded-full text-xs touch-friendly ${
                       selectedCategory === null
-                        ? 'bg-liberation-gold text-liberation-black'
+                        ? 'bg-liberation-gold text-gray-900'
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                     }`}
                   >
@@ -449,7 +449,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
                       onClick={() => setSelectedCategory(category)}
                       className={`px-2 md:px-3 py-1 rounded-full text-xs capitalize touch-friendly ${
                         selectedCategory === category
-                          ? 'bg-liberation-gold text-liberation-black'
+                          ? 'bg-liberation-gold text-gray-900'
                           : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                       }`}
                     >
@@ -470,7 +470,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
                     <div className="flex items-start space-x-2 md:space-x-3">
                       <span className="text-lg md:text-2xl">{tool.icon}</span>
                       <div>
-                        <h4 className="font-semibold text-liberation-black text-xs md:text-sm">{tool.name}</h4>
+                        <h4 className="font-semibold text-gray-900 text-xs md:text-sm">{tool.name}</h4>
                         <p className="text-xs text-gray-600 mt-1 hidden sm:block">{tool.description}</p>
                       </div>
                     </div>
@@ -492,12 +492,12 @@ What would feel most helpful for you right now? I'm here to listen and support y
                   <div
                     className={`max-w-[85%] md:max-w-[80%] p-2 md:p-3 rounded-lg ${
                       message.type === 'user'
-                        ? 'bg-liberation-gold text-liberation-black'
-                        : 'bg-liberation-cream text-liberation-black border border-liberation-gold/20'
+                        ? 'bg-liberation-gold text-gray-900'
+                        : 'bg-gray-100 text-gray-900 border border-liberation-gold/20'
                     }`}
                   >
-                    <p className="whitespace-pre-line text-sm md:text-base text-current">{message.content}</p>
-                    <p className="text-xs opacity-60 mt-1 md:mt-2">
+                    <p className="whitespace-pre-line text-sm md:text-base text-gray-900">{message.content}</p>
+                    <p className="text-xs text-gray-600 mt-1 md:mt-2">
                       {message.timestamp.toLocaleTimeString()}
                     </p>
                   </div>
@@ -505,7 +505,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-liberation-cream text-liberation-black border border-liberation-gold/20 p-2 md:p-3 rounded-lg">
+                  <div className="bg-gray-100 text-gray-900 border border-liberation-gold/20 p-2 md:p-3 rounded-lg">
                     <div className="flex items-center space-x-2">
                       <div className="w-2 h-2 bg-liberation-gold rounded-full animate-bounce"></div>
                       <div className="w-2 h-2 bg-liberation-gold rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
@@ -526,13 +526,13 @@ What would feel most helpful for you right now? I'm here to listen and support y
                   onChange={(e) => setCurrentMessage(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="Ask IVOR anything..."
-                  className="flex-1 p-2 md:p-3 border border-liberation-gold/20 rounded-lg focus:outline-none focus:border-liberation-gold text-sm md:text-base"
+                  className="flex-1 p-2 md:p-3 border border-liberation-gold/20 rounded-lg focus:outline-none focus:border-liberation-gold text-sm md:text-base text-gray-900 bg-white"
                   disabled={isLoading}
                 />
                 <button
                   onClick={() => handleSendMessage()}
                   disabled={isLoading || !currentMessage.trim()}
-                  className="px-4 md:px-6 py-2 md:py-3 bg-liberation-gold text-liberation-black rounded-lg hover:bg-liberation-gold/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-friendly text-sm md:text-base"
+                  className="px-4 md:px-6 py-2 md:py-3 bg-liberation-gold text-gray-900 rounded-lg hover:bg-liberation-gold/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-friendly text-sm md:text-base"
                 >
                   Send
                 </button>
@@ -540,11 +540,11 @@ What would feel most helpful for you right now? I'm here to listen and support y
               <div className="flex justify-between items-center mt-2">
                 <button
                   onClick={() => setShowLearningTools(!showLearningTools)}
-                  className="text-xs md:text-sm text-liberation-black/60 hover:text-liberation-black touch-friendly"
+                  className="text-xs md:text-sm text-gray-600 hover:text-gray-900 touch-friendly"
                 >
                   {showLearningTools ? 'Hide Tools' : 'Show Tools'}
                 </button>
-                <p className="text-xs text-liberation-black/60 hidden sm:block">
+                <p className="text-xs text-gray-600 hidden sm:block">
                   IVOR supports community learning and mutual aid
                 </p>
               </div>
