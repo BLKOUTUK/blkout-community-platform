@@ -150,10 +150,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const offsetNum = parseInt(offset as string, 10);
 
     // Try to fetch from Supabase first
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (supabaseUrl && supabaseServiceKey) {
+      console.log('✅ Using Supabase for stories:', { url: supabaseUrl.substring(0, 30) + '...', hasKey: !!supabaseServiceKey });
       return await fetchFromSupabase(req, res, supabaseUrl, supabaseServiceKey, {
         category: category as string,
         status: status as string,
@@ -165,7 +166,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Fallback to migrated data if Supabase not configured
-    console.log('Supabase not configured, using fallback data');
+    console.log('❌ Supabase not configured, using fallback mock data:', { url: !!supabaseUrl, key: !!supabaseServiceKey });
     return await fallbackToMigratedData(req, res, {
       category: category as string,
       status: status as string,
@@ -225,6 +226,8 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
       console.error('Supabase query error:', error);
       throw error;
     }
+
+    console.log(`📚 Supabase query returned ${stories?.length || 0} stories, total count: ${count}`);
 
     // Transform data to match expected interface
     const transformedStories = (stories || []).map((story: any) => ({
