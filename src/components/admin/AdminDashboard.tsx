@@ -8,6 +8,7 @@ import { communityAPI } from '@/services/community-api';
 import { BulkStorySubmission } from './BulkStorySubmission';
 import { IVORFeedbackCollection } from './IVORFeedbackCollection';
 import { voicesAPI, type VoicesArticle, type VoicesArticleSubmission } from '@/services/voices-api';
+import { liberationDB, type ModerationItem as SupabaseModerationItem } from '@/lib/supabase';
 import type { NewsArticle, CommunityEvent, EventSubmission, EventModerationItem } from '@/types/liberation';
 
 interface AdminStats {
@@ -168,12 +169,27 @@ export const AdminDashboard: React.FC = () => {
     try {
       const [queueData, eventQueueData, statsData] = await Promise.all([
         communityAPI.getModerationQueue(),
-        communityAPI.getEventModerationQueue(),
-        communityAPI.getAdminStats()
+        liberationDB.getModerationQueue('event'), // Use Supabase for events
+        liberationDB.getAdminStats()
       ]);
 
       setModerationQueue(queueData);
-      setEventModerationQueue(eventQueueData);
+
+      // Transform Supabase events to expected format
+      const transformedEvents = eventQueueData.map((item: SupabaseModerationItem) => ({
+        id: item.id,
+        title: item.title,
+        submittedBy: item.moderator_id,
+        submittedAt: item.submitted_at,
+        category: item.category,
+        type: item.content_data?.event_type || 'in-person',
+        date: item.content_data?.event_date || item.submitted_at,
+        description: item.description,
+        organizer: item.content_data?.organizer || 'Unknown',
+        status: item.status
+      }));
+
+      setEventModerationQueue(transformedEvents);
       setStats(statsData);
     } catch (error) {
       console.error('Failed to load dashboard data:', error);
@@ -202,7 +218,7 @@ export const AdminDashboard: React.FC = () => {
 
   const handleApproveEvent = async (eventId: string) => {
     try {
-      await communityAPI.approveEventForCalendar(eventId);
+      await liberationDB.approveSubmission(eventId, 'Approved for community calendar');
       await loadDashboardData(); // Refresh data
     } catch (error) {
       console.error('Failed to approve event:', error);
@@ -211,7 +227,7 @@ export const AdminDashboard: React.FC = () => {
 
   const handleRejectEvent = async (eventId: string) => {
     try {
-      await communityAPI.rejectEvent(eventId);
+      await liberationDB.rejectSubmission(eventId, 'Does not meet community guidelines');
       await loadDashboardData(); // Refresh data
     } catch (error) {
       console.error('Failed to reject event:', error);
@@ -973,7 +989,14 @@ const SingleEventSubmission: React.FC<{ onSubmit: () => void }> = ({ onSubmit })
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean)
       };
 
-      await communityAPI.submitSingleEvent(eventSubmission);
+      await liberationDB.submitEventToQueue({
+        title: eventSubmission.title,
+        description: eventSubmission.description,
+        category: eventSubmission.category,
+        type: eventSubmission.type,
+        date: eventSubmission.date,
+        organizer: eventSubmission.organizer.name
+      });
 
       setFormData({
         title: '', description: '', excerpt: '', category: '' as any, type: '' as any,
@@ -1224,7 +1247,17 @@ const BulkEventSubmission: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) =
         throw new Error('No valid events found in file');
       }
 
-      await communityAPI.submitBulkEvents({ events });
+      // Submit events individually to Supabase to avoid CORS issues
+      for (const event of events) {
+        await liberationDB.submitEventToQueue({
+          title: event.title,
+          description: event.description,
+          category: event.category,
+          type: event.type,
+          date: event.date,
+          organizer: event.organizer?.name || 'Unknown'
+        });
+      }
 
       setUploadStatus({
         type: 'success',
