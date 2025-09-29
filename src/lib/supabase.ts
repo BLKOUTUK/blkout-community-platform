@@ -193,6 +193,16 @@ export class LiberationDatabase {
 
   async approveSubmission(id: string, reviewNotes?: string): Promise<void> {
     try {
+      // First get the submission to check its type
+      const { data: submission, error: fetchError } = await this.client
+        .from('moderation_queue')
+        .select('type')
+        .eq('id', id)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      // Update moderation status
       const { error } = await this.client
         .from('moderation_queue')
         .update({
@@ -204,6 +214,17 @@ export class LiberationDatabase {
         .eq('id', id);
 
       if (error) throw error;
+
+      // Auto-publish events to public events page
+      if (submission?.type === 'event') {
+        try {
+          const publishedEventId = await this.publishApprovedEvent(id);
+          console.log(`Event ${id} approved and auto-published as ${publishedEventId}`);
+        } catch (publishError) {
+          console.error('Event approved but publication failed:', publishError);
+          // Don't throw - approval succeeded even if publication failed
+        }
+      }
 
       // TODO: Add governance event logging for transparency
       console.log(`Submission ${id} approved with liberation values compliance`);
@@ -231,6 +252,62 @@ export class LiberationDatabase {
       console.log(`Submission ${id} rejected with community feedback option`);
     } catch (error) {
       console.error('Error rejecting submission:', error);
+      throw error;
+    }
+  }
+
+  async publishApprovedEvent(moderationItemId: string): Promise<string> {
+    try {
+      // Get the approved moderation item
+      const { data: moderationItem, error: fetchError } = await this.client
+        .from('moderation_queue')
+        .select('*')
+        .eq('id', moderationItemId)
+        .eq('type', 'event')
+        .eq('status', 'approved')
+        .single();
+
+      if (fetchError) throw fetchError;
+      if (!moderationItem) throw new Error('Approved event not found');
+
+      // Prepare event data for publication
+      const contentData = moderationItem.content_data || {};
+      const eventData = {
+        title: moderationItem.title,
+        content: moderationItem.description || moderationItem.content || '',
+        author: contentData.organizer || 'Community Organizer',
+        event_date: contentData.event_date || moderationItem.submitted_at,
+        location: contentData.location || 'Location TBA',
+        status: 'published',
+        source: 'moderation_queue',
+        original_event_id: moderationItemId,
+        metadata: {
+          event_type: contentData.event_type || 'education',
+          location_type: contentData.location_type || 'in-person',
+          organizer: contentData.organizer,
+          registration_required: contentData.registration_required || false,
+          registration_link: contentData.registration_link,
+          capacity: contentData.capacity,
+          accessibility_features: contentData.accessibility_features || [],
+          community_value: contentData.community_value || 'education',
+          source_url: moderationItem.url,
+          original_moderation_id: moderationItemId
+        }
+      };
+
+      // Insert into published_events table
+      const { data: publishedEvent, error: publishError } = await this.client
+        .from('published_events')
+        .insert([eventData])
+        .select()
+        .single();
+
+      if (publishError) throw publishError;
+
+      console.log(`Event ${moderationItemId} published successfully as ${publishedEvent.id}`);
+      return publishedEvent.id;
+    } catch (error) {
+      console.error('Error publishing approved event:', error);
       throw error;
     }
   }
