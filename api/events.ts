@@ -215,11 +215,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const limitNum = parseInt(limit as string, 10);
     const offsetNum = parseInt(offset as string, 10);
 
-    // Try to fetch from Supabase first
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    // Try to fetch from Supabase first - use correct environment variables
+    const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (supabaseUrl && supabaseServiceKey) {
+      console.log('✅ Using Supabase for events:', { url: supabaseUrl.substring(0, 30) + '...', hasKey: !!supabaseServiceKey });
       return await fetchEventsFromSupabase(req, res, supabaseUrl, supabaseServiceKey, {
         category: category as string,
         type: type as string,
@@ -253,13 +254,13 @@ async function fetchEventsFromSupabase(req: VercelRequest, res: VercelResponse, 
   try {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Build query
+    // Build query - use events table not published_events
     let query = supabase
-      .from('published_events')
+      .from('events')
       .select('*', { count: 'exact' });
 
-    // Apply filters
-    query = query.eq('status', 'published');
+    // Apply filters - use approved status not published
+    query = query.eq('status', 'approved');
 
     if (params.category && params.category !== 'all') {
       query = query.ilike('category', params.category);
@@ -269,14 +270,14 @@ async function fetchEventsFromSupabase(req: VercelRequest, res: VercelResponse, 
       query = query.eq('type', params.type);
     }
 
-    // Filter upcoming events
+    // Filter upcoming events - use date field not event_date
     if (params.upcoming === 'true') {
-      const now = new Date().toISOString();
-      query = query.gte('event_date', now);
+      const now = new Date().toISOString().split('T')[0]; // Date only format
+      query = query.gte('date', now);
     }
 
-    // Sort by event date
-    query = query.order('event_date', { ascending: true });
+    // Sort by date field
+    query = query.order('date', { ascending: true });
 
     // Apply pagination
     query = query.range(params.offset, params.offset + params.limit - 1);
@@ -288,47 +289,51 @@ async function fetchEventsFromSupabase(req: VercelRequest, res: VercelResponse, 
       throw error;
     }
 
-    // Transform data to match expected interface
+    console.log(`📅 Supabase events query returned ${events?.length || 0} events, total count: ${count}`);
+
+    // Transform data to match expected interface - use actual database schema
     const transformedEvents = (events || []).map((event: any) => ({
       id: event.id,
       title: event.title,
       description: event.description || '',
-      category: event.category || 'community',
-      type: event.type || 'in-person',
-      date: event.event_date || event.created_at,
-      endDate: event.end_date,
+      category: (event.tags && event.tags[0]) || 'community',
+      type: event.virtual_link ? 'hybrid' : 'in-person',
+      date: event.date,
+      endDate: event.end_time ? `${event.date}T${event.end_time}` : null,
       location: {
-        type: event.type || 'in-person',
+        type: event.virtual_link ? 'hybrid' : 'in-person',
         details: event.location || 'TBD',
-        address: event.address,
+        address: event.location,
         virtualLink: event.virtual_link
       },
       organizer: {
-        name: event.organizer || event.author || 'Community Organizer',
-        email: event.organizer_email,
-        organization: event.organization || 'BLKOUT Community'
+        name: event.organizer || 'Community Organizer',
+        email: null,
+        organization: 'BLKOUT Community'
       },
       registration: {
         required: event.registration_required || false,
         capacity: event.capacity,
-        registrationUrl: event.registration_url,
-        deadline: event.registration_deadline,
+        registrationUrl: event.url,
+        deadline: null,
         cost: event.cost || 'Free'
       },
       accessibilityFeatures: event.accessibility_features || [],
       tags: event.tags || [],
-      imageUrl: event.image_url,
-      status: event.status || 'published',
-      featured: event.featured || false
+      imageUrl: null,
+      status: 'published', // Transform approved to published for UI
+      featured: false
     }));
 
-    // Get unique categories
+    // Get unique categories from tags
     const categoriesQuery = await supabase
-      .from('published_events')
-      .select('category')
-      .not('category', 'is', null);
+      .from('events')
+      .select('tags')
+      .eq('status', 'approved')
+      .not('tags', 'is', null);
 
-    const categories = [...new Set((categoriesQuery.data || []).map((item: any) => item.category))];
+    const allTags = (categoriesQuery.data || []).flatMap((item: any) => item.tags || []);
+    const categories = [...new Set(allTags)];
 
     return res.status(200).json({
       success: true,
