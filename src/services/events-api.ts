@@ -52,8 +52,8 @@ class EventsAPIService {
   private fallbackEvents: LiberationEvent[];
 
   constructor() {
-    // Use events API endpoint
-    this.baseURL = '/api/events';
+    // Use events API endpoint - v2 to bypass Vercel cache
+    this.baseURL = '/api/events-v2';
     this.fallbackEvents = this.generateLiveEvents();
   }
 
