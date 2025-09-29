@@ -166,42 +166,28 @@ export class LiberationDatabase {
 
       if (error) throw error;
 
-      return data || [];
+      // Transform the data to match the expected interface
+      return (data || []).map(item => ({
+        id: item.id,
+        type: item.type || 'story',
+        content_data: item.content_data || {},
+        title: item.title,
+        description: item.description || item.excerpt || item.content || '',
+        url: item.url || '',
+        category: item.category || 'general',
+        status: item.status || 'pending',
+        priority: item.priority || 'medium',
+        moderator_id: item.moderator_id || item.submitted_by || 'unknown',
+        submitted_at: item.submitted_at || item.created_at || new Date().toISOString(),
+        reviewed_at: item.reviewed_at,
+        reviewer_id: item.reviewer_id,
+        review_notes: item.review_notes,
+        created_at: item.created_at || item.submitted_at || new Date().toISOString(),
+        updated_at: item.updated_at || item.submitted_at || new Date().toISOString(),
+      }));
     } catch (error) {
       console.error('Error fetching moderation queue:', error);
-      // Return mock data for development
-      return [
-        {
-          id: 'mock-1',
-          type: 'story',
-          content_data: { title: 'Sample News Story' },
-          title: 'Breaking: Community Garden Initiative Receives Funding',
-          description: 'Local Black-owned community garden receives major grant for expansion',
-          url: 'https://example.com/community-garden-funding',
-          category: 'community',
-          status: 'pending',
-          priority: 'medium',
-          moderator_id: 'mod-001',
-          submitted_at: new Date().toISOString(),
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        },
-        {
-          id: 'mock-2',
-          type: 'event',
-          content_data: { title: 'Black Queer Youth Workshop' },
-          title: 'Healing Justice Workshop for Black Queer Youth',
-          description: 'Monthly healing circle and skill-building workshop',
-          url: 'https://example.com/healing-workshop',
-          category: 'education',
-          status: 'pending',
-          priority: 'high',
-          moderator_id: 'mod-002',
-          submitted_at: new Date(Date.now() - 86400000).toISOString(),
-          created_at: new Date(Date.now() - 86400000).toISOString(),
-          updated_at: new Date(Date.now() - 86400000).toISOString(),
-        }
-      ];
+      return [];
     }
   }
 
@@ -346,7 +332,15 @@ export class LiberationDatabase {
         .select('*')
         .eq('membership_status', 'active');
 
-      if (error) throw error;
+      if (error) {
+        console.warn('Governance members table access issue:', error);
+        // Return realistic fallback data for development
+        return {
+          active_members: 12,
+          voting_members: 8,
+          recent_participation: 85
+        };
+      }
 
       return {
         active_members: members?.length || 0,
@@ -357,6 +351,7 @@ export class LiberationDatabase {
       };
     } catch (error) {
       console.error('Error fetching governance metrics:', error);
+      // Return fallback mock data for development
       return {
         active_members: 12,
         voting_members: 8,
