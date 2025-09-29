@@ -266,53 +266,38 @@ async function fetchEventsFromSupabase(req: VercelRequest, res: VercelResponse, 
   try {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Build query - use events table not published_events
-    let query = supabase
-      .from('events')
-      .select('*', { count: 'exact' });
-
-    // Apply filters - use approved status not published
-    query = query.eq('status', 'approved');
-
-    if (params.category && params.category !== 'all') {
-      query = query.ilike('category', params.category);
-    }
-
-    if (params.type && params.type !== 'all') {
-      query = query.eq('type', params.type);
-    }
-
-    // Filter upcoming events - use date field not event_date
-    if (params.upcoming === 'true') {
-      const now = new Date().toISOString().split('T')[0]; // Date only format
-      query = query.gte('date', now);
-    }
-
-    // Debug: Log query parameters
-    console.log('🔍 Events API Query:', {
-      status: 'approved',
-      upcoming: params.upcoming,
-      limit: params.limit,
-      offset: params.offset
+    console.log('🔍 Supabase connection:', {
+      url: supabaseUrl,
+      hasKey: !!supabaseServiceKey,
+      keyLength: supabaseServiceKey?.length
     });
 
-    // Sort by date field
-    query = query.order('date', { ascending: true });
+    // SIMPLIFIED: Use exact same query that works manually
+    const { data: events, error, count } = await supabase
+      .from('events')
+      .select('*', { count: 'exact' })
+      .eq('status', 'approved')
+      .order('date', { ascending: true });
 
-    // Apply pagination
-    query = query.range(params.offset, params.offset + params.limit - 1);
-
-    const { data: events, error, count } = await query;
+    console.log('🔍 Direct query result:', {
+      count,
+      dataLength: events?.length,
+      error: error?.message,
+      sample: events?.[0]?.title
+    });
 
     if (error) {
-      console.error('Supabase events query error:', error);
-      throw error;
+      console.error('❌ Supabase query error:', error);
+      return res.status(500).json({
+        success: false,
+        error: 'Database query failed',
+        details: error.message,
+        supabaseUrl: supabaseUrl?.substring(0, 50)
+      });
     }
 
-    console.log(`📅 Supabase events query returned ${events?.length || 0} events, total count: ${count}`);
-
-    // Transform data to match expected interface - use actual database schema
-    const transformedEvents = (events || []).map((event: any) => ({
+    // Transform events to match API interface
+    const transformedEvents = (events || []).slice(params.offset, params.offset + params.limit).map((event: any) => ({
       id: event.id,
       title: event.title,
       description: event.description || '',
