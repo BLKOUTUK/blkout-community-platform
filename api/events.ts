@@ -272,12 +272,19 @@ async function fetchEventsFromSupabase(req: VercelRequest, res: VercelResponse, 
       keyLength: supabaseServiceKey?.length
     });
 
-    // SIMPLIFIED: Use exact same query that works manually
-    const { data: events, error, count } = await supabase
+    // Build query with proper date filtering
+    let query = supabase
       .from('events')
       .select('*', { count: 'exact' })
-      .eq('status', 'approved')
-      .order('date', { ascending: true });
+      .eq('status', 'approved');
+
+    // Apply upcoming filter if requested
+    if (params.upcoming === 'true') {
+      const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+      query = query.gte('date', today);
+    }
+
+    const { data: events, error, count } = await query.order('date', { ascending: true });
 
     console.log('🔍 Direct query result:', {
       count,
