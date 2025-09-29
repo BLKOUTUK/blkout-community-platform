@@ -276,6 +276,14 @@ async function fetchEventsFromSupabase(req: VercelRequest, res: VercelResponse, 
       query = query.gte('date', now);
     }
 
+    // Debug: Log query parameters
+    console.log('🔍 Events API Query:', {
+      status: 'approved',
+      upcoming: params.upcoming,
+      limit: params.limit,
+      offset: params.offset
+    });
+
     // Sort by date field
     query = query.order('date', { ascending: true });
 
