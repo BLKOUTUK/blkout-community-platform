@@ -218,8 +218,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         message: 'Events API is working',
         timestamp: new Date().toISOString(),
         environment: {
-          hasSupabaseUrl: !!(process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL),
-          hasSupabaseKey: !!(process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY)
+          hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+          hasSupabaseKey: !!process.env.SUPABASE_SERVICE_ROLE_KEY
         }
       });
     }
@@ -227,9 +227,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const limitNum = parseInt(limit as string, 10);
     const offsetNum = parseInt(offset as string, 10);
 
-    // Try to fetch from Supabase first - use correct environment variables
-    const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseServiceKey = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+    // Try to fetch from Supabase first - use same env vars as working newsroom API
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (supabaseUrl && supabaseServiceKey) {
       console.log('✅ Using Supabase for events:', { url: supabaseUrl.substring(0, 30) + '...', hasKey: !!supabaseServiceKey });
@@ -290,7 +290,9 @@ async function fetchEventsFromSupabase(req: VercelRequest, res: VercelResponse, 
       count,
       dataLength: events?.length,
       error: error?.message,
-      sample: events?.[0]?.title
+      sample: events?.[0]?.title,
+      upcomingFilter: params.upcoming,
+      today: params.upcoming === 'true' ? new Date().toISOString().split('T')[0] : 'not applied'
     });
 
     if (error) {
