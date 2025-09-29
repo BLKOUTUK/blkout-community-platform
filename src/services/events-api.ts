@@ -81,8 +81,8 @@ class EventsAPIService {
       const allEvents = [...approvedEvents, ...publishedEvents];
       const uniqueEvents = this.deduplicateEvents(allEvents);
 
+      // Don't filter by date for now - show all approved events
       return uniqueEvents
-        .filter(event => new Date(event.date) >= new Date()) // Only future events
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
     } catch (error) {
@@ -139,32 +139,85 @@ class EventsAPIService {
   private transformToLiberationEvent(moderationEvent: any): LiberationEvent {
     const contentData = moderationEvent.content_data || {};
 
+    // Extract date from title if available (e.g., "Event Name | 02 Oct @ Location")
+    const extractedDate = this.extractDateFromTitle(moderationEvent.title);
+    const eventDate = contentData.event_date || extractedDate || moderationEvent.submitted_at;
+
     return {
       id: moderationEvent.id,
       title: moderationEvent.title,
       description: moderationEvent.description || 'Event details coming soon',
-      type: this.mapEventType(contentData.event_type || 'education'),
-      date: contentData.event_date || moderationEvent.submitted_at,
+      type: this.mapEventType(contentData.event_type || 'celebration'),
+      date: eventDate,
       location: {
         type: contentData.location_type || 'in-person',
-        details: contentData.location || 'Location TBA'
+        details: this.extractLocationFromTitle(moderationEvent.title) || contentData.location || 'London'
       },
       organizer: {
-        name: contentData.organizer || moderationEvent.moderator_id || 'Community Organizer'
+        name: contentData.organizer || 'Community Organizer'
       },
       registration: {
-        required: contentData.registration_required || false,
-        link: contentData.registration_link,
+        required: true, // Most events require registration
+        link: moderationEvent.url, // Use source URL as registration link
         capacity: contentData.capacity
       },
       traumaInformed: true,
       accessibilityFeatures: contentData.accessibility_features || [],
-      communityValue: this.mapCommunityValue(contentData.community_value || 'education'),
+      communityValue: this.mapCommunityValue(contentData.community_value || 'celebration'),
       status: 'upcoming',
       sourceUrl: moderationEvent.url,
       created: moderationEvent.created_at,
       updated: moderationEvent.updated_at
     };
+  }
+
+  // Extract date from event title (e.g., "Event | 02 Oct @ Location")
+  private extractDateFromTitle(title: string): string | null {
+    try {
+      // Look for patterns like "02 Oct", "09 Sep", "11 Oct"
+      const dateMatch = title.match(/(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)/i);
+      if (dateMatch) {
+        const [, day, month] = dateMatch;
+        const currentYear = new Date().getFullYear();
+        const date = new Date(`${month} ${day}, ${currentYear}`);
+
+        // If the date is in the past, assume it's for next year
+        if (date < new Date()) {
+          date.setFullYear(currentYear + 1);
+        }
+
+        return date.toISOString();
+      }
+
+      // Look for "Multiple Dates" pattern
+      if (title.includes('Multiple Dates')) {
+        // Default to next week for multiple dates events
+        const nextWeek = new Date();
+        nextWeek.setDate(nextWeek.getDate() + 7);
+        return nextWeek.toISOString();
+      }
+
+      return null;
+    } catch (error) {
+      console.warn('Failed to extract date from title:', title);
+      return null;
+    }
+  }
+
+  // Extract location from event title
+  private extractLocationFromTitle(title: string): string {
+    try {
+      // Look for "@ Location" pattern
+      const locationMatch = title.match(/@\s*([^|,]+)/);
+      if (locationMatch) {
+        return locationMatch[1].trim();
+      }
+
+      // Default to London if no location found
+      return 'London';
+    } catch (error) {
+      return 'London';
+    }
   }
 
   // Map string event types to our enum

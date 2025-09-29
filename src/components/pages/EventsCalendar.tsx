@@ -19,7 +19,9 @@ const EventsCalendar: React.FC = () => {
   const loadEvents = async () => {
     setLoading(true);
     try {
+      console.log('🔄 Loading events from API...');
       const eventData = await eventsAPI.getEvents();
+      console.log('📅 Events loaded:', eventData.length, eventData);
       setEvents(eventData);
     } catch (error) {
       console.error('Failed to load events:', error);
