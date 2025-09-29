@@ -52,8 +52,8 @@ class EventsAPIService {
   private fallbackEvents: LiberationEvent[];
 
   constructor() {
-    // Use local content API for events
-    this.baseURL = '/api/content?type=events';
+    // Use events API endpoint
+    this.baseURL = '/api/events';
     this.fallbackEvents = this.generateLiveEvents();
   }
 
@@ -63,33 +63,97 @@ class EventsAPIService {
     return [];
   }
 
-  // Get all events with live data from Supabase
+  // Get all events using the API endpoint
   async getEvents(): Promise<LiberationEvent[]> {
     try {
-      // Get approved events from both moderation_queue and events tables
-      const [moderationEvents, publishedEvents] = await Promise.all([
-        liberationDB.getModerationQueue('event'),
-        this.getPublishedEvents()
-      ]);
+      console.log('🔄 Loading events from API:', this.baseURL);
 
-      // Transform moderation queue events to LiberationEvent format
-      const approvedEvents = moderationEvents
-        .filter(event => event.status === 'approved')
-        .map(event => this.transformToLiberationEvent(event));
+      const response = await fetch(`${this.baseURL}?upcoming=false&limit=50`);
 
-      // Combine both sources and deduplicate
-      const allEvents = [...approvedEvents, ...publishedEvents];
-      const uniqueEvents = this.deduplicateEvents(allEvents);
+      if (!response.ok) {
+        throw new Error(`Events API failed: ${response.status}`);
+      }
 
-      // Don't filter by date for now - show all approved events
-      return uniqueEvents
-        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      const result = await response.json();
+
+      if (result.success && result.data?.events) {
+        const events = result.data.events;
+        console.log('📅 Events loaded from API:', events.length);
+
+        // Transform API events to LiberationEvent format
+        return events.map((event: any) => this.transformAPIEventToLiberationEvent(event));
+      }
+
+      console.warn('Events API returned no data');
+      return [];
 
     } catch (error) {
-      console.error('Error fetching events from Supabase:', error);
-      // Return empty array instead of fallback mock data
+      console.error('Error fetching events from API:', error);
       return [];
     }
+  }
+
+  // Transform API event to LiberationEvent format
+  private transformAPIEventToLiberationEvent(event: any): LiberationEvent {
+    return {
+      id: event.id,
+      title: event.title,
+      description: event.description || '',
+      type: this.mapEventType(event.category || event.type),
+      date: event.date,
+      location: {
+        type: event.location?.type || (event.location?.virtualLink ? 'hybrid' : 'in-person'),
+        details: event.location?.details || 'Location TBA',
+        accessibilityNotes: event.accessibilityFeatures?.join(', ')
+      },
+      organizer: {
+        name: event.organizer?.name || 'Community Organizer',
+        contact: event.organizer?.email || event.registration?.registrationUrl
+      },
+      registration: {
+        required: event.registration?.required || false,
+        link: event.registration?.registrationUrl,
+        capacity: event.registration?.capacity
+      },
+      traumaInformed: true,
+      accessibilityFeatures: event.accessibilityFeatures || [],
+      communityValue: this.mapCommunityValue(event.category || 'organizing'),
+      status: this.mapEventStatus(event.date),
+      sourceUrl: event.registration?.registrationUrl,
+      created: event.created || new Date().toISOString(),
+      updated: event.updated || new Date().toISOString()
+    };
+  }
+
+  // Map event types
+  private mapEventType(type: string): LiberationEvent['type'] {
+    const typeLower = type?.toLowerCase() || '';
+    if (typeLower.includes('mutual') || typeLower.includes('aid')) return 'mutual-aid';
+    if (typeLower.includes('organiz')) return 'organizing';
+    if (typeLower.includes('education') || typeLower.includes('workshop')) return 'education';
+    if (typeLower.includes('celebrat') || typeLower.includes('party')) return 'celebration';
+    if (typeLower.includes('support') || typeLower.includes('wellness')) return 'support';
+    if (typeLower.includes('action') || typeLower.includes('protest')) return 'action';
+    return 'organizing';
+  }
+
+  // Map community values
+  private mapCommunityValue(category: string): LiberationEvent['communityValue'] {
+    const catLower = category?.toLowerCase() || '';
+    if (catLower.includes('education') || catLower.includes('workshop')) return 'education';
+    if (catLower.includes('mutual') || catLower.includes('aid')) return 'mutual-aid';
+    if (catLower.includes('celebrat') || catLower.includes('party')) return 'celebration';
+    if (catLower.includes('wellness') || catLower.includes('healing')) return 'healing';
+    return 'organizing';
+  }
+
+  // Map event status based on date
+  private mapEventStatus(eventDate: string): LiberationEvent['status'] {
+    const now = new Date();
+    const eventDateTime = new Date(eventDate);
+
+    if (eventDateTime < now) return 'completed';
+    return 'upcoming';
   }
 
   // Get published events from published_events table

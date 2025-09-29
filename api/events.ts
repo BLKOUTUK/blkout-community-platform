@@ -207,7 +207,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const {
       category,
       type,
-      upcoming = 'true',
+      upcoming = 'false',
       limit = '20',
       offset = '0'
     } = req.query;
