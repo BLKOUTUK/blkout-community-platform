@@ -212,6 +212,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       offset = '0'
     } = req.query;
 
+    // Add immediate debug response to test if API is working
+    if (req.query.debug === 'true') {
+      return res.status(200).json({
+        message: 'Events API is working',
+        timestamp: new Date().toISOString(),
+        environment: {
+          hasSupabaseUrl: !!(process.env.VITE_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL),
+          hasSupabaseKey: !!(process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY)
+        }
+      });
+    }
+
     const limitNum = parseInt(limit as string, 10);
     const offsetNum = parseInt(offset as string, 10);
 
