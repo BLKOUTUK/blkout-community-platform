@@ -2,11 +2,12 @@
 // Authentication, moderation, and story management interface
 
 import React, { useState, useEffect } from 'react';
-import { Shield, Users, FileText, Download, Plus, Eye, CheckCircle, XCircle, BarChart3, Settings, Chrome, Key, UserCheck, Calendar, MapPin, Clock, Upload, Mail, Lock, EyeOff } from 'lucide-react';
+import { Shield, Users, FileText, Download, Plus, Eye, CheckCircle, XCircle, BarChart3, Settings, Chrome, Key, UserCheck, Calendar, MapPin, Clock, Upload, Mail, Lock, EyeOff, PenTool } from 'lucide-react';
 // import { useAuth } from '@/hooks/useAuth';  // REMOVED - NO AUTH
 import { communityAPI } from '@/services/community-api';
 import { BulkStorySubmission } from './BulkStorySubmission';
 import { IVORFeedbackCollection } from './IVORFeedbackCollection';
+import { voicesAPI, type VoicesArticle, type VoicesArticleSubmission } from '@/services/voices-api';
 import type { NewsArticle, CommunityEvent, EventSubmission, EventModerationItem } from '@/types/liberation';
 
 interface AdminStats {
@@ -223,6 +224,7 @@ export const AdminDashboard: React.FC = () => {
     { id: 'submissions', label: 'Story Submissions', icon: Plus },
     { id: 'event-moderation', label: 'Event Moderation', icon: Calendar },
     { id: 'event-submissions', label: 'Event Submissions', icon: Users },
+    { id: 'voices', label: 'Voices Editorial', icon: PenTool },
     { id: 'extension', label: 'Chrome Extension', icon: Chrome },
     { id: 'ivor', label: 'IVOR Training', icon: Settings },
   ];
@@ -683,6 +685,11 @@ export const AdminDashboard: React.FC = () => {
         {/* Chrome Extension Tab */}
         {activeTab === 'extension' && (
           <ChromeExtensionManager />
+        )}
+
+        {/* Voices Editorial Tab */}
+        {activeTab === 'voices' && (
+          <VoicesEditorialManager />
         )}
 
         {/* IVOR Training Tab */}
@@ -1355,6 +1362,381 @@ const BulkEventSubmission: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) =
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+// Voices Editorial Manager Component
+const VoicesEditorialManager: React.FC = () => {
+  const [activeView, setActiveView] = useState<'list' | 'create' | 'edit'>('list');
+  const [voicesArticles, setVoicesArticles] = useState<VoicesArticle[]>([]);
+  const [selectedArticle, setSelectedArticle] = useState<VoicesArticle | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    title: '',
+    content: '',
+    excerpt: '',
+    author: '',
+    category: 'opinion' as 'opinion' | 'analysis' | 'editorial' | 'community' | 'liberation',
+    tags: '',
+    featured: false,
+    published: false
+  });
+
+  const loadVoicesArticles = async () => {
+    setLoading(true);
+    try {
+      const articles = await voicesAPI.getAllArticles();
+      setVoicesArticles(articles);
+    } catch (error) {
+      console.error('Failed to load voices articles:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadVoicesArticles();
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const articleData: VoicesArticleSubmission = {
+        title: formData.title,
+        content: formData.content,
+        excerpt: formData.excerpt,
+        author: formData.author,
+        category: formData.category,
+        tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean),
+        featured: formData.featured,
+        published: formData.published
+      };
+
+      if (activeView === 'create') {
+        await voicesAPI.createArticle(articleData);
+      } else if (activeView === 'edit' && selectedArticle) {
+        await voicesAPI.updateArticle(selectedArticle.id, articleData);
+      }
+
+      // Reset form
+      setFormData({
+        title: '',
+        content: '',
+        excerpt: '',
+        author: '',
+        category: 'opinion',
+        tags: '',
+        featured: false,
+        published: false
+      });
+
+      setActiveView('list');
+      setSelectedArticle(null);
+      await loadVoicesArticles();
+    } catch (error) {
+      console.error('Failed to submit article:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleEdit = (article: VoicesArticle) => {
+    setSelectedArticle(article);
+    setFormData({
+      title: article.title,
+      content: article.content,
+      excerpt: article.excerpt,
+      author: article.author,
+      category: article.category,
+      tags: article.tags?.join(', ') || '',
+      featured: article.featured,
+      published: article.published
+    });
+    setActiveView('edit');
+  };
+
+  const handlePublishToggle = async (articleId: string, published: boolean) => {
+    try {
+      await voicesAPI.togglePublished(articleId, published);
+      await loadVoicesArticles();
+    } catch (error) {
+      console.error('Failed to toggle publish status:', error);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-white">Voices Editorial</h2>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setActiveView('list')}
+            className={`px-4 py-2 font-medium rounded-lg transition-colors ${
+              activeView === 'list'
+                ? 'bg-purple-500 text-white'
+                : 'bg-white/10 text-white hover:bg-white/20'
+            }`}
+          >
+            All Articles
+          </button>
+          <button
+            onClick={() => {
+              setActiveView('create');
+              setFormData({
+                title: '',
+                content: '',
+                excerpt: '',
+                author: '',
+                category: 'opinion',
+                tags: '',
+                featured: false,
+                published: false
+              });
+            }}
+            className={`px-4 py-2 font-medium rounded-lg transition-colors ${
+              activeView === 'create'
+                ? 'bg-purple-500 text-white'
+                : 'bg-white/10 text-white hover:bg-white/20'
+            }`}
+          >
+            Create Article
+          </button>
+        </div>
+      </div>
+
+      {/* Article List View */}
+      {activeView === 'list' && (
+        <div className="space-y-4">
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400 mx-auto"></div>
+              <p className="text-gray-300 mt-4">Loading articles...</p>
+            </div>
+          ) : voicesArticles.length === 0 ? (
+            <div className="bg-white/10 backdrop-blur-md rounded-lg p-8 border border-white/20 text-center">
+              <PenTool className="w-12 h-12 text-purple-400 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-2">No articles yet</h3>
+              <p className="text-gray-300 mb-4">Start building your editorial voice by creating your first article.</p>
+              <button
+                onClick={() => setActiveView('create')}
+                className="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+              >
+                Create First Article
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {voicesArticles.map((article) => (
+                <div key={article.id} className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-lg font-semibold text-white">{article.title}</h3>
+                        {article.featured && (
+                          <span className="px-2 py-1 bg-yellow-500/20 rounded text-yellow-300 text-xs font-semibold">
+                            FEATURED
+                          </span>
+                        )}
+                        <span className={`px-2 py-1 rounded text-xs font-semibold ${
+                          article.published
+                            ? 'bg-green-500/20 text-green-300'
+                            : 'bg-gray-500/20 text-gray-300'
+                        }`}>
+                          {article.published ? 'PUBLISHED' : 'DRAFT'}
+                        </span>
+                        <span className="px-2 py-1 bg-purple-500/20 rounded text-purple-300 text-xs font-semibold">
+                          {article.category.toUpperCase()}
+                        </span>
+                      </div>
+
+                      <p className="text-gray-300 text-sm mb-3">{article.excerpt}</p>
+
+                      <div className="flex items-center gap-4 text-sm text-gray-400">
+                        <span>By {article.author}</span>
+                        <span>•</span>
+                        <span>{new Date(article.created_at).toLocaleDateString()}</span>
+                        {article.tags && article.tags.length > 0 && (
+                          <>
+                            <span>•</span>
+                            <span>{article.tags.join(', ')}</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-2 ml-4">
+                      <button
+                        onClick={() => handleEdit(article)}
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                      >
+                        <PenTool className="w-4 h-4" />
+                        Edit
+                      </button>
+
+                      <button
+                        onClick={() => handlePublishToggle(article.id, !article.published)}
+                        className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                          article.published
+                            ? 'bg-gray-600 hover:bg-gray-700 text-white'
+                            : 'bg-green-600 hover:bg-green-700 text-white'
+                        }`}
+                      >
+                        {article.published ? (
+                          <>
+                            <XCircle className="w-4 h-4" />
+                            Unpublish
+                          </>
+                        ) : (
+                          <>
+                            <CheckCircle className="w-4 h-4" />
+                            Publish
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Create/Edit Article Form */}
+      {(activeView === 'create' || activeView === 'edit') && (
+        <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
+          <h3 className="text-xl font-semibold text-white mb-4">
+            {activeView === 'create' ? 'Create New Article' : 'Edit Article'}
+          </h3>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Title</label>
+                <input
+                  type="text"
+                  value={formData.title}
+                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  className="w-full px-4 py-2 bg-black/20 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  placeholder="Article title"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Author</label>
+                <input
+                  type="text"
+                  value={formData.author}
+                  onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                  className="w-full px-4 py-2 bg-black/20 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  placeholder="Author name"
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Excerpt</label>
+              <textarea
+                value={formData.excerpt}
+                onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+                rows={3}
+                className="w-full px-4 py-2 bg-black/20 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                placeholder="Brief article summary..."
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Content</label>
+              <textarea
+                value={formData.content}
+                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                rows={12}
+                className="w-full px-4 py-2 bg-black/20 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                placeholder="Write your article content here... (Markdown supported)"
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Category</label>
+                <select
+                  value={formData.category}
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  className="w-full px-4 py-2 bg-black/20 border border-white/20 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  required
+                >
+                  <option value="opinion">Opinion</option>
+                  <option value="analysis">Analysis</option>
+                  <option value="editorial">Editorial</option>
+                  <option value="community">Community Voice</option>
+                  <option value="liberation">Liberation Thought</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">Tags</label>
+                <input
+                  type="text"
+                  value={formData.tags}
+                  onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                  className="w-full px-4 py-2 bg-black/20 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                  placeholder="tag1, tag2, tag3"
+                />
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="featured"
+                    checked={formData.featured}
+                    onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
+                    className="mr-2 text-purple-500 focus:ring-purple-400"
+                  />
+                  <label htmlFor="featured" className="text-sm text-gray-300">Featured Article</label>
+                </div>
+
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="published"
+                    checked={formData.published}
+                    onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
+                    className="mr-2 text-purple-500 focus:ring-purple-400"
+                  />
+                  <label htmlFor="published" className="text-sm text-gray-300">Publish Immediately</label>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex-1 py-3 bg-purple-500 hover:bg-purple-600 disabled:bg-purple-500/50 text-white font-semibold rounded-lg transition-colors"
+              >
+                {loading ? 'Saving...' : (activeView === 'create' ? 'Create Article' : 'Update Article')}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveView('list')}
+                className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

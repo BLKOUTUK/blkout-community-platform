@@ -3,7 +3,7 @@
 // STRICT SEPARATION: Application shell only - NO business logic
 
 import React, { useState, useEffect } from 'react';
-import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain, ArrowRight, ExternalLink, Globe, Mail, Trophy, Camera, Calendar } from 'lucide-react';
+import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain, ArrowRight, ExternalLink, Globe, Mail, Trophy, Camera, Calendar, PenTool } from 'lucide-react';
 import {
   cn,
   culturalUtils,
@@ -22,6 +22,7 @@ import Footer from '@/components/ui/Footer';
 import IVORIntroduction from '@/components/pages/IVORIntroduction';
 import IVORAssistant from './components/ivor/IVORAssistant';
 import GovernancePage from '@/components/pages/GovernancePage';
+import VoicesPage from '@/components/pages/VoicesPage';
 import MobileNav from '@/components/ui/MobileNav';
 import InstallPrompt from '@/components/ui/InstallPrompt';
 import FirstTimeUserFlow from '@/components/onboarding/FirstTimeUserFlow';
@@ -46,7 +47,7 @@ import { eventsAPI } from './services/events-api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'about' | 'news' | 'stories' | 'events' | 'intro' | 'admin' | 'platform';
+type NavigationTab = 'liberation' | 'governance' | 'about' | 'news' | 'stories' | 'events' | 'intro' | 'admin' | 'platform' | 'voices';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -118,7 +119,7 @@ class ErrorBoundary extends React.Component<any, any> {
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'governance', 'about', 'news', 'stories', 'events', 'intro', 'admin', 'platform'];
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'about', 'news', 'stories', 'events', 'intro', 'admin', 'platform', 'voices'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
@@ -208,6 +209,8 @@ export default function App() {
         />;
       case 'governance':
         return <GovernancePage />;
+      case 'voices':
+        return <VoicesPage />;
       case 'platform':
         return <DiscoverPage onNavigate={changeActiveTab} />;
       case 'admin':
@@ -521,18 +524,28 @@ export default function App() {
                   <button
                     onClick={() => changeActiveTab('news')}
                     className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
-                      activeTab === 'news' 
-                        ? 'bg-liberation-red-liberation text-white' 
+                      activeTab === 'news'
+                        ? 'bg-liberation-red-liberation text-white'
                         : 'text-liberation-silver hover:text-liberation-gold-divine'
                     }`}
                   >
                     News
                   </button>
                   <button
+                    onClick={() => changeActiveTab('voices')}
+                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
+                      activeTab === 'voices'
+                        ? 'bg-liberation-red-liberation text-white'
+                        : 'text-liberation-silver hover:text-liberation-gold-divine'
+                    }`}
+                  >
+                    Voices
+                  </button>
+                  <button
                     onClick={() => changeActiveTab('intro')}
                     className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
-                      activeTab === 'intro' 
-                        ? 'bg-liberation-red-liberation text-white' 
+                      activeTab === 'intro'
+                        ? 'bg-liberation-red-liberation text-white'
                         : 'text-liberation-silver hover:text-liberation-gold-divine'
                     }`}
                   >

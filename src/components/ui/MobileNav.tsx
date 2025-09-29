@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Heart, Info, Play, Vote, Calendar, Brain } from 'lucide-react';
+import { Menu, X, Heart, Info, Play, Vote, Calendar, Brain, Shield, PenTool } from 'lucide-react';
 import { cn } from '@/lib/liberation-utils';
 
 interface MobileNavProps {
@@ -24,8 +24,10 @@ const MobileNav: React.FC<MobileNavProps> = ({
     { id: 'stories', label: 'Archive', icon: Calendar },
     { id: 'events', label: 'Events', icon: Calendar },
     { id: 'news', label: 'News', icon: Play },
+    { id: 'voices', label: 'Voices', icon: PenTool },
     { id: 'intro', label: 'IVOR', icon: Brain },
-    { id: 'about', label: 'About', icon: Info }
+    { id: 'about', label: 'About', icon: Info },
+    { id: 'admin', label: 'Admin', icon: Shield }
   ];
 
   const handleTabChange = (tabId: string) => {

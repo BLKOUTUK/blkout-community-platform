@@ -125,7 +125,7 @@ export default function AboutUs() {
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="flex-shrink-0">
                     <img
-                      src="/Branding and logos/site_editor.png"
+                      src="/Branding and logos/Robwebsite.png"
                       alt="Dr Rob Berkeley - Site Editor & Creator"
                       className="w-32 h-32 md:w-40 md:h-40 rounded-lg object-cover shadow-lg"
                     />
