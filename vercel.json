@@ -75,16 +75,14 @@
   ],
   "rewrites": [
     {
-      "source": "/",
+      "source": "/(.*)",
       "destination": "/index.html"
-    },
+    }
+  ],
+  "routes": [
     {
-      "source": "/(?!api)([^/]+)",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/(?!api)([^/]+)/([^/]+)",
-      "destination": "/index.html"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     }
   ],
   "functions": {
