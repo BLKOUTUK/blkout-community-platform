@@ -141,16 +141,19 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
   try {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Build query for published_news table (current community news)
+    // Build query for moderation_queue table (approved articles for Phase 1)
     let query = supabase
-      .from('published_news')
-      .select('*', { count: 'exact' });
+      .from('moderation_queue')
+      .select('*', { count: 'exact' })
+      .eq('status', 'approved')
+      .eq('type', 'article');
 
-    // Apply filters
-    if (params.status === 'published') {
-      query = query.eq('status', 'published');
+    // Apply category filter if provided
+    if (params.category && params.category !== 'all') {
+      query = query.contains('tags', [params.category]);
     }
 
+    // Apply search filter
     if (params.search) {
       const searchTerm = `%${params.search}%`;
       query = query.or(`title.ilike.${searchTerm},content.ilike.${searchTerm}`);
@@ -158,7 +161,7 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
 
     // Apply sorting
     if (params.sortBy === 'recent') {
-      query = query.order('published_at', { ascending: false });
+      query = query.order('approved_at', { ascending: false });
     } else {
       query = query.order('created_at', { ascending: false });
     }
@@ -166,7 +169,7 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
     // Apply pagination
     query = query.range(params.offset, params.offset + params.limit - 1);
 
-    const { data: news, error, count } = await query;
+    const { data: articles, error, count } = await query;
 
     if (error) {
       console.error('Supabase query error:', error);
@@ -174,50 +177,123 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
     }
 
     // If no community news, return fallback data
-    if (!news || news.length === 0) {
+    if (!articles || articles.length === 0) {
       return await fallbackToFallbackData(req, res, params);
     }
 
-    // Transform data to match expected interface
-    const transformedNews = news.map((article: any) => ({
-      id: article.id,
-      title: article.title,
-      excerpt: article.content?.substring(0, 200) + '...' || '',
-      content: article.content || '',
-      category: article.metadata?.category || 'Community News',
-      author: article.author || 'BLKOUT Community',
-      publishedAt: article.published_at || article.created_at,
-      readTime: estimateReadTime(article.content || ''),
-      originalUrl: article.metadata?.original_url || '#',
-      sourceName: article.metadata?.source_name || 'Community Submission',
-      curatorId: article.metadata?.curator_id || 'community',
-      submittedAt: article.created_at,
-      interestScore: article.metadata?.interest_score || 85,
-      totalVotes: article.metadata?.total_votes || 0,
-      topics: article.metadata?.topics || [],
-      sentiment: article.metadata?.sentiment || 'neutral',
-      relevanceScore: article.metadata?.relevance_score || 85,
-      status: article.status || 'published'
-    }));
+    // Get article IDs for voting data
+    const articleIds = articles.map(a => a.id);
+
+    // Fetch voting data from content_ratings
+    const { data: ratings } = await supabase
+      .from('content_ratings')
+      .select('content_id, rating_type, rating_value')
+      .eq('content_type', 'news')
+      .in('content_id', articleIds);
+
+    // Get Story of the Week from weekly_highlights
+    const { data: storyOfWeek } = await supabase
+      .from('weekly_highlights')
+      .select('content_id, week_number, featured_at')
+      .eq('content_type', 'news')
+      .order('week_number', { ascending: false })
+      .limit(1)
+      .single();
+
+    // Calculate interest scores and transform data
+    const transformedNews = articles.map((article: any) => {
+      // Get ratings for this article
+      const articleRatings = ratings?.filter(r => r.content_id === article.id) || [];
+
+      // Calculate interest score (0-100 scale)
+      let interestScore = 0;
+      let totalVotes = articleRatings.length;
+
+      if (totalVotes > 0) {
+        const sum = articleRatings.reduce((acc, r) => acc + (r.rating_value || 0), 0);
+        // Convert 0-5 scale to 0-100 percentage
+        interestScore = Math.round((sum / (totalVotes * 5)) * 100);
+      }
+
+      // Check if this is Story of the Week
+      const isStoryOfWeek = storyOfWeek?.content_id === article.id;
+
+      return {
+        id: article.id,
+        title: article.title,
+        excerpt: article.excerpt || article.content?.substring(0, 200) + '...' || '',
+        content: article.content || '',
+        category: article.tags?.[0] || 'Community News',
+        author: article.author || article.submitted_by || 'Community Curator',
+        publishedAt: article.approved_at || article.created_at,
+        readTime: estimateReadTime(article.content || ''),
+
+        // Phase 1: Story Aggregation fields
+        originalUrl: article.url || '#',
+        sourceName: article.source || 'Community Submission',
+        curatorId: article.submitted_by,
+        submittedAt: article.created_at,
+
+        // Community engagement
+        interestScore,
+        totalVotes,
+
+        // IVOR learning data
+        topics: article.tags || [],
+        sentiment: 'neutral', // TODO: Add sentiment analysis
+        relevanceScore: interestScore / 100, // 0-1 scale for ML
+
+        // Featured content
+        isStoryOfWeek,
+        weeklyRank: isStoryOfWeek ? 1 : undefined,
+
+        status: 'published'
+      };
+    });
+
+    // Apply interest-based sorting if requested
+    if (params.sortBy === 'interest') {
+      transformedNews.sort((a, b) => b.interestScore - a.interestScore);
+    } else if (params.sortBy === 'weekly') {
+      transformedNews.sort((a, b) => {
+        if (a.isStoryOfWeek) return -1;
+        if (b.isStoryOfWeek) return 1;
+        return b.interestScore - a.interestScore;
+      });
+    }
+
+    // Calculate stats
+    const totalPublished = count || 0;
+    const averageInterestScore = transformedNews.length > 0
+      ? Math.round(transformedNews.reduce((sum, a) => sum + a.interestScore, 0) / transformedNews.length)
+      : 0;
+
+    // Get unique categories from articles
+    const categories = [...new Set(transformedNews.map(a => a.category))];
 
     return res.status(200).json({
       success: true,
       data: {
         articles: transformedNews,
         pagination: {
-          total: count || 0,
+          total: totalPublished,
           limit: params.limit,
           offset: params.offset,
-          hasMore: params.offset + params.limit < (count || 0),
+          hasMore: params.offset + params.limit < totalPublished,
           page: Math.floor(params.offset / params.limit) + 1,
-          totalPages: Math.ceil((count || 0) / params.limit)
+          totalPages: Math.ceil(totalPublished / params.limit)
         },
-        categories: ['Community News', 'Liberation Updates', 'Resource Sharing'],
+        categories: categories.length > 0 ? categories : ['Community News', 'Liberation Updates', 'Resource Sharing'],
         stats: {
-          totalPublished: count || 0,
-          averageInterestScore: 85
+          totalPublished,
+          averageInterestScore,
+          storyOfWeek: storyOfWeek ? {
+            id: storyOfWeek.content_id,
+            weekNumber: storyOfWeek.week_number,
+            featuredAt: storyOfWeek.featured_at
+          } : null
         },
-        source: 'supabase-news'
+        source: 'moderation-queue-approved'
       }
     });
 
