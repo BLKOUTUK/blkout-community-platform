@@ -269,7 +269,7 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
       : 0;
 
     // Get unique categories from articles
-    const categories = [...new Set(transformedNews.map(a => a.category))];
+    const categories = Array.from(new Set(transformedNews.map(a => a.category)));
 
     return res.status(200).json({
       success: true,
@@ -354,7 +354,7 @@ async function fallbackToFallbackData(req: VercelRequest, res: VercelResponse, p
         page: Math.floor(params.offset / params.limit) + 1,
         totalPages: Math.ceil(filteredNews.length / params.limit)
       },
-      categories: [...new Set(FALLBACK_NEWS.map(n => n.category))],
+      categories: Array.from(new Set(FALLBACK_NEWS.map(n => n.category))),
       stats: {
         totalPublished: FALLBACK_NEWS.filter(n => n.status === 'published').length,
         averageInterestScore: Math.round(
