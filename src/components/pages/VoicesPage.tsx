@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { PenTool, Star, Calendar, User, ArrowRight, Tag, Clock, Quote, ChevronRight } from 'lucide-react';
+import { PenTool, Star, Calendar, User, ArrowRight, Tag, Clock, Quote, ChevronRight, FileText } from 'lucide-react';
 import { voicesAPI, type VoicesArticle } from '@/services/voices-api';
+import ArticlePitchForm from '@/components/voices/ArticlePitchForm';
+import ArticleShareButtons from '@/components/voices/ArticleShareButtons';
 
 const VoicesPage: React.FC = () => {
   const [articles, setArticles] = useState<VoicesArticle[]>([]);
@@ -8,6 +10,7 @@ const VoicesPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedArticle, setSelectedArticle] = useState<VoicesArticle | null>(null);
+  const [showPitchForm, setShowPitchForm] = useState(false);
 
   const categories = [
     { id: 'all', label: 'All Voices', icon: PenTool, color: 'purple' },
@@ -105,7 +108,7 @@ const VoicesPage: React.FC = () => {
                   {selectedArticle.excerpt}
                 </p>
 
-                <div className="flex items-center gap-6 text-sm text-liberation-silver/70">
+                <div className="flex flex-wrap items-center gap-6 text-sm text-liberation-silver/70">
                   <div className="flex items-center gap-2">
                     <User className="h-4 w-4" />
                     <span>By {selectedArticle.author}</span>
@@ -118,6 +121,15 @@ const VoicesPage: React.FC = () => {
                     <Clock className="h-4 w-4" />
                     <span>{Math.max(1, Math.ceil(selectedArticle.content.length / 1000))} min read</span>
                   </div>
+                </div>
+
+                {/* Share Buttons */}
+                <div className="pt-4 border-t border-liberation-silver/10">
+                  <ArticleShareButtons
+                    title={selectedArticle.title}
+                    excerpt={selectedArticle.excerpt}
+                    url={`${window.location.origin}/voices/${selectedArticle.slug}`}
+                  />
                 </div>
               </div>
             </div>
@@ -189,20 +201,34 @@ const VoicesPage: React.FC = () => {
             <h1 className="text-5xl md:text-7xl font-black text-liberation-gold-divine mb-4">
               BLKOUT Voices
             </h1>
-            <p className="text-xl md:text-2xl text-liberation-silver max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-liberation-silver max-w-3xl mx-auto mb-6">
               Editorial perspectives, community voices, and liberation thought from our community
             </p>
+            <button
+              onClick={() => setShowPitchForm(!showPitchForm)}
+              className="inline-flex items-center gap-2 bg-liberation-gold-divine text-liberation-black-power px-6 py-3 rounded-lg font-bold hover:bg-liberation-gold-divine/90 transition-colors"
+            >
+              <FileText className="h-5 w-5" />
+              {showPitchForm ? 'Hide Pitch Form' : 'Pitch an Article'}
+            </button>
           </div>
         </div>
       </div>
 
+      {/* Article Pitch Form */}
+      {showPitchForm && (
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <ArticlePitchForm onClose={() => setShowPitchForm(false)} />
+        </div>
+      )}
+
       {/* Featured Hero Article */}
-      {featuredArticles.length > 0 && (
+      {featuredArticles.length > 1 && (
         <section className="relative">
           <div className="relative h-[600px] overflow-hidden">
             <img
-              src={featuredArticles[0].hero_image || '/Fallback images/blue images/blue man.jpg'}
-              alt={featuredArticles[0].hero_image_alt || featuredArticles[0].title}
+              src={featuredArticles[1].hero_image || '/Fallback images/blue images/blue man.jpg'}
+              alt={featuredArticles[1].hero_image_alt || featuredArticles[1].title}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-liberation-black-power via-liberation-black-power/40 to-transparent" />
@@ -213,27 +239,27 @@ const VoicesPage: React.FC = () => {
                   <div className="flex items-center gap-3 mb-4">
                     <Star className="h-5 w-5 text-yellow-400" />
                     <span className="text-yellow-400 font-semibold uppercase tracking-wide">Featured</span>
-                    <span className={`px-3 py-1 rounded-full text-sm font-semibold uppercase tracking-wide border ${getCategoryColor(featuredArticles[0].category)}`}>
-                      {featuredArticles[0].category}
+                    <span className={`px-3 py-1 rounded-full text-sm font-semibold uppercase tracking-wide border ${getCategoryColor(featuredArticles[1].category)}`}>
+                      {featuredArticles[1].category}
                     </span>
                   </div>
 
                   <h2 className="text-4xl md:text-6xl font-black text-liberation-gold-divine mb-4 leading-tight">
-                    {featuredArticles[0].title}
+                    {featuredArticles[1].title}
                   </h2>
 
                   <p className="text-xl md:text-2xl text-liberation-silver mb-6 leading-relaxed">
-                    {featuredArticles[0].excerpt}
+                    {featuredArticles[1].excerpt}
                   </p>
 
                   <div className="flex items-center gap-6 text-liberation-silver/70 mb-6">
-                    <span>By {featuredArticles[0].author}</span>
-                    <span>{new Date(featuredArticles[0].published_at || featuredArticles[0].created_at).toLocaleDateString()}</span>
-                    <span>{Math.max(1, Math.ceil(featuredArticles[0].content.length / 1000))} min read</span>
+                    <span>By {featuredArticles[1].author}</span>
+                    <span>{new Date(featuredArticles[1].published_at || featuredArticles[1].created_at).toLocaleDateString()}</span>
+                    <span>{Math.max(1, Math.ceil(featuredArticles[1].content.length / 1000))} min read</span>
                   </div>
 
                   <button
-                    onClick={() => handleArticleClick(featuredArticles[0])}
+                    onClick={() => handleArticleClick(featuredArticles[1])}
                     className="inline-flex items-center gap-2 bg-liberation-gold-divine text-liberation-black-power px-8 py-4 rounded-lg font-bold text-lg hover:bg-liberation-gold-divine/90 transition-colors"
                   >
                     Read Article
