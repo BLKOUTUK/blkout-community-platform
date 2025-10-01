@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Heart, Info, Play, Vote, Calendar, Brain, Shield, PenTool } from 'lucide-react';
+import { Menu, X, Heart, Info, Play, Vote, Calendar, Brain, Shield, PenTool, ExternalLink } from 'lucide-react';
 import { cn } from '@/lib/liberation-utils';
 
 interface MobileNavProps {
@@ -18,16 +18,16 @@ const MobileNav: React.FC<MobileNavProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const navigationItems = [
-    { id: 'liberation', label: 'Home', icon: Heart },
-    { id: 'platform', label: 'Discover', icon: Play },
-    { id: 'governance', label: 'Governance', icon: Vote },
-    { id: 'stories', label: 'Archive', icon: Calendar },
-    { id: 'events', label: 'Events', icon: Calendar },
-    { id: 'news', label: 'News', icon: Play },
-    { id: 'voices', label: 'Voices', icon: PenTool },
-    { id: 'intro', label: 'IVOR', icon: Brain },
-    { id: 'about', label: 'About', icon: Info },
-    { id: 'admin', label: 'Admin', icon: Shield }
+    { id: 'liberation', label: 'Home', icon: Heart, type: 'button' },
+    { id: 'platform', label: 'Discover', icon: Play, type: 'button' },
+    { id: 'governance', label: 'Governance', icon: Vote, type: 'button' },
+    { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' },
+    { id: 'events', label: 'Events', icon: Calendar, type: 'button' },
+    { id: 'newsroom', label: 'Newsroom', icon: ExternalLink, type: 'link', href: 'https://news-blkout.vercel.app' },
+    { id: 'voices', label: 'Voices', icon: PenTool, type: 'button' },
+    { id: 'intro', label: 'IVOR', icon: Brain, type: 'button' },
+    { id: 'about', label: 'About', icon: Info, type: 'button' },
+    { id: 'admin', label: 'Admin', icon: Shield, type: 'button' }
   ];
 
   const handleTabChange = (tabId: string) => {
@@ -82,21 +82,35 @@ const MobileNav: React.FC<MobileNavProps> = ({
 
             {/* Navigation Items */}
             <nav className="p-4 space-y-2">
-              {navigationItems.map(({ id, label, icon: Icon }) => (
-                <button
-                  key={id}
-                  onClick={() => handleTabChange(id)}
-                  className={cn(
-                    'w-full flex items-center gap-3 p-4 rounded-lg text-left transition-all duration-200 touch-friendly',
-                    activeTab === id
-                      ? 'bg-liberation-gold-divine text-liberation-black-power font-semibold'
-                      : 'text-liberation-silver hover:bg-liberation-silver hover:bg-opacity-10 hover:text-liberation-gold-divine'
-                  )}
-                >
-                  <Icon className="h-5 w-5 flex-shrink-0" />
-                  <span className="font-medium">{label}</span>
-                </button>
-              ))}
+              {navigationItems.map(({ id, label, icon: Icon, type, href }) =>
+                type === 'link' ? (
+                  <a
+                    key={id}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center gap-3 p-4 rounded-lg text-left transition-all duration-200 touch-friendly text-liberation-silver hover:bg-liberation-silver hover:bg-opacity-10 hover:text-liberation-gold-divine"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <Icon className="h-5 w-5 flex-shrink-0" />
+                    <span className="font-medium">{label}</span>
+                  </a>
+                ) : (
+                  <button
+                    key={id}
+                    onClick={() => handleTabChange(id)}
+                    className={cn(
+                      'w-full flex items-center gap-3 p-4 rounded-lg text-left transition-all duration-200 touch-friendly',
+                      activeTab === id
+                        ? 'bg-liberation-gold-divine text-liberation-black-power font-semibold'
+                        : 'text-liberation-silver hover:bg-liberation-silver hover:bg-opacity-10 hover:text-liberation-gold-divine'
+                    )}
+                  >
+                    <Icon className="h-5 w-5 flex-shrink-0" />
+                    <span className="font-medium">{label}</span>
+                  </button>
+                )
+              )}
 
               {/* IVOR Assistant Button */}
               <div className="pt-4 border-t border-liberation-silver border-opacity-20">

@@ -521,16 +521,15 @@ export default function App() {
                   >
                     Events
                   </button>
-                  <button
-                    onClick={() => changeActiveTab('news')}
-                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
-                      activeTab === 'news'
-                        ? 'bg-liberation-red-liberation text-white'
-                        : 'text-liberation-silver hover:text-liberation-gold-divine'
-                    }`}
+                  <a
+                    href="https://news-blkout.vercel.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-lg font-bold transition-all duration-300 text-liberation-silver hover:text-liberation-gold-divine hover:bg-liberation-red-liberation/20 flex items-center gap-1"
                   >
-                    News
-                  </button>
+                    Newsroom
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
                   <button
                     onClick={() => changeActiveTab('voices')}
                     className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
