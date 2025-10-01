@@ -101,6 +101,15 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                 Back to Platform
               </button>
               <a
+                href="https://events-blkout.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-gray-400 hover:text-liberation-sovereignty-gold transition-colors"
+              >
+                <ExternalLink className="h-4 w-4" />
+                <span>Events</span>
+              </a>
+              <a
                 href="https://news-blkout.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
