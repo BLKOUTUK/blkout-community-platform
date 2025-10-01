@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Brain, Vote, Users, Info, Play } from 'lucide-react';
+import { Heart, Brain, Vote, Users, Info, Play, Calendar, ExternalLink } from 'lucide-react';
 import VideoHero from '@/components/ui/VideoHero';
 
 interface PlatformPageProps {
@@ -13,42 +13,58 @@ const PlatformPage: React.FC<PlatformPageProps> = ({ onNavigate }) => {
       label: 'LIBERATION',
       icon: Heart,
       description: 'Community-owned platform for Black queer liberation',
-      color: 'bg-liberation-red-liberation'
+      color: 'bg-liberation-red-liberation',
+      type: 'button'
     },
     {
       id: 'intro',
       label: 'IVOR',
       icon: Brain,
       description: 'Meet your AI liberation assistant',
-      color: 'bg-liberation-purple-spirit'
+      color: 'bg-liberation-purple-spirit',
+      type: 'button'
     },
     {
       id: 'governance',
       label: 'GOVERNANCE',
       icon: Vote,
       description: 'Democratic community decision-making',
-      color: 'bg-liberation-green-africa'
+      color: 'bg-liberation-green-africa',
+      type: 'button'
     },
     {
       id: 'community',
       label: 'COMMUNITY',
       icon: Users,
       description: 'Connect with liberation organizers',
-      color: 'bg-liberation-sovereignty-gold'
+      color: 'bg-liberation-sovereignty-gold',
+      type: 'button'
     },
     {
-      id: 'news',
+      id: 'events',
+      label: 'EVENTS',
+      icon: Calendar,
+      description: 'Community gatherings, protests, and celebrations',
+      color: 'bg-liberation-pride-pink',
+      type: 'link',
+      href: 'https://events-blkout.vercel.app'
+    },
+    {
+      id: 'newsroom',
       label: 'NEWSROOM',
-      icon: Play,
-      description: 'Stories, events, and community updates',
-      color: 'bg-liberation-pride-pink'
+      icon: ExternalLink,
+      description: 'Stories, articles, and community journalism',
+      color: 'bg-liberation-healing-sage',
+      type: 'link',
+      href: 'https://news-blkout.vercel.app'
     },
     {
       id: 'about',
       label: 'ABOUT',
       icon: Info,
       description: 'Our mission, values, and vision',
-      color: 'bg-liberation-healing-sage'
+      color: 'bg-liberation-purple-spirit',
+      type: 'button'
     }
   ];
 
@@ -94,30 +110,57 @@ const PlatformPage: React.FC<PlatformPageProps> = ({ onNavigate }) => {
       {/* Navigation Grid */}
       <section className="max-w-6xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {navigationLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => onNavigate(link.id)}
-              className={`${link.color} text-white p-8 rounded-2xl hover:scale-105 transition-all duration-300 text-left group`}
-            >
-              <div className="flex items-start justify-between mb-4">
-                <link.icon className="h-10 w-10" />
-                <span className="text-xs opacity-75 group-hover:opacity-100 transition-opacity">
-                  EXPLORE →
-                </span>
-              </div>
+          {navigationLinks.map((link) =>
+            link.type === 'link' ? (
+              <a
+                key={link.id}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${link.color} text-white p-8 rounded-2xl hover:scale-105 transition-all duration-300 text-left group block`}
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <link.icon className="h-10 w-10" />
+                  <span className="text-xs opacity-75 group-hover:opacity-100 transition-opacity">
+                    VISIT →
+                  </span>
+                </div>
 
-              <h3 className="text-2xl font-black mb-3 uppercase" style={{
-                textShadow: '1px 1px 0px rgba(0,0,0,0.5)'
-              }}>
-                {link.label}
-              </h3>
+                <h3 className="text-2xl font-black mb-3 uppercase" style={{
+                  textShadow: '1px 1px 0px rgba(0,0,0,0.5)'
+                }}>
+                  {link.label}
+                </h3>
 
-              <p className="text-sm opacity-90 leading-relaxed">
-                {link.description}
-              </p>
-            </button>
-          ))}
+                <p className="text-sm opacity-90 leading-relaxed">
+                  {link.description}
+                </p>
+              </a>
+            ) : (
+              <button
+                key={link.id}
+                onClick={() => onNavigate(link.id)}
+                className={`${link.color} text-white p-8 rounded-2xl hover:scale-105 transition-all duration-300 text-left group`}
+              >
+                <div className="flex items-start justify-between mb-4">
+                  <link.icon className="h-10 w-10" />
+                  <span className="text-xs opacity-75 group-hover:opacity-100 transition-opacity">
+                    EXPLORE →
+                  </span>
+                </div>
+
+                <h3 className="text-2xl font-black mb-3 uppercase" style={{
+                  textShadow: '1px 1px 0px rgba(0,0,0,0.5)'
+                }}>
+                  {link.label}
+                </h3>
+
+                <p className="text-sm opacity-90 leading-relaxed">
+                  {link.description}
+                </p>
+              </button>
+            )
+          )}
         </div>
       </section>
 
