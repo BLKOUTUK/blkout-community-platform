@@ -3,6 +3,7 @@ import { PenTool, Star, Calendar, User, ArrowRight, Tag, Clock, Quote, ChevronRi
 import { voicesAPI, type VoicesArticle } from '@/services/voices-api';
 import ArticlePitchForm from '@/components/voices/ArticlePitchForm';
 import ArticleShareButtons from '@/components/voices/ArticleShareButtons';
+import ArticleCallToAction from '@/components/voices/ArticleCallToAction';
 
 const VoicesPage: React.FC = () => {
   const [articles, setArticles] = useState<VoicesArticle[]>([]);
@@ -186,6 +187,9 @@ const VoicesPage: React.FC = () => {
               </div>
             </div>
           )}
+
+          {/* Call to Action - Link to relevant platform section */}
+          <ArticleCallToAction articleSlug={selectedArticle.slug} />
         </div>
       </div>
     );
