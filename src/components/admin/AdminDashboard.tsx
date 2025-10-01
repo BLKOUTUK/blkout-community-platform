@@ -851,7 +851,7 @@ const ChromeExtensionManager: React.FC = () => {
 
         <div className="flex gap-4">
           <a
-            href="/blkout-extension-v1.0.2-clean.zip"
+            href="https://blkout.vercel.app/blkout-extension-v1.0.2-clean.zip"
             download="blkout-extension-v1.0.2-clean.zip"
             className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors"
           >
@@ -859,7 +859,7 @@ const ChromeExtensionManager: React.FC = () => {
             Download v1.0.2 Enhanced (.zip)
           </a>
           <a
-            href="/blkout-extension-v1.0.2-clean.tar.gz"
+            href="https://blkout.vercel.app/blkout-extension-v1.0.2-clean.tar.gz"
             download="blkout-extension-v1.0.2-clean.tar.gz"
             className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
           >
