@@ -201,6 +201,44 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
   };
 
   const generateIVORResponse = async (userMessage: string): Promise<string> => {
+    try {
+      // Call the IVOR AI API endpoint
+      const response = await fetch('/api/ivor/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: userMessage,
+          conversationHistory: messages
+            .filter(m => m.type !== 'greeting') // Exclude greeting
+            .map(m => ({
+              role: m.type === 'user' ? 'user' : 'assistant',
+              content: m.content
+            })),
+          sessionId: `webapp-${Date.now()}`
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.success && data.response) {
+        return data.response;
+      } else {
+        throw new Error('Invalid API response');
+      }
+    } catch (error) {
+      console.error('Error calling IVOR API:', error);
+      // Fallback to pattern-matching if API fails
+      return generateFallbackResponse(userMessage);
+    }
+  };
+
+  const generateFallbackResponse = (userMessage: string): string => {
     const message = userMessage.toLowerCase();
 
     // Problem-solving responses
