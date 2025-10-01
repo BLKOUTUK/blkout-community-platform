@@ -1,13 +1,56 @@
 // BLKOUT Discovery Page - What's New & How to Get Involved
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sparkles, Calendar, MessageCircle, Trophy, Heart, Users, TrendingUp, ArrowRight, Star, Gift, BookOpen, Instagram, User, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { supabase } from '../../lib/supabase';
 
 interface DiscoverPageProps {
   onNavigate?: (tab: string) => void;
 }
 
+interface FeaturedStory {
+  id: string;
+  title: string;
+  content: string;
+  author: string;
+  readTime?: number;
+  created_at: string;
+}
+
 const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
+  const [featuredStory, setFeaturedStory] = useState<FeaturedStory | null>(null);
+  const [isLoadingStory, setIsLoadingStory] = useState(true);
+
+  // Fetch featured story from archive - rotates weekly
+  useEffect(() => {
+    const fetchFeaturedStory = async () => {
+      try {
+        // Get current week number to rotate featured story weekly
+        const weekNumber = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000));
+
+        const { data, error } = await supabase
+          .from('stories')
+          .select('id, title, content, author, readTime, created_at')
+          .eq('published', true)
+          .order('created_at', { ascending: false })
+          .limit(10);
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          // Select story based on week number for weekly rotation
+          const selectedStory = data[weekNumber % data.length];
+          setFeaturedStory(selectedStory);
+        }
+      } catch (error) {
+        console.error('Error fetching featured story:', error);
+      } finally {
+        setIsLoadingStory(false);
+      }
+    };
+
+    fetchFeaturedStory();
+  }, []);
   // BLKOUT Community YouTube Playlist Videos - from PLQIvk5RMvEWxx_xt-vvwKS8k-D7eRRnDh
   const playlistVideos = [
     {
@@ -211,35 +254,52 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
                 </h3>
               </div>
 
-              <div className="mb-4">
-                <span className="inline-block px-2 py-1 bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-400 rounded text-xs font-semibold mb-3">
-                  Featured Story
-                </span>
-                <h4 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2">
-                  Community Healing Circles Transform Mental Health Support
-                </h4>
-                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
-                  Grassroots organizations pioneer culturally-affirming mental health practices that blend traditional healing with modern therapy approaches in South London.
-                </p>
-              </div>
+              {isLoadingStory ? (
+                <div className="mb-4 animate-pulse">
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-24 mb-3"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-full mb-2"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-1"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+                </div>
+              ) : featuredStory ? (
+                <>
+                  <div className="mb-4">
+                    <span className="inline-block px-2 py-1 bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-400 rounded text-xs font-semibold mb-3">
+                      Featured Story
+                    </span>
+                    <h4 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2">
+                      {featuredStory.title}
+                    </h4>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
+                      {featuredStory.content.substring(0, 200)}...
+                    </p>
+                  </div>
 
-              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
-                <span className="flex items-center gap-1">
-                  <User className="h-3 w-3" />
-                  Amara Johnson
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  12 min read
-                </span>
-              </div>
+                  <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
+                    <span className="flex items-center gap-1">
+                      <User className="h-3 w-3" />
+                      {featuredStory.author}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      {featuredStory.readTime || 5} min read
+                    </span>
+                  </div>
 
-              <button
-                onClick={() => onNavigate?.('stories')}
-                className="w-full px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors text-sm"
-              >
-                Read in Archive
-              </button>
+                  <a
+                    href={`/archive/${featuredStory.id}`}
+                    className="block w-full px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors text-sm text-center"
+                  >
+                    Read in Archive
+                  </a>
+                </>
+              ) : (
+                <div className="text-center py-4">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
+                    No featured story available
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -517,16 +577,21 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
               whileHover={{ scale: 1.05 }}
               className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg"
             >
-              <TrendingUp className="w-8 h-8 text-purple-500 mb-4" />
+              <BookOpen className="w-8 h-8 text-purple-500 mb-4" />
               <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-gray-100">
-                Your Impact Dashboard
+                Interactive Storytelling Experience
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
-                See how your participation is helping build our community.
+                Journey through BLKOUT's vision with our immersive scrollytelling introduction.
               </p>
-              <button className="text-purple-600 hover:text-purple-700 font-semibold text-sm">
-                View Impact →
-              </button>
+              <a
+                href="https://blkoutuk.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-600 hover:text-purple-700 font-semibold text-sm"
+              >
+                Experience Story →
+              </a>
             </motion.div>
           </div>
         </div>
