@@ -98,8 +98,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
-    // Check for GROQ API key
-    const groqApiKey = process.env.VITE_GROQ_API_KEY || process.env.GROQ_API_KEY;
+    // Check for GROQ API key (server-side only, never exposed to client)
+    const groqApiKey = process.env.GROQ_API_KEY;
 
     if (!groqApiKey) {
       console.error('GROQ API key not configured');

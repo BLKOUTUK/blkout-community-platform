@@ -25,17 +25,27 @@ User Message → IVORAssistant Component → /api/ivor/chat → GROQ API → AI 
 ### 2. Add API Key to Environment Variables
 
 **Local Development (.env):**
+
+⚠️ **IMPORTANT**: The `.env` file is tracked in git but should NOT contain your actual API key when committing.
+
+1. Open `.env` file in the project root
+2. Replace the placeholder with your actual GROQ API key:
 ```bash
-VITE_GROQ_API_KEY=gsk_your_actual_api_key_here
-GROQ_API_KEY=gsk_your_actual_api_key_here
+GROQ_API_KEY=gsk_your_actual_api_key_here  # Replace with your real key
 ```
+3. **DO NOT commit this file with your real API key** - GitHub will block the push
+4. Save your API key securely - you'll need it for both local development and Vercel production
 
 **Production (Vercel):**
-1. Go to your Vercel project settings
-2. Navigate to Environment Variables
-3. Add both variables:
-   - `VITE_GROQ_API_KEY` = your key
-   - `GROQ_API_KEY` = your key
+1. Go to your Vercel project settings: https://vercel.com/dashboard
+2. Select your project: `blkout-community-platform`
+3. Navigate to **Settings** → **Environment Variables**
+4. Add the following variable:
+   - **Name**: `GROQ_API_KEY`
+   - **Value**: `[Your GROQ API key from https://console.groq.com]`
+   - **Environment**: Select all (Production, Preview, Development)
+5. Click **Save**
+6. Redeploy your application for changes to take effect
 
 ### 3. Restart Development Server
 
