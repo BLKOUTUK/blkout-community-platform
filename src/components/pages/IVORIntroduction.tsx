@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { ArrowLeft, Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, Play, Pause, Volume2, VolumeX, ExternalLink } from 'lucide-react';
 
 interface IVORIntroductionProps {
   onStartChat: () => void;
@@ -100,6 +100,15 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                 <ArrowLeft className="h-5 w-5 mr-2" />
                 Back to Platform
               </button>
+              <a
+                href="https://news-blkout.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-gray-400 hover:text-liberation-sovereignty-gold transition-colors"
+              >
+                <ExternalLink className="h-4 w-4" />
+                <span>Newsroom</span>
+              </a>
             </div>
 
             <div className="text-center">

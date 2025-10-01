@@ -1,5 +1,5 @@
 import React from 'react'; // Force rebuild
-import { Home, Heart, Brain, Vote, Users, Info, Play, Calendar, Instagram, Twitter, Facebook, Youtube, Mail } from 'lucide-react';
+import { Home, Heart, Brain, Vote, Users, Info, Play, Calendar, Instagram, Twitter, Facebook, Youtube, Mail, ExternalLink } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (tab: string) => void;
@@ -8,13 +8,13 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
   const footerLinks = [
-    { id: 'liberation', label: 'Platform', icon: Home },
-    { id: 'intro', label: 'IVOR', icon: Brain },
-    { id: 'news', label: 'Newsroom', icon: Play },
-    { id: 'stories', label: 'Archive', icon: Calendar },
-    { id: 'community', label: 'Community', icon: Users },
-    { id: 'governance', label: 'Governance', icon: Vote },
-    { id: 'about', label: 'About', icon: Info }
+    { id: 'liberation', label: 'Platform', icon: Home, type: 'button' },
+    { id: 'intro', label: 'IVOR', icon: Brain, type: 'button' },
+    { id: 'newsroom', label: 'Newsroom', icon: ExternalLink, type: 'link', href: 'https://news-blkout.vercel.app' },
+    { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' },
+    { id: 'community', label: 'Community', icon: Users, type: 'button' },
+    { id: 'governance', label: 'Governance', icon: Vote, type: 'button' },
+    { id: 'about', label: 'About', icon: Info, type: 'button' }
   ];
 
   return (
@@ -22,20 +22,33 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
       {/* Navigation Links */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex flex-wrap justify-center gap-4 mb-8">
-          {footerLinks.map((link) => (
-            <button
-              key={link.id}
-              onClick={() => onNavigate(link.id)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
-                currentTab === link.id
-                  ? 'bg-liberation-sovereignty-gold text-black font-bold'
-                  : 'text-liberation-silver hover:text-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/10'
-              }`}
-            >
-              <link.icon className="h-4 w-4" />
-              <span className="text-sm font-medium">{link.label}</span>
-            </button>
-          ))}
+          {footerLinks.map((link) =>
+            link.type === 'link' ? (
+              <a
+                key={link.id}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 text-liberation-silver hover:text-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/10"
+              >
+                <link.icon className="h-4 w-4" />
+                <span className="text-sm font-medium">{link.label}</span>
+              </a>
+            ) : (
+              <button
+                key={link.id}
+                onClick={() => onNavigate(link.id)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
+                  currentTab === link.id
+                    ? 'bg-liberation-sovereignty-gold text-black font-bold'
+                    : 'text-liberation-silver hover:text-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/10'
+                }`}
+              >
+                <link.icon className="h-4 w-4" />
+                <span className="text-sm font-medium">{link.label}</span>
+              </button>
+            )
+          )}
         </div>
 
         {/* Platform Button */}
