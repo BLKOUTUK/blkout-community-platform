@@ -270,44 +270,36 @@ export class LiberationDatabase {
       if (fetchError) throw fetchError;
       if (!moderationItem) throw new Error('Approved event not found');
 
-      // Prepare event data for publication
+      // Prepare event data for publication to events table (not published_events)
       const contentData = moderationItem.content_data || {};
       const eventData = {
         title: moderationItem.title,
-        content: moderationItem.description || moderationItem.content || '',
-        author: contentData.organizer || 'Community Organizer',
-        event_date: contentData.event_date || moderationItem.submitted_at,
+        description: moderationItem.description || moderationItem.content || '',
+        date: contentData.event_date || moderationItem.submitted_at,
+        start_time: contentData.start_time || null,
+        end_time: contentData.end_time || null,
         location: contentData.location || 'Location TBA',
-        status: 'published',
+        url: moderationItem.url || '',
+        tags: contentData.tags || [],
+        organizer: contentData.organizer || 'Community Organizer',
         source: 'moderation_queue',
-        original_event_id: moderationItemId,
-        metadata: {
-          event_type: contentData.event_type || 'education',
-          location_type: contentData.location_type || 'in-person',
-          organizer: contentData.organizer,
-          registration_required: contentData.registration_required || false,
-          registration_link: contentData.registration_link,
-          capacity: contentData.capacity,
-          accessibility_features: contentData.accessibility_features || [],
-          community_value: contentData.community_value || 'education',
-          source_url: moderationItem.url,
-          original_moderation_id: moderationItemId
-        }
+        status: 'approved',
+        created_at: new Date().toISOString()
       };
 
-      // Insert into published_events table
+      // Insert into events table (matches submit-event.ts schema)
       const { data: publishedEvent, error: publishError } = await this.client
-        .from('published_events')
+        .from('events')
         .insert([eventData])
         .select()
         .single();
 
       if (publishError) throw publishError;
 
-      console.log(`Event ${moderationItemId} published successfully as ${publishedEvent.id}`);
+      console.log(`Event ${moderationItemId} published to events calendar as ${publishedEvent.id}`);
       return publishedEvent.id;
     } catch (error) {
-      console.error('Error publishing approved event:', error);
+      console.error('Error publishing approved event to calendar:', error);
       throw error;
     }
   }
