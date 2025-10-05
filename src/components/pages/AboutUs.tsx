@@ -175,6 +175,21 @@ export default function AboutUs() {
             </div>
           </CollapsibleSection>
 
+          {/* Story Powered Full Width Video */}
+          <div className="my-8 -mx-6 md:-mx-0">
+            <div className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: '16/9' }}>
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
+              >
+                <source src="/videos/onboarding/story powered full width (Video).mp4" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+
           {/* Trauma-Informed Practices */}
           <CollapsibleSection title="Trauma-Informed Practices Explained">
             <div className="space-y-6">

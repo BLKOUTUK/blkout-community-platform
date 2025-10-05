@@ -79,7 +79,7 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
             <div className="w-10 h-10 bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center">
               <Star className="w-5 h-5 text-purple-600 dark:text-purple-400" />
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">October Themes</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Competition Themes</h3>
           </div>
 
           <div className="space-y-2">
@@ -111,17 +111,13 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
           </div>
 
           <div className="space-y-3">
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Winner</p>
-              <p className="font-semibold text-gray-900 dark:text-gray-100">{competition.prizes.winner}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Featured</p>
-              <p className="font-semibold text-gray-900 dark:text-gray-100">{competition.prizes.featured}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Shortlisted</p>
-              <p className="font-semibold text-sm text-gray-900 dark:text-gray-100">{competition.prizes.shortlisted}</p>
+            <div className="text-center py-4">
+              <p className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                Prizes to be announced
+              </p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Exciting prizes and recognition for winners, featured photographers, and shortlisted entries
+              </p>
             </div>
           </div>
         </motion.div>
@@ -143,25 +139,25 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                {competition.stats.totalSubmissions}
+                {competition.stats?.totalSubmissions || 0}
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">Submissions</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-cyan-600 dark:text-cyan-400">
-                {competition.stats.communityVotes}
+                {competition.stats?.communityVotes || 0}
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">Votes Cast</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">
-                {competition.stats.activeCurators}
+                {competition.stats?.activeCurators || 0}
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">Curators</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-pink-600 dark:text-pink-400">
-                75%
+                {competition.creatorSharePercentage || 'TBA'}
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-400">Creator Share</p>
             </div>
@@ -191,7 +187,7 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
               </div>
               <div className="ml-12">
                 <p className="font-semibold text-gray-900 dark:text-gray-100">Submission Phase</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Now - October 31, 2025</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Now - November 16, 2025 (Midnight)</p>
               </div>
             </div>
 
@@ -201,7 +197,7 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
               </div>
               <div className="ml-12">
                 <p className="font-semibold text-gray-900 dark:text-gray-100">Curator Review</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">November 1-7, 2025</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">November 17-23, 2025</p>
               </div>
             </div>
 
@@ -211,7 +207,7 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
               </div>
               <div className="ml-12">
                 <p className="font-semibold text-gray-900 dark:text-gray-100">Community Voting</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">November 8-14, 2025</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">November 24-30, 2025</p>
               </div>
             </div>
 
@@ -221,7 +217,7 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
               </div>
               <div className="ml-12">
                 <p className="font-semibold text-gray-900 dark:text-gray-100">Winners Announced</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">November 15, 2025</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">December 1, 2025</p>
               </div>
             </div>
           </div>

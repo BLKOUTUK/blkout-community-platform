@@ -263,12 +263,12 @@ export default function App() {
           <div className="flex items-center mb-4">
             <Play className="h-8 w-8 text-liberation-gold-divine" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Our Journey Together</h3>
+          <h3 className="text-lg font-bold mb-2">Our Stories, Our Power</h3>
           <p className="text-liberation-silver text-sm mb-4">
-            Experience stories from our community that celebrate who we are and where we're going.
+            Witness the strength, joy, and resilience of Black queer voices. Our lived experiences shape the future we're building together.
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Browse Archive
+            Explore Stories
             <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
@@ -285,10 +285,10 @@ export default function App() {
           </div>
           <h3 className="text-lg font-bold mb-2">Photo of the Year 2025</h3>
           <p className="text-liberation-silver text-sm mb-4">
-            Share your vision. Connect with others. Celebrate our stories together.
+            Through your lens, show the world what Black queer liberation looks like. Your perspective matters, your artistry deserves recognition.
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Share Your Photos
+            Enter Competition
             <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
@@ -302,10 +302,10 @@ export default function App() {
           </div>
           <h3 className="text-lg font-bold mb-2">Meet IVOR</h3>
           <p className="text-liberation-black-power opacity-80 text-sm mb-4">
-            Connect with a companion who understands. IVOR listens and supports our community.
+            Your AI companion built by and for our community. IVOR centers Black queer experiences, understands our context, and supports your journey.
           </p>
           <div className="flex items-center text-liberation-black-power font-semibold text-sm">
-            Start Chat
+            Start Conversation
             <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
@@ -319,10 +319,10 @@ export default function App() {
           </div>
           <h3 className="text-lg font-bold mb-2">Discover Platform</h3>
           <p className="text-liberation-silver text-sm mb-4">
-            See what's new, find events, and connect with our community.
+            Find events, resources, and opportunities created for us, by us. Everything you need to thrive in one liberated space.
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Explore Now
+            Explore Platform
             <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
@@ -334,12 +334,12 @@ export default function App() {
           <div className="flex items-center mb-4">
             <Globe className="h-8 w-8 text-liberation-black-power" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Join Our Community</h3>
+          <h3 className="text-lg font-bold mb-2">Join BLKOUTHUB</h3>
           <p className="text-liberation-black-power opacity-80 text-sm mb-4">
-            Connect with others in our secure community space. Share, support, and grow together.
+            Your safe, affirming space to build authentic connections. Share experiences, find solidarity, and grow with people who truly get it.
           </p>
           <div className="flex items-center text-liberation-black-power font-semibold text-sm">
-            Connect Now
+            Join Community
             <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
@@ -353,10 +353,10 @@ export default function App() {
           </div>
           <h3 className="text-lg font-bold mb-2">Stay Connected</h3>
           <p className="text-liberation-black-power opacity-80 text-sm mb-4">
-            Get updates from our community and never miss what matters to you.
+            Get news, events, and opportunities delivered to your inbox. Stay in the loop with what matters to our liberation.
           </p>
           <div className="flex items-center text-liberation-black-power font-semibold text-sm">
-            Subscribe
+            Get Updates
             <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
@@ -368,12 +368,12 @@ export default function App() {
           <div className="flex items-center mb-4">
             <Heart className="h-8 w-8 text-liberation-gold-divine" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Get Involved</h3>
+          <h3 className="text-lg font-bold mb-2">Shape Our Future</h3>
           <p className="text-liberation-silver text-sm mb-4">
-            Ready to be part of something bigger? Let's build this together.
+            This platform belongs to us all. Join decision-making, propose ideas, and help build the community we deserve.
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Start Here
+            Get Involved
             <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
