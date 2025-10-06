@@ -284,7 +284,7 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
   }
 }
 
-async function fallbackToMigratedData(req: VercelRequest, res: VercelResponse, params: any) {
+async function fallbackToMigratedData(_req: VercelRequest, res: VercelResponse, params: any) {
   // Filter stories based on parameters
   let filteredStories = [...MIGRATED_STORIES];
 

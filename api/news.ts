@@ -304,7 +304,7 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
   }
 }
 
-async function fallbackToFallbackData(req: VercelRequest, res: VercelResponse, params: any) {
+async function fallbackToFallbackData(_req: VercelRequest, res: VercelResponse, params: any) {
   // Filter news based on parameters
   let filteredNews = [...FALLBACK_NEWS];
 
