@@ -125,28 +125,6 @@ class EventsAPIService {
     };
   }
 
-  // Map event types
-  private mapEventType(type: string): LiberationEvent['type'] {
-    const typeLower = type?.toLowerCase() || '';
-    if (typeLower.includes('mutual') || typeLower.includes('aid')) return 'mutual-aid';
-    if (typeLower.includes('organiz')) return 'organizing';
-    if (typeLower.includes('education') || typeLower.includes('workshop')) return 'education';
-    if (typeLower.includes('celebrat') || typeLower.includes('party')) return 'celebration';
-    if (typeLower.includes('support') || typeLower.includes('wellness')) return 'support';
-    if (typeLower.includes('action') || typeLower.includes('protest')) return 'action';
-    return 'organizing';
-  }
-
-  // Map community values
-  private mapCommunityValue(category: string): LiberationEvent['communityValue'] {
-    const catLower = category?.toLowerCase() || '';
-    if (catLower.includes('education') || catLower.includes('workshop')) return 'education';
-    if (catLower.includes('mutual') || catLower.includes('aid')) return 'mutual-aid';
-    if (catLower.includes('celebrat') || catLower.includes('party')) return 'celebration';
-    if (catLower.includes('wellness') || catLower.includes('healing')) return 'healing';
-    return 'organizing';
-  }
-
   // Map event status based on date
   private mapEventStatus(eventDate: string): LiberationEvent['status'] {
     const now = new Date();
