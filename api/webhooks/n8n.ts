@@ -1,4 +1,11 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase client for duplicate checking and moderation log
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 // N8N Authentication - Liberation Values: Secure but transparent
 const N8N_WEBHOOK_SECRET = process.env.N8N_WEBHOOK_SECRET;
