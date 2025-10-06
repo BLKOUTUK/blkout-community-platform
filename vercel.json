@@ -75,7 +75,7 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!extensions/).*)",
       "destination": "/index.html"
     }
   ],
