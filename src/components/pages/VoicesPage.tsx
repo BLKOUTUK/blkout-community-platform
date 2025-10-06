@@ -228,12 +228,12 @@ const VoicesPage: React.FC = () => {
       )}
 
       {/* Featured Hero Article */}
-      {featuredArticles.length > 1 && (
+      {featuredArticles.length > 0 && featuredArticles[0] && (
         <section className="relative">
           <div className="relative h-[600px] overflow-hidden">
             <img
-              src={featuredArticles[1].hero_image || getCategoryFallbackImage(featuredArticles[1].category, featuredArticles[1].id)}
-              alt={featuredArticles[1].hero_image_alt || featuredArticles[1].title}
+              src={featuredArticles[0].hero_image || getCategoryFallbackImage(featuredArticles[0].category, featuredArticles[0].id)}
+              alt={featuredArticles[0].hero_image_alt || featuredArticles[0].title}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-liberation-black-power via-liberation-black-power/40 to-transparent" />
@@ -244,27 +244,27 @@ const VoicesPage: React.FC = () => {
                   <div className="flex items-center gap-3 mb-4">
                     <Star className="h-5 w-5 text-yellow-400" />
                     <span className="text-yellow-400 font-semibold uppercase tracking-wide">Featured</span>
-                    <span className={`px-3 py-1 rounded-full text-sm font-semibold uppercase tracking-wide border ${getCategoryColor(featuredArticles[1].category)}`}>
-                      {featuredArticles[1].category}
+                    <span className={`px-3 py-1 rounded-full text-sm font-semibold uppercase tracking-wide border ${getCategoryColor(featuredArticles[0].category)}`}>
+                      {featuredArticles[0].category}
                     </span>
                   </div>
 
                   <h2 className="text-4xl md:text-6xl font-black text-liberation-gold-divine mb-4 leading-tight">
-                    {featuredArticles[1].title}
+                    {featuredArticles[0].title}
                   </h2>
 
                   <p className="text-xl md:text-2xl text-liberation-silver mb-6 leading-relaxed">
-                    {featuredArticles[1].excerpt}
+                    {featuredArticles[0].excerpt}
                   </p>
 
                   <div className="flex items-center gap-6 text-liberation-silver/70 mb-6">
-                    <span>By {featuredArticles[1].author}</span>
-                    <span>{new Date(featuredArticles[1].published_at || featuredArticles[1].created_at).toLocaleDateString()}</span>
-                    <span>{Math.max(1, Math.ceil(featuredArticles[1].content.length / 1000))} min read</span>
+                    <span>By {featuredArticles[0].author}</span>
+                    <span>{new Date(featuredArticles[0].published_at || featuredArticles[0].created_at).toLocaleDateString()}</span>
+                    <span>{Math.max(1, Math.ceil(featuredArticles[0].content.length / 1000))} min read</span>
                   </div>
 
                   <button
-                    onClick={() => handleArticleClick(featuredArticles[1])}
+                    onClick={() => handleArticleClick(featuredArticles[0])}
                     className="inline-flex items-center gap-2 bg-liberation-gold-divine text-liberation-black-power px-8 py-4 rounded-lg font-bold text-lg hover:bg-liberation-gold-divine/90 transition-colors"
                   >
                     Read Article
