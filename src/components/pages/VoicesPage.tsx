@@ -4,6 +4,7 @@ import { voicesAPI, type VoicesArticle } from '@/services/voices-api';
 import ArticlePitchForm from '@/components/voices/ArticlePitchForm';
 import ArticleShareButtons from '@/components/voices/ArticleShareButtons';
 import ArticleCallToAction from '@/components/voices/ArticleCallToAction';
+import { getCategoryFallbackImage } from '@/lib/fallback-images';
 
 const VoicesPage: React.FC = () => {
   const [articles, setArticles] = useState<VoicesArticle[]>([]);
@@ -72,7 +73,7 @@ const VoicesPage: React.FC = () => {
         {/* Article Hero */}
         <div className="relative h-96 md:h-[500px] overflow-hidden">
           <img
-            src={selectedArticle.hero_image || '/fallback-images/blue-images/blue-man.jpg'}
+            src={selectedArticle.hero_image || getCategoryFallbackImage(selectedArticle.category)}
             alt={selectedArticle.hero_image_alt || selectedArticle.title}
             className="w-full h-full object-cover"
           />
@@ -231,7 +232,7 @@ const VoicesPage: React.FC = () => {
         <section className="relative">
           <div className="relative h-[600px] overflow-hidden">
             <img
-              src={featuredArticles[1].hero_image || '/fallback-images/blue-images/blue-man.jpg'}
+              src={featuredArticles[1].hero_image || getCategoryFallbackImage(featuredArticles[1].category)}
               alt={featuredArticles[1].hero_image_alt || featuredArticles[1].title}
               className="w-full h-full object-cover"
             />
@@ -331,7 +332,7 @@ const VoicesPage: React.FC = () => {
                   {/* Article Image */}
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <img
-                      src={article.thumbnail_image || article.hero_image || '/fallback-images/blue-images/blue-man.jpg'}
+                      src={article.thumbnail_image || article.hero_image || getCategoryFallbackImage(article.category)}
                       alt={article.thumbnail_alt || article.hero_image_alt || article.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
