@@ -119,10 +119,35 @@ export function getColorFromCategory(category?: string): FallbackImageColor {
 
 /**
  * Get a random fallback image based on article category
+ * Uses article ID or timestamp as seed for consistent-per-article randomization
  * @param category - Article category
+ * @param seed - Optional seed (article ID) for deterministic selection
  * @returns Random image path matching the category's theme color
  */
-export function getCategoryFallbackImage(category?: string): string {
+export function getCategoryFallbackImage(category?: string, seed?: string): string {
   const color = getColorFromCategory(category);
-  return getRandomFallbackImage(color);
+  const images = FALLBACK_IMAGES[color];
+
+  if (!images || images.length === 0) {
+    return FALLBACK_IMAGES.blue[0];
+  }
+
+  // If seed provided, use it for deterministic selection (same article = same image)
+  // Otherwise use random (will change on each component render)
+  let index: number;
+
+  if (seed) {
+    // Simple hash function for string seed
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+      hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    index = Math.abs(hash) % images.length;
+  } else {
+    // Pure random - will change on each render/refresh
+    index = Math.floor(Math.random() * images.length);
+  }
+
+  return images[index];
 }

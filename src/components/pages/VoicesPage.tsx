@@ -73,7 +73,7 @@ const VoicesPage: React.FC = () => {
         {/* Article Hero */}
         <div className="relative h-96 md:h-[500px] overflow-hidden">
           <img
-            src={selectedArticle.hero_image || getCategoryFallbackImage(selectedArticle.category)}
+            src={selectedArticle.hero_image || getCategoryFallbackImage(selectedArticle.category, selectedArticle.id)}
             alt={selectedArticle.hero_image_alt || selectedArticle.title}
             className="w-full h-full object-cover"
           />
@@ -232,7 +232,7 @@ const VoicesPage: React.FC = () => {
         <section className="relative">
           <div className="relative h-[600px] overflow-hidden">
             <img
-              src={featuredArticles[1].hero_image || getCategoryFallbackImage(featuredArticles[1].category)}
+              src={featuredArticles[1].hero_image || getCategoryFallbackImage(featuredArticles[1].category, featuredArticles[1].id)}
               alt={featuredArticles[1].hero_image_alt || featuredArticles[1].title}
               className="w-full h-full object-cover"
             />
@@ -332,7 +332,7 @@ const VoicesPage: React.FC = () => {
                   {/* Article Image */}
                   <div className="relative aspect-[16/10] overflow-hidden">
                     <img
-                      src={article.thumbnail_image || article.hero_image || getCategoryFallbackImage(article.category)}
+                      src={article.thumbnail_image || article.hero_image || getCategoryFallbackImage(article.category, article.id)}
                       alt={article.thumbnail_alt || article.hero_image_alt || article.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
