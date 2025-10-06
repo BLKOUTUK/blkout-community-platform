@@ -435,28 +435,41 @@ async function fallbackToMigratedEvents(req: VercelRequest, res: VercelResponse,
 // Handle POST requests for event submission
 async function handleEventSubmission(req: VercelRequest, res: VercelResponse) {
   try {
-    const {
-      title,
-      date,
-      time,
-      location,
-      description,
-      url,
-      tags = [],
-      organizer,
-      capacity,
-      cost,
-      registrationRequired = false,
-      virtualLink,
-      submittedBy = 'anonymous'
-    } = req.body;
+    const eventData = req.body;
+
+    // Check if this is from Chrome extension (has edited/original structure)
+    const isExtensionSubmission = eventData.edited && eventData.original;
+
+    let title, date, time, location, description, url, tags, organizer, capacity, cost, registrationRequired, virtualLink, submittedBy;
+
+    if (isExtensionSubmission) {
+      // Chrome extension format
+      const { original = {}, edited = {} } = eventData;
+      title = edited.title;
+      date = edited.date || edited.startDate;
+      time = edited.startTime;
+      location = edited.location || original.location;
+      description = edited.description || original.description || '';
+      url = original.url || edited.sourceUrl;
+      tags = edited.tags || original.tags || [];
+      organizer = edited.organizer || original.organizer || 'Community Organizer';
+      capacity = edited.capacity;
+      cost = edited.price || edited.cost || original.cost || 'Free';
+      registrationRequired = edited.registrationRequired || false;
+      virtualLink = edited.virtualUrl || original.virtualUrl;
+      submittedBy = 'events_curator_extension';
+    } else {
+      // Direct API submission format
+      ({ title, date, time, location, description, url, tags = [], organizer, capacity, cost, registrationRequired = false, virtualLink, submittedBy = 'anonymous' } = eventData);
+    }
 
     // Validation
     if (!title || !date) {
       return res.status(400).json({
         success: false,
         error: 'Validation failed',
-        message: 'Title and date are required fields'
+        message: 'Title and date are required fields',
+        required: ['title', 'date']
       });
     }
 
@@ -479,13 +492,13 @@ async function handleEventSubmission(req: VercelRequest, res: VercelResponse) {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Submit event to events table with pending status
-    const { data, error } = await supabase
+    const { data: event, error: eventError } = await supabase
       .from('events')
       .insert([
         {
           title,
           date,
-          time,
+          start_time: time,
           location: location || 'TBD',
           description: description || '',
           url: url || null,
@@ -496,7 +509,8 @@ async function handleEventSubmission(req: VercelRequest, res: VercelResponse) {
           registration_required: registrationRequired,
           virtual_link: virtualLink || null,
           status: 'pending', // Events start as pending, require approval
-          submitted_by: submittedBy,
+          source: submittedBy === 'events_curator_extension' ? 'chrome_extension' : 'api',
+          priority: 'medium',
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString()
         }
@@ -504,31 +518,56 @@ async function handleEventSubmission(req: VercelRequest, res: VercelResponse) {
       .select()
       .single();
 
-    if (error) {
-      console.error('Supabase insert error:', error);
+    if (eventError) {
+      console.error('Supabase insert error:', eventError);
       return res.status(500).json({
         success: false,
         error: 'Database error',
         message: 'Failed to submit event to database',
-        details: error.message
+        details: eventError.message
       });
     }
 
+    // For extension submissions, also add to moderation_queue
+    if (isExtensionSubmission) {
+      const { original = {}, edited = {} } = eventData;
+      await supabase
+        .from('moderation_queue')
+        .insert([{
+          title: edited.title,
+          url: original.url || edited.sourceUrl || null,
+          excerpt: edited.description || original.description || '',
+          category: 'events',
+          status: 'pending_review',
+          type: 'event',
+          submitted_by: 'events_curator_extension',
+          content_data: {
+            original,
+            edited,
+            event_id: event.id
+          },
+          priority: 'medium'
+        }]);
+    }
+
     console.log('✅ Event submitted successfully:', {
-      id: data.id,
-      title: data.title,
-      status: data.status
+      id: event.id,
+      title: event.title,
+      status: event.status
     });
 
     return res.status(201).json({
       success: true,
-      message: 'Event submitted successfully and is pending approval',
-      data: {
-        id: data.id,
-        title: data.title,
-        date: data.date,
-        status: data.status
-      }
+      message: isExtensionSubmission
+        ? 'Event submitted to moderation queue successfully'
+        : 'Event submitted successfully and is pending approval',
+      event: {
+        id: event.id,
+        title: event.title,
+        date: event.date,
+        status: event.status
+      },
+      timestamp: new Date().toISOString()
     });
 
   } catch (error: any) {

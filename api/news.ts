@@ -8,7 +8,7 @@ import { createClient } from '@supabase/supabase-js';
 // CORS headers
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization'
 };
 
@@ -80,11 +80,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     res.setHeader(key, value);
   });
 
-  // Only support GET requests
+  // Handle POST requests (news submission from Chrome extension)
+  if (req.method === 'POST') {
+    return await handleNewsSubmission(req, res);
+  }
+
+  // Handle GET requests (fetch news)
   if (req.method !== 'GET') {
     return res.status(405).json({
       error: 'Method not allowed',
-      message: 'This endpoint supports GET method only'
+      message: 'This endpoint supports GET and POST methods only'
     });
   }
 
@@ -364,4 +369,128 @@ async function fallbackToFallbackData(_req: VercelRequest, res: VercelResponse, 
       source: 'fallback-news'
     }
   });
+}
+
+// Handle POST requests for news submission from Chrome extension
+async function handleNewsSubmission(req: VercelRequest, res: VercelResponse) {
+  try {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!supabaseUrl || !supabaseServiceKey) {
+      console.error('Missing Supabase configuration:', {
+        hasUrl: !!supabaseUrl,
+        hasKey: !!supabaseServiceKey
+      });
+      return res.status(500).json({
+        error: 'Server configuration error',
+        message: 'Database connection not configured'
+      });
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+    const articleData = req.body;
+
+    // Validate required fields
+    if (!articleData.edited?.title || !articleData.edited?.content) {
+      return res.status(400).json({
+        error: 'Missing required fields',
+        required: ['edited.title', 'edited.content']
+      });
+    }
+
+    // Extract article data from extension format
+    const {
+      original = {},
+      edited = {}
+    } = articleData;
+
+    // Generate slug from title
+    const slug = (edited.title || original.title || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
+    // Create news article record
+    const { data: article, error: articleError } = await supabase
+      .from('news_articles')
+      .insert([{
+        title: edited.title,
+        slug: `${slug}-${Date.now()}`, // Add timestamp to ensure uniqueness
+        excerpt: edited.excerpt || edited.description || original.description || '',
+        content: edited.content || original.content || '',
+        category: edited.category || 'community',
+        tags: edited.tags || original.tags || [],
+        author: edited.author || original.author || 'Community Curator',
+        source_url: original.url || edited.sourceUrl || null,
+        source_name: original.site_name || edited.sourceName || null,
+        featured_image: edited.imageUrl || original.image || null,
+        image_alt: edited.imageAlt || original.imageAlt || null,
+        hero_image: edited.heroImage || original.hero_image || null,
+        hero_image_alt: edited.heroImageAlt || null,
+        status: 'draft',
+        published: false,
+        interest_score: 0,
+        total_votes: 0,
+        view_count: 0,
+        is_featured: false,
+        is_story_of_week: false
+      }])
+      .select()
+      .single();
+
+    if (articleError) {
+      console.error('Failed to insert news article:', articleError);
+      return res.status(500).json({
+        error: 'Database error',
+        message: articleError.message
+      });
+    }
+
+    // Also add to moderation_queue for unified admin view
+    const { error: queueError } = await supabase
+      .from('moderation_queue')
+      .insert([{
+        title: edited.title,
+        url: original.url || edited.sourceUrl || null,
+        excerpt: edited.excerpt || edited.description || original.description || '',
+        category: edited.category || 'community',
+        status: 'pending_review',
+        type: 'news',
+        submitted_by: 'news_curator_extension',
+        content: edited.content || original.content || '',
+        content_data: {
+          original,
+          edited,
+          article_id: article.id
+        },
+        priority: 'medium'
+      }]);
+
+    if (queueError) {
+      console.warn('Failed to add to moderation queue:', queueError);
+      // Don't fail the request - article was saved successfully
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'News article submitted to moderation queue successfully',
+      article: {
+        id: article.id,
+        title: article.title,
+        slug: article.slug,
+        status: article.status,
+        category: article.category
+      },
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('News submission error:', error);
+    return res.status(500).json({
+      error: 'Internal server error',
+      message: error instanceof Error ? error.message : 'Unknown error',
+      timestamp: new Date().toISOString()
+    });
+  }
 }

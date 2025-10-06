@@ -1,0 +1,60 @@
+{
+  "manifest_version": 3,
+  "name": "BLKOUT Community Submission Tool",
+  "version": "1.0.2",
+  "description": "Submit events and stories to BLKOUT platform with enhanced content detection",
+  
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "scripting"
+  ],
+  
+  "host_permissions": [
+    "https://blkout-community-platform.vercel.app/*",
+    "https://blkout.vercel.app/*",
+    "https://*.theguardian.com/*",
+    "https://*.bbc.co.uk/*",
+    "https://*.bbc.com/*",
+    "https://*.independent.co.uk/*",
+    "https://*.reuters.com/*",
+    "https://*.aljazeera.com/*",
+    "https://*.huffpost.com/*",
+    "https://*.huffingtonpost.com/*",
+    "https://*.news.sky.com/*",
+    "https://*.channel4.com/*",
+    "https://*.itv.com/*",
+    "https://*.twitter.com/*",
+    "https://*.x.com/*",
+    "https://*.linkedin.com/*",
+    "https://*.instagram.com/*",
+    "https://*.eventbrite.com/*",
+    "https://*.facebook.com/*",
+    "https://*.meetup.com/*",
+    "<all_urls>"
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Submit to BLKOUT",
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "32": "assets/icon32.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    }
+  },
+  
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  }
+}
