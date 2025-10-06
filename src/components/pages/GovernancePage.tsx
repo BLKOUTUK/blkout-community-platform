@@ -268,6 +268,148 @@ const GovernancePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Story-Powered Platform Video */}
+      <section className="py-16 px-6 bg-white dark:bg-gray-900">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-gray-100">
+            Our Story-Powered Platform
+          </h2>
+          <p className="text-xl text-center text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+            BLKOUT is built on the power of our stories. Watch how we're creating a platform
+            that centers Black queer voices, experiences, and liberation.
+          </p>
+          <div className="max-w-4xl mx-auto">
+            <video
+              controls
+              className="w-full rounded-lg shadow-2xl"
+              poster="/videos/onboarding/story-powered-poster.jpg"
+            >
+              <source src="/videos/onboarding/story powered full width (Video).mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </section>
+
+      {/* Development Roadmap - Realness Unleashed */}
+      <section className="py-16 px-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-gray-100">
+            Current Development Plans: Realness Unleashed
+          </h2>
+          <p className="text-xl text-center text-gray-700 dark:text-gray-300 mb-12 max-w-3xl mx-auto">
+            We're building BLKOUT in phases, guided by community needs and our commitment to
+            authentic, liberatory technology. Here's where we're headed:
+          </p>
+
+          {/* Infographic */}
+          <div className="flex justify-center mb-12">
+            <img
+              src="/Branding and logos/REALNESS UNLEASHED Infographic Graph.png"
+              alt="BLKOUT Realness Unleashed Development Roadmap"
+              className="max-w-full h-auto rounded-lg shadow-2xl"
+            />
+          </div>
+
+          {/* Development Phases Explained */}
+          <div className="grid md:grid-cols-2 gap-8">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
+            >
+              <div className="bg-purple-100 dark:bg-purple-900 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold text-purple-600">1</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+                Phase 1: Foundation (Current)
+              </h3>
+              <ul className="text-gray-700 dark:text-gray-300 space-y-2">
+                <li>✅ Community news curation platform</li>
+                <li>✅ Events calendar for Black queer spaces</li>
+                <li>✅ Chrome extensions for content submission</li>
+                <li>✅ Basic moderation workflows</li>
+                <li>🔄 Member profiles and authentication</li>
+                <li>🔄 Community voting on content</li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
+            >
+              <div className="bg-pink-100 dark:bg-pink-900 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold text-pink-600">2</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+                Phase 2: Community Tools
+              </h3>
+              <ul className="text-gray-700 dark:text-gray-300 space-y-2">
+                <li>📋 Community proposal system</li>
+                <li>📋 Democratic voting on platform decisions</li>
+                <li>📋 Working group coordination</li>
+                <li>📋 Member directory and networking</li>
+                <li>📋 Community benefit society structure</li>
+                <li>📋 Transparent governance dashboard</li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
+            >
+              <div className="bg-yellow-100 dark:bg-yellow-900 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold text-yellow-600">3</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+                Phase 3: Liberation Features
+              </h3>
+              <ul className="text-gray-700 dark:text-gray-300 space-y-2">
+                <li>📋 Mutual aid coordination</li>
+                <li>📋 Resource sharing marketplace</li>
+                <li>📋 Community storytelling archive</li>
+                <li>📋 Skill sharing and mentorship</li>
+                <li>📋 Wellness and healing resources</li>
+                <li>📋 Collective memory preservation</li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
+            >
+              <div className="bg-blue-100 dark:bg-blue-900 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-2xl font-bold text-blue-600">4</span>
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+                Phase 4: Full Liberation Platform
+              </h3>
+              <ul className="text-gray-700 dark:text-gray-300 space-y-2">
+                <li>📋 Decentralized infrastructure</li>
+                <li>📋 Community-owned data sovereignty</li>
+                <li>📋 Economic cooperation tools</li>
+                <li>📋 International solidarity networks</li>
+                <li>📋 Liberation technology ecosystem</li>
+                <li>📋 Full community autonomy</li>
+              </ul>
+            </motion.div>
+          </div>
+
+          {/* Community Involvement CTA */}
+          <div className="mt-12 bg-gradient-to-r from-purple-600 to-pink-600 p-8 rounded-2xl text-center">
+            <h3 className="text-2xl font-bold text-white mb-4">
+              Shape the Roadmap With Us
+            </h3>
+            <p className="text-white/90 text-lg mb-6 max-w-2xl mx-auto">
+              These plans aren't set in stone - they evolve based on community needs and priorities.
+              Your voice matters in deciding what we build next.
+            </p>
+            <button className="px-8 py-4 bg-white text-purple-600 rounded-lg font-bold hover:bg-gray-100 transition-colors">
+              Join Community Planning Sessions
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* Info Section */}
       <section className="py-16 px-6 bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto">
@@ -279,9 +421,9 @@ const GovernancePage: React.FC = () => {
                   Building Together Takes Time
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  We're still developing our governance tools to make participation easy and meaningful.
-                  For now, join our community spaces to be part of the conversation.
-                  Your input shapes what we build next.
+                  We're currently in Phase 1, building the foundation of our platform. Each phase is developed
+                  collaboratively with community input. Join our community spaces to participate in shaping
+                  what we build next. Your ideas and feedback directly influence our development priorities.
                 </p>
               </div>
             </div>
