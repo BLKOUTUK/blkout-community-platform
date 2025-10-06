@@ -26,7 +26,7 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/videos/hero/Photo Comp Oct25 (Video).mp4" type="video/mp4" />
+          <source src="/videos/onboarding/Photo Comp Introduction(Video).mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
