@@ -20,8 +20,8 @@ export const ModerationTools: React.FC<ModerationToolsProps> = ({
 
   const downloadExtension = (type: 'events' | 'news') => {
     const fileName = type === 'events'
-      ? 'blkout-events-curator-v1.0.0.zip'
-      : 'blkout-news-curator-v1.0.0.zip';
+      ? 'blkout-events-curator-v1.0.1.zip'
+      : 'blkout-news-curator-v1.0.1.zip';
 
     // Download from public folder
     const link = document.createElement('a');

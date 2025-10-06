@@ -1,9 +1,9 @@
 # Chrome Extensions - When Will They Be Online?
 
 **Date**: 2025-10-06
-**Status**: ✅ **Backend Ready** - Both extension API endpoints deployed
-**Extensions**: Events Curator + News Curator
-**Next Step**: Extensions need to update API URLs from Railway → Vercel
+**Status**: ✅ **EXTENSIONS ONLINE** - Both v1.0.1 extensions deployed with Vercel endpoints
+**Extensions**: Events Curator v1.0.1 + News Curator v1.0.1
+**API Endpoints**: Both extensions now submit to https://blkout.vercel.app/api
 
 ---
 
@@ -366,10 +366,10 @@ SELECT COUNT(*) FROM moderation_queue WHERE type IN ('event', 'news');
 |--------|----------|--------|
 | Backend endpoints deployed | ✅ Complete | Both Vercel live |
 | Supabase tables ready | ✅ Complete | All tested |
-| Extensions need update | ⏳ Pending | Change API URLs |
-| Rebuild extension ZIPs | ⏳ Pending | 10-15 minutes |
-| Deploy updated extensions | ⏳ Pending | Replace ZIP files |
-| **Extensions online** | 🎯 **~45 minutes** | After ZIPs updated |
+| Extensions updated | ✅ Complete | API URLs changed to Vercel |
+| Rebuild extension ZIPs | ✅ Complete | v1.0.1 created |
+| Deploy updated extensions | ✅ Complete | ZIPs in public/extensions/ |
+| **Extensions online** | ✅ **LIVE NOW** | v1.0.1 ready to download |
 
 ---
 
@@ -384,9 +384,10 @@ SELECT COUNT(*) FROM moderation_queue WHERE type IN ('event', 'news');
 
 ---
 
-**Status**: ✅ **Backend ready** - Both extensions can go online as soon as API URLs are updated
-**Last Updated**: 2025-10-06 12:00 GMT
-**Endpoints**:
-- Events: `https://blkout.vercel.app/api/events/moderation-queue` ✅
-- News: `https://blkout.vercel.app/api/news/moderation-queue` ✅
+**Status**: ✅ **EXTENSIONS LIVE** - Both v1.0.1 extensions deployed and ready to use
+**Last Updated**: 2025-10-06 13:30 GMT
+**Download**: Both extensions available at `/admin` moderation dashboard
+**Versions**:
+- Events Curator: v1.0.1 → `https://blkout.vercel.app/api/events/moderation-queue`
+- News Curator: v1.0.1 → `https://blkout.vercel.app/api/news/moderation-queue`
 **Contact**: See `docs/CONTENT_PIPELINE_ISSUES.md` for full pipeline details
