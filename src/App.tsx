@@ -397,7 +397,7 @@ export default function App() {
               playsInline
               className="w-full h-full object-cover"
             >
-              <source src="/videos/hero/Photo Comp Oct25 Updated.mp4" type="video/mp4" />
+              <source src="/videos/onboarding/Photo Comp Introduction(Video).mp4" type="video/mp4" />
             </video>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
