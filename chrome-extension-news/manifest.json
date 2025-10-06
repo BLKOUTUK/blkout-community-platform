@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "BLKOUT News Curator",
+  "version": "1.0.0",
+  "description": "Smart news content curation for BLKOUT Liberation Platform - Auto-extracts articles with content warnings",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "notifications",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "liberation.blkoutcollective.org/*",
+    "https://blkout-api-railway-production.up.railway.app/*",
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "BLKOUT News Curator",
+    "default_icon": {
+      "16": "icons/news-16.png",
+      "32": "icons/news-32.png",
+      "48": "icons/news-48.png",
+      "128": "icons/news-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/content.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/news-16.png",
+    "32": "icons/news-32.png",
+    "48": "icons/news-48.png",
+    "128": "icons/news-128.png"
+  }
+}

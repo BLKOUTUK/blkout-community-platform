@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "BLKOUT Events Curator",
+  "version": "1.0.0",
+  "description": "Smart event content curation for BLKOUT Liberation Platform - Auto-extracts dates, venues, and organizer info",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "notifications",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://liberation.blkoutcollective.org/*",
+    "https://blkout-api-railway-production.up.railway.app/*",
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "BLKOUT Events Curator",
+    "default_icon": {
+      "16": "icons/events-16.png",
+      "32": "icons/events-32.png",
+      "48": "icons/events-48.png",
+      "128": "icons/events-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/content.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/events-16.png",
+    "32": "icons/events-32.png",
+    "48": "icons/events-48.png",
+    "128": "icons/events-128.png"
+  }
+}

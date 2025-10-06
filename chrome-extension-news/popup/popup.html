@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLKOUT News Curator</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-icon">📰</div>
+      <div class="header-text">
+        <h1>News Curator</h1>
+        <p class="header-subtitle">BLKOUT Liberation Platform</p>
+      </div>
+    </header>
+
+    <!-- Status Messages -->
+    <div id="statusMessage" class="status-message" style="display: none;"></div>
+    <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+    <!-- News Form -->
+    <form id="newsForm" class="news-form">
+      <!-- Headline -->
+      <div class="field-group">
+        <label for="newsHeadline">Headline *</label>
+        <input type="text" id="newsHeadline" class="field-input" placeholder="Article headline" required>
+      </div>
+
+      <!-- Author & Publication -->
+      <div class="field-row">
+        <div class="field-group">
+          <label for="newsAuthor">Author</label>
+          <input type="text" id="newsAuthor" class="field-input" placeholder="Author name">
+        </div>
+        <div class="field-group">
+          <label for="newsPublication">Publication</label>
+          <input type="text" id="newsPublication" class="field-input" placeholder="Source">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="newsPublishedDate">Published Date</label>
+        <input type="date" id="newsPublishedDate" class="field-input">
+      </div>
+
+      <!-- Summary -->
+      <div class="field-group">
+        <label for="newsSummary">Summary *</label>
+        <textarea id="newsSummary" class="field-textarea" rows="3" placeholder="Brief summary of the article" required></textarea>
+      </div>
+
+      <!-- Content -->
+      <div class="field-group">
+        <label for="newsContent">Content (key excerpts)</label>
+        <textarea id="newsContent" class="field-textarea" rows="5" placeholder="Important quotes or excerpts"></textarea>
+      </div>
+
+      <!-- Image Management -->
+      <div class="field-group">
+        <label>Article Images</label>
+        <div class="image-management">
+          <!-- Auto-extracted images -->
+          <div class="extracted-images" id="extractedImages">
+            <div class="images-grid" id="imagesGrid"></div>
+          </div>
+
+          <!-- Manual image upload -->
+          <div class="image-upload">
+            <label for="imageUpload" class="upload-button">
+              <span class="upload-icon">📤</span>
+              <span>Upload Additional Images</span>
+              <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;">
+            </label>
+            <div class="upload-hint">Max 5 images, 5MB each. JPG, PNG, WebP supported.</div>
+          </div>
+
+          <!-- Uploaded images preview -->
+          <div class="uploaded-images" id="uploadedImages" style="display: none;">
+            <h4>Uploaded Images</h4>
+            <div class="images-grid" id="uploadedImagesGrid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Source URL -->
+      <div class="field-group">
+        <label for="newsSourceUrl">Source URL *</label>
+        <input type="url" id="newsSourceUrl" class="field-input" placeholder="https://..." required>
+      </div>
+
+      <!-- Category -->
+      <div class="field-group">
+        <label for="newsCategory">Category</label>
+        <select id="newsCategory" class="field-select">
+          <option value="">Auto-detect</option>
+          <option value="justice">Justice/Rights</option>
+          <option value="community">Community</option>
+          <option value="culture">Culture/Arts</option>
+          <option value="health">Health/Wellness</option>
+          <option value="education">Education</option>
+          <option value="politics">Politics/Policy</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <!-- Tags -->
+      <div class="field-group">
+        <label for="newsTags">Tags (comma-separated)</label>
+        <input type="text" id="newsTags" class="field-input" placeholder="queer-rights, justice, activism">
+      </div>
+
+      <!-- Community Relevance -->
+      <div class="field-group">
+        <label for="newsCommunityRelevance">Community Relevance</label>
+        <textarea id="newsCommunityRelevance" class="field-textarea" rows="2" placeholder="Why this matters to BLKOUT community"></textarea>
+      </div>
+
+      <!-- Content Warning -->
+      <div class="field-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="newsContentWarning">
+          <span>Content Warning Required (violence, trauma, sensitive topics)</span>
+        </label>
+      </div>
+
+      <div class="field-group" id="warningTextGroup" style="display: none;">
+        <label for="newsWarningText">Warning Text</label>
+        <input type="text" id="newsWarningText" class="field-input" placeholder="CW: [describe sensitive content]">
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button type="button" id="extractBtn" class="btn btn-secondary">Extract Data</button>
+        <button type="button" id="saveDraftBtn" class="btn btn-secondary">Save Draft</button>
+        <button type="submit" id="submitBtn" class="btn btn-primary">Submit to Queue</button>
+      </div>
+    </form>
+
+    <!-- Footer Stats -->
+    <div class="footer-stats" id="footerStats">
+      <div class="stat">
+        <span class="stat-value" id="submittedToday">0</span>
+        <span class="stat-label">Today</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="approvalRate">--</span>
+        <span class="stat-label">Approval</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="queueSize">--</span>
+        <span class="stat-label">Queue</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

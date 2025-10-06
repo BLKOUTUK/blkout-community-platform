@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLKOUT Events Curator</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-icon">📅</div>
+      <div class="header-text">
+        <h1>Events Curator</h1>
+        <p class="header-subtitle">BLKOUT Liberation Platform</p>
+      </div>
+    </header>
+
+    <!-- Status Messages -->
+    <div id="statusMessage" class="status-message" style="display: none;"></div>
+    <div id="errorMessage" class="error-message" style="display: none;"></div>
+
+    <!-- Event Form -->
+    <form id="eventForm" class="event-form">
+      <!-- Title -->
+      <div class="field-group">
+        <label for="eventTitle">Event Title *</label>
+        <input type="text" id="eventTitle" class="field-input" placeholder="Enter event title" required>
+      </div>
+
+      <!-- Dates -->
+      <div class="field-row">
+        <div class="field-group">
+          <label for="eventStartDate">Start Date/Time *</label>
+          <input type="datetime-local" id="eventStartDate" class="field-input" required>
+        </div>
+        <div class="field-group">
+          <label for="eventEndDate">End Date/Time</label>
+          <input type="datetime-local" id="eventEndDate" class="field-input">
+        </div>
+      </div>
+
+      <!-- Location & Organizer -->
+      <div class="field-group">
+        <label for="eventLocation">Location *</label>
+        <input type="text" id="eventLocation" class="field-input" placeholder="Venue name or address" required>
+      </div>
+
+      <div class="field-group">
+        <label for="eventOrganizer">Organizer</label>
+        <input type="text" id="eventOrganizer" class="field-input" placeholder="Organization or person">
+      </div>
+
+      <!-- Description -->
+      <div class="field-group">
+        <label for="eventDescription">Description</label>
+        <textarea id="eventDescription" class="field-textarea" rows="4" placeholder="Event description"></textarea>
+      </div>
+
+      <!-- Image Management -->
+      <div class="field-group">
+        <label>Event Images</label>
+        <div class="image-management">
+          <!-- Auto-extracted images -->
+          <div class="extracted-images" id="extractedImages">
+            <div class="images-grid" id="imagesGrid"></div>
+          </div>
+
+          <!-- Manual image upload -->
+          <div class="image-upload">
+            <label for="imageUpload" class="upload-button">
+              <span class="upload-icon">📤</span>
+              <span>Upload Additional Images</span>
+              <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;">
+            </label>
+            <div class="upload-hint">Max 5 images, 5MB each. JPG, PNG, WebP supported.</div>
+          </div>
+
+          <!-- Uploaded images preview -->
+          <div class="uploaded-images" id="uploadedImages" style="display: none;">
+            <h4>Uploaded Images</h4>
+            <div class="images-grid" id="uploadedImagesGrid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Details -->
+      <div class="field-row">
+        <div class="field-group">
+          <label for="eventCapacity">Capacity</label>
+          <input type="number" id="eventCapacity" class="field-input" placeholder="Max attendees">
+        </div>
+        <div class="field-group">
+          <label for="eventPrice">Price</label>
+          <input type="text" id="eventPrice" class="field-input" placeholder="Free or price">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="eventRegistration">Registration URL</label>
+        <input type="url" id="eventRegistration" class="field-input" placeholder="https://...">
+      </div>
+
+      <div class="field-group">
+        <label for="eventType">Event Type</label>
+        <select id="eventType" class="field-select">
+          <option value="">Auto-detect</option>
+          <option value="protest">Protest/March</option>
+          <option value="workshop">Workshop/Training</option>
+          <option value="social">Social/Gathering</option>
+          <option value="performance">Performance/Arts</option>
+          <option value="fundraiser">Fundraiser</option>
+          <option value="meeting">Meeting/Conference</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="eventTags">Tags (comma-separated)</label>
+        <input type="text" id="eventTags" class="field-input" placeholder="liberation, community, activism">
+      </div>
+
+      <div class="field-group">
+        <label for="eventAccessibility">Accessibility Info</label>
+        <textarea id="eventAccessibility" class="field-textarea" rows="2" placeholder="Wheelchair accessible, BSL interpreter, etc."></textarea>
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button type="button" id="extractBtn" class="btn btn-secondary">Extract Data</button>
+        <button type="button" id="saveDraftBtn" class="btn btn-secondary">Save Draft</button>
+        <button type="submit" id="submitBtn" class="btn btn-primary">Submit to Queue</button>
+      </div>
+    </form>
+
+    <!-- Footer Stats -->
+    <div class="footer-stats" id="footerStats">
+      <div class="stat">
+        <span class="stat-value" id="submittedToday">0</span>
+        <span class="stat-label">Today</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="approvalRate">--</span>
+        <span class="stat-label">Approval</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="queueSize">--</span>
+        <span class="stat-label">Queue</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
