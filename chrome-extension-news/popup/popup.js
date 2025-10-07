@@ -6,7 +6,7 @@ class NewsCurator {
     this.selectedImages = [];
     this.maxImages = 5;
     this.maxImageSize = 5 * 1024 * 1024; // 5MB
-    this.apiEndpoint = 'https://blkout-api-railway-production.up.railway.app/api';
+    this.apiEndpoint = 'https://blkout.vercel.app/api';
     this.dashboardUrl = 'https://news-blkout.vercel.app/admin';
     this.version = '1.0.0';
     this.init();
@@ -215,17 +215,26 @@ class NewsCurator {
 
     try {
       this.showStatus('Submitting to moderation queue...');
-      
-      const response = await fetch(`${this.apiEndpoint}/news/moderation-queue`, {
+
+      const response = await fetch(`${this.apiEndpoint}/news`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'pending_review', ...articleData })
+        body: JSON.stringify({
+          type: 'news',
+          status: 'pending_review',
+          title: articleData.edited.headline,
+          content: articleData.edited.content,
+          url: articleData.metadata.sourceUrl,
+          ...articleData
+        })
       });
 
       if (response.ok) {
         this.showSuccess('Article submitted to moderation queue!');
         setTimeout(() => this.showDashboardPrompt(), 1500);
       } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Submission error:', errorData);
         this.saveToLocalStorage('pending_review', articleData);
         this.showSuccess('Article saved locally (will sync when online)');
       }

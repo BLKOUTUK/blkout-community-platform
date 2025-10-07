@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "BLKOUT Events Curator",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Smart event content curation for BLKOUT Liberation Platform - Auto-extracts dates, venues, and organizer info",
   "permissions": [
     "activeTab",
@@ -11,8 +11,8 @@
     "alarms"
   ],
   "host_permissions": [
-    "https://liberation.blkoutcollective.org/*",
-    "https://blkout-api-railway-production.up.railway.app/*",
+    "https://blkout.vercel.app/*",
+    "https://events-blkout.vercel.app/*",
     "<all_urls>"
   ],
   "action": {

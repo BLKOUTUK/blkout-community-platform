@@ -6,7 +6,7 @@ class EventsCurator {
     this.selectedImages = [];
     this.maxImages = 5;
     this.maxImageSize = 5 * 1024 * 1024; // 5MB
-    this.apiEndpoint = 'https://blkout-api-railway-production.up.railway.app/api';
+    this.apiEndpoint = 'https://blkout.vercel.app/api';
     this.dashboardUrl = 'https://events-blkout.vercel.app/admin';
     this.version = '1.0.0';
     this.init();
@@ -227,17 +227,25 @@ class EventsCurator {
 
     try {
       this.showStatus('Submitting to moderation queue...');
-      
-      const response = await fetch(`${this.apiEndpoint}/events/moderation-queue`, {
+
+      const response = await fetch(`${this.apiEndpoint}/events`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'pending_review', ...eventData })
+        body: JSON.stringify({
+          type: 'event',
+          status: 'pending_review',
+          title: eventData.edited.title,
+          date: eventData.edited.startDate,
+          ...eventData
+        })
       });
 
       if (response.ok) {
         this.showSuccess('Event submitted to moderation queue!');
         setTimeout(() => this.showDashboardPrompt(), 1500);
       } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Submission error:', errorData);
         this.saveToLocalStorage('pending_review', eventData);
         this.showSuccess('Event saved locally (will sync when online)');
       }

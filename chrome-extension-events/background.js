@@ -3,7 +3,7 @@
 
 class EventsBackgroundService {
   constructor() {
-    this.apiEndpoint = 'https://blkout-api-railway-production.up.railway.app/api';
+    this.apiEndpoint = 'https://blkout.vercel.app/api';
     this.dashboardUrl = 'https://liberation.blkoutcollective.org/admin/events';
     this.init();
   }
@@ -31,10 +31,10 @@ class EventsBackgroundService {
 
   async updateBadge() {
     try {
-      const response = await fetch(`${this.apiEndpoint}/events/moderation-queue/size`);
+      const response = await fetch(`${this.apiEndpoint}/admin/moderation-queue?type=event&status=pending`);
       if (response.ok) {
         const data = await response.json();
-        const count = data.queueSize || 0;
+        const count = data.metadata?.total || data.queue?.length || 0;
 
         if (count > 0) {
           chrome.action.setBadgeText({ text: count.toString() });
@@ -57,10 +57,14 @@ class EventsBackgroundService {
 
       for (const key of pendingKeys) {
         const eventData = result[key];
-        const response = await fetch(`${this.apiEndpoint}/events/moderation-queue`, {
+        const response = await fetch(`${this.apiEndpoint}/events`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(eventData)
+          body: JSON.stringify({
+            type: 'event',
+            status: 'pending_review',
+            ...eventData
+          })
         });
 
         if (response.ok) {

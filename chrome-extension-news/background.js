@@ -3,7 +3,7 @@
 
 class NewsBackgroundService {
   constructor() {
-    this.apiEndpoint = 'https://blkout-api-railway-production.up.railway.app/api';
+    this.apiEndpoint = 'https://blkout.vercel.app/api';
     this.dashboardUrl = 'https://liberation.blkoutcollective.org/admin/news';
     this.init();
   }
@@ -31,10 +31,10 @@ class NewsBackgroundService {
 
   async updateBadge() {
     try {
-      const response = await fetch(`${this.apiEndpoint}/news/moderation-queue/size`);
+      const response = await fetch(`${this.apiEndpoint}/admin/moderation-queue?type=news&status=pending`);
       if (response.ok) {
         const data = await response.json();
-        const count = data.queueSize || 0;
+        const count = data.metadata?.total || data.queue?.length || 0;
 
         if (count > 0) {
           chrome.action.setBadgeText({ text: count.toString() });
@@ -57,10 +57,14 @@ class NewsBackgroundService {
 
       for (const key of pendingKeys) {
         const articleData = result[key];
-        const response = await fetch(`${this.apiEndpoint}/news/moderation-queue`, {
+        const response = await fetch(`${this.apiEndpoint}/news`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(articleData)
+          body: JSON.stringify({
+            type: 'news',
+            status: 'pending_review',
+            ...articleData
+          })
         });
 
         if (response.ok) {
