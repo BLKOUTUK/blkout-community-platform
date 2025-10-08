@@ -216,16 +216,17 @@ class NewsCurator {
     try {
       this.showStatus('Submitting to moderation queue...');
 
-      const response = await fetch(`${this.apiEndpoint}/news`, {
+      const response = await fetch(`https://news-blkout.vercel.app/api/submit-article`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          type: 'news',
-          status: 'pending_review',
           title: articleData.edited.headline,
-          content: articleData.edited.content,
           url: articleData.metadata.sourceUrl,
-          ...articleData
+          excerpt: articleData.edited.summary,
+          content: articleData.edited.content,
+          category: articleData.edited.category,
+          submittedBy: 'chrome-extension',
+          type: 'story'
         })
       });
 

@@ -8,7 +8,7 @@ from pathlib import Path
 def create_extension_zip(source_dir, output_path, exclude_patterns=None):
     """Create a zip file from source directory, excluding specified patterns"""
     if exclude_patterns is None:
-        exclude_patterns = ['.git', 'auth', '.DS_Store', '.zone.identifier', '__pycache__']
+        exclude_patterns = ['.git', 'auth', '.DS_Store', 'Zone.Identifier', '.zone.identifier', '__pycache__']
 
     with zipfile.ZipFile(output_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
         for root, dirs, files in os.walk(source_dir):
@@ -40,24 +40,24 @@ def main():
     # Package News Curator
     print("📰 Packaging News Curator...")
     news_source = project_root / 'chrome-extension-news'
-    news_zip = project_root / 'public' / 'extensions' / 'blkout-news-curator-v1.0.2.zip'
+    news_zip = project_root / 'public' / 'extensions' / 'blkout-news-curator-v1.0.3.zip'
 
     create_extension_zip(news_source, news_zip)
 
     # Copy to dist
     import shutil
-    shutil.copy(news_zip, project_root / 'dist' / 'extensions' / 'blkout-news-curator-v1.0.2.zip')
+    shutil.copy(news_zip, project_root / 'dist' / 'extensions' / 'blkout-news-curator-v1.0.3.zip')
     print(f"✅ News Curator packaged: {news_zip}")
 
     # Package Events Curator
     print("📅 Packaging Events Curator...")
     events_source = project_root / 'chrome-extension-events'
-    events_zip = project_root / 'public' / 'extensions' / 'blkout-events-curator-v1.0.2.zip'
+    events_zip = project_root / 'public' / 'extensions' / 'blkout-events-curator-v1.0.3.zip'
 
     create_extension_zip(events_source, events_zip)
 
     # Copy to dist
-    shutil.copy(events_zip, project_root / 'dist' / 'extensions' / 'blkout-events-curator-v1.0.2.zip')
+    shutil.copy(events_zip, project_root / 'dist' / 'extensions' / 'blkout-events-curator-v1.0.3.zip')
     print(f"✅ Events Curator packaged: {events_zip}")
 
     # Show results
@@ -67,8 +67,8 @@ def main():
         print(f"   {ext_file.name}: {size:.1f} KB")
 
     print("\n✅ Extensions ready for download from admin dashboards!")
-    print("   - News: /extensions/blkout-news-curator-v1.0.2.zip")
-    print("   - Events: /extensions/blkout-events-curator-v1.0.2.zip")
+    print("   - News: /extensions/blkout-news-curator-v1.0.3.zip")
+    print("   - Events: /extensions/blkout-events-curator-v1.0.3.zip")
 
 if __name__ == '__main__':
     main()

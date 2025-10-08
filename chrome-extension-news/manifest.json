@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "BLKOUT News Curator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Smart news content curation for BLKOUT Liberation Platform - Auto-extracts articles with content warnings",
   "permissions": [
     "activeTab",

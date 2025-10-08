@@ -228,15 +228,18 @@ class EventsCurator {
     try {
       this.showStatus('Submitting to moderation queue...');
 
-      const response = await fetch(`${this.apiEndpoint}/events`, {
+      const response = await fetch(`https://events-blkout.vercel.app/api/submit-event`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          type: 'event',
-          status: 'pending_review',
           title: eventData.edited.title,
           date: eventData.edited.startDate,
-          ...eventData
+          end_date: eventData.edited.endDate,
+          location: eventData.edited.location,
+          organizer: eventData.edited.organizer,
+          description: eventData.edited.description,
+          event_url: eventData.metadata.sourceUrl,
+          submittedBy: 'chrome-extension'
         })
       });
 
