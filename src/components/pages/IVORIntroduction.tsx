@@ -121,6 +121,15 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
             </div>
 
             <div className="text-center">
+              {/* BLKOUT Logo */}
+              <div className="flex justify-center mb-4">
+                <img
+                  src="/Branding and logos/blkoutlogo_wht_transparent.png"
+                  alt="BLKOUT"
+                  className="h-16 md:h-20 w-auto mx-auto filter drop-shadow-2xl"
+                />
+              </div>
+
               <h1 className="text-3xl font-black text-white mb-2 uppercase" style={{
                 textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
                 WebkitTextStroke: '1px #000'

@@ -203,6 +203,15 @@ const VoicesPage: React.FC = () => {
       <div className="bg-gradient-to-r from-purple-900 via-black to-purple-900 border-b border-liberation-silver/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
+            {/* BLKOUT Logo */}
+            <div className="flex justify-center mb-6">
+              <img
+                src="/Branding and logos/blkoutlogo_wht_transparent.png"
+                alt="BLKOUT"
+                className="h-24 md:h-32 lg:h-40 w-auto mx-auto filter drop-shadow-2xl"
+              />
+            </div>
+
             <h1 className="text-5xl md:text-7xl font-black text-liberation-gold-divine mb-4">
               BLKOUT Voices
             </h1>
