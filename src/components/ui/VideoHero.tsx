@@ -33,7 +33,7 @@ const VideoHero: React.FC<VideoHeroProps> = ({
   className,
   children,
   showLogo = true,
-  logoSrc = "/Branding and logos/blkout_logo_roundel_colour.png"
+  logoSrc = "/Branding and logos/raisedfistlogo.png"
 }) => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -163,7 +163,7 @@ const VideoHero: React.FC<VideoHeroProps> = ({
               <img
                 src={logoSrc}
                 alt="BLKOUT Logo"
-                className="h-16 md:h-20 lg:h-24 w-auto mx-auto filter drop-shadow-lg"
+                className="h-24 md:h-32 lg:h-40 w-auto mx-auto filter drop-shadow-2xl"
                 loading="eager"
               />
             </motion.div>

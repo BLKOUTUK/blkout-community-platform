@@ -362,6 +362,23 @@ export default function App() {
         </button>
 
         <button
+          onClick={() => changeActiveTab('voices')}
+          className="group bg-gradient-to-br from-liberation-pride-purple via-liberation-gold-divine to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left border-2 border-liberation-gold-divine shadow-lg hover:shadow-2xl"
+        >
+          <div className="flex items-center mb-4">
+            <PenTool className="h-8 w-8 text-white" />
+          </div>
+          <h3 className="text-lg font-bold mb-2">✊🏾 Voices Newsletter</h3>
+          <p className="text-white text-sm mb-4">
+            Amplifying Black queer narratives. Read powerful stories, perspectives, and voices from our community. New link coming soon.
+          </p>
+          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
+            Read Voices
+            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </button>
+
+        <button
           onClick={() => changeActiveTab('governance')}
           className="group bg-gradient-to-br from-liberation-black-power to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 border-2 border-liberation-gold-divine text-left shadow-lg hover:shadow-2xl"
         >
