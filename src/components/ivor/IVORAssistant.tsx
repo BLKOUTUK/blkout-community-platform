@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
+import ResourceCard from './ResourceCard';
 
 const supabaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL;
 const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY;
@@ -10,12 +11,30 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null;
 
+// IVOR Core API endpoint
+const IVOR_API_URL = 'https://ivor-core-6ayklxl9m-robs-projects-54d653d3.vercel.app/api/chat';
+
+interface Resource {
+  id: string;
+  name: string;
+  description: string;
+  organization: string;
+  url?: string;
+  phone?: string;
+  email?: string;
+  location: string;
+  score?: number;
+}
+
 interface IVORMessage {
   id: string;
   type: 'user' | 'ivor';
   content: string;
   timestamp: Date;
   category?: string;
+  resources?: Resource[];
+  resourceCount?: number;
+  enhancedWithRAG?: boolean;
 }
 
 interface LearningTool {
@@ -91,14 +110,6 @@ const LEARNING_TOOLS: LearningTool[] = [
     icon: '🗺️',
     category: 'learning',
     prompt: 'I need help finding resources or connecting with community support. Can you guide me?'
-  },
-  {
-    id: 'staying-healthy',
-    name: 'Staying Healthy',
-    description: 'Sexual health, wellness, and care resources for Black queer men',
-    icon: '💪🏾',
-    category: 'emotional-support',
-    prompt: 'I have questions about sexual health, wellness, or staying healthy. Can you share resources and information?'
   }
 ];
 
@@ -159,14 +170,37 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
         ]);
       }
 
-      // Simulate IVOR response based on content
-      const response = await generateIVORResponse(content);
+      // Call real IVOR Core API with RAG enhancement
+      const conversationHistory = messages.map(msg => ({
+        role: msg.type === 'user' ? 'user' : 'assistant',
+        content: msg.content
+      }));
+
+      const apiResponse = await fetch(IVOR_API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: content,
+          conversationHistory: conversationHistory
+        })
+      });
+
+      if (!apiResponse.ok) {
+        throw new Error(`API error: ${apiResponse.status}`);
+      }
+
+      const data = await apiResponse.json();
 
       const ivorMessage: IVORMessage = {
         id: (Date.now() + 1).toString(),
         type: 'ivor',
-        content: response,
-        timestamp: new Date()
+        content: data.response || data.message || 'I apologize, but I received an unexpected response. Please try again.',
+        timestamp: new Date(),
+        resources: data.resources || [],
+        resourceCount: data.resourceCount || 0,
+        enhancedWithRAG: data.enhancedWithRAG || false
       };
 
       setMessages(prev => [...prev, ivorMessage]);
@@ -175,7 +209,7 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
       if (supabase) {
         await supabase.from('ivor_conversations').insert([
           {
-            ivor_response: response,
+            ivor_response: ivorMessage.content,
             timestamp: new Date().toISOString(),
             session_id: 'webapp-session-' + Date.now()
           }
@@ -187,7 +221,7 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
       const errorMessage: IVORMessage = {
         id: (Date.now() + 1).toString(),
         type: 'ivor',
-        content: 'I apologize, but I\'m having trouble responding right now. Please try again or reach out to the community for support.',
+        content: 'I apologize, but I\'m having trouble connecting to my backend right now. Please try again in a moment, or reach out to the community for support.',
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -200,280 +234,11 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
     handleSendMessage(tool.prompt);
   };
 
-  const generateIVORResponse = async (userMessage: string): Promise<string> => {
-    try {
-      // Call the IVOR AI API endpoint
-      const response = await fetch('/api/ivor/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          message: userMessage,
-          conversationHistory: messages
-            .filter(m => m.type !== 'greeting') // Exclude greeting
-            .map(m => ({
-              role: m.type === 'user' ? 'user' : 'assistant',
-              content: m.content
-            })),
-          sessionId: `webapp-${Date.now()}`
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data.success && data.response) {
-        return data.response;
-      } else {
-        throw new Error('Invalid API response');
-      }
-    } catch (error) {
-      console.error('Error calling IVOR API:', error);
-      // Fallback to pattern-matching if API fails
-      return generateFallbackResponse(userMessage);
-    }
-  };
-
-  const generateFallbackResponse = (userMessage: string): string => {
-    const message = userMessage.toLowerCase();
-
-    // Problem-solving responses
-    if (message.includes('problem') || message.includes('challenge') || message.includes('step-by-step')) {
-      return `Let's work through this together using community-centered problem-solving:
-
-1. **Define the Challenge**: What exactly are you facing? Let's name it clearly and without judgment.
-
-2. **Community Perspective**: How might this challenge affect not just you, but your community connections?
-
-3. **Resources & Strengths**: What resources, skills, or community support do you already have?
-
-4. **Liberation-Centered Solutions**: What options align with our values of mutual aid, community care, and collective liberation?
-
-5. **Action Steps**: What's one small, manageable step you could take today?
-
-Would you like to work through any of these steps together? I'm here to support you with trauma-informed, community-centered guidance.`;
-    }
-
-    // Conflict resolution responses
-    if (message.includes('conflict') || message.includes('resolution') || message.includes('trauma-informed')) {
-      return `Conflict is natural in community spaces. Let's approach this with care:
-
-**Trauma-Informed Approach:**
-- Center safety for all involved
-- Recognize that conflict can trigger past traumas
-- Move at the pace of trust, not urgency
-
-**Community Care Steps:**
-1. Pause and breathe - your nervous system matters
-2. Identify your needs and feelings without blame
-3. Consider the other person's humanity and circumstances
-4. Seek to understand before being understood
-5. Focus on impact over intent
-
-**Restorative Questions:**
-- What happened and who was affected?
-- What needs weren't met?
-- How can we move forward together?
-
-Would you like to explore any of these approaches more deeply? I'm here to support you in navigating this with community wisdom.`;
-    }
-
-    // Study partner responses
-    if (message.includes('study') || message.includes('learn') || message.includes('understand')) {
-      return `I'd love to be your study partner! Learning is more powerful when we do it together.
-
-**How I can support your learning:**
-- Break down complex topics into manageable pieces
-- Help you make connections between new and existing knowledge
-- Practice active recall and spaced repetition
-- Connect learning to liberation and community wisdom
-- Celebrate your progress and growth
-
-**Learning with Liberation Principles:**
-- Knowledge belongs to the community
-- Different ways of knowing are valuable
-- Learning should serve collective liberation
-- Mistakes are part of the process
-
-What subject or topic would you like to explore together? I'm here to support your learning journey with patience and encouragement.`;
-    }
-
-    // Emotional support responses
-    if (message.includes('emotional') || message.includes('feeling') || message.includes('support') || message.includes('check-in')) {
-      return `Thank you for trusting me with your feelings. Your emotions are valid and deserve care.
-
-**Gentle Check-In:**
-How are you holding up right now? It's okay if the answer is "not great" - you don't have to be strong all the time.
-
-**Reminders for Your Heart:**
-- You are worthy of love and care exactly as you are
-- It's okay to feel multiple things at once
-- Community healing happens through individual healing
-- Your struggles don't define your worth
-
-**Community Care Suggestions:**
-- Reach out to a trusted friend or community member
-- Practice grounding techniques (5-4-3-2-1 senses)
-- Move your body gently if it feels good
-- Rest without guilt
-
-I'm here to listen without judgment. What would feel most supportive for you right now?`;
-    }
-
-    // Jokes and humor responses
-    if (message.includes('joke') || message.includes('humor') || message.includes('laugh')) {
-      const jokes = [
-        "Why did the liberation organizer bring a ladder to the meeting? Because they heard it was time to raise consciousness! 😄",
-        "What's a community organizer's favorite type of music? Protest songs... but they're always in harmony! 🎵",
-        "Why don't oppressive systems ever win at hide and seek? Because the community always finds them! 👀",
-        "What did one liberation activist say to another? 'We're stronger together!' (And they weren't wrong!) ✊🏾",
-        "Why did the mutual aid network cross the road? To help the chicken get to the other side - because no one should have to journey alone! 🐔💜"
-      ];
-
-      const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
-
-      return `Here's some community humor for you:
-
-${randomJoke}
-
-Laughter is resistance! Community joy is a radical act. Sometimes we need moments of lightness to sustain us in the work of liberation.
-
-Would you like another joke, or is there something else I can help brighten your day with?`;
-    }
-
-    // Liberation wisdom responses
-    if (message.includes('liberation') || message.includes('wisdom') || message.includes('principles')) {
-      return `Liberation wisdom flows from our ancestors and grows through our collective experiences:
-
-**Core Liberation Principles:**
-- "Nobody's free until everybody's free" - We rise together
-- Community care is not just self-care scaled up
-- Center those most impacted by systems of oppression
-- Mutual aid is solidarity, not charity
-- Healing happens in community
-
-**Ancestral Wisdom:**
-"If you have come here to help me, you are wasting your time. But if you have come because your liberation is bound up with mine, then let us work together." - Aboriginal activists, Queensland, 1970s
-
-**Community Practices:**
-- Listen more than you speak
-- Share resources and power
-- Hold space for difficult emotions
-- Celebrate small victories together
-- Rest is resistance
-
-What aspect of liberation wisdom resonates with you today? I'm here to explore these principles together.`;
-    }
-
-    // Creative inspiration responses
-    if (message.includes('creative') || message.includes('art') || message.includes('stuck') || message.includes('inspiration')) {
-      return `Creative blocks are just energy waiting to flow in new directions! Let's unstick that creative spark:
-
-**Creative Unsticking Techniques:**
-- Change your environment (even just a different chair)
-- Start with the "worst" idea first - take the pressure off
-- Set a timer for 5 minutes and create anything
-- Ask: "What would my ancestor create?"
-- Connect your art to community needs
-
-**Liberation-Centered Creativity:**
-- How does your creativity serve the community?
-- What stories need telling that only you can tell?
-- How can your art be an act of resistance?
-- What beauty can you bring to the movement?
-
-**Creative Prompts:**
-- Create something that celebrates community resilience
-- Make art from materials you have right now
-- Tell a story about mutual aid in action
-- Design something that brings joy to your neighbors
-
-What kind of creative work calls to you? I'm here to help you reconnect with your artistic power!`;
-    }
-
-    // Staying healthy responses
-    if (message.includes('health') || message.includes('sexual health') || message.includes('wellness') || message.includes('staying healthy') || message.includes('sti') || message.includes('hiv') || message.includes('prep') || message.includes('medical')) {
-      return `Your health and wellness matter deeply to our community. Here's some trusted information and resources:
-
-**Sexual Health & Wellness Resources:**
-- **MenRUS.co.uk** - GMHC's comprehensive sexual health resource for Black queer men: https://menrus.co.uk
-- **PrEP Information** - Pre-exposure prophylaxis for HIV prevention
-- **STI Testing** - Regular testing as part of self-care and community care
-- **Mental Health Support** - Holistic wellness includes emotional wellbeing
-
-**Community-Centered Health Principles:**
-- Your body, your choices - informed consent in all healthcare
-- Healthcare is a human right, not a privilege
-- Cultural competency matters - seek providers who understand your identity
-- Community knowledge and medical expertise both have value
-
-**Key Health Topics:**
-- **Sexual Health**: Regular testing, safer sex practices, communication with partners
-- **Mental Wellness**: Trauma-informed care, therapy, community support
-- **Substance Use**: Harm reduction, non-judgmental support
-- **Healthcare Access**: Finding affirming providers, navigating systems
-
-**Important Reminders:**
-- This is general information, not medical advice
-- Always consult with healthcare providers for personal health decisions
-- You deserve respectful, culturally competent healthcare
-- Community support complements professional medical care
-
-Would you like specific information about any of these health topics? I'm here to provide resources and support your wellness journey.`;
-    }
-
-    // Resource navigator responses
-    if (message.includes('resource') || message.includes('help') || message.includes('support') || message.includes('mutual aid')) {
-      return `Finding community resources is an act of mutual aid! Let's connect you with support:
-
-**Types of Community Resources:**
-- Mutual aid networks and food pantries
-- Community healing and therapy resources
-- Educational opportunities and skill shares
-- Housing assistance and tenant organizing
-- Economic justice and cooperative development
-- Legal aid and know-your-rights trainings
-
-**How to Find Local Resources:**
-- Search "[your city] mutual aid network"
-- Check with local community centers
-- Connect with faith communities doing justice work
-- Look for community fridges and little free libraries
-- Ask neighbors and community members
-
-**Mutual Aid Principles:**
-- Solidarity, not charity
-- No strings attached
-- Led by those most impacted
-- Meets immediate needs while working for systemic change
-
-What specific type of support are you looking for? I can help you think through where to start looking and how to connect with community resources.`;
-    }
-
-    // Default response
-    return `Thank you for sharing that with me. I'm here to support you however I can.
-
-I can help with:
-- Problem-solving and working through challenges
-- Learning and studying together
-- Emotional support and check-ins
-- Finding community resources
-- Creative inspiration
-- Sharing liberation wisdom
-- A good joke when you need one!
-
-What would feel most helpful for you right now? I'm here to listen and support you with community-centered care.`;
-  };
-
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 md:p-4 overflow-y-auto">
-      <div className="bg-white rounded-lg w-full max-w-4xl max-h-[90vh] md:max-h-[85vh] flex flex-col overflow-hidden my-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 md:p-4">
+      <div className="bg-white rounded-lg w-full max-w-4xl h-[95vh] md:h-[80vh] flex flex-col max-h-screen">
         {/* Header */}
-        <div className="bg-liberation-gold text-gray-900 p-3 md:p-4 rounded-t-lg flex justify-between items-center">
+        <div className="bg-liberation-gold text-liberation-black p-3 md:p-4 rounded-t-lg flex justify-between items-center">
           <div className="flex items-center space-x-2 md:space-x-3">
             <div className="w-8 h-8 md:w-10 md:h-10 bg-liberation-black rounded-full flex items-center justify-center">
               <span className="text-liberation-gold font-bold text-sm md:text-base">I</span>
@@ -485,22 +250,22 @@ What would feel most helpful for you right now? I'm here to listen and support y
           </div>
           <button
             onClick={onClose}
-            className="text-gray-900 hover:text-gray-700 text-xl md:text-2xl font-bold touch-friendly p-1"
+            className="text-liberation-black hover:text-liberation-black/70 text-xl md:text-2xl font-bold touch-friendly p-1"
             aria-label="Close IVOR Assistant"
           >
             ×
           </button>
         </div>
 
-        <div className="flex flex-1 min-h-0">
+        <div className="flex flex-1 overflow-hidden min-h-0">
           {/* Learning Tools Sidebar */}
           {showLearningTools && (
-            <div className="w-full md:w-1/3 bg-gray-50 border-r border-liberation-gold/20 p-3 md:p-4 overflow-y-auto">
+            <div className="w-full md:w-1/3 bg-liberation-cream border-r border-liberation-gold/20 p-3 md:p-4 overflow-y-auto">
               <div className="flex justify-between items-center mb-3 md:mb-4">
-                <h3 className="font-bold text-gray-900 text-sm md:text-base">Learning Tools</h3>
+                <h3 className="font-bold text-liberation-black text-sm md:text-base">Learning Tools</h3>
                 <button
                   onClick={() => setShowLearningTools(false)}
-                  className="md:hidden text-gray-600 hover:text-gray-900 touch-friendly"
+                  className="md:hidden text-liberation-black/60 hover:text-liberation-black touch-friendly"
                   aria-label="Close learning tools"
                 >
                   ×
@@ -514,7 +279,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
                     onClick={() => setSelectedCategory(null)}
                     className={`px-2 md:px-3 py-1 rounded-full text-xs touch-friendly ${
                       selectedCategory === null
-                        ? 'bg-liberation-gold text-gray-900'
+                        ? 'bg-liberation-gold text-liberation-black'
                         : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                     }`}
                   >
@@ -526,7 +291,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
                       onClick={() => setSelectedCategory(category)}
                       className={`px-2 md:px-3 py-1 rounded-full text-xs capitalize touch-friendly ${
                         selectedCategory === category
-                          ? 'bg-liberation-gold text-gray-900'
+                          ? 'bg-liberation-gold text-liberation-black'
                           : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                       }`}
                     >
@@ -547,7 +312,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
                     <div className="flex items-start space-x-2 md:space-x-3">
                       <span className="text-lg md:text-2xl">{tool.icon}</span>
                       <div>
-                        <h4 className="font-semibold text-gray-900 text-xs md:text-sm">{tool.name}</h4>
+                        <h4 className="font-semibold text-liberation-black text-xs md:text-sm">{tool.name}</h4>
                         <p className="text-xs text-gray-600 mt-1 hidden sm:block">{tool.description}</p>
                       </div>
                     </div>
@@ -558,9 +323,9 @@ What would feel most helpful for you right now? I'm here to listen and support y
           )}
 
           {/* Chat Area */}
-          <div className={`${showLearningTools ? 'hidden md:flex md:w-2/3' : 'w-full'} flex flex-col min-h-0`}>
+          <div className={`${showLearningTools ? 'hidden md:flex md:w-2/3' : 'flex w-full'} flex-col min-h-0`}>
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 md:space-y-4">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 md:p-4 space-y-3 md:space-y-4 min-h-0">
               {messages.map(message => (
                 <div
                   key={message.id}
@@ -569,12 +334,34 @@ What would feel most helpful for you right now? I'm here to listen and support y
                   <div
                     className={`max-w-[85%] md:max-w-[80%] p-2 md:p-3 rounded-lg ${
                       message.type === 'user'
-                        ? 'bg-liberation-gold text-gray-900'
-                        : 'bg-gray-100 text-gray-900 border border-liberation-gold/20'
+                        ? 'bg-liberation-gold text-liberation-black'
+                        : 'bg-liberation-cream text-liberation-black border border-liberation-gold/20'
                     }`}
                   >
-                    <p className="whitespace-pre-line text-sm md:text-base text-gray-900">{message.content}</p>
-                    <p className="text-xs text-gray-600 mt-1 md:mt-2">
+                    <p className="whitespace-pre-line text-sm md:text-base">{message.content}</p>
+
+                    {/* Display resources if available */}
+                    {message.type === 'ivor' && message.resources && message.resources.length > 0 && (
+                      <div className="mt-3">
+                        <div className="flex items-center justify-between mb-2">
+                          <p className="text-xs font-semibold text-liberation-black">
+                            📚 Community Resources ({message.resourceCount})
+                          </p>
+                          {message.enhancedWithRAG && (
+                            <span className="text-xs bg-liberation-gold/30 px-2 py-0.5 rounded">
+                              AI-Enhanced
+                            </span>
+                          )}
+                        </div>
+                        <div className="space-y-2">
+                          {message.resources.map((resource) => (
+                            <ResourceCard key={resource.id} resource={resource} />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <p className="text-xs opacity-60 mt-1 md:mt-2">
                       {message.timestamp.toLocaleTimeString()}
                     </p>
                   </div>
@@ -582,7 +369,7 @@ What would feel most helpful for you right now? I'm here to listen and support y
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="bg-gray-100 text-gray-900 border border-liberation-gold/20 p-2 md:p-3 rounded-lg">
+                  <div className="bg-liberation-cream text-liberation-black border border-liberation-gold/20 p-2 md:p-3 rounded-lg">
                     <div className="flex items-center space-x-2">
                       <div className="w-2 h-2 bg-liberation-gold rounded-full animate-bounce"></div>
                       <div className="w-2 h-2 bg-liberation-gold rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
@@ -603,13 +390,13 @@ What would feel most helpful for you right now? I'm here to listen and support y
                   onChange={(e) => setCurrentMessage(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="Ask IVOR anything..."
-                  className="flex-1 p-2 md:p-3 border border-liberation-gold/20 rounded-lg focus:outline-none focus:border-liberation-gold text-sm md:text-base text-gray-900 bg-white"
+                  className="flex-1 p-2 md:p-3 border border-liberation-gold/20 rounded-lg focus:outline-none focus:border-liberation-gold text-sm md:text-base"
                   disabled={isLoading}
                 />
                 <button
                   onClick={() => handleSendMessage()}
                   disabled={isLoading || !currentMessage.trim()}
-                  className="px-4 md:px-6 py-2 md:py-3 bg-liberation-gold text-gray-900 rounded-lg hover:bg-liberation-gold/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-friendly text-sm md:text-base"
+                  className="px-4 md:px-6 py-2 md:py-3 bg-liberation-gold text-liberation-black rounded-lg hover:bg-liberation-gold/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-friendly text-sm md:text-base"
                 >
                   Send
                 </button>
@@ -617,11 +404,11 @@ What would feel most helpful for you right now? I'm here to listen and support y
               <div className="flex justify-between items-center mt-2">
                 <button
                   onClick={() => setShowLearningTools(!showLearningTools)}
-                  className="text-xs md:text-sm text-gray-600 hover:text-gray-900 touch-friendly"
+                  className="text-xs md:text-sm text-liberation-black/60 hover:text-liberation-black touch-friendly"
                 >
                   {showLearningTools ? 'Hide Tools' : 'Show Tools'}
                 </button>
-                <p className="text-xs text-gray-600 hidden sm:block">
+                <p className="text-xs text-liberation-black/60 hidden sm:block">
                   IVOR supports community learning and mutual aid
                 </p>
               </div>

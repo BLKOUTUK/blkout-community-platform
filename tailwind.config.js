@@ -19,6 +19,11 @@ export default {
           'silver': '#C0C0C0',              // Elegant silver for subtle text
           'purple-spirit': '#8B008B',       // Spiritual purple for community
 
+          // IVOR color aliases
+          'black': '#000000',               // Alias for IVOR components
+          'gold': '#FFD700',                // Alias for IVOR components
+          'cream': '#FFFDD0',               // Cream for IVOR backgrounds
+
           // Pride celebration palette
           'pride-pink': '#FF69B4',          // Hot pink for joy
           'pride-purple': '#8B008B',        // Deep magenta for dignity

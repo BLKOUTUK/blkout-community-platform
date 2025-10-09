@@ -12,8 +12,9 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type, Authorization'
 };
 
-// Migrated events data
-const MIGRATED_EVENTS = [
+// No more migrated/fallback data - we show the truth: empty until events are approved
+// (Previously had 5 fake events here)
+const MIGRATED_EVENTS_REMOVED = [
   {
     id: 'event_migrated_001',
     title: 'Black Queer Joy Celebration & Community Gathering',
@@ -236,20 +237,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    if (supabaseUrl && supabaseServiceKey) {
-      console.log('✅ Using Supabase for events:', { url: supabaseUrl.substring(0, 30) + '...', hasKey: !!supabaseServiceKey });
-      return await fetchEventsFromSupabase(req, res, supabaseUrl, supabaseServiceKey, {
-        category: category as string,
-        type: type as string,
-        upcoming: upcoming as string,
-        limit: limitNum,
-        offset: offsetNum
+    if (!supabaseUrl || !supabaseServiceKey) {
+      console.error('❌ Supabase credentials not configured for events');
+      return res.status(503).json({
+        success: false,
+        error: 'Service unavailable',
+        message: 'Events database connection not configured. Please contact platform administrators.',
+        debug: {
+          hasUrl: !!supabaseUrl,
+          hasKey: !!supabaseServiceKey
+        }
       });
     }
 
-    // Fallback to migrated data if Supabase not configured
-    console.log('Supabase not configured, using fallback event data');
-    return await fallbackToMigratedEvents(req, res, {
+    console.log('✅ Using Supabase for events:', { url: supabaseUrl.substring(0, 30) + '...', hasKey: !!supabaseServiceKey });
+    return await fetchEventsFromSupabase(req, res, supabaseUrl, supabaseServiceKey, {
       category: category as string,
       type: type as string,
       upcoming: upcoming as string,
@@ -305,8 +307,33 @@ async function fetchEventsFromSupabase(req: VercelRequest, res: VercelResponse, 
       return res.status(500).json({
         success: false,
         error: 'Database query failed',
-        details: error.message,
-        supabaseUrl: supabaseUrl?.substring(0, 50)
+        message: 'Failed to fetch events from database. Please try again later.',
+        debug: {
+          error: error.message,
+          code: error.code
+        }
+      });
+    }
+
+    // If no events, return empty state (no fake data)
+    if (!events || events.length === 0) {
+      return res.status(200).json({
+        success: true,
+        data: {
+          events: [],
+          pagination: {
+            total: 0,
+            limit: params.limit,
+            offset: params.offset,
+            hasMore: false,
+            page: 1,
+            totalPages: 0
+          },
+          categories: ['community', 'education', 'celebration', 'mutual-aid', 'organizing'],
+          featured: null,
+          source: 'database',
+          message: 'No approved events yet. Submit events through our curation system to see them here.'
+        }
       });
     }
 
@@ -374,14 +401,21 @@ async function fetchEventsFromSupabase(req: VercelRequest, res: VercelResponse, 
 
   } catch (error) {
     console.error('Error fetching events from Supabase:', error);
-    // Fallback to migrated data on error
-    return await fallbackToMigratedEvents(req, res, params);
+    return res.status(500).json({
+      success: false,
+      error: 'Database error',
+      message: 'Failed to retrieve events. Please try again later.',
+      debug: {
+        error: error instanceof Error ? error.message : 'Unknown error'
+      }
+    });
   }
 }
 
-async function fallbackToMigratedEvents(req: VercelRequest, res: VercelResponse, params: any) {
-  // Filter events
-  let filteredEvents = [...MIGRATED_EVENTS];
+// Fallback function removed - we no longer lie to users with fake events
+async function fallbackToMigratedEvents_REMOVED(req: VercelRequest, res: VercelResponse, params: any) {
+  // This function is disabled - no more fake data
+  let filteredEvents = [...MIGRATED_EVENTS_REMOVED];
 
   // Filter by category
   if (params.category && params.category !== 'all') {

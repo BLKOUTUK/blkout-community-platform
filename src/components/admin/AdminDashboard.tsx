@@ -7,6 +7,7 @@ import { Shield, Users, FileText, Download, Plus, Eye, CheckCircle, XCircle, Bar
 import { communityAPI } from '@/services/community-api';
 import { BulkStorySubmission } from './BulkStorySubmission';
 import { IVORFeedbackCollection } from './IVORFeedbackCollection';
+import AdminVoicesInterface from './AdminVoicesInterface';
 import { voicesAPI, type VoicesArticle, type VoicesArticleSubmission } from '@/services/voices-api';
 import { liberationDB, type ModerationItem as SupabaseModerationItem } from '@/lib/supabase';
 import type { NewsArticle, CommunityEvent, EventSubmission, EventModerationItem } from '@/types/liberation';
@@ -705,7 +706,7 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Voices Editorial Tab */}
         {activeTab === 'voices' && (
-          <VoicesEditorialManager />
+          <AdminVoicesInterface />
         )}
 
         {/* IVOR Training Tab */}

@@ -12,51 +12,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type, Authorization'
 };
 
-// Fallback news data for when moderation queue is empty
-const FALLBACK_NEWS = [
-  {
-    id: 'news_fallback_001',
-    title: 'Community News Coming Soon',
-    excerpt: 'Community-curated news articles will appear here as they are approved through our moderation queue.',
-    content: 'This is where community-curated news articles will appear once they have been reviewed and approved through our moderation system. Submit news articles through our submission form to contribute to the community news feed.',
-    category: 'Community Updates',
-    author: 'BLKOUT Editorial',
-    publishedAt: new Date().toISOString(),
-    readTime: '2 min read',
-    tags: ['community', 'news', 'updates'],
-    originalUrl: '#',
-    sourceName: 'BLKOUT Community',
-    curatorId: 'editorial',
-    submittedAt: new Date().toISOString(),
-    interestScore: 95,
-    totalVotes: 0,
-    topics: ['community', 'moderation'],
-    sentiment: 'positive',
-    relevanceScore: 100,
-    status: 'published'
-  },
-  {
-    id: 'news_fallback_002',
-    title: 'How to Submit News Articles',
-    excerpt: 'Learn how to submit relevant news articles to the BLKOUT community for review and publication.',
-    content: 'Community members can submit news articles relevant to Black queer liberation through our submission form. All submissions go through a community moderation process before being published to ensure quality and relevance.',
-    category: 'How To',
-    author: 'BLKOUT Editorial',
-    publishedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-    readTime: '3 min read',
-    tags: ['how-to', 'submission', 'moderation'],
-    originalUrl: '#',
-    sourceName: 'BLKOUT Community',
-    curatorId: 'editorial',
-    submittedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
-    interestScore: 88,
-    totalVotes: 0,
-    topics: ['submission', 'community'],
-    sentiment: 'informative',
-    relevanceScore: 95,
-    status: 'published'
-  }
-];
+// No more fallback data - we show the truth: empty until content is approved
 
 // Helper function to estimate read time
 function estimateReadTime(content: string): string {
@@ -110,20 +66,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    if (supabaseUrl && supabaseServiceKey) {
-      return await fetchFromSupabase(req, res, supabaseUrl, supabaseServiceKey, {
-        category: category as string,
-        status: status as string,
-        limit: limitNum,
-        offset: offsetNum,
-        search: search as string,
-        sortBy: sortBy as string
+    if (!supabaseUrl || !supabaseServiceKey) {
+      console.error('❌ Supabase credentials not configured');
+      return res.status(503).json({
+        success: false,
+        error: 'Service unavailable',
+        message: 'Database connection not configured. Please contact platform administrators.',
+        debug: {
+          hasUrl: !!supabaseUrl,
+          hasKey: !!supabaseServiceKey
+        }
       });
     }
 
-    // Fallback to placeholder data if Supabase not configured
-    console.log('Supabase not configured, using fallback news data');
-    return await fallbackToFallbackData(req, res, {
+    return await fetchFromSupabase(req, res, supabaseUrl, supabaseServiceKey, {
       category: category as string,
       status: status as string,
       limit: limitNum,
@@ -178,12 +134,41 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
 
     if (error) {
       console.error('Supabase query error:', error);
-      throw error;
+      return res.status(500).json({
+        success: false,
+        error: 'Database query failed',
+        message: 'Failed to fetch news from database. Please try again later.',
+        debug: {
+          error: error.message,
+          code: error.code
+        }
+      });
     }
 
-    // If no community news, return fallback data
+    // If no community news, return empty state (no fake data)
     if (!articles || articles.length === 0) {
-      return await fallbackToFallbackData(req, res, params);
+      return res.status(200).json({
+        success: true,
+        data: {
+          articles: [],
+          pagination: {
+            total: 0,
+            limit: params.limit,
+            offset: params.offset,
+            hasMore: false,
+            page: 1,
+            totalPages: 0
+          },
+          categories: ['Community News', 'Liberation Updates', 'Resource Sharing'],
+          stats: {
+            totalPublished: 0,
+            averageInterestScore: 0,
+            storyOfWeek: null
+          },
+          source: 'database',
+          message: 'No approved articles yet. Submit content through our curation system to see articles here.'
+        }
+      });
     }
 
     // Get article IDs for voting data
@@ -304,71 +289,15 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
 
   } catch (error) {
     console.error('Error fetching from Supabase:', error);
-    // Fallback to placeholder data on error
-    return await fallbackToFallbackData(req, res, params);
+    return res.status(500).json({
+      success: false,
+      error: 'Database error',
+      message: 'Failed to retrieve news articles. Please try again later.',
+      debug: {
+        error: error instanceof Error ? error.message : 'Unknown error'
+      }
+    });
   }
-}
-
-async function fallbackToFallbackData(_req: VercelRequest, res: VercelResponse, params: any) {
-  // Filter news based on parameters
-  let filteredNews = [...FALLBACK_NEWS];
-
-  // Filter by status (for now, all are published)
-  if (params.status === 'published') {
-    filteredNews = filteredNews.filter(n => n.status === 'published');
-  }
-
-  // Filter by category
-  if (params.category && params.category !== 'all') {
-    filteredNews = filteredNews.filter(n =>
-      n.category.toLowerCase() === params.category.toLowerCase()
-    );
-  }
-
-  // Search filter
-  if (params.search) {
-    const searchLower = params.search.toLowerCase();
-    filteredNews = filteredNews.filter(n =>
-      n.title.toLowerCase().includes(searchLower) ||
-      n.excerpt.toLowerCase().includes(searchLower) ||
-      n.tags.some(tag => tag.toLowerCase().includes(searchLower))
-    );
-  }
-
-  // Sort news
-  if (params.sortBy === 'interest') {
-    filteredNews.sort((a, b) => b.interestScore - a.interestScore);
-  } else if (params.sortBy === 'recent') {
-    filteredNews.sort((a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
-  }
-
-  // Apply pagination
-  const paginatedNews = filteredNews.slice(params.offset, params.offset + params.limit);
-
-  return res.status(200).json({
-    success: true,
-    data: {
-      articles: paginatedNews,
-      pagination: {
-        total: filteredNews.length,
-        limit: params.limit,
-        offset: params.offset,
-        hasMore: params.offset + params.limit < filteredNews.length,
-        page: Math.floor(params.offset / params.limit) + 1,
-        totalPages: Math.ceil(filteredNews.length / params.limit)
-      },
-      categories: Array.from(new Set(FALLBACK_NEWS.map(n => n.category))),
-      stats: {
-        totalPublished: FALLBACK_NEWS.filter(n => n.status === 'published').length,
-        averageInterestScore: Math.round(
-          FALLBACK_NEWS.reduce((sum, n) => sum + n.interestScore, 0) / FALLBACK_NEWS.length
-        )
-      },
-      source: 'fallback-news'
-    }
-  });
 }
 
 // Handle POST requests for news submission from Chrome extension
@@ -487,7 +416,7 @@ async function handleNewsSubmission(req: VercelRequest, res: VercelResponse) {
 
   } catch (error) {
     console.error('News submission error:', error);
-    return res.status(500).json({
+    return res.status(200).json({
       error: 'Internal server error',
       message: error instanceof Error ? error.message : 'Unknown error',
       timestamp: new Date().toISOString()

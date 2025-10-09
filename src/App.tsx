@@ -239,7 +239,7 @@ export default function App() {
       />
 
       {/* Rotating Liberation Quotes */}
-      <section className="bg-liberation-black-power rounded-xl p-6 md:p-8 border border-liberation-sovereignty-gold/20 mb-8">
+      <section className="bg-liberation-black-power rounded-xl p-6 md:p-8 border border-liberation-sovereignty-gold/20 mb-8 shadow-xl">
         <div className="text-center">
           <blockquote className="text-2xl md:text-3xl lg:text-4xl font-black text-liberation-sovereignty-gold mb-4 leading-tight" style={{
             textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
@@ -258,7 +258,7 @@ export default function App() {
       <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         <button
           onClick={() => window.open('https://blkout-scrollytelling.vercel.app', '_blank')}
-          className="group bg-gradient-to-br from-liberation-red-liberation to-liberation-purple-spirit text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
+          className="group bg-gradient-to-br from-liberation-red-liberation to-liberation-purple-spirit text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Play className="h-8 w-8 text-liberation-gold-divine" />
@@ -278,7 +278,7 @@ export default function App() {
             setCompetitionInitialView('landing');
             setShowCompetitionModal(true);
           }}
-          className="group bg-gradient-to-br from-liberation-pride-purple to-liberation-pride-pink text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left border-2 border-liberation-gold-divine"
+          className="group bg-gradient-to-br from-liberation-pride-purple to-liberation-pride-pink text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left border-2 border-liberation-gold-divine shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Trophy className="h-8 w-8 text-liberation-gold-divine" />
@@ -295,7 +295,7 @@ export default function App() {
 
         <button
           onClick={() => changeActiveTab('intro')}
-          className="group bg-gradient-to-br from-liberation-green-africa to-liberation-gold-divine text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
+          className="group bg-gradient-to-br from-liberation-green-africa to-liberation-gold-divine text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Brain className="h-8 w-8 text-liberation-black-power" />
@@ -312,7 +312,7 @@ export default function App() {
 
         <button
           onClick={() => changeActiveTab('platform')}
-          className="group bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
+          className="group bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Users className="h-8 w-8 text-liberation-gold-divine" />
@@ -329,7 +329,7 @@ export default function App() {
 
         <button
           onClick={() => window.open('https://blkouthub.com', '_blank')}
-          className="group bg-gradient-to-br from-liberation-gold-divine to-liberation-red-liberation text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
+          className="group bg-gradient-to-br from-liberation-gold-divine to-liberation-red-liberation text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Globe className="h-8 w-8 text-liberation-black-power" />
@@ -346,7 +346,7 @@ export default function App() {
 
         <button
           onClick={() => window.open('https://sendfox.com/blkoutuk', '_blank')}
-          className="group bg-gradient-to-br from-liberation-silver to-liberation-purple-spirit text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left"
+          className="group bg-gradient-to-br from-liberation-silver to-liberation-purple-spirit text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Mail className="h-8 w-8 text-liberation-black-power" />
@@ -363,7 +363,7 @@ export default function App() {
 
         <button
           onClick={() => changeActiveTab('governance')}
-          className="group bg-gradient-to-br from-liberation-black-power to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 border-2 border-liberation-gold-divine text-left"
+          className="group bg-gradient-to-br from-liberation-black-power to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 border-2 border-liberation-gold-divine text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Heart className="h-8 w-8 text-liberation-gold-divine" />
@@ -380,7 +380,7 @@ export default function App() {
       </section>
 
       {/* Photo Competition Widget */}
-      <section className="bg-gradient-to-br from-liberation-pride-purple to-liberation-gold-divine text-liberation-black-power p-8 rounded-2xl shadow-2xl mb-8">
+      <section className="bg-gradient-to-br from-liberation-pride-purple to-liberation-gold-divine text-liberation-black-power p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 mb-8">
         <div className="text-center">
           <div className="flex justify-center mb-6">
             <Trophy className="w-16 h-16 text-liberation-black-power" />
@@ -453,10 +453,10 @@ export default function App() {
               <div className="flex items-center justify-between h-16 md:h-20">
                 {/* Logo and Brand */}
                 <div className="flex items-center space-x-4">
-                  <img 
-                    src="/blkout-logo.png" 
-                    alt="BLKOUT" 
-                    className="h-10 md:h-12 w-auto cursor-pointer hover:scale-110 transition-transform"
+                  <img
+                    src="/blkout-logo.png"
+                    alt="BLKOUT"
+                    className="h-12 md:h-16 w-auto cursor-pointer hover:scale-110 transition-transform drop-shadow-lg"
                     onClick={() => changeActiveTab('liberation')}
                   />
                   <div className="hidden sm:block">
@@ -531,13 +531,13 @@ export default function App() {
                   </a>
                   <button
                     onClick={() => changeActiveTab('voices')}
-                    className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${
+                    className={`px-5 py-2.5 rounded-lg font-extrabold text-base transition-all duration-300 shadow-md hover:shadow-xl ${
                       activeTab === 'voices'
-                        ? 'bg-liberation-red-liberation text-white'
-                        : 'text-liberation-silver hover:text-liberation-gold-divine'
+                        ? 'bg-gradient-to-r from-liberation-pride-purple to-liberation-pride-pink text-white scale-105'
+                        : 'bg-liberation-gold-divine text-liberation-black-power hover:scale-105'
                     }`}
                   >
-                    Voices
+                    ✊🏾 Voices
                   </button>
                   <button
                     onClick={() => changeActiveTab('intro')}

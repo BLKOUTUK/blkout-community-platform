@@ -477,7 +477,7 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
               {/* Large BLKOUTHUB Logo */}
               <div className="flex justify-center mb-6">
                 <img
-                  src="/Branding and logos/blkouthub_logo.png"
+                  src="/Branding and logos/blkout_logo_roundel_colour.png"
                   alt="BLKOUTHUB"
                   className="h-32 w-auto object-contain"
                 />

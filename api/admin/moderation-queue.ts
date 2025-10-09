@@ -111,67 +111,19 @@ async function handleGetModerationQueue(req: VercelRequest, res: VercelResponse)
     console.error('❌ Error details:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : undefined,
-      supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ? '✅ Set' : '❌ Missing',
-      supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ? '✅ Set' : '❌ Missing'
+      railwayUrl: 'blkout-api-railway-production.up.railway.app',
+      railwayStatus: error instanceof Error && error.message.includes('Railway API error') ? 'DOWN/UNREACHABLE' : 'CONNECTION_FAILED'
     });
 
-    // Return fallback mock data with error info
-    return res.status(200).json({
-      queue: [
-        {
-          id: 'mock-1',
-          title: 'Breaking: Community Garden Initiative Receives Major Funding',
-          url: 'https://example.com/community-garden-funding',
-          submittedBy: 'community_curator_001',
-          submittedAt: new Date().toISOString(),
-          category: 'community',
-          status: 'pending',
-          votes: 5,
-          excerpt: 'Local Black-owned community garden receives substantial grant funding for expansion, creating more green space and food security for the community...',
-          type: 'story',
-          priority: 'medium',
-          liberationMetadata: {
-            requiresCulturalReview: false,
-            requiresTraumaExpertise: false,
-            communityInputRequested: false,
-            ivorAnalysisComplete: true
-          }
-        },
-        {
-          id: 'mock-2',
-          title: 'Healing Justice Workshop for Black Queer Youth',
-          url: '#',
-          submittedBy: 'event_organizer_001',
-          submittedAt: new Date(Date.now() - 86400000).toISOString(),
-          category: 'education',
-          status: 'pending',
-          votes: 8,
-          excerpt: 'Monthly healing circle and skill-building workshop specifically designed for Black queer youth, incorporating trauma-informed practices...',
-          type: 'event',
-          priority: 'high',
-          liberationMetadata: {
-            requiresCulturalReview: true,
-            requiresTraumaExpertise: true,
-            communityInputRequested: true,
-            ivorAnalysisComplete: false
-          }
-        }
-      ],
-      metadata: {
-        total: 2,
-        filters: {},
-        timestamp: new Date().toISOString(),
-        source: 'fallback-mock-data',
-        error: `Database error: ${error instanceof Error ? error.message : 'Unknown error'}`,
-        debug: {
-          supabaseConfigured: !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY),
-          errorType: error instanceof Error ? error.constructor.name : typeof error
-        }
-      },
-      liberationSummary: {
-        pendingCulturalReview: 1,
-        pendingTraumaExpertise: 1,
-        communityInputItems: 1
+    // No more mock data - return honest error
+    return res.status(503).json({
+      success: false,
+      error: 'Service unavailable',
+      message: 'Moderation queue backend is unavailable. Railway API connection failed.',
+      debug: {
+        errorMessage: error instanceof Error ? error.message : 'Unknown error',
+        railwayBackend: 'blkout-api-railway-production.up.railway.app',
+        suggestion: 'Check if Railway backend is deployed and accessible, or migrate to direct Supabase connection'
       }
     });
   }
