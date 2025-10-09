@@ -52,8 +52,8 @@ class EventsAPIService {
   private fallbackEvents: LiberationEvent[];
 
   constructor() {
-    // Use events API endpoint - v2 to bypass Vercel cache
-    this.baseURL = '/api/events-v2';
+    // Use events API endpoint - updated to correct path
+    this.baseURL = '/api/events';
     this.fallbackEvents = this.generateLiveEvents();
   }
 
@@ -262,32 +262,6 @@ class EventsAPIService {
     }
   }
 
-  // Map string event types to our enum
-  private mapEventType(type: string): LiberationEvent['type'] {
-    const typeMap: Record<string, LiberationEvent['type']> = {
-      'mutual-aid': 'mutual-aid',
-      'organizing': 'organizing',
-      'education': 'education',
-      'celebration': 'celebration',
-      'support': 'support',
-      'action': 'action',
-      'in-person': 'celebration', // Default mapping for generic types
-      'online': 'education'
-    };
-    return typeMap[type] || 'education';
-  }
-
-  // Map community values
-  private mapCommunityValue(value: string): LiberationEvent['communityValue'] {
-    const valueMap: Record<string, LiberationEvent['communityValue']> = {
-      'education': 'education',
-      'mutual-aid': 'mutual-aid',
-      'organizing': 'organizing',
-      'celebration': 'celebration',
-      'healing': 'healing'
-    };
-    return valueMap[value] || 'education';
-  }
 
   // Remove duplicate events (by title and date)
   private deduplicateEvents(events: LiberationEvent[]): LiberationEvent[] {
