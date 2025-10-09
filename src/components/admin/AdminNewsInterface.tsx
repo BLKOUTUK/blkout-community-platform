@@ -385,13 +385,13 @@ const AdminNewsInterface: React.FC = () => {
                 </span>
               </div>
               <a
-                href="/downloads/blkout-news-curator-v2.0.tar.gz"
+                href="/downloads/blkout-news-curator-v2.1.tar.gz"
                 download
                 className="bg-blue-600 hover:bg-blue-500 text-white py-2 px-4 rounded-lg font-bold transition-all duration-300 flex items-center"
-                title="Download News Curator Chrome Extension"
+                title="Download News Curator Chrome Extension v2.1 - Submits to news-blkout.vercel.app"
               >
                 <Download className="h-4 w-4 mr-2" />
-                Extension
+                Extension v2.1
               </a>
               <button
                 onClick={handleCreateArticle}
