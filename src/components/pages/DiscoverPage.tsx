@@ -120,7 +120,11 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
             className="text-center"
           >
             <div className="flex justify-center mb-6">
-              <Sparkles className="w-16 h-16 text-yellow-500" />
+              <img
+                src="/Branding and logos/blkoutlogo_wht_transparent.png"
+                alt="BLKOUT"
+                className="h-24 md:h-32 lg:h-40 w-auto mx-auto filter drop-shadow-2xl"
+              />
             </div>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-gray-100">
               Discover What's Happening
@@ -477,7 +481,7 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
               {/* Large BLKOUTHUB Logo */}
               <div className="flex justify-center mb-6">
                 <img
-                  src="/Branding and logos/blkout_logo_roundel_colour.png"
+                  src="/Branding and logos/blkouthub_logo.png"
                   alt="BLKOUTHUB"
                   className="h-32 w-auto object-contain"
                 />
