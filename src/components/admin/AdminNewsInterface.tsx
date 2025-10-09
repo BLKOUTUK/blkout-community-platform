@@ -13,7 +13,8 @@ import {
   Clock,
   CheckCircle,
   XCircle,
-  MessageSquare
+  MessageSquare,
+  Download
 } from 'lucide-react';
 import AdminAuth, { checkAdminAuth } from './AdminAuth';
 import NewsSubmissionForm from '../forms/NewsSubmissionForm';
@@ -383,6 +384,15 @@ const AdminNewsInterface: React.FC = () => {
                   {filteredArticles.length} Articles
                 </span>
               </div>
+              <a
+                href="/downloads/blkout-news-curator-v2.0.tar.gz"
+                download
+                className="bg-blue-600 hover:bg-blue-500 text-white py-2 px-4 rounded-lg font-bold transition-all duration-300 flex items-center"
+                title="Download News Curator Chrome Extension"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Extension
+              </a>
               <button
                 onClick={handleCreateArticle}
                 className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-gray-900 py-2 px-4 rounded-lg font-bold transition-all duration-300 flex items-center"
