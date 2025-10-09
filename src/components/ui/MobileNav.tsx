@@ -18,14 +18,14 @@ const MobileNav: React.FC<MobileNavProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const navigationItems = [
-    { id: 'liberation', label: 'Home', icon: Heart, type: 'button' },
+    { id: 'liberation', label: 'Platform', icon: Heart, type: 'button' },
     { id: 'platform', label: 'Discover', icon: Play, type: 'button' },
-    { id: 'governance', label: 'Governance', icon: Vote, type: 'button' },
+    { id: 'governance', label: 'Ownership', icon: Vote, type: 'button' },
     { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' },
-    { id: 'events', label: 'Events', icon: ExternalLink, type: 'link', href: 'https://events-blkout.vercel.app' },
+    { id: 'events', label: "What's On", icon: ExternalLink, type: 'link', href: 'https://events-blkout.vercel.app' },
     { id: 'newsroom', label: 'Newsroom', icon: ExternalLink, type: 'link', href: 'https://news-blkout.vercel.app' },
     { id: 'voices', label: 'Voices', icon: PenTool, type: 'button' },
-    { id: 'intro', label: 'IVOR', icon: Brain, type: 'button' },
+    { id: 'intro', label: 'Ask Ivor', icon: Brain, type: 'button' },
     { id: 'about', label: 'About', icon: Info, type: 'button' },
     { id: 'admin', label: 'Admin', icon: Shield, type: 'button' }
   ];

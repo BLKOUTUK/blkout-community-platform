@@ -523,7 +523,7 @@ export default function App() {
                         : 'text-liberation-silver hover:text-liberation-gold-divine'
                     }`}
                   >
-                    Home
+                    Platform
                   </button>
                   <button
                     onClick={() => changeActiveTab('platform')}
@@ -543,7 +543,7 @@ export default function App() {
                         : 'text-liberation-silver hover:text-liberation-gold-divine'
                     }`}
                   >
-                    Governance
+                    Ownership
                   </button>
                   <button
                     onClick={() => changeActiveTab('stories')}
@@ -561,7 +561,7 @@ export default function App() {
                     rel="noopener noreferrer"
                     className="px-4 py-2 rounded-lg font-bold transition-all duration-300 text-liberation-silver hover:text-liberation-gold-divine hover:bg-liberation-red-liberation/20 flex items-center gap-1"
                   >
-                    Events
+                    What's On
                     <ExternalLink className="h-3 w-3" />
                   </a>
                   <a
@@ -581,7 +581,7 @@ export default function App() {
                         : 'bg-liberation-gold-divine text-liberation-black-power hover:scale-105'
                     }`}
                   >
-                    ✊🏾 Voices
+                    Voices
                   </button>
                   <button
                     onClick={() => changeActiveTab('intro')}
@@ -591,7 +591,7 @@ export default function App() {
                         : 'text-liberation-silver hover:text-liberation-gold-divine'
                     }`}
                   >
-                    IVOR
+                    Ask Ivor
                   </button>
                   <button
                     onClick={() => changeActiveTab('about')}
