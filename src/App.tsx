@@ -225,8 +225,9 @@ export default function App() {
     <div className="space-y-8">
       {/* Hero Section */}
       <VideoHero
-        title="Welcome to BLKOUT"
-        description="BLKOUT is an organisation for and by Black queer men and the communities of which they are part"
+        title="BLKOUTUK.COM"
+        subtitle="The digital home for Black Queer Men, by Black Queer Men."
+        description="Where Realness Lives"
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
@@ -236,6 +237,7 @@ export default function App() {
         textColor="light"
         overlayOpacity={0.7}
         className="mb-8"
+        logoSrc="/Branding and logos/blkoutlogo_wht_transparent.png"
       />
 
       {/* Rotating Liberation Quotes */}
@@ -257,69 +259,80 @@ export default function App() {
       {/* Welcome Links Grid */}
       <section className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         <button
-          onClick={() => window.open('https://blkout-scrollytelling.vercel.app', '_blank')}
-          className="group bg-gradient-to-br from-liberation-red-liberation to-liberation-purple-spirit text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
+          onClick={() => changeActiveTab('stories')}
+          className="group bg-gradient-to-br from-liberation-red-liberation/90 to-liberation-purple-spirit text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Play className="h-8 w-8 text-liberation-gold-divine" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Our Stories, Our Power</h3>
-          <p className="text-liberation-silver text-sm mb-4">
-            Witness the strength, joy, and resilience of Black queer voices. Our lived experiences shape the future we're building together.
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
+            WebkitTextStroke: '1px rgba(255, 255, 255, 0.3)',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
+          }}>ARCHIVE</h3>
+          <p className="text-white text-sm mb-4 leading-relaxed">
+            Know your history<br/>270+ BLKOUT articles 2016-2024
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Explore Stories
-            <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </div>
-        </button>
-
-        <button
-          onClick={() => {
-            setCompetitionInitialView('landing');
-            setShowCompetitionModal(true);
-          }}
-          className="group bg-gradient-to-br from-liberation-pride-purple to-liberation-pride-pink text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left border-2 border-liberation-gold-divine shadow-lg hover:shadow-2xl"
-        >
-          <div className="flex items-center mb-4">
-            <Trophy className="h-8 w-8 text-liberation-gold-divine" />
-          </div>
-          <h3 className="text-lg font-bold mb-2">Photo of the Year 2025</h3>
-          <p className="text-liberation-silver text-sm mb-4">
-            Through your lens, show the world what Black queer liberation looks like. Your perspective matters, your artistry deserves recognition.
-          </p>
-          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Enter Competition
+            Explore Archive
             <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
 
+        <a
+          href="https://events-blkout.vercel.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group bg-gradient-to-br from-liberation-pride-purple/90 to-liberation-pride-pink text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
+        >
+          <div className="flex items-center mb-4">
+            <Calendar className="h-8 w-8 text-liberation-gold-divine" />
+          </div>
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
+            WebkitTextStroke: '1px rgba(255, 255, 255, 0.3)',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
+          }}>WHAT'S ON</h3>
+          <p className="text-white text-sm mb-4 leading-relaxed">
+            parties - culture - workshops<br/>Where the Black Queer Magic happens
+          </p>
+          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
+            See Events
+            <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </a>
+
         <button
           onClick={() => changeActiveTab('intro')}
-          className="group bg-gradient-to-br from-liberation-green-africa to-liberation-gold-divine text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
+          className="group bg-gradient-to-br from-liberation-green-africa/90 to-liberation-gold-divine text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Brain className="h-8 w-8 text-liberation-black-power" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Meet IVOR</h3>
-          <p className="text-liberation-black-power opacity-80 text-sm mb-4">
-            Your AI companion built by and for our community. IVOR centers Black queer experiences, understands our context, and supports your journey.
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
+            WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
+            textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)'
+          }}>ASK IVOR</h3>
+          <p className="text-liberation-black-power text-sm mb-4 leading-relaxed">
+            Our AI Community Liberation Assistant
           </p>
           <div className="flex items-center text-liberation-black-power font-semibold text-sm">
-            Start Conversation
+            Start Chat
             <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
 
         <button
           onClick={() => changeActiveTab('platform')}
-          className="group bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
+          className="group bg-gradient-to-br from-liberation-purple-spirit/90 to-liberation-black-power text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Users className="h-8 w-8 text-liberation-gold-divine" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Discover Platform</h3>
-          <p className="text-liberation-silver text-sm mb-4">
-            Find events, resources, and opportunities created for us, by us. Everything you need to thrive in one liberated space.
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
+            WebkitTextStroke: '1px rgba(255, 255, 255, 0.3)',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
+          }}>DISCOVER</h3>
+          <p className="text-white text-sm mb-4 leading-relaxed">
+            New features, community highlights, and ways to connect. Your guide to everything BLKOUT.
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
             Explore Platform
@@ -327,50 +340,61 @@ export default function App() {
           </div>
         </button>
 
-        <button
-          onClick={() => window.open('https://blkouthub.com', '_blank')}
-          className="group bg-gradient-to-br from-liberation-gold-divine to-liberation-red-liberation text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
+        <a
+          href="https://news-blkout.vercel.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group bg-gradient-to-br from-liberation-gold-divine/90 to-liberation-red-liberation text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Globe className="h-8 w-8 text-liberation-black-power" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Join BLKOUTHUB</h3>
-          <p className="text-liberation-black-power opacity-80 text-sm mb-4">
-            Your safe, affirming space to build authentic connections. Share experiences, find solidarity, and grow with people who truly get it.
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
+            WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
+            textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)'
+          }}>NEWS THAT MATTERS</h3>
+          <p className="text-liberation-black-power text-sm mb-4 leading-relaxed">
+            News reports and analysis through a Black Queer lens<br/>Set the tone, shape the agenda
           </p>
           <div className="flex items-center text-liberation-black-power font-semibold text-sm">
-            Join Community
+            Read News
             <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
-        </button>
+        </a>
 
         <button
-          onClick={() => window.open('https://sendfox.com/blkoutuk', '_blank')}
-          className="group bg-gradient-to-br from-liberation-silver to-liberation-purple-spirit text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
+          onClick={() => changeActiveTab('about')}
+          className="group bg-gradient-to-br from-liberation-silver/90 to-liberation-purple-spirit text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
-            <Mail className="h-8 w-8 text-liberation-black-power" />
+            <Info className="h-8 w-8 text-liberation-black-power" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Stay Connected</h3>
-          <p className="text-liberation-black-power opacity-80 text-sm mb-4">
-            Get news, events, and opportunities delivered to your inbox. Stay in the loop with what matters to our liberation.
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
+            WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
+            textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)'
+          }}>ABOUT</h3>
+          <p className="text-liberation-black-power text-sm mb-4 leading-relaxed">
+            For and By Black Queer Men<br/>"Without community, there is no liberation"
           </p>
           <div className="flex items-center text-liberation-black-power font-semibold text-sm">
-            Get Updates
-            <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            Learn More
+            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
 
         <button
           onClick={() => changeActiveTab('voices')}
-          className="group bg-gradient-to-br from-liberation-pride-purple via-liberation-gold-divine to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left border-2 border-liberation-gold-divine shadow-lg hover:shadow-2xl"
+          className="group bg-gradient-to-br from-liberation-pride-purple/90 via-liberation-gold-divine/90 to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <PenTool className="h-8 w-8 text-white" />
           </div>
-          <h3 className="text-lg font-bold mb-2">✊🏾 Voices Newsletter</h3>
-          <p className="text-white text-sm mb-4">
-            Amplifying Black queer narratives. Read powerful stories, perspectives, and voices from our community. New link coming soon.
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
+            WebkitTextStroke: '1px rgba(255, 255, 255, 0.3)',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
+          }}>BLKOUT VOICES</h3>
+          <p className="text-white text-sm mb-4 leading-relaxed">
+            Liberation narratives, views, perspectives and new writing from our community
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
             Read Voices
@@ -380,14 +404,17 @@ export default function App() {
 
         <button
           onClick={() => changeActiveTab('governance')}
-          className="group bg-gradient-to-br from-liberation-black-power to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 border-2 border-liberation-gold-divine text-left shadow-lg hover:shadow-2xl"
+          className="group bg-gradient-to-br from-liberation-black-power/90 to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex items-center mb-4">
             <Heart className="h-8 w-8 text-liberation-gold-divine" />
           </div>
-          <h3 className="text-lg font-bold mb-2">Shape Our Future</h3>
-          <p className="text-liberation-silver text-sm mb-4">
-            This platform belongs to us all. Join decision-making, propose ideas, and help build the community we deserve.
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
+            WebkitTextStroke: '1px rgba(255, 255, 255, 0.3)',
+            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
+          }}>OWNERS' MANUAL</h3>
+          <p className="text-white text-sm mb-4 leading-relaxed">
+            Every voice matters. Our members shape our future. This is how we build liberation - stronger together.
           </p>
           <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
             Get Involved
