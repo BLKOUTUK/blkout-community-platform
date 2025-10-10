@@ -90,11 +90,11 @@
       ]
     }
   ],
-  "rewrites": [
-    {
-      "source": "/((?!api|extensions).*)",
-      "destination": "/index.html"
-    }
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/api/.*", "dest": "/api/$1" },
+    { "src": "/extensions/.*", "dest": "/extensions/$1" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ],
   "functions": {
     "api/**/*.ts": {
