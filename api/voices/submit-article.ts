@@ -34,6 +34,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   });
 
   try {
+    console.log('[submit-article] Received request:', {
+      method: req.method,
+      hasBody: !!req.body,
+      bodyKeys: req.body ? Object.keys(req.body) : []
+    });
+
     const {
       name,
       email,
@@ -50,8 +56,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       thumbnail_alt
     } = req.body;
 
+    console.log('[submit-article] Parsed data:', {
+      name, email, title, category,
+      contentLength: content?.length,
+      excerptLength: excerpt?.length,
+      tags, featured, published
+    });
+
     // Validate required fields
     if (!name || !email || !title || !category || !content) {
+      console.error('[submit-article] Validation failed:', { name: !!name, email: !!email, title: !!title, category: !!category, content: !!content });
       return res.status(400).json({
         error: 'Missing required fields',
         message: 'Please provide name, email, title, category, and content',
@@ -62,11 +76,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
+    console.log('[submit-article] Environment check:', {
+      hasUrl: !!supabaseUrl,
+      hasKey: !!supabaseServiceKey,
+      urlPreview: supabaseUrl ? supabaseUrl.substring(0, 20) + '...' : 'missing'
+    });
+
     if (!supabaseUrl || !supabaseServiceKey) {
-      console.error('Supabase credentials not configured');
+      console.error('[submit-article] Supabase credentials not configured');
       return res.status(500).json({
         error: 'Server configuration error',
         message: 'Database connection not available',
+        debug: {
+          hasUrl: !!supabaseUrl,
+          hasServiceKey: !!supabaseServiceKey
+        }
       });
     }
 
@@ -77,38 +101,49 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Generate unique slug from title
     const slug = generateSlug(title);
+    console.log('[submit-article] Generated slug:', slug);
+
+    const articleData = {
+      title,
+      content,
+      excerpt: articleExcerpt,
+      author: name,
+      category,
+      slug,
+      published,
+      published_at: published ? new Date().toISOString() : null,
+      featured,
+      tags,
+      hero_image,
+      hero_image_alt,
+      thumbnail_image,
+      thumbnail_alt,
+    };
+
+    console.log('[submit-article] Article data prepared:', {
+      ...articleData,
+      content: `${content.substring(0, 50)}...`,
+      excerpt: `${articleExcerpt.substring(0, 50)}...`
+    });
 
     // Insert article directly into voices_articles table
     const { data, error } = await supabase
       .from('voices_articles')
-      .insert([
-        {
-          title,
-          content,
-          excerpt: articleExcerpt,
-          author: name,
-          category,
-          slug,
-          published,
-          published_at: published ? new Date().toISOString() : null,
-          featured,
-          tags,
-          hero_image,
-          hero_image_alt,
-          thumbnail_image,
-          thumbnail_alt,
-        },
-      ])
+      .insert([articleData])
       .select();
 
     if (error) {
-      console.error('Supabase insert error:', error);
+      console.error('[submit-article] Supabase insert error:', error);
       return res.status(500).json({
         error: 'Database error',
         message: 'Failed to publish your article. Please try again.',
         details: error.message,
+        code: error.code,
+        hint: error.hint
       });
     }
+
+    console.log('[submit-article] Article created successfully:', data?.[0]?.id);
 
     // Send success response
     return res.status(200).json({
