@@ -171,9 +171,9 @@ const StoryArchive: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
       {/* Video Hero */}
       <VideoHero
-        title="STORIES"
-        subtitle="Your voices, your experiences, your liberation"
-        description="270+ stories from the BLKOUT community."
+        title="ARCHIVE"
+        subtitle="Know your history"
+        description="270+ BLKOUT articles 2016-2024"
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
@@ -183,6 +183,7 @@ const StoryArchive: React.FC = () => {
         textColor="light"
         overlayOpacity={0.7}
         className="mb-8"
+        logoSrc="/Branding and logos/blkoutlogo_wht_transparent.png"
       />
 
       {/* Search and Filters */}

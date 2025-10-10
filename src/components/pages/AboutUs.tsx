@@ -42,8 +42,8 @@ export default function AboutUs() {
       {/* Hero Section with Video Background */}
       <VideoHero
         title="ABOUT"
-        subtitle="For and by Black queer men"
-        description="BLKOUT is an organisation for and by Black queer men and the communities of which they are part. We create spaces for connection, support, and celebration of Black queer joy."
+        subtitle="For and By Black Queer Men"
+        description="&quot;Without community, there is no liberation&quot;"
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
@@ -53,6 +53,7 @@ export default function AboutUs() {
         textColor="light"
         overlayOpacity={0.8}
         className="mb-8"
+        logoSrc="/Branding and logos/blkoutlogo_wht_transparent.png"
       />
 
       <div className="max-w-4xl mx-auto px-6">

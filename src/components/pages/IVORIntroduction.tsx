@@ -134,11 +134,11 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                 textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
                 WebkitTextStroke: '1px #000'
               }}>
-                MEET <span className="text-liberation-sovereignty-gold">IVOR</span>
+                <span className="text-liberation-sovereignty-gold">ASK IVOR</span>
               </h1>
               <p className="text-gray-400 uppercase font-semibold" style={{
                 textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
-              }}>YOUR LIBERATION AI ASSISTANT</p>
+              }}>OUR AI COMMUNITY LIBERATION ASSISTANT</p>
             </div>
 
             <div className="w-32"></div>
