@@ -34,7 +34,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   });
 
   try {
-    const { name, email, title, category, content, excerpt } = req.body;
+    const {
+      name,
+      email,
+      title,
+      category,
+      content,
+      excerpt,
+      tags = [],
+      featured = false,
+      published = true,
+      hero_image,
+      hero_image_alt,
+      thumbnail_image,
+      thumbnail_alt
+    } = req.body;
 
     // Validate required fields
     if (!name || !email || !title || !category || !content) {

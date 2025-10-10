@@ -169,21 +169,42 @@ export const AdminVoicesInterface: React.FC = () => {
 
   const handleSaveArticle = async () => {
     setLoading(true);
+    setError(null);
+    setSuccess(null);
+
     try {
       if (editorMode === 'create') {
-        // Generate slug from title
-        const slug = editorArticle.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || '';
+        // Use the API endpoint that has service role permissions
+        const response = await fetch('/api/voices/submit-article', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: editorArticle.author,
+            email: 'admin@blkoutuk.com', // Admin email placeholder
+            title: editorArticle.title,
+            category: editorArticle.category,
+            content: editorArticle.content,
+            excerpt: editorArticle.excerpt,
+            tags: editorArticle.tags,
+            featured: editorArticle.featured,
+            published: editorArticle.published,
+            hero_image: editorArticle.hero_image,
+            hero_image_alt: editorArticle.hero_image_alt,
+            thumbnail_image: editorArticle.thumbnail_image,
+            thumbnail_alt: editorArticle.thumbnail_alt,
+          }),
+        });
 
-        // Prepare article data with published_at timestamp if publishing
-        const articleData: VoicesArticleSubmission = {
-          ...editorArticle as VoicesArticleSubmission,
-          slug,
-          // Set published_at timestamp if publishing immediately
-          ...(editorArticle.published && { published_at: new Date().toISOString() }),
-        };
+        const result = await response.json();
 
-        await voicesAPI.createArticle(articleData);
-        setSuccess('Article created successfully');
+        if (!response.ok) {
+          throw new Error(result.message || 'Failed to create article');
+        }
+
+        setSuccess('Article created successfully!');
+        console.log('Article created:', result.data);
       } else if (selectedArticle) {
         await voicesAPI.updateArticle(selectedArticle.id, editorArticle);
         setSuccess('Article updated successfully');
@@ -194,8 +215,9 @@ export const AdminVoicesInterface: React.FC = () => {
       setActiveTab('articles');
       resetEditor();
     } catch (err) {
-      setError('Failed to save article');
-      console.error(err);
+      const errorMessage = err instanceof Error ? err.message : 'Failed to save article';
+      setError(errorMessage);
+      console.error('Article save error:', err);
     } finally {
       setLoading(false);
     }
