@@ -78,7 +78,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Generate unique slug from title
     const slug = generateSlug(title);
 
-    // Insert article directly into voices_articles table as published
+    // Insert article directly into voices_articles table
     const { data, error } = await supabase
       .from('voices_articles')
       .insert([
@@ -89,10 +89,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           author: name,
           category,
           slug,
-          published: true,
-          published_at: new Date().toISOString(),
-          featured: false,
-          tags: [],
+          published,
+          published_at: published ? new Date().toISOString() : null,
+          featured,
+          tags,
+          hero_image,
+          hero_image_alt,
+          thumbnail_image,
+          thumbnail_alt,
         },
       ])
       .select();
