@@ -382,8 +382,10 @@ export default function App() {
           </p>
         </button>
 
-        <button
-          onClick={() => changeActiveTab('voices')}
+        <a
+          href="https://web-production-9b7af.up.railway.app"
+          target="_blank"
+          rel="noopener noreferrer"
           className="group bg-gradient-to-br from-liberation-pride-purple/90 via-liberation-gold-divine/90 to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex justify-center mb-4">
@@ -400,7 +402,7 @@ export default function App() {
           <p className="text-white text-sm mb-4 leading-relaxed text-center">
             Liberation narratives, views, perspectives and new writing from our community
           </p>
-        </button>
+        </a>
 
         <button
           onClick={() => changeActiveTab('governance')}
@@ -573,16 +575,15 @@ export default function App() {
                     Newsroom
                     <ExternalLink className="h-3 w-3" />
                   </a>
-                  <button
-                    onClick={() => changeActiveTab('voices')}
-                    className={`px-5 py-2.5 rounded-lg font-extrabold text-base transition-all duration-300 shadow-md hover:shadow-xl ${
-                      activeTab === 'voices'
-                        ? 'bg-gradient-to-r from-liberation-pride-purple to-liberation-pride-pink text-white scale-105'
-                        : 'bg-liberation-gold-divine text-liberation-black-power hover:scale-105'
-                    }`}
+                  <a
+                    href="https://web-production-9b7af.up.railway.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-2.5 rounded-lg font-extrabold text-base transition-all duration-300 shadow-md hover:shadow-xl bg-liberation-gold-divine text-liberation-black-power hover:scale-105 flex items-center gap-1"
                   >
                     Voices
-                  </button>
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
                   <button
                     onClick={() => changeActiveTab('intro')}
                     className={`px-4 py-2 rounded-lg font-bold transition-all duration-300 ${

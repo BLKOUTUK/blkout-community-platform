@@ -24,7 +24,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
     { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' },
     { id: 'events', label: "What's On", icon: ExternalLink, type: 'link', href: 'https://events-blkout.vercel.app' },
     { id: 'newsroom', label: 'Newsroom', icon: ExternalLink, type: 'link', href: 'https://news-blkout.vercel.app' },
-    { id: 'voices', label: 'Voices', icon: PenTool, type: 'button' },
+    { id: 'voices', label: 'Voices', icon: ExternalLink, type: 'link', href: 'https://web-production-9b7af.up.railway.app' },
     { id: 'intro', label: 'Ask Ivor', icon: Brain, type: 'button' },
     { id: 'about', label: 'About', icon: Info, type: 'button' },
     { id: 'admin', label: 'Admin', icon: Shield, type: 'button' }
