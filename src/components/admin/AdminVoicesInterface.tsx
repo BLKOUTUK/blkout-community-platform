@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { voicesAPI, type VoicesArticle, type VoicesArticleSubmission } from '@/services/voices-api';
 import { liberationDB } from '@/lib/supabase';
+import { supabaseAdmin } from '@/lib/supabase-admin';
 
 interface ArticlePitch {
   id: string;
@@ -174,37 +175,40 @@ export const AdminVoicesInterface: React.FC = () => {
 
     try {
       if (editorMode === 'create') {
-        // Use the API endpoint that has service role permissions
-        const response = await fetch('/api/voices/submit-article', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: editorArticle.author,
-            email: 'admin@blkoutuk.com', // Admin email placeholder
+        // Generate slug from title
+        const slug = editorArticle.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') + '-' + Date.now().toString(36);
+
+        // Generate excerpt if not provided
+        const articleExcerpt = editorArticle.excerpt || editorArticle.content?.substring(0, 200) + '...';
+
+        // Use admin client to bypass RLS
+        const { data, error: insertError } = await supabaseAdmin
+          .from('voices_articles')
+          .insert([{
             title: editorArticle.title,
-            category: editorArticle.category,
             content: editorArticle.content,
-            excerpt: editorArticle.excerpt,
-            tags: editorArticle.tags,
-            featured: editorArticle.featured,
-            published: editorArticle.published,
+            excerpt: articleExcerpt,
+            author: editorArticle.author,
+            category: editorArticle.category,
+            slug,
+            published: editorArticle.published || false,
+            published_at: editorArticle.published ? new Date().toISOString() : null,
+            featured: editorArticle.featured || false,
+            tags: editorArticle.tags || [],
             hero_image: editorArticle.hero_image,
             hero_image_alt: editorArticle.hero_image_alt,
             thumbnail_image: editorArticle.thumbnail_image,
             thumbnail_alt: editorArticle.thumbnail_alt,
-          }),
-        });
+          }])
+          .select();
 
-        const result = await response.json();
-
-        if (!response.ok) {
-          throw new Error(result.message || 'Failed to create article');
+        if (insertError) {
+          console.error('Database insert error:', insertError);
+          throw new Error(insertError.message || 'Failed to create article');
         }
 
         setSuccess('Article created successfully!');
-        console.log('Article created:', result.data);
+        console.log('Article created:', data?.[0]);
       } else if (selectedArticle) {
         await voicesAPI.updateArticle(selectedArticle.id, editorArticle);
         setSuccess('Article updated successfully');
