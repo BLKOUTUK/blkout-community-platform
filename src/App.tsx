@@ -262,22 +262,20 @@ export default function App() {
           onClick={() => changeActiveTab('stories')}
           className="group bg-gradient-to-br from-liberation-red-liberation/90 to-liberation-purple-spirit text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
-          <div className="flex items-center mb-4">
-            <Play className="h-8 w-8 text-liberation-gold-divine" />
+          <div className="flex justify-center mb-4">
+            <img
+              src="/Branding and logos/blkoutlogo_wht_transparent.png"
+              alt="BLKOUT"
+              className="h-12 w-auto"
+            />
           </div>
-          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
-            WebkitTextStroke: '1px rgba(255, 255, 255, 0.3)',
-            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide text-center" style={{
+            WebkitTextStroke: '2px #fff',
+            color: 'transparent'
           }}>ARCHIVE</h3>
-          <p className="text-white text-sm mb-4 leading-relaxed uppercase" style={{
-            textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
-          }}>
-            KNOW YOUR HISTORY<br/>270+ BLKOUT ARTICLES 2016-2024
+          <p className="text-white text-sm mb-4 leading-relaxed text-center">
+            Know your history<br/>270+ BLKOUT articles 2016-2024
           </p>
-          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm uppercase">
-            EXPLORE ARCHIVE
-            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </div>
         </button>
 
         <a
@@ -286,60 +284,60 @@ export default function App() {
           rel="noopener noreferrer"
           className="group bg-gradient-to-br from-liberation-pride-purple/90 to-liberation-pride-pink text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
-          <div className="flex items-center mb-4">
-            <Calendar className="h-8 w-8 text-liberation-gold-divine" />
+          <div className="flex justify-center mb-4">
+            <img
+              src="/Branding and logos/blkoutlogo_wht_transparent.png"
+              alt="BLKOUT"
+              className="h-12 w-auto"
+            />
           </div>
-          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
-            WebkitTextStroke: '1px rgba(255, 255, 255, 0.3)',
-            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide text-center" style={{
+            WebkitTextStroke: '2px #fff',
+            color: 'transparent'
           }}>WHAT'S ON</h3>
-          <p className="text-white text-sm mb-4 leading-relaxed">
+          <p className="text-white text-sm mb-4 leading-relaxed text-center">
             parties - culture - workshops<br/>Where the Black Queer Magic happens
           </p>
-          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            See Events
-            <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </div>
         </a>
 
         <button
           onClick={() => changeActiveTab('intro')}
           className="group bg-gradient-to-br from-liberation-green-africa/90 to-liberation-gold-divine text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
-          <div className="flex items-center mb-4">
-            <Brain className="h-8 w-8 text-liberation-black-power" />
+          <div className="flex justify-center mb-4">
+            <img
+              src="/Branding and logos/blkoutlogo_wht_transparent.png"
+              alt="BLKOUT"
+              className="h-12 w-auto"
+            />
           </div>
-          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
-            WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
-            textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)'
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide text-center" style={{
+            WebkitTextStroke: '2px #000',
+            color: 'transparent'
           }}>ASK IVOR</h3>
-          <p className="text-liberation-black-power text-sm mb-4 leading-relaxed">
+          <p className="text-liberation-black-power text-sm mb-4 leading-relaxed text-center">
             Our AI Community Liberation Assistant
           </p>
-          <div className="flex items-center text-liberation-black-power font-semibold text-sm">
-            Start Chat
-            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </div>
         </button>
 
         <button
           onClick={() => changeActiveTab('platform')}
           className="group bg-gradient-to-br from-liberation-purple-spirit/90 to-liberation-black-power text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
-          <div className="flex items-center mb-4">
-            <Users className="h-8 w-8 text-liberation-gold-divine" />
+          <div className="flex justify-center mb-4">
+            <img
+              src="/Branding and logos/blkoutlogo_wht_transparent.png"
+              alt="BLKOUT"
+              className="h-12 w-auto"
+            />
           </div>
-          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
-            WebkitTextStroke: '1px rgba(255, 255, 255, 0.3)',
-            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide text-center" style={{
+            WebkitTextStroke: '2px #fff',
+            color: 'transparent'
           }}>DISCOVER</h3>
-          <p className="text-white text-sm mb-4 leading-relaxed">
-            New features, community highlights, and ways to connect. Your guide to everything BLKOUT.
+          <p className="text-white text-sm mb-4 leading-relaxed text-center">
+            New features, community highlights, and ways to connect.<br/>Your guide to everything BLKOUT.
           </p>
-          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Explore Platform
-            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </div>
         </button>
 
         <a
@@ -348,40 +346,40 @@ export default function App() {
           rel="noopener noreferrer"
           className="group bg-gradient-to-br from-liberation-gold-divine/90 to-liberation-red-liberation text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
-          <div className="flex items-center mb-4">
-            <Globe className="h-8 w-8 text-liberation-black-power" />
+          <div className="flex justify-center mb-4">
+            <img
+              src="/Branding and logos/blkoutlogo_wht_transparent.png"
+              alt="BLKOUT"
+              className="h-12 w-auto"
+            />
           </div>
-          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
-            WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
-            textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)'
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide text-center" style={{
+            WebkitTextStroke: '2px #000',
+            color: 'transparent'
           }}>NEWS THAT MATTERS</h3>
-          <p className="text-liberation-black-power text-sm mb-4 leading-relaxed">
+          <p className="text-liberation-black-power text-sm mb-4 leading-relaxed text-center">
             News reports and analysis through a Black Queer lens<br/>Set the tone, shape the agenda
           </p>
-          <div className="flex items-center text-liberation-black-power font-semibold text-sm">
-            Read News
-            <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </div>
         </a>
 
         <button
           onClick={() => changeActiveTab('about')}
           className="group bg-gradient-to-br from-liberation-silver/90 to-liberation-purple-spirit text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
-          <div className="flex items-center mb-4">
-            <Info className="h-8 w-8 text-liberation-black-power" />
+          <div className="flex justify-center mb-4">
+            <img
+              src="/Branding and logos/blkoutlogo_wht_transparent.png"
+              alt="BLKOUT"
+              className="h-12 w-auto"
+            />
           </div>
-          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
-            WebkitTextStroke: '0.5px rgba(0, 0, 0, 0.3)',
-            textShadow: '1px 1px 2px rgba(255, 255, 255, 0.5)'
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide text-center" style={{
+            WebkitTextStroke: '2px #000',
+            color: 'transparent'
           }}>ABOUT</h3>
-          <p className="text-liberation-black-power text-sm mb-4 leading-relaxed">
+          <p className="text-liberation-black-power text-sm mb-4 leading-relaxed text-center">
             For and By Black Queer Men<br/>"Without community, there is no liberation"
           </p>
-          <div className="flex items-center text-liberation-black-power font-semibold text-sm">
-            Learn More
-            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </div>
         </button>
 
         <button
@@ -408,20 +406,20 @@ export default function App() {
           onClick={() => changeActiveTab('governance')}
           className="group bg-gradient-to-br from-liberation-black-power/90 to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
-          <div className="flex items-center mb-4">
-            <Heart className="h-8 w-8 text-liberation-gold-divine" />
+          <div className="flex justify-center mb-4">
+            <img
+              src="/Branding and logos/blkoutlogo_wht_transparent.png"
+              alt="BLKOUT"
+              className="h-12 w-auto"
+            />
           </div>
-          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
-            WebkitTextStroke: '1px rgba(255, 255, 255, 0.3)',
-            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide text-center" style={{
+            WebkitTextStroke: '2px #fff',
+            color: 'transparent'
           }}>OWNERS' MANUAL</h3>
-          <p className="text-white text-sm mb-4 leading-relaxed">
-            Every voice matters. Our members shape our future. This is how we build liberation - stronger together.
+          <p className="text-white text-sm mb-4 leading-relaxed text-center">
+            Every voice matters. Our members shape our future.<br/>This is how we build liberation - stronger together.
           </p>
-          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Get Involved
-            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </div>
         </button>
       </section>
 
