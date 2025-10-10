@@ -33,6 +33,7 @@ export interface VoicesArticleSubmission {
   featured?: boolean;
   published?: boolean;
   slug?: string;
+  published_at?: string;
   hero_image?: string;
   hero_image_alt?: string;
   thumbnail_image?: string;

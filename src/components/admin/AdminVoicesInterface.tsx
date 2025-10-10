@@ -174,10 +174,15 @@ export const AdminVoicesInterface: React.FC = () => {
         // Generate slug from title
         const slug = editorArticle.title?.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || '';
 
-        await voicesAPI.createArticle({
+        // Prepare article data with published_at timestamp if publishing
+        const articleData: VoicesArticleSubmission = {
           ...editorArticle as VoicesArticleSubmission,
           slug,
-        });
+          // Set published_at timestamp if publishing immediately
+          ...(editorArticle.published && { published_at: new Date().toISOString() }),
+        };
+
+        await voicesAPI.createArticle(articleData);
         setSuccess('Article created successfully');
       } else if (selectedArticle) {
         await voicesAPI.updateArticle(selectedArticle.id, editorArticle);
