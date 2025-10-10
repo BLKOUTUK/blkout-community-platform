@@ -269,11 +269,13 @@ export default function App() {
             WebkitTextStroke: '1px rgba(255, 255, 255, 0.3)',
             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
           }}>ARCHIVE</h3>
-          <p className="text-white text-sm mb-4 leading-relaxed">
-            Know your history<br/>270+ BLKOUT articles 2016-2024
+          <p className="text-white text-sm mb-4 leading-relaxed uppercase" style={{
+            textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
+          }}>
+            KNOW YOUR HISTORY<br/>270+ BLKOUT ARTICLES 2016-2024
           </p>
-          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Explore Archive
+          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm uppercase">
+            EXPLORE ARCHIVE
             <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </div>
         </button>
