@@ -386,20 +386,20 @@ export default function App() {
           onClick={() => changeActiveTab('voices')}
           className="group bg-gradient-to-br from-liberation-pride-purple/90 via-liberation-gold-divine/90 to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
-          <div className="flex items-center mb-4">
-            <PenTool className="h-8 w-8 text-white" />
+          <div className="flex justify-center mb-4">
+            <img
+              src="/Branding and logos/blkoutlogo_wht_transparent.png"
+              alt="BLKOUT"
+              className="h-12 w-auto"
+            />
           </div>
-          <h3 className="text-lg font-black mb-2 uppercase tracking-wide" style={{
-            WebkitTextStroke: '1px rgba(255, 255, 255, 0.3)',
-            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)'
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide text-center" style={{
+            WebkitTextStroke: '2px #fff',
+            color: 'transparent'
           }}>BLKOUT VOICES</h3>
-          <p className="text-white text-sm mb-4 leading-relaxed">
+          <p className="text-white text-sm mb-4 leading-relaxed text-center">
             Liberation narratives, views, perspectives and new writing from our community
           </p>
-          <div className="flex items-center text-liberation-gold-divine font-semibold text-sm">
-            Read Voices
-            <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-          </div>
         </button>
 
         <button
