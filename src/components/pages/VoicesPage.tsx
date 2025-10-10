@@ -212,8 +212,11 @@ const VoicesPage: React.FC = () => {
               />
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-black text-liberation-gold-divine mb-4">
-              BLKOUT Voices
+            <h1 className="text-5xl md:text-7xl font-black mb-4 uppercase tracking-wide" style={{
+              WebkitTextStroke: '2px #fff',
+              color: 'transparent'
+            }}>
+              BLKOUT VOICES
             </h1>
             <p className="text-xl md:text-2xl text-liberation-silver max-w-3xl mx-auto mb-6">
               Editorial perspectives, community voices, and liberation thought from our community
