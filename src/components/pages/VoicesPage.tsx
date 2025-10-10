@@ -219,7 +219,7 @@ const VoicesPage: React.FC = () => {
               BLKOUT VOICES
             </h1>
             <p className="text-xl md:text-2xl text-liberation-silver max-w-3xl mx-auto mb-6">
-              Editorial perspectives, community voices, and liberation thought from our community
+              Liberation narratives, views, perspectives and new writing from our community
             </p>
             <button
               onClick={() => setShowPitchForm(!showPitchForm)}
