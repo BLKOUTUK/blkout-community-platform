@@ -92,7 +92,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!extensions/).*)",
+      "source": "/((?!api/|extensions/).*)",
       "destination": "/index.html"
     }
   ],
