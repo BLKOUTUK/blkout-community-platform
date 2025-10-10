@@ -14,12 +14,26 @@ const GovernancePage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-gray-100">
-              We Decide Together
+            {/* BLKOUT Logo */}
+            <div className="flex justify-center mb-8">
+              <img
+                src="/Branding and logos/blkoutlogo_wht_transparent.png"
+                alt="BLKOUT"
+                className="h-24 md:h-32 lg:h-40 w-auto mx-auto filter drop-shadow-2xl"
+              />
+            </div>
+
+            <h1 className="text-4xl md:text-6xl font-black mb-6 text-gray-900 dark:text-gray-100 uppercase" style={{
+              textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
+              WebkitTextStroke: '1px #000'
+            }}>
+              OWNERS' MANUAL
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-              Every voice matters. Every member shapes our future.
-              This is how we build liberation - hand in hand, decision by decision.
+            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-8 font-semibold" style={{
+              textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
+            }}>
+              <span className="uppercase">EVERY VOICE MATTERS. OUR MEMBERS SHAPE OUR FUTURE.</span><br/>
+              This is how we build liberation - stronger together.
             </p>
           </motion.div>
         </div>
