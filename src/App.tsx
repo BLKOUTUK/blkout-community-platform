@@ -13,30 +13,23 @@ import {
 // import AdminAuth, { checkAdminAuth } from '@/components/admin/AdminAuth';  // REMOVED - NO AUTH
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import AboutUs from '@/components/pages/AboutUs';
-import NewsPage from '@/components/pages/NewsPage';
 import StoryArchive from '@/components/pages/StoryArchive';
 import ArticleDetail from '@/components/pages/ArticleDetail';
-import EventsCalendar from '@/components/pages/EventsCalendar';
 import DiscoverPage from '@/components/pages/DiscoverPage';
 import Footer from '@/components/ui/Footer';
 import IVORIntroduction from '@/components/pages/IVORIntroduction';
 import IVORAssistant from './components/ivor/IVORAssistant';
 import GovernancePage from '@/components/pages/GovernancePage';
-import VoicesPage from '@/components/pages/VoicesPage';
 import MobileNav from '@/components/ui/MobileNav';
 import InstallPrompt from '@/components/ui/InstallPrompt';
 import FirstTimeUserFlow from '@/components/onboarding/FirstTimeUserFlow';
 import VideoHero from '@/components/ui/VideoHero';
-// import { AuthProvider } from '@/hooks/useAuth';  // REMOVED - NO AUTH
 
 // Photo Competition Integration
 import { PhotoCompetitionModal } from '@/components/competition/PhotoCompetitionModal';
 
 // API Configuration - Working backend
 const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
-
-// Import live events API at the top level
-import { eventsAPI } from './services/events-api';
 
 /**
  * QI COMPLIANCE: Main BLKOUT Liberation Platform Application
@@ -47,7 +40,7 @@ import { eventsAPI } from './services/events-api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'about' | 'news' | 'stories' | 'events' | 'intro' | 'admin' | 'platform' | 'voices';
+type NavigationTab = 'liberation' | 'governance' | 'about' | 'stories' | 'intro' | 'admin' | 'platform';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -119,7 +112,7 @@ class ErrorBoundary extends React.Component<any, any> {
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'governance', 'about', 'news', 'stories', 'events', 'intro', 'admin', 'platform', 'voices'];
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'about', 'stories', 'intro', 'admin', 'platform'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
@@ -195,12 +188,8 @@ export default function App() {
     switch (activeTab) {
       case 'about':
         return <AboutUs />;
-      case 'news':
-        return <NewsPage />;
       case 'stories':
         return <StoryArchive />;
-      case 'events':
-        return <EventsCalendar />;
       case 'intro':
         return <IVORIntroduction
           onStartChat={() => setShowIVOR(true)}
@@ -209,8 +198,6 @@ export default function App() {
         />;
       case 'governance':
         return <GovernancePage />;
-      case 'voices':
-        return <VoicesPage />;
       case 'platform':
         return <DiscoverPage onNavigate={changeActiveTab} />;
       case 'admin':

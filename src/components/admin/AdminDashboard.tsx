@@ -2,15 +2,12 @@
 // Authentication, moderation, and story management interface
 
 import React, { useState, useEffect } from 'react';
-import { Shield, Users, FileText, Download, Plus, Eye, CheckCircle, XCircle, BarChart3, Settings, Chrome, Key, UserCheck, Calendar, MapPin, Clock, Upload, Mail, Lock, EyeOff, PenTool } from 'lucide-react';
+import { Shield, Users, FileText, Download, Plus, Eye, CheckCircle, XCircle, BarChart3, Settings, Chrome, Key, UserCheck, Calendar, MapPin, Clock, Upload, Mail, Lock, EyeOff } from 'lucide-react';
 // import { useAuth } from '@/hooks/useAuth';  // REMOVED - NO AUTH
 import { communityAPI } from '@/services/community-api';
 import { BulkStorySubmission } from './BulkStorySubmission';
 import { IVORFeedbackCollection } from './IVORFeedbackCollection';
-import AdminVoicesInterface from './AdminVoicesInterface';
-import { voicesAPI, type VoicesArticle, type VoicesArticleSubmission } from '@/services/voices-api';
 import { liberationDB, type ModerationItem as SupabaseModerationItem } from '@/lib/supabase';
-import type { NewsArticle, CommunityEvent, EventSubmission, EventModerationItem } from '@/types/liberation';
 
 interface AdminStats {
   pendingStories: number;
@@ -239,9 +236,6 @@ export const AdminDashboard: React.FC = () => {
     { id: 'overview', label: 'Overview', icon: BarChart3 },
     { id: 'moderation', label: 'Story Moderation', icon: Eye },
     { id: 'submissions', label: 'Story Submissions', icon: Plus },
-    { id: 'event-moderation', label: 'Event Moderation', icon: Calendar },
-    { id: 'event-submissions', label: 'Event Submissions', icon: Users },
-    { id: 'voices', label: 'Voices Editorial', icon: PenTool },
     { id: 'extension', label: 'Chrome Extension', icon: Chrome },
     { id: 'ivor', label: 'IVOR Training', icon: Settings },
   ];
@@ -419,17 +413,6 @@ export const AdminDashboard: React.FC = () => {
                 </button>
 
                 <button
-                  onClick={() => setActiveTab('event-moderation')}
-                  className="flex items-center gap-3 p-4 bg-orange-500/20 hover:bg-orange-500/30 rounded-lg transition-colors text-left"
-                >
-                  <Calendar className="w-6 h-6 text-orange-400" />
-                  <div>
-                    <h3 className="font-semibold text-white">Event Review</h3>
-                    <p className="text-sm text-gray-300">{stats.pendingEvents} pending events</p>
-                  </div>
-                </button>
-
-                <button
                   onClick={() => setActiveTab('submissions')}
                   className="flex items-center gap-3 p-4 bg-green-500/20 hover:bg-green-500/30 rounded-lg transition-colors text-left"
                 >
@@ -533,98 +516,6 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Event Moderation Queue Tab */}
-        {activeTab === 'event-moderation' && (
-          <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-white">Event Moderation Queue</h2>
-              <button
-                onClick={loadDashboardData}
-                className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-lg transition-colors"
-              >
-                Refresh
-              </button>
-            </div>
-
-            {loading ? (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-400 mx-auto"></div>
-                <p className="text-gray-300 mt-4">Loading event moderation queue...</p>
-              </div>
-            ) : eventModerationQueue.length === 0 ? (
-              <div className="bg-white/10 backdrop-blur-md rounded-lg p-8 border border-white/20 text-center">
-                <CheckCircle className="w-12 h-12 text-green-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-white mb-2">All caught up!</h3>
-                <p className="text-gray-300">No events pending moderation.</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {eventModerationQueue.map((item) => (
-                  <div key={item.id} className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-                          <span className="px-2 py-1 bg-orange-500/20 rounded text-orange-300 text-xs font-semibold">
-                            {item.category.toUpperCase()}
-                          </span>
-                          <span className="px-2 py-1 bg-blue-500/20 rounded text-blue-300 text-xs font-semibold">
-                            {item.type.toUpperCase()}
-                          </span>
-                        </div>
-
-                        <p className="text-gray-300 text-sm mb-3">{item.description}</p>
-
-                        <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
-                          <div className="flex items-center gap-1">
-                            <Calendar className="w-4 h-4" />
-                            <span>{new Date(item.date).toLocaleDateString()}</span>
-                          </div>
-                          <span>•</span>
-                          <div className="flex items-center gap-1">
-                            <Users className="w-4 h-4" />
-                            <span>By {item.organizer}</span>
-                          </div>
-                          <span>•</span>
-                          <span>Submitted by {item.submittedBy}</span>
-                          <span>•</span>
-                          <span>{new Date(item.submittedAt).toLocaleDateString()}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2 ml-4">
-                        <button
-                          onClick={() => handleApproveEvent(item.id)}
-                          className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
-                        >
-                          <CheckCircle className="w-4 h-4" />
-                          Approve to Calendar
-                        </button>
-
-                        <button
-                          onClick={() => handleRejectEvent(item.id)}
-                          className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-                        >
-                          <XCircle className="w-4 h-4" />
-                          Reject
-                        </button>
-                      </div>
-                    </div>
-
-                    {item.flagReason && (
-                      <div className="bg-red-500/20 border border-red-500/30 rounded-lg p-3 mb-3">
-                        <p className="text-red-300 text-sm">
-                          <strong>Flag Reason:</strong> {item.flagReason}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
         {/* Story Submissions Tab */}
         {activeTab === 'submissions' && (
           <div className="space-y-6">
@@ -662,51 +553,9 @@ export const AdminDashboard: React.FC = () => {
           </div>
         )}
 
-        {/* Event Submissions Tab */}
-        {activeTab === 'event-submissions' && (
-          <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-white">Event Submissions</h2>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setShowSingleEventSubmission(!showSingleEventSubmission)}
-                  className={`px-4 py-2 font-medium rounded-lg transition-colors ${
-                    showSingleEventSubmission
-                      ? 'bg-orange-500 text-black'
-                      : 'bg-white/10 text-white hover:bg-white/20'
-                  }`}
-                >
-                  Single Event
-                </button>
-                <button
-                  onClick={() => setShowSingleEventSubmission(false)}
-                  className={`px-4 py-2 font-medium rounded-lg transition-colors ${
-                    !showSingleEventSubmission
-                      ? 'bg-orange-500 text-black'
-                      : 'bg-white/10 text-white hover:bg-white/20'
-                  }`}
-                >
-                  Bulk Events
-                </button>
-              </div>
-            </div>
-
-            {showSingleEventSubmission ? (
-              <SingleEventSubmission onSubmit={loadDashboardData} />
-            ) : (
-              <BulkEventSubmission onSubmit={loadDashboardData} />
-            )}
-          </div>
-        )}
-
         {/* Chrome Extension Tab */}
         {activeTab === 'extension' && (
           <ChromeExtensionManager />
-        )}
-
-        {/* Voices Editorial Tab */}
-        {activeTab === 'voices' && (
-          <AdminVoicesInterface />
         )}
 
         {/* IVOR Training Tab */}
