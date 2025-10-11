@@ -370,7 +370,7 @@ export default function App() {
         </button>
 
         <a
-          href="https://web-production-9b7af.up.railway.app"
+          href="https://voices-blkout.up.railway.app"
           target="_blank"
           rel="noopener noreferrer"
           className="group bg-gradient-to-br from-liberation-pride-purple/90 via-liberation-gold-divine/90 to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
@@ -563,7 +563,7 @@ export default function App() {
                     <ExternalLink className="h-3 w-3" />
                   </a>
                   <a
-                    href="https://web-production-9b7af.up.railway.app"
+                    href="https://voices-blkout.up.railway.app"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-5 py-2.5 rounded-lg font-extrabold text-base transition-all duration-300 shadow-md hover:shadow-xl bg-liberation-gold-divine text-liberation-black-power hover:scale-105 flex items-center gap-1"
