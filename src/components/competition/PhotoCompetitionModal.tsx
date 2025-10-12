@@ -31,7 +31,7 @@ export const PhotoCompetitionModal: React.FC<PhotoCompetitionModalProps> = ({
   const [userSubmissions, setUserSubmissions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Mock competition data
+  // Competition data - prizes and stats to be announced
   const currentCompetition = {
     id: competitionId || 'oct-2025',
     title: 'BLKOUT Photo Competition - October 2025',
@@ -39,14 +39,14 @@ export const PhotoCompetitionModal: React.FC<PhotoCompetitionModalProps> = ({
     themes: COMPETITION_THEMES,
     deadline: '2025-11-01',
     prizes: {
-      winner: '£500 + Featured Exhibition',
-      featured: '£200 + Gallery Display',
+      winner: 'To be announced',
+      featured: 'To be announced',
       shortlisted: 'Digital Certificate + Community Recognition'
     },
     stats: {
-      totalSubmissions: 42,
-      activeCurators: 5,
-      communityVotes: 156
+      totalSubmissions: 0,
+      activeCurators: 0,
+      communityVotes: 0
     }
   };
 
