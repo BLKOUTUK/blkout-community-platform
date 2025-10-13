@@ -555,7 +555,118 @@ export const AdminDashboard: React.FC = () => {
 
         {/* Chrome Extension Tab */}
         {activeTab === 'extension' && (
-          <ChromeExtensionManager />
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-white">Chrome Extension</h2>
+
+            {/* Download Section */}
+            <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
+              <div className="flex items-center gap-4 mb-4">
+                <Chrome className="w-8 h-8 text-blue-400" />
+                <div>
+                  <h3 className="text-xl font-semibold text-white">BLKOUT Moderator Tools v2.2.0</h3>
+                  <p className="text-gray-300">Dual-platform support - Submit news articles and events directly from any webpage</p>
+                </div>
+              </div>
+
+              <div className="flex gap-4 mb-6">
+                <a
+                  href="/blkout-moderator-tools-v2.2.0.zip"
+                  download="blkout-moderator-tools-v2.2.0.zip"
+                  className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors"
+                >
+                  <Download className="w-5 h-5" />
+                  Download v2.2.0 (.zip)
+                </a>
+              </div>
+
+              {/* What's New */}
+              <div className="bg-green-900/20 backdrop-blur-md rounded-lg p-4 border border-green-500/30 mb-4">
+                <h4 className="text-lg font-semibold text-white mb-3">🚀 What's New in v2.2.0</h4>
+                <div className="space-y-2 text-gray-300 text-sm">
+                  <p>• ✅ Dual-platform support: Submit to both news platform and events calendar</p>
+                  <p>• ✅ Intelligent API routing based on content type (Event/News/Story)</p>
+                  <p>• ✅ Event-specific fields: Date, time, location, capacity auto-extraction</p>
+                  <p>• ✅ Smart content type detection with keyword analysis</p>
+                  <p>• ✅ Fixed null reference error and duplicate context menu issues</p>
+                  <p>• ✅ Enhanced success messages indicating target platform</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Installation Instructions */}
+            <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
+              <h3 className="text-xl font-semibold text-white mb-4">Installation Instructions</h3>
+
+              <div className="space-y-4">
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold">1</div>
+                  <div>
+                    <h4 className="font-semibold text-white">Download & Extract Extension</h4>
+                    <p className="text-gray-300">Click the download button above to get the extension package, then extract the zip file</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold">2</div>
+                  <div>
+                    <h4 className="font-semibold text-white">Enable Developer Mode</h4>
+                    <p className="text-gray-300">Go to chrome://extensions/ and toggle "Developer mode" in the top right</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold">3</div>
+                  <div>
+                    <h4 className="font-semibold text-white">Load Extension</h4>
+                    <p className="text-gray-300">Click "Load unpacked" and select the extracted extension folder</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-black font-bold">4</div>
+                  <div>
+                    <h4 className="font-semibold text-white">Start Using</h4>
+                    <p className="text-gray-300">Navigate to any webpage and click the extension icon to submit content</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Features Overview */}
+            <div className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20">
+              <h3 className="text-xl font-semibold text-white mb-4">Key Features</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-white">Dual-Platform Routing</h4>
+                    <p className="text-gray-400 text-sm">Events → Events Calendar API, News/Stories → News Platform API</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-white">Auto Content Extraction</h4>
+                    <p className="text-gray-400 text-sm">Automatically extracts title, summary, images, dates, and locations</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-white">Smart Type Detection</h4>
+                    <p className="text-gray-400 text-sm">Keyword analysis auto-suggests Event/News/Story based on page content</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-white">Offline Support</h4>
+                    <p className="text-gray-400 text-sm">Saves submissions locally if API is unavailable, syncs when online</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         )}
 
         {/* IVOR Training Tab */}
