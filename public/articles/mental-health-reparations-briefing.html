@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Queer Mental Health Reparations Briefing | BLKOUT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --purple: #4A148C;
+            --gold: #FFD700;
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray: #E0E0E0;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            overflow-x: hidden;
+        }
+
+        /* Bauhaus Geometric Background */
+        .geometric-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+            opacity: 0.05;
+        }
+
+        .circle {
+            position: absolute;
+            border: 3px solid var(--purple);
+            border-radius: 50%;
+        }
+
+        .circle-1 { width: 400px; height: 400px; top: -100px; right: -100px; }
+        .circle-2 { width: 250px; height: 250px; bottom: 50px; left: -50px; border-color: var(--gold); }
+
+        .square {
+            position: absolute;
+            border: 3px solid var(--black);
+        }
+
+        .square-1 { width: 200px; height: 200px; top: 40%; left: 10%; transform: rotate(15deg); }
+
+        /* Invoice Container */
+        .invoice-container {
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Header */
+        .invoice-header {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 4px solid var(--black);
+            margin-bottom: 2rem;
+        }
+
+        .invoice-title h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .invoice-number {
+            text-align: right;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .invoice-number .label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--purple);
+        }
+
+        .invoice-number .number {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* OVERDUE Stamp */
+        .overdue-stamp {
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            width: 200px;
+            height: 200px;
+            border: 8px solid rgba(255, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-15deg);
+            animation: stampAppear 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 10;
+        }
+
+        .overdue-stamp span {
+            color: rgba(255, 0, 0, 0.7);
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        @keyframes stampAppear {
+            0% {
+                transform: scale(0) rotate(-15deg);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) rotate(-15deg);
+            }
+            100% {
+                transform: scale(1) rotate(-15deg);
+                opacity: 1;
+            }
+        }
+
+        /* Invoice Body - CSS Grid Layout */
+        .invoice-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .billing-section h2 {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--purple);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .billing-info {
+            font-family: 'Space Mono', monospace;
+            line-height: 1.8;
+        }
+
+        .billing-info strong {
+            display: block;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Line Items */
+        .line-items {
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .items-table thead {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .items-table th {
+            padding: 1rem;
+            text-align: left;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+        }
+
+        .items-table td {
+            padding: 1.5rem 1rem;
+            border-bottom: 2px solid var(--gray);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .items-table .description {
+            width: 60%;
+        }
+
+        .items-table .amount {
+            text-align: right;
+            font-weight: 700;
+            color: var(--purple);
+        }
+
+        .highlight-row {
+            background: rgba(74, 20, 140, 0.05);
+        }
+
+        /* Total Section */
+        .total-section {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 4px solid var(--black);
+        }
+
+        .payment-terms {
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        .payment-terms h3 {
+            color: var(--purple);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .total-box {
+            background: var(--black);
+            color: var(--white);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .total-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+        }
+
+        .total-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--gold);
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 20;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 700;
+        }
+
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            border-left: 3px solid var(--black);
+            border-bottom: 3px solid var(--black);
+            transform: rotate(-45deg);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* Briefing Content Sections */
+        .briefing-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            background: var(--white);
+        }
+
+        .briefing-section.alt {
+            background: rgba(74, 20, 140, 0.03);
+        }
+
+        .briefing-section h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 2rem;
+            color: var(--purple);
+        }
+
+        .briefing-section h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--black);
+        }
+
+        .briefing-section p {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .briefing-section ul, .briefing-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .briefing-section li {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 2rem;
+            border-left: 4px solid var(--purple);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--purple);
+            font-family: 'Space Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            color: var(--black);
+        }
+
+        .quote-block {
+            background: var(--purple);
+            color: var(--white);
+            padding: 3rem;
+            margin: 3rem 0;
+            border-left: 8px solid var(--gold);
+            font-size: 1.5rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .cta-section {
+            background: var(--black);
+            color: var(--white);
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .cta-section h2 {
+            color: var(--gold);
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.5rem 3rem;
+            background: var(--gold);
+            color: var(--black);
+            text-decoration: none;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: transform 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .invoice-container {
+                padding: 1rem;
+            }
+
+            .invoice-header {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .invoice-number {
+                text-align: left;
+            }
+
+            .invoice-body {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .total-section {
+                grid-template-columns: 1fr;
+            }
+
+            .overdue-stamp {
+                width: 150px;
+                height: 150px;
+                top: 5%;
+                right: 2%;
+            }
+
+            .overdue-stamp span {
+                font-size: 1.75rem;
+            }
+
+            .items-table {
+                font-size: 0.875rem;
+            }
+
+            .items-table th,
+            .items-table td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .total-amount {
+                font-size: 2rem;
+            }
+
+            .briefing-section {
+                padding: 2rem 1rem;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .invoice-title h1 {
+                font-size: 1.75rem;
+            }
+
+            .items-table .description,
+            .items-table .amount {
+                display: block;
+                width: 100%;
+            }
+
+            .items-table td {
+                padding: 1rem 0.5rem;
+            }
+        }
+
+        /* Hide scroll indicator when scrolled */
+        .scrolled .scroll-indicator {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Geometric Background -->
+    <div class="geometric-bg">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="square square-1"></div>
+    </div>
+
+    <!-- Invoice Introduction -->
+    <div class="invoice-container">
+        <div class="overdue-stamp">
+            <span>OVERDUE</span>
+        </div>
+
+        <div class="invoice-header">
+            <div class="invoice-title">
+                <h1>INVOICE</h1>
+                <p style="margin-top: 0.5rem; font-size: 1.125rem;">Mental Health Reparations</p>
+            </div>
+            <div class="invoice-number">
+                <div class="label">Invoice #</div>
+                <div class="number">1619-2025</div>
+                <div style="margin-top: 1rem; font-size: 0.875rem;">
+                    <div><strong>Date:</strong> Overdue</div>
+                    <div><strong>Due:</strong> 406 Years Ago</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="invoice-body">
+            <div class="billing-section">
+                <h2>Bill To</h2>
+                <div class="billing-info">
+                    <strong>United States of America</strong>
+                    <div>Colonial Powers & Institutions</div>
+                    <div>White Supremacist Systems</div>
+                    <div>Heteropatriarchy Inc.</div>
+                </div>
+            </div>
+
+            <div class="billing-section">
+                <h2>Invoice From</h2>
+                <div class="billing-info">
+                    <strong>Black Queer Community</strong>
+                    <div>Survivors of Generational Trauma</div>
+                    <div>Mental Health Collective</div>
+                    <div>Reparations Department</div>
+                </div>
+            </div>
+
+            <div class="line-items">
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th class="description">Description</th>
+                            <th>Qty</th>
+                            <th class="amount">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="description">
+                                <strong>Slavery-Induced Generational Trauma</strong>
+                                <div style="font-size: 0.875rem; margin-top: 0.25rem; opacity: 0.8;">
+                                    400+ years of psychological warfare, family separation, and dehumanization
+                                </div>
+                            </td>
+                            <td>Ongoing</td>
+                            <td class="amount">INCALCULABLE</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="description">
+                                <strong>Anti-Queer Violence & Discrimination</strong>
+                                <div style="font-size: 0.875rem; margin-top: 0.25rem; opacity: 0.8;">
+                                    Erasure, criminalization, and systemic violence against Black LGBTQIA+ lives
+                                </div>
+                            </td>
+                            <td>Persistent</td>
+                            <td class="amount">IMMEASURABLE</td>
+                        </tr>
+                        <tr>
+                            <td class="description">
+                                <strong>Denial of Mental Healthcare Access</strong>
+                                <div style="font-size: 0.875rem; margin-top: 0.25rem; opacity: 0.8;">
+                                    Criminalization of mental illness, lack of culturally competent care, medical racism
+                                </div>
+                            </td>
+                            <td>Systemic</td>
+                            <td class="amount">PRICELESS</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="description">
+                                <strong>State-Sanctioned Murder & Police Brutality</strong>
+                                <div style="font-size: 0.875rem; margin-top: 0.25rem; opacity: 0.8;">
+                                    Tony McDade, Layleen Polanco, countless unnamed victims of state violence
+                                </div>
+                            </td>
+                            <td>Too Many</td>
+                            <td class="amount">UNPAYABLE</td>
+                        </tr>
+                        <tr>
+                            <td class="description">
+                                <strong>Economic Exploitation & Wage Theft</strong>
+                                <div style="font-size: 0.875rem; margin-top: 0.25rem; opacity: 0.8;">
+                                    Unpaid labor, wealth extraction, denied opportunity for 15+ generations
+                                </div>
+                            </td>
+                            <td>Generational</td>
+                            <td class="amount">$∞ TRILLION</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td class="description">
+                                <strong>Collective Therapy & Healing Spaces</strong>
+                                <div style="font-size: 0.875rem; margin-top: 0.25rem; opacity: 0.8;">
+                                    Community-led healing, radical rest, joy as resistance, liberation therapy
+                                </div>
+                            </td>
+                            <td>Essential</td>
+                            <td class="amount">DUE NOW</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="total-section">
+                <div class="payment-terms">
+                    <h3>Payment Terms</h3>
+                    <p>
+                        <strong style="color: var(--purple);">IMMEDIATE REPARATIONS REQUIRED:</strong>
+                    </p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem; line-height: 1.8;">
+                        <li>Free, accessible, culturally competent mental healthcare for all Black queer people</li>
+                        <li>Community-controlled healing spaces and wellness centers</li>
+                        <li>Economic redistribution and wealth transfer</li>
+                        <li>Abolition of systems causing ongoing harm</li>
+                        <li>Land back and resource sovereignty</li>
+                    </ul>
+                    <p style="margin-top: 1rem; font-weight: 700;">
+                        This debt cannot be paid in currency alone. Liberation is the only acceptable payment.
+                    </p>
+                </div>
+                <div class="total-box">
+                    <div class="total-label">Total Due</div>
+                    <div class="total-amount">FREEDOM</div>
+                    <div style="margin-top: 0.5rem; font-size: 0.875rem; opacity: 0.9;">
+                        + Full Reparations + Collective Liberation
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" onclick="document.querySelector('.briefing-section').scrollIntoView({behavior: 'smooth'})">
+        <span>Read Briefing</span>
+        <div class="scroll-arrow"></div>
+    </div>
+
+    <!-- Briefing Content -->
+    <div class="briefing-section">
+        <h2>WE ARE HEALING OURSELVES</h2>
+
+        <div class="stat-grid">
+            <div class="stat-card">
+                <div class="stat-number">90%</div>
+                <div class="stat-label">of us know depression - and still we rise</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">40+</div>
+                <div class="stat-label">years of creating our own spaces from Gay Black Group (1982) to UK Black Pride today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">30,000</div>
+                <div class="stat-label">reached through community care - BLKOUT's lockdown interventions alone</div>
+            </div>
+        </div>
+
+        <div class="quote-block">
+            "No matter what we're doing, as long as I'm with my queer people, I feel at home."
+        </div>
+    </div>
+
+    <div class="briefing-section alt">
+        <h2>CREATING WHOLENESS FROM FRAGMENTS</h2>
+
+        <p>Black queer men are master builders:</p>
+
+        <h3>In LGBTQ+ spaces</h3>
+        <p>We challenge racism and create ballrooms, Black Pride, and chosen families</p>
+
+        <h3>In Black communities</h3>
+        <p>We expand definitions of Blackness and masculinity</p>
+
+        <h3>In healthcare</h3>
+        <p>Organizations like NAZ integrate what systems keep separate</p>
+
+        <p>When faced with "No Blacks" on dating profiles, we created our own apps, parties, and definitions of desirability.</p>
+
+        <p>When therapists couldn't see us wholly, we built peer support networks that could.</p>
+
+        <p>When churches condemned us, we found faith in chosen families.</p>
+
+        <div class="quote-block">
+            "Being gay is what makes me. I wonder if I would be as clever, as witty, as intelligent you know, if I wasn't gay. The only negative thing is the way society views it."
+        </div>
+    </div>
+
+    <div class="briefing-section">
+        <h2>COMMUNITY SOLUTIONS IN ACTION</h2>
+
+        <h3>"In The Picture": Proof of What Works</h3>
+
+        <p>During the 2020 lockdown, while government services vanished, BLKOUT UK created:</p>
+
+        <h3>The BLKOUT HUB</h3>
+        <ul>
+            <li>Crowdsourced self-care guide</li>
+            <li>Redefined care as communal, not individual</li>
+            <li>Available 24/7 when NHS wasn't</li>
+        </ul>
+
+        <h3>Get Down on Lockdown</h3>
+        <ul>
+            <li>Recognized joy as mental health intervention</li>
+            <li>So popular it crashed servers</li>
+            <li>Proved hunger for spaces "that reflected and celebrated us"</li>
+        </ul>
+
+        <h3>Breathe 8.46</h3>
+        <ul>
+            <li>Direct trauma response to George Floyd's murder</li>
+            <li>"Space to acknowledge and heal through music, exercise, meditation"</li>
+            <li>Culturally specific healing when mainstream services offered nothing</li>
+        </ul>
+
+        <h3>Black Queer Lives Matter</h3>
+        <ul>
+            <li>Reached 30,000 people</li>
+            <li>Ensured racial justice included queer voices</li>
+            <li>Created virtual community during isolation</li>
+        </ul>
+
+        <div class="quote-block">
+            "Without community there is no liberation"
+        </div>
+    </div>
+
+    <div class="briefing-section alt">
+        <h2>FROM INVISIBLE TO INEVITABLE</h2>
+
+        <ul>
+            <li><strong>We document ourselves</strong> - "In The Picture" proved communities create better research than universities</li>
+            <li><strong>We fund ourselves</strong> - Crowdsourcing care when the state abandons us</li>
+            <li><strong>We heal ourselves</strong> - Joy as medicine, dancing as resistance, connection as cure</li>
+            <li><strong>We see ourselves</strong> - Even when NHS data refuses to count us together</li>
+        </ul>
+
+        <h3>The Paradox</h3>
+        <p>Our HIV organizing shows what's possible. Black queer men ARE visible when it comes to sexual health. That same vision must extend to mental health - or we'll fail both.</p>
+
+        <p>Recent data shows new HIV infections declining less among ethnic minority MSM. Without mental health support, we cannot meet the 2030 Zero Transmissions target.</p>
+
+        <div class="quote-block">
+            "Society just refuses to accept that we exist" - except when counting our infections
+        </div>
+    </div>
+
+    <div class="briefing-section">
+        <h2>TEST AND LEARN: READY FOR SCALE</h2>
+
+        <h3>What Exists</h3>
+        <ul>
+            <li>Community infrastructure already engaging thousands</li>
+            <li>Proven interventions created without formal funding</li>
+            <li>Evidence from natural experiments (lockdown responses)</li>
+        </ul>
+
+        <h3>The Opportunity</h3>
+        <ul>
+            <li>Test, document, and scale what's working</li>
+            <li>Co-production with built-in reflexive evaluation</li>
+            <li>Move from "survival mode" to "thriving systems"</li>
+        </ul>
+
+        <h3>The Method</h3>
+        <ul>
+            <li>Community-led design and delivery</li>
+            <li>Reflexive evaluation that evolves with context</li>
+            <li>Success metrics defined by communities, not commissioners</li>
+        </ul>
+
+        <h3>The Urgency</h3>
+        <ul>
+            <li>HIV targets failing without mental health integration</li>
+            <li>90% depression rates despite community innovations</li>
+            <li>Every delay = preventable suffering</li>
+        </ul>
+
+        <div class="quote-block">
+            "Fund us to properly document and scale the innovations Black queer communities are already creating"
+        </div>
+    </div>
+
+    <div class="briefing-section alt">
+        <h2>FROM SURVIVAL TO THRIVING</h2>
+
+        <h3>Urgent Actions for System Change</h3>
+
+        <ol>
+            <li><strong>Shift power to communities</strong><br>
+            Direct funding to Black queer-led organizations for self-determined solutions</li>
+
+            <li><strong>Resource our brilliance</strong><br>
+            We've proven what works; fund it properly</li>
+
+            <li><strong>Expand what healing means</strong><br>
+            Joy, culture, and community ARE mental health</li>
+
+            <li><strong>Connect our wholeness</strong><br>
+            We are not fragments to be studied separately</li>
+
+            <li><strong>Trust our leadership</strong><br>
+            Solutions come from those living the experience</li>
+
+            <li><strong>Build the future now</strong><br>
+            Every funded community program saves lives today</li>
+        </ol>
+    </div>
+
+    <div class="cta-section">
+        <h2>JOIN THE MOVEMENT</h2>
+
+        <p style="max-width: 800px; margin: 0 auto 3rem; font-size: 1.25rem; line-height: 1.8;">
+            We are not waiting for permission to heal. But proper resources would honor the solutions we've already created.
+        </p>
+
+        <p style="font-size: 1.5rem; font-weight: 700; color: var(--gold); margin-bottom: 2rem;">
+            Black Queer Men Connected. Futures Transformed.
+        </p>
+
+        <a href="https://blkout.uk" class="cta-button">Learn More at BLKOUT.UK</a>
+        <a href="#" class="cta-button">Download Full Briefing</a>
+    </div>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                document.body.classList.add('scrolled');
+            } else {
+                document.body.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
