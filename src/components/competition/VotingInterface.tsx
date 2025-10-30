@@ -55,7 +55,7 @@ export const VotingInterface: React.FC<VotingInterfaceProps> = ({
           <h2 className="text-2xl font-bold mb-3 text-gray-900 dark:text-gray-100">Thank You for Voting!</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-6">
             Your voice matters in celebrating our community's creative vision.
-            Winners will be announced on November 15, 2025.
+            Winners will be announced on January 15, 2026.
           </p>
           <button
             onClick={onBack}

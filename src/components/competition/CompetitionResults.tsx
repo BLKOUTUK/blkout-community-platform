@@ -101,7 +101,7 @@ export const CompetitionResults: React.FC<CompetitionResultsProps> = ({
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-600 dark:text-gray-400">Results will be announced on November 15, 2025</p>
+            <p className="text-gray-600 dark:text-gray-400">Results will be announced on January 15, 2026</p>
           </div>
         )}
       </motion.div>
