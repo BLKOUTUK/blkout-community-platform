@@ -27,7 +27,7 @@ Photography has always been a powerful tool for Black queer communities to docum
 - **Personal Expressions**: Fashion, art, identity, self-portraiture
 - **Everyday Magic**: The ordinary moments that hold extraordinary meaning
 - **Cultural Connections**: Heritage, tradition, innovation, fusion
-- **Liberation in Action**: Organizing, creating, healing, building
+- **Liberation in Action**: Organising, creating, healing, building
 
 We want to see YOUR perspective. What does Black queer joy look like through your lens?
 
@@ -54,7 +54,7 @@ We want to see YOUR perspective. What does Black queer joy look like through you
 
 ## Why This Matters
 
-For too long, our stories have been told by others. This competition centers **your** vision, **your** creativity, and **your** truth. Whether you're a professional photographer or someone with a phone camera who sees beauty in everyday moments, we want to hear from you.
+For too long, our stories have been told by others. This competition centres **your** vision, **your** creativity, and **your** truth. Whether you're a professional photographer or someone with a phone camera who sees beauty in everyday moments, we want to hear from you.
 
 ## How to Enter
 
@@ -77,7 +77,7 @@ For too long, our stories have been told by others. This competition centers **y
 
 ## Selection Process
 
-### Phase 1: Curator Review (Jan 1-7)
+### Phase 1: Curatorial Review (Jan 1-7)
 Our panel of Black queer artists, photographers, and community leaders will review all submissions based on:
 - **Artistic Merit**: Composition, technique, creativity
 - **Authenticity**: Genuine representation of Black queer experience
@@ -87,16 +87,16 @@ Our panel of Black queer artists, photographers, and community leaders will revi
 Top entries advance to community voting.
 
 ### Phase 2: Community Vote (Jan 8-14)
-BLKOUT community members vote for their favorites. Your voice matters in deciding who represents our collective vision.
+BLKOUT community members vote for their favourites. Your voice matters in deciding who represents our collective vision.
 
 ### Phase 3: Final Selection (Jan 15)
-Combining curator scores and community votes, we'll announce our winner and runners-up.
+Combining curatorial scores and community votes, we'll announce our winner and runners-up.
 
 ## Guidelines & Requirements
 
 ### Photo Requirements
 - **Original work** only - you must own all rights
-- **Subjects**: Must center Black queer people or themes
+- **Subjects**: Must centre Black queer people or themes
 - **Format**: JPEG or PNG
 - **Size**: Minimum 2000px, maximum 8000px on longest side
 - **No watermarks** on submissions (credit will be given)
@@ -132,7 +132,7 @@ Combining curator scores and community votes, we'll announce our winner and runn
 Our curatorial panel includes:
 
 - **Black queer photographers** with exhibited work
-- **Community organizers** leading grassroots movements
+- **Community organisers** leading grassroots movements
 - **Arts professionals** from galleries and institutions
 - **BLKOUT leadership** representing platform values
 
@@ -211,7 +211,7 @@ Follow us on social media for:
 
 ## About BLKOUT Lens
 
-BLKOUT Lens is our initiative to center Black queer visual storytelling. Through photography competitions, exhibitions, and community galleries, we're building an archive of our experiences - told by us, for us.
+BLKOUT Lens is our initiative to centre Black queer visual storytelling. Through photography competitions, exhibitions, and community galleries, we're building an archive of our experiences - told by us, for us.
 
 This Photo of the Year competition is just the beginning. Watch this space for:
 - Quarterly themed photo challenges
