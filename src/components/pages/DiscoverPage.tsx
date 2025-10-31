@@ -161,7 +161,7 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
                   </h3>
                   <p className="text-gray-700 dark:text-gray-300 mb-4">
                     Share your vision of Black queer joy. Win £500 and be featured
-                    in our community gallery. Submissions open until October 31st!
+                    in our community gallery. Submissions open December 1-31, 2025!
                   </p>
                   <button className="flex items-center space-x-2 text-purple-600 hover:text-purple-700 font-semibold">
                     <span>Enter Competition</span>

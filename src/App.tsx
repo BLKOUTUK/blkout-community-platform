@@ -454,7 +454,7 @@ export default function App() {
             </button>
           </div>
           <p className="text-sm mt-4 opacity-75">
-            Submissions open until October 31st • Be featured in our community gallery
+            Submissions open December 1-31, 2025 • Be featured in our community gallery
           </p>
         </div>
       </section>
