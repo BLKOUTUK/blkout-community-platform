@@ -223,9 +223,13 @@ This Photo of the Year competition is just the beginning. Watch this space for:
 
 ---
 
-*Questions about the competition? Contact us at hello@blkoutuk.com*
-
-*Need submission support or accessibility accommodations? We're here to help.*
+> **📸 Ready to Enter BLKOUT Lens: Photo of the Year 2025?**
+>
+> **Visit [blkoutuk.com/photo-competition](https://blkoutuk.com/photo-competition) to submit your photos**
+>
+> Submissions open: **December 1-31, 2025**
+> Questions? Contact us at **hello@blkoutuk.com**
+> Need support or accessibility accommodations? We're here to help.
 `,
 
   callToAction: {
