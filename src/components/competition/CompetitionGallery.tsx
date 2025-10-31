@@ -118,7 +118,7 @@ export const CompetitionGallery: React.FC<CompetitionGalleryProps> = ({
                 <img
                   src={photo.imageUrl}
                   alt={photo.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
                 {photo.isFeatured && (
                   <div className="absolute top-2 left-2 px-2 py-1 bg-yellow-500 text-white text-xs font-semibold rounded">

@@ -108,7 +108,7 @@ export const VotingInterface: React.FC<VotingInterfaceProps> = ({
             <img
               src={currentPhoto.imageUrl}
               alt={currentPhoto.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-top"
             />
             <div className="absolute top-4 right-4 px-3 py-1 bg-black/50 text-white text-sm font-semibold rounded backdrop-blur-sm">
               {currentPhoto.theme}
