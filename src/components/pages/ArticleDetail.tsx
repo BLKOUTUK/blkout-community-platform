@@ -232,7 +232,7 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ articleId, source, onBack
               <img
                 src={article.imageUrl}
                 alt={article.title}
-                className="w-full h-64 lg:h-96 object-cover"
+                className="w-full h-64 lg:h-96 object-cover object-top"
               />
             </div>
           )}

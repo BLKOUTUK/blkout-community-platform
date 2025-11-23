@@ -64,7 +64,7 @@ export const CompetitionResults: React.FC<CompetitionResultsProps> = ({
                 <img
                   src={results.winner.imageUrl}
                   alt={results.winner.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
                 <div className="absolute top-4 left-4 px-3 py-1 bg-yellow-500 text-white text-sm font-semibold rounded">
                   Winner
@@ -101,7 +101,7 @@ export const CompetitionResults: React.FC<CompetitionResultsProps> = ({
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-600 dark:text-gray-400">Results will be announced on November 15, 2025</p>
+            <p className="text-gray-600 dark:text-gray-400">Results will be announced on January 15, 2026</p>
           </div>
         )}
       </motion.div>
@@ -129,7 +129,7 @@ export const CompetitionResults: React.FC<CompetitionResultsProps> = ({
                   <img
                     src={photo.imageUrl}
                     alt={photo.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-top"
                   />
                   <div className="absolute top-3 left-3 px-2 py-1 bg-purple-600 text-white text-xs font-semibold rounded">
                     Featured

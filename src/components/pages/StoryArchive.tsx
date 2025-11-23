@@ -270,7 +270,7 @@ const StoryArchive: React.FC = () => {
                       <img
                         src={story.imageUrl}
                         alt={story.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                   )}

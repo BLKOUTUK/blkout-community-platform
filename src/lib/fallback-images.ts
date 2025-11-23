@@ -119,12 +119,17 @@ export function getColorFromCategory(category?: string): FallbackImageColor {
 
 /**
  * Get a random fallback image based on article category
- * Uses article ID or timestamp as seed for consistent-per-article randomization
+ * Uses rotating selection with date-based seed for daily variety
  * @param category - Article category
  * @param seed - Optional seed (article ID) for deterministic selection
+ * @param useDateRotation - If true, rotates images daily instead of using pure random (default: true)
  * @returns Random image path matching the category's theme color
  */
-export function getCategoryFallbackImage(category?: string, seed?: string): string {
+export function getCategoryFallbackImage(
+  category?: string,
+  seed?: string,
+  useDateRotation: boolean = true
+): string {
   const color = getColorFromCategory(category);
   const images = FALLBACK_IMAGES[color];
 
@@ -132,15 +137,19 @@ export function getCategoryFallbackImage(category?: string, seed?: string): stri
     return FALLBACK_IMAGES.blue[0];
   }
 
-  // If seed provided, use it for deterministic selection (same article = same image)
-  // Otherwise use random (will change on each component render)
   let index: number;
 
   if (seed) {
-    // Simple hash function for string seed
+    // Combine seed with current date for daily rotation
+    // This ensures same article gets different image each day
+    const dateSeed = useDateRotation
+      ? `${seed}-${new Date().toISOString().split('T')[0]}`
+      : seed;
+
+    // Simple hash function for combined seed
     let hash = 0;
-    for (let i = 0; i < seed.length; i++) {
-      hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+    for (let i = 0; i < dateSeed.length; i++) {
+      hash = ((hash << 5) - hash) + dateSeed.charCodeAt(i);
       hash = hash & hash; // Convert to 32-bit integer
     }
     index = Math.abs(hash) % images.length;

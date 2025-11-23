@@ -187,7 +187,7 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
               </div>
               <div className="ml-12">
                 <p className="font-semibold text-gray-900 dark:text-gray-100">Submission Phase</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">Now - November 16, 2025 (Midnight)</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">December 1-31, 2025</p>
               </div>
             </div>
 
@@ -197,7 +197,7 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
               </div>
               <div className="ml-12">
                 <p className="font-semibold text-gray-900 dark:text-gray-100">Curator Review</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">November 17-23, 2025</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">January 1-7, 2026</p>
               </div>
             </div>
 
@@ -207,7 +207,7 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
               </div>
               <div className="ml-12">
                 <p className="font-semibold text-gray-900 dark:text-gray-100">Community Voting</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">November 24-30, 2025</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">January 8-14, 2026</p>
               </div>
             </div>
 
@@ -217,7 +217,7 @@ export const CompetitionLanding: React.FC<CompetitionLandingProps> = ({
               </div>
               <div className="ml-12">
                 <p className="font-semibold text-gray-900 dark:text-gray-100">Winners Announced</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">December 1, 2025</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">January 15, 2026</p>
               </div>
             </div>
           </div>

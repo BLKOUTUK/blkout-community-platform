@@ -162,7 +162,7 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
             <img
               src={previewUrl!}
               alt="Preview"
-              className="w-full h-64 object-cover"
+              className="w-full h-64 object-cover object-top"
             />
             <button
               type="button"

@@ -263,6 +263,29 @@
     }
   }
 
+  /* Image positioning utilities - prioritize top of images for portraits */
+  .object-cover-top {
+    object-fit: cover;
+    object-position: top;
+  }
+
+  .object-cover-top-center {
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  /* Article/portrait image optimization - shows faces/heads */
+  .article-image {
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  /* Hero image optimization - balanced composition */
+  .hero-image {
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
   /* Trauma-informed interaction states */
   .gentle-hover:hover {
     transform: translateY(-1px);
