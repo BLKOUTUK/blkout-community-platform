@@ -15,7 +15,7 @@ import AdminDashboard from '@/components/admin/AdminDashboard';
 import AboutUs from '@/components/pages/AboutUs';
 import StoryArchive from '@/components/pages/StoryArchive';
 import ArticleDetail from '@/components/pages/ArticleDetail';
-import DiscoverPage from '@/components/pages/DiscoverPage';
+import DiscoverPage from '@/components/pages/DiscoverPage.enhanced';
 import Footer from '@/components/ui/Footer';
 import IVORIntroduction from '@/components/pages/IVORIntroduction';
 import IVORAssistant from './components/ivor/IVORAssistant';
