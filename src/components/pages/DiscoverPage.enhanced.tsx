@@ -18,6 +18,7 @@ import { HeroSection } from '../discover/HeroSection';
 import { BlkoutHubWidget } from '../discover/BlkoutHubWidget';
 import { AnnouncementsSection } from '../discover/AnnouncementsSection';
 import { YouTubeEmbed } from '../discover/YouTubeEmbed';
+import { AdventCalendarWidget } from '../discover/AdventCalendarWidget';
 import { ContentCard } from '../shared/ContentCard';
 import { usePublishedContent } from '../../hooks/usePublishedContent';
 
@@ -60,6 +61,16 @@ export default function DiscoverPage({ onNavigate }: DiscoverPageProps) {
           className="mb-16"
         >
           <BlkoutHubWidget />
+        </motion.div>
+
+        {/* Advent Calendar Section - December Feature */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.5 }}
+          className="mb-16 p-8 bg-gradient-to-br from-red-50 via-green-50 to-white dark:from-red-900/20 dark:via-green-900/20 dark:to-gray-900 rounded-2xl"
+        >
+          <AdventCalendarWidget />
         </motion.div>
 
         {/* Two-column layout for Announcements and YouTube */}
