@@ -185,12 +185,13 @@ function CalendarDay({
   }[data.status];
 
   const isLocked = data.status === 'locked';
+  const hasEventDetails = data.title && data.description;
 
   return (
     <motion.div
       className="h-48 cursor-pointer perspective-1000"
       onClick={() => onToggle(data.day, data.status)}
-      whileHover={!isLocked ? { scale: 1.05 } : {}}
+      whileHover={{ scale: 1.05 }}
       transition={{ duration: 0.2 }}
     >
       <motion.div
@@ -201,81 +202,104 @@ function CalendarDay({
       >
         {/* Front */}
         <div
-          className={`absolute w-full h-full rounded-lg ${borderColor} border-2 bg-gradient-to-br from-gray-900 via-gray-800 to-black dark:from-black dark:via-gray-900 dark:to-gray-800 flex items-center justify-center ${
-            isLocked ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-lg hover:border-opacity-80'
-          }`}
+          className={`absolute w-full h-full rounded-lg ${borderColor} border-2 bg-gradient-to-br from-gray-900 via-gray-800 to-black dark:from-black dark:via-gray-900 dark:to-gray-800 flex items-center justify-center hover:shadow-lg hover:border-opacity-80`}
           style={{ backfaceVisibility: 'hidden' }}
         >
           <div className="text-center">
-            <div className={`text-6xl font-bold mb-2 ${isLocked ? 'text-gray-600' : 'text-white'}`}>
+            <div className={`text-6xl font-bold mb-2 text-white`}>
               {data.day}
             </div>
-            <div className={`text-xs ${isLocked ? 'text-gray-600' : data.status === 'attended' ? 'text-pink-400' : 'text-emerald-400'}`}>
+            <div className={`text-xs ${data.status === 'attended' ? 'text-pink-400' : data.status === 'upcoming' ? 'text-emerald-400' : 'text-gray-400'}`}>
               {data.date}
             </div>
-            {data.time && !isLocked && (
+            {data.time && hasEventDetails && (
               <div className="text-xs text-white mt-2">📍 {data.time}</div>
             )}
             {data.status === 'attended' && (
               <div className="text-xs text-white mt-2">✓ Reviewed</div>
             )}
+            {isLocked && (
+              <div className="text-xs text-gray-400 mt-2">🎄 Tap to reveal</div>
+            )}
           </div>
         </div>
 
         {/* Back */}
-        {!isLocked && (
-          <div
-            className={`absolute w-full h-full rounded-lg ${borderColor} border-2 bg-black dark:bg-gray-900 p-4 overflow-y-auto text-white text-xs`}
-            style={{
-              backfaceVisibility: 'hidden',
-              transform: 'rotateY(180deg)'
-            }}
-          >
-            {data.image && (
-              <img
-                src={data.image}
-                alt={data.title}
-                className="w-full h-32 object-cover rounded mb-2"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-            )}
-            <h3 className={`font-bold mb-2 ${data.status === 'attended' ? 'text-pink-400' : 'text-emerald-400'}`}>
-              {data.title}
-            </h3>
-            {data.organizer && (
-              <p className="mb-2">
-                <strong>Organizer:</strong> {data.organizer}
-              </p>
-            )}
-            <p className="mb-2 text-gray-300">{data.description}</p>
-            {data.venue && (
-              <p className="text-gray-400 text-xs mb-2">📍 {data.venue}, {data.time}</p>
-            )}
-            {data.eventLink && (
-              <a
-                href={data.eventLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-emerald-400 hover:text-emerald-300 text-xs mt-2 inline-block font-bold"
+        <div
+          className={`absolute w-full h-full rounded-lg ${borderColor} border-2 bg-black dark:bg-gray-900 overflow-hidden text-white text-xs`}
+          style={{
+            backfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)'
+          }}
+        >
+          {isLocked || !hasEventDetails ? (
+            // Show Christmas video for locked days or days without event details
+            <div className="w-full h-full flex items-center justify-center bg-black">
+              <video
+                className="w-full h-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
                 onClick={(e) => e.stopPropagation()}
               >
-                View event details →
-              </a>
-            )}
-            {data.reviewLink && (
-              <a
-                href={data.reviewLink}
-                className="text-pink-400 hover:text-pink-300 text-xs mt-2 inline-block font-bold"
-                onClick={(e) => e.stopPropagation()}
-              >
-                Read full review →
-              </a>
-            )}
-            <p className="text-xs text-gray-500 mt-2">💬 DM me if you want to attend together</p>
-          </div>
-        )}
+                <source src="/Branding and logos/Blkoutchristmas.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute bottom-2 left-0 right-0 text-center">
+                <p className="text-xs text-white bg-black/70 px-2 py-1 rounded inline-block">
+                  🎄 Stay tuned for updates
+                </p>
+              </div>
+            </div>
+          ) : (
+            // Show event details for days with events
+            <div className="p-4 overflow-y-auto h-full">
+              {data.image && (
+                <img
+                  src={data.image}
+                  alt={data.title}
+                  className="w-full h-32 object-cover rounded mb-2"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              )}
+              <h3 className={`font-bold mb-2 ${data.status === 'attended' ? 'text-pink-400' : 'text-emerald-400'}`}>
+                {data.title}
+              </h3>
+              {data.organizer && (
+                <p className="mb-2">
+                  <strong>Organizer:</strong> {data.organizer}
+                </p>
+              )}
+              <p className="mb-2 text-gray-300">{data.description}</p>
+              {data.venue && (
+                <p className="text-gray-400 text-xs mb-2">📍 {data.venue}, {data.time}</p>
+              )}
+              {data.eventLink && (
+                <a
+                  href={data.eventLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emerald-400 hover:text-emerald-300 text-xs mt-2 inline-block font-bold"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  View event details →
+                </a>
+              )}
+              {data.reviewLink && (
+                <a
+                  href={data.reviewLink}
+                  className="text-pink-400 hover:text-pink-300 text-xs mt-2 inline-block font-bold"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  Read full review →
+                </a>
+              )}
+              <p className="text-xs text-gray-500 mt-2">💬 DM me if you want to attend together</p>
+            </div>
+          )}
+        </div>
       </motion.div>
     </motion.div>
   );
