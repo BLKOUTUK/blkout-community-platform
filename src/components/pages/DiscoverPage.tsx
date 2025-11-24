@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Sparkles, Calendar, MessageCircle, Trophy, Heart, Users, TrendingUp, ArrowRight, Star, Gift, BookOpen, Instagram, User, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
+import { AdventCalendarWidget } from '../discover/AdventCalendarWidget';
 
 interface DiscoverPageProps {
   onNavigate?: (tab: string) => void;
@@ -199,6 +200,13 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Advent Calendar Section - December Feature */}
+      <section className="py-12 px-6 bg-gradient-to-br from-red-50 via-green-50 to-white dark:from-red-900/20 dark:via-green-900/20 dark:to-gray-900">
+        <div className="max-w-6xl mx-auto">
+          <AdventCalendarWidget />
         </div>
       </section>
 

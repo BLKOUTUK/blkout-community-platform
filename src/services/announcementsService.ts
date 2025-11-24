@@ -75,30 +75,3 @@ export async function fetchPublishedAnnouncements(
   }
 }
 
-/**
- * Mock announcements for fallback when Supabase is not configured or on error
- */
-export const mockAnnouncements: Announcement[] = [
-  {
-    id: '1',
-    title: 'New Community Hub Features',
-    excerpt: 'BLKOUT HUB now includes member forums, resource library, and cooperative decision-making tools.',
-    date: '2024-03-15',
-    category: 'update',
-    link: 'https://blkouthub.com',
-  },
-  {
-    id: '2',
-    title: 'Black Queer Liberation Summit 2024',
-    excerpt: 'Join us for our annual gathering bringing together activists, artists, and organizers across the UK.',
-    date: '2024-04-20',
-    category: 'event',
-  },
-  {
-    id: '3',
-    title: 'Media Sovereignty Workshop Series',
-    excerpt: 'Learn to create liberatory content and build community power through storytelling.',
-    date: '2024-03-22',
-    category: 'campaign',
-  },
-];
