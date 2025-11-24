@@ -14,14 +14,17 @@ export function HeroSection() {
         transition={{ duration: 0.6 }}
         className="relative text-center py-16"
       >
+        {/* BLKOUT Logo */}
         <div className="flex justify-center mb-6">
-          <div className="w-20 h-20 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center shadow-lg">
-            <Sparkles className="h-10 w-10 text-white" />
-          </div>
+          <img
+            src="/Branding and logos/blkoutlogo_wht_transparent.png"
+            alt="BLKOUT"
+            className="h-24 md:h-32 lg:h-40 w-auto mx-auto filter drop-shadow-2xl"
+          />
         </div>
 
         <h1 className="text-5xl md:text-6xl font-display font-bold text-gray-900 dark:text-gray-100 mb-4">
-          BLKOUT Community Platform
+          Community Platform
         </h1>
 
         <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-4xl mx-auto mb-4">
