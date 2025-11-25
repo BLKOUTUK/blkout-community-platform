@@ -1,6 +1,6 @@
 // BLKOUT Discovery Page - What's New & How to Get Involved
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Calendar, MessageCircle, Trophy, Heart, Users, TrendingUp, ArrowRight, Star, Gift, BookOpen, Instagram, User, Clock } from 'lucide-react';
+import { Sparkles, Calendar, MessageCircle, Trophy, Heart, Users, TrendingUp, ArrowRight, Star, Gift, BookOpen, Instagram, User, Clock, Settings, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { AdventCalendarWidget } from '../discover/AdventCalendarWidget';
@@ -625,6 +625,38 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
             <button className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold hover:bg-white/10 transition-colors">
               Take a Tour
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Admin Dashboard Access */}
+      <section className="py-8 px-6 bg-gray-100 dark:bg-gray-800/50">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-lg">
+                  <Settings className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                    Content Management
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Social media automation & content scheduling dashboard
+                  </p>
+                </div>
+              </div>
+              <a
+                href="https://comms-blkout.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors text-sm"
+              >
+                <span>Open Dashboard</span>
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </div>
       </section>
