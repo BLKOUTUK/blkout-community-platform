@@ -4,9 +4,9 @@
 
 The BLKOUT Platform is a modular, liberation-focused community empowerment platform built for and by Black queer communities. This document outlines the production architecture, deployment strategy, and development roadmap from Phase 1 (current) through future phases.
 
-**Version:** 1.1.0-production
+**Version:** 1.1.1-production
 **Phase:** Phase 1.5 - Foundation & Module Uniformity
-**Last Updated:** 2025-11-27
+**Last Updated:** 2025-11-28
 
 ---
 
@@ -102,9 +102,11 @@ The BLKOUT Platform consists of **6 independent modules** that work together as 
 - `src/services/supabaseEventService.ts` - Database integration
 
 **Chrome Extension:**
-- Location: `public/extensions/blkout-events-curator-v1.0.0.zip`
+- Current Version: **v2.2.2** (BLKOUT Moderator Tools)
+- Central Download: `https://news-blkout.vercel.app/blkout-moderator-tools-v2.2.2-fixed.zip`
+- Version Manifest: `https://news-blkout.vercel.app/extension-manifest.json`
 - Extracts from: Eventbrite, Meetup, Facebook Events, Schema.org
-- Downloads from: `https://blkout.vercel.app/extensions/`
+- Features: Event submission, article submission, Supabase integration
 
 ---
 
@@ -133,9 +135,11 @@ The BLKOUT Platform consists of **6 independent modules** that work together as 
 - `src/lib/supabase.ts` - Database client
 
 **Chrome Extension:**
-- Location: `public/extensions/blkout-news-curator-v1.0.0.zip`
+- Unified with Events: **BLKOUT Moderator Tools v2.2.2**
+- Central Download: `https://news-blkout.vercel.app/blkout-moderator-tools-v2.2.2-fixed.zip`
+- Version Manifest: `https://news-blkout.vercel.app/extension-manifest.json`
 - Extracts from: News sites with JSON-LD, Open Graph, Twitter Cards
-- Downloads from: `https://blkout.vercel.app/extensions/`
+- Single extension handles both events and news submission
 
 ---
 
