@@ -19,7 +19,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
 
   const navigationItems = [
     { id: 'liberation', label: 'Platform', icon: Heart, type: 'button' },
-    { id: 'platform', label: 'Discover', icon: Play, type: 'button' },
+    { id: 'discover', label: 'Discover', icon: ExternalLink, type: 'link', href: 'https://comms-blkout.vercel.app/discover' },
     { id: 'governance', label: 'Ownership', icon: Vote, type: 'button' },
     { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' },
     { id: 'events', label: "What's On", icon: ExternalLink, type: 'link', href: 'https://events-blkout.vercel.app' },

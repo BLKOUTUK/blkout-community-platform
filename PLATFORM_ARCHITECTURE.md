@@ -4,9 +4,9 @@
 
 The BLKOUT Platform is a modular, liberation-focused community empowerment platform built for and by Black queer communities. This document outlines the production architecture, deployment strategy, and development roadmap from Phase 1 (current) through future phases.
 
-**Version:** 1.0.0-production
-**Phase:** Phase 1 - Foundation & Core Services
-**Last Updated:** 2025-10-06
+**Version:** 1.1.0-production
+**Phase:** Phase 1.5 - Foundation & Module Uniformity
+**Last Updated:** 2025-11-27
 
 ---
 
@@ -14,12 +14,13 @@ The BLKOUT Platform is a modular, liberation-focused community empowerment platf
 
 1. [Platform Overview](#platform-overview)
 2. [Modular Architecture](#modular-architecture)
-3. [Production Deployments](#production-deployments)
-4. [Phase 1: Current State](#phase-1-current-state)
-5. [Deployment Routes](#deployment-routes)
-6. [Future Development Phases](#future-development-phases)
-7. [Integration Points](#integration-points)
-8. [Technical Stack](#technical-stack)
+3. [Shared Package (@blkout/shared)](#shared-package-blkoutshared)
+4. [Production Deployments](#production-deployments)
+5. [Phase 1.5: Current State](#phase-15-current-state)
+6. [Deployment Routes](#deployment-routes)
+7. [Future Development Phases](#future-development-phases)
+8. [Integration Points](#integration-points)
+9. [Technical Stack](#technical-stack)
 
 ---
 
@@ -39,6 +40,7 @@ Liberation-centered technology that empowers Black queer communities through:
 3. **API-First Integration** - Services communicate via documented APIs
 4. **Liberation Values** - All modules enforce community empowerment principles
 5. **Progressive Enhancement** - Core features work, advanced features enhance
+6. **Shared Foundation** - Common types, services, and utilities via @blkout/shared
 
 ---
 
@@ -288,6 +290,83 @@ voices_articles {
 
 ---
 
+## Shared Package (@blkout/shared)
+
+A new shared package has been created to provide module uniformity across the BLKOUT ecosystem.
+
+**Repository:** `BLKOUT_LIBERATION_PLATFORM/blkout-shared`
+**Package Name:** `@blkout/shared`
+**Version:** 1.0.0
+
+### Purpose
+
+The shared package provides:
+- **Type Definitions** - Consistent TypeScript types across all modules
+- **Services** - Shared Supabase client and API services
+- **Hooks** - Common React hooks (useAnnouncements, etc.)
+- **Utilities** - Formatting functions and constants
+
+### Structure
+
+```
+blkout-shared/
+├── src/
+│   ├── types/              # Shared TypeScript definitions
+│   │   └── index.ts        # Content, Announcement, Event, Article types
+│   ├── services/           # API services
+│   │   ├── supabase.ts     # Unified Supabase client
+│   │   └── announcements.ts # Announcements CRUD
+│   ├── hooks/              # React hooks
+│   │   └── useAnnouncements.ts
+│   ├── utils/              # Utilities
+│   │   ├── formatting.ts   # Date/text formatting
+│   │   └── constants.ts    # Platform configs, colors, endpoints
+│   └── index.ts            # Main exports
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+### Key Types Provided
+
+| Type | Description | Used By |
+|------|-------------|---------|
+| `Announcement` | Community announcements | All modules |
+| `Content` | Social media content | comms-blkout |
+| `Event` | Calendar events | events-blkout |
+| `Article` | News articles | news-blkout |
+| `PlatformType` | Social platforms enum | All modules |
+| `AgentType` | AI agent types | comms-blkout |
+
+### Usage
+
+```typescript
+// Import types
+import type { Announcement, Content, Event } from '@blkout/shared/types';
+
+// Import services
+import { fetchPublishedAnnouncements, supabase } from '@blkout/shared/services';
+
+// Import hooks
+import { useAnnouncements } from '@blkout/shared/hooks';
+
+// Import utilities
+import { formatDate, PLATFORMS, BLKOUT_COLORS } from '@blkout/shared/utils';
+```
+
+### Module Uniformity Goals
+
+| Aspect | Current State | Target State |
+|--------|--------------|--------------|
+| React Version | 18.x / 19.x mixed | React 19 standard |
+| Vite Version | 5.x / 7.x mixed | Vite 7 standard |
+| TypeScript | 5.3 / 5.7 mixed | TypeScript 5.7 |
+| Tailwind | 3.4 (consistent) | ✅ Aligned |
+| Type Definitions | Duplicated | @blkout/shared |
+| Supabase Client | Per-module | @blkout/shared |
+
+---
+
 ## Production Deployments
 
 ### Deployment Infrastructure
@@ -370,7 +449,7 @@ CORS_ORIGINS=https://blkout.vercel.app,https://events-blkout.vercel.app,https://
 
 ---
 
-## Phase 1: Current State
+## Phase 1.5: Current State (Foundation & Module Uniformity)
 
 ### ✅ Completed Features
 
@@ -386,6 +465,17 @@ CORS_ORIGINS=https://blkout.vercel.app,https://events-blkout.vercel.app,https://
 - [x] About Us page with mission/values
 - [x] Voices section with 5 published articles
 - [x] Story Archive with migrated blkoutuk.com content
+
+#### Communications Hub (comms-blkout) - NEW in 1.5
+- [x] SocialSync AI-assisted content creation with Gemini
+- [x] Advent Calendar 2024 campaign with community engagement
+- [x] Newsletter Archive integration via SendFox API
+- [x] Community Directory with organization profiles
+- [x] Discover Page with unified content feed
+- [x] AI Agent System (Griot, Listener, Weaver, Strategist, Herald)
+- [x] Platform-specific content optimization (Instagram, LinkedIn, X, etc.)
+- [x] Draft management and scheduling system
+- [x] Engagement analytics dashboard
 
 #### Events Calendar
 - [x] Google Sheets integration for event data
@@ -421,12 +511,22 @@ CORS_ORIGINS=https://blkout.vercel.app,https://events-blkout.vercel.app,https://
 - [x] Offline capability with local storage
 - [x] Dashboard integration post-submission
 
-### 📊 Phase 1 Metrics
+#### Shared Package (@blkout/shared) - NEW in 1.5
+- [x] Centralized type definitions for all modules
+- [x] Unified Supabase client configuration
+- [x] Shared React hooks (useAnnouncements, etc.)
+- [x] Common utility functions (formatting, constants)
+- [x] Standardized component patterns
+- [x] Module uniformity documentation
 
-**Deployments:** 4 production services
+### 📊 Phase 1.5 Metrics
+
+**Deployments:** 5 production services (including comms-blkout)
 **Chrome Extensions:** 2 (Events, News)
-**API Integrations:** 3 (Supabase, Google Sheets, Railway)
+**API Integrations:** 5 (Supabase, Google Sheets, Railway, SendFox, Gemini AI)
 **External Services:** 2 (BLKOUTHUB, Scrollytelling)
+**Shared Package:** @blkout/shared v1.0.0
+**AI Agents:** 5 (Griot, Listener, Weaver, Strategist, Herald)
 
 ---
 

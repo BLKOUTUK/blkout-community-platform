@@ -516,16 +516,15 @@ export default function App() {
                     >
                       Home
                     </button>
-                    <button
-                      onClick={() => changeActiveTab('platform')}
-                      className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
-                        activeTab === 'platform'
-                          ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
-                          : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
-                      }`}
+                    <a
+                      href="https://comms-blkout.vercel.app/discover"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
                     >
                       Discover
-                    </button>
+                      <ExternalLink className="h-3 w-3 opacity-50" />
+                    </a>
                     <button
                       onClick={() => changeActiveTab('stories')}
                       className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${

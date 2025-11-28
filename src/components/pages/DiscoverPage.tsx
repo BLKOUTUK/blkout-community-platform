@@ -1,6 +1,6 @@
 // BLKOUT Discovery Page - What's New & How to Get Involved
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Calendar, MessageCircle, Trophy, Heart, Users, TrendingUp, ArrowRight, Star, Gift, BookOpen, Instagram, User, Clock, Settings, ExternalLink } from 'lucide-react';
+import { Sparkles, Calendar, MessageCircle, Heart, Users, TrendingUp, ArrowRight, Gift, BookOpen, Instagram, User, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { AdventCalendarWidget } from '../discover/AdventCalendarWidget';
@@ -52,64 +52,26 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
 
     fetchFeaturedStory();
   }, []);
+
   // BLKOUT Community YouTube Playlist Videos - from PLQIvk5RMvEWxx_xt-vvwKS8k-D7eRRnDh
   const playlistVideos = [
-    {
-      id: "rxouLM4Xaeg",
-      title: "Community Stories & Liberation",
-      description: "Discover powerful stories, insights, and conversations from the BLKOUT community"
-    },
-    {
-      id: "7PLD773p1Uw",
-      title: "Community Stories & Liberation",
-      description: "Discover powerful stories, insights, and conversations from the BLKOUT community"
-    },
-    {
-      id: "7fUP1Zbjvxw",
-      title: "Community Stories & Liberation",
-      description: "Discover powerful stories, insights, and conversations from the BLKOUT community"
-    },
-    {
-      id: "luAr9lZ09yM",
-      title: "Community Stories & Liberation",
-      description: "Discover powerful stories, insights, and conversations from the BLKOUT community"
-    },
-    {
-      id: "P-UOd-pvE04",
-      title: "Community Stories & Liberation",
-      description: "Discover powerful stories, insights, and conversations from the BLKOUT community"
-    },
-    {
-      id: "Xl9NCrOpBYI",
-      title: "Community Stories & Liberation",
-      description: "Discover powerful stories, insights, and conversations from the BLKOUT community"
-    },
-    {
-      id: "8pC54GafaFU",
-      title: "Community Stories & Liberation",
-      description: "Discover powerful stories, insights, and conversations from the BLKOUT community"
-    },
-    {
-      id: "IEnqgfICyEE",
-      title: "Community Stories & Liberation",
-      description: "Discover powerful stories, insights, and conversations from the BLKOUT community"
-    },
-    {
-      id: "shuAroJcM3Y",
-      title: "Community Stories & Liberation",
-      description: "Discover powerful stories, insights, and conversations from the BLKOUT community"
-    },
-    {
-      id: "UIxs6AbI44k",
-      title: "Community Stories & Liberation",
-      description: "Discover powerful stories, insights, and conversations from the BLKOUT community"
-    }
+    { id: "rxouLM4Xaeg", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
+    { id: "7PLD773p1Uw", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
+    { id: "7fUP1Zbjvxw", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
+    { id: "luAr9lZ09yM", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
+    { id: "P-UOd-pvE04", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
+    { id: "Xl9NCrOpBYI", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
+    { id: "8pC54GafaFU", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
+    { id: "IEnqgfICyEE", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
+    { id: "shuAroJcM3Y", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
+    { id: "UIxs6AbI44k", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" }
   ];
 
   // Randomly select a video
   const randomVideo = React.useMemo(() => {
     return playlistVideos[Math.floor(Math.random() * playlistVideos.length)];
   }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-black">
       {/* Hero Section */}
@@ -135,71 +97,6 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
               Your guide to everything BLKOUT.
             </p>
           </motion.div>
-        </div>
-      </section>
-
-      {/* What's New Section */}
-      <section className="py-12 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100 flex items-center">
-            <Star className="w-8 h-8 text-yellow-500 mr-3" />
-            What's New This Month
-          </h2>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-br from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 p-6 rounded-2xl"
-            >
-              <div className="flex items-start space-x-4">
-                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg">
-                  <Trophy className="w-6 h-6 text-purple-600" />
-                </div>
-                <div className="flex-1">
-                  <span className="text-sm text-purple-600 font-semibold">LAUNCHING NOW</span>
-                  <h3 className="text-xl font-bold mt-1 mb-2 text-gray-900 dark:text-gray-100">
-                    Photo of the Year 2025 Competition
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">
-                    Share your vision of Black queer joy. Win £500 and be featured
-                    in our community gallery. Submissions open December 1-31, 2025!
-                  </p>
-                  <button className="flex items-center space-x-2 text-purple-600 hover:text-purple-700 font-semibold">
-                    <span>Enter Competition</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-br from-yellow-100 to-orange-100 dark:from-yellow-900/30 dark:to-orange-900/30 p-6 rounded-2xl"
-            >
-              <div className="flex items-start space-x-4">
-                <div className="bg-white dark:bg-gray-800 p-3 rounded-lg">
-                  <Users className="w-6 h-6 text-yellow-600" />
-                </div>
-                <div className="flex-1">
-                  <span className="text-sm text-yellow-600 font-semibold">NEW ON BLKOUTUK.COM</span>
-                  <h3 className="text-xl font-bold mt-1 mb-2 text-gray-900 dark:text-gray-100">
-                    Fresh Stories & Community Voices
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">
-                    Discover authentic narratives from our community archive - real stories
-                    of joy, resilience, and liberation from Black queer voices across the UK and diaspora.
-                  </p>
-                  <button
-                    onClick={() => onNavigate?.('stories')}
-                    className="flex items-center space-x-2 text-yellow-600 hover:text-yellow-700 font-semibold"
-                  >
-                    <span>Read in Archive</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </div>
         </div>
       </section>
 
@@ -372,11 +269,164 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* Featured Video */}
+      {/* Social Media Feeds Section */}
       <section className="py-12 px-6 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100 text-center">
-            Watch: Our Community in Action
+            Follow Us Everywhere
+          </h2>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Newsletter Signup */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+              <div className="flex items-center mb-4">
+                <Sparkles className="w-6 h-6 text-purple-500 mr-2" />
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  Newsletter
+                </h3>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm">
+                Get the latest updates, events, and community news delivered to your inbox.
+              </p>
+              <a
+                href="https://blkoutuk.com/newsletter"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-all text-sm"
+              >
+                <span>Subscribe Now</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            {/* Twitter/X Feed */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+              <div className="flex items-center mb-4">
+                <svg className="w-6 h-6 text-black dark:text-white mr-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  X (Twitter)
+                </h3>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm">
+                Join the conversation and stay updated in real-time.
+              </p>
+              <a
+                href="https://twitter.com/blaboratoryuk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition-all text-sm"
+              >
+                <span>Follow @blaboratoryuk</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            {/* TikTok */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+              <div className="flex items-center mb-4">
+                <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  TikTok
+                </h3>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm">
+                Short-form content, community moments, and more.
+              </p>
+              <a
+                href="https://tiktok.com/@blkoutuk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white rounded-lg font-semibold hover:opacity-90 transition-all text-sm"
+              >
+                <span>Follow on TikTok</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            {/* Facebook */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+              <div className="flex items-center mb-4">
+                <svg className="w-6 h-6 text-blue-600 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  Facebook
+                </h3>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm">
+                Community events, discussions, and updates.
+              </p>
+              <a
+                href="https://facebook.com/blaboratoryuk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-all text-sm"
+              >
+                <span>Like Our Page</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            {/* YouTube */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+              <div className="flex items-center mb-4">
+                <svg className="w-6 h-6 text-red-600 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  YouTube
+                </h3>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm">
+                Community stories, interviews, and liberation content.
+              </p>
+              <a
+                href="https://youtube.com/@blkoutuk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-all text-sm"
+              >
+                <span>Subscribe</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            {/* Threads */}
+            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+              <div className="flex items-center mb-4">
+                <svg className="w-6 h-6 text-black dark:text-white mr-2" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.59 12c.025 3.086.718 5.496 2.057 7.164 1.432 1.781 3.632 2.695 6.54 2.717 1.986-.013 3.758-.38 5.272-1.088v-5.09H12.04V13.6h7.54v8.072c-.022.015-2.058 1.106-4.516 1.724-1.474.37-2.898.56-4.243.6-.213.003-.43.004-.635.004z"/>
+                </svg>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                  Threads
+                </h3>
+              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4 text-sm">
+                Conversations, thoughts, and community threads.
+              </p>
+              <a
+                href="https://threads.net/@blkoutuk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-4 py-2 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition-all text-sm"
+              >
+                <span>Follow on Threads</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Video */}
+      <section className="py-12 px-6 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100 text-center">
+            Watch: Community Stories
           </h2>
 
           <div className="max-w-4xl mx-auto">
@@ -401,7 +451,7 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
                 <div className="mt-4 space-y-3">
                   <div className="flex items-center justify-between">
                     <a
-                      href={`https://www.youtube.com/@blkoutuk`}
+                      href="https://www.youtube.com/@blkoutuk"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all duration-300 flex items-center gap-2"
@@ -409,7 +459,7 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
                       <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                       </svg>
-                      <span>Subscribe to Our Channel</span>
+                      <span>Subscribe</span>
                     </a>
                     <button
                       onClick={() => window.location.reload()}
@@ -419,10 +469,10 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
                     </button>
                   </div>
                   <a
-                    href={`https://www.youtube.com/playlist?list=PLQIvk5RMvEWxx_xt-vvwKS8k-D7eRRnDh`}
+                    href="https://www.youtube.com/playlist?list=PLQIvk5RMvEWxx_xt-vvwKS8k-D7eRRnDh"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-purple-600 hover:text-purple-700 font-semibold text-sm flex items-center gap-2 justify-center"
+                    className="text-red-600 hover:text-red-700 font-semibold text-sm flex items-center gap-2 justify-center"
                   >
                     <span>📺 Watch Full Liberation Playlist</span>
                     <ArrowRight className="w-4 h-4" />
@@ -629,37 +679,17 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
         </div>
       </section>
 
-      {/* Admin Dashboard Access */}
-      <section className="py-8 px-6 bg-gray-100 dark:bg-gray-800/50">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-lg">
-                  <Settings className="w-6 h-6 text-purple-600 dark:text-purple-400" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                    Content Management
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Social media automation & content scheduling dashboard
-                  </p>
-                </div>
-              </div>
-              <a
-                href="https://comms-blkout.vercel.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors text-sm"
-              >
-                <span>Open Dashboard</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Discreet Admin Link */}
+      <div className="py-4 text-center">
+        <a
+          href="https://comms-blkout.vercel.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
+        >
+          Admin
+        </a>
+      </div>
     </div>
   );
 };
