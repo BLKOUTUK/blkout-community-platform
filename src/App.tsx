@@ -3,7 +3,7 @@
 // STRICT SEPARATION: Application shell only - NO business logic
 
 import React, { useState, useEffect } from 'react';
-import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain, ArrowRight, ExternalLink, Globe, Mail, Trophy, Camera, Calendar, PenTool } from 'lucide-react';
+import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain, ArrowRight, ExternalLink, Globe, Mail, Calendar, PenTool } from 'lucide-react';
 import {
   cn,
   culturalUtils,
@@ -25,8 +25,6 @@ import InstallPrompt from '@/components/ui/InstallPrompt';
 import FirstTimeUserFlow from '@/components/onboarding/FirstTimeUserFlow';
 import VideoHero from '@/components/ui/VideoHero';
 
-// Photo Competition Integration
-import { PhotoCompetitionModal } from '@/components/competition/PhotoCompetitionModal';
 
 // API Configuration - Working backend
 const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
@@ -128,8 +126,6 @@ export default function App() {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(true); // Admin always accessible
   const [showIVOR, setShowIVOR] = useState(false);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
-  const [showCompetitionModal, setShowCompetitionModal] = useState(false);
-  const [competitionInitialView, setCompetitionInitialView] = useState<'landing' | 'submit' | 'gallery' | 'voting' | 'results'>('landing');
   const [platformStats, setPlatformStats] = useState({
     membersServed: 847,
     storiesShared: 234,
@@ -412,49 +408,28 @@ export default function App() {
         </button>
       </section>
 
-      {/* Photo Competition Widget */}
-      <section className="bg-gradient-to-br from-liberation-pride-purple to-liberation-gold-divine text-liberation-black-power p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 mb-8">
+      {/* Advent Calendar Widget */}
+      <section className="bg-gradient-to-br from-liberation-red-liberation to-liberation-green-africa text-white p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 mb-8">
         <div className="text-center">
           <div className="flex justify-center mb-6">
-            <Trophy className="w-16 h-16 text-liberation-black-power" />
+            <Calendar className="w-16 h-16 text-liberation-gold-divine" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Enter and Win</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">BLKOUT Advent Calendar 2025</h2>
           <p className="text-xl mb-6 opacity-90">
-            Photo of the Year 2025 Competition - Share your vision of Black queer joy
+            24 days of Black queer joy, community, and celebration
           </p>
           <div className="relative rounded-xl overflow-hidden mb-6 max-w-5xl mx-auto" style={{ aspectRatio: '16/9' }}>
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            >
-              <source src="/videos/onboarding/Photo Comp Introduction(Video).mp4" type="video/mp4" />
-            </video>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => {
-                setCompetitionInitialView('landing');
-                setShowCompetitionModal(true);
-              }}
-              className="px-8 py-4 bg-liberation-black-power text-liberation-gold-divine rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-2 border-liberation-black-power hover:border-liberation-red-liberation"
-            >
-              Enter Competition
-            </button>
-            <button
-              onClick={() => {
-                setCompetitionInitialView('guidelines');
-                setShowCompetitionModal(true);
-              }}
-              className="px-8 py-4 bg-transparent border-2 border-liberation-black-power text-liberation-black-power rounded-lg font-bold text-lg hover:bg-liberation-black-power hover:text-liberation-gold-divine transition-all duration-300"
-            >
-              View Guidelines
-            </button>
+            <iframe
+              src="https://www.flexclip.com/embed/12797929e05ada2d26d26d1916680d12093ac71.html"
+              className="w-full h-full"
+              style={{ border: 'none' }}
+              allowFullScreen
+              allow="autoplay; encrypted-media"
+              title="BLKOUT Advent Calendar 2025"
+            />
           </div>
           <p className="text-sm mt-4 opacity-75">
-            Submissions open December 1-31, 2025 • Be featured in our community gallery
+            Unwrap something special every day this December
           </p>
         </div>
       </section>
@@ -626,13 +601,6 @@ export default function App() {
             <IVORAssistant onClose={() => setShowIVOR(false)} />
           )}
 
-          {/* Photo Competition Modal */}
-          <PhotoCompetitionModal
-            isOpen={showCompetitionModal}
-            onClose={() => setShowCompetitionModal(false)}
-            initialView={competitionInitialView}
-            competitionId="oct-2025"
-          />
       </div>
     </ErrorBoundary>
   );
