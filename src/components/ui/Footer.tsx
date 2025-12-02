@@ -136,6 +136,22 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
             </a>
           </div>
 
+          {/* Legal Links */}
+          <div className="flex justify-center gap-6 mb-6 text-sm">
+            <button
+              onClick={() => onNavigate('terms')}
+              className="text-liberation-silver/60 hover:text-liberation-sovereignty-gold transition-colors duration-200"
+            >
+              Terms of Service
+            </button>
+            <button
+              onClick={() => onNavigate('privacy')}
+              className="text-liberation-silver/60 hover:text-liberation-sovereignty-gold transition-colors duration-200"
+            >
+              Privacy Policy
+            </button>
+          </div>
+
           {/* Copyright and Info */}
           <div className="text-center text-sm text-liberation-silver/60">
             <p className="mb-2">

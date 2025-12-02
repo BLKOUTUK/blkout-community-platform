@@ -20,6 +20,8 @@ import Footer from '@/components/ui/Footer';
 import IVORIntroduction from '@/components/pages/IVORIntroduction';
 import IVORAssistant from './components/ivor/IVORAssistant';
 import GovernancePage from '@/components/pages/GovernancePage';
+import TermsOfService from '@/components/pages/TermsOfService';
+import PrivacyPolicy from '@/components/pages/PrivacyPolicy';
 import MobileNav from '@/components/ui/MobileNav';
 import InstallPrompt from '@/components/ui/InstallPrompt';
 import FirstTimeUserFlow from '@/components/onboarding/FirstTimeUserFlow';
@@ -38,7 +40,7 @@ const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'about' | 'stories' | 'intro' | 'admin' | 'platform';
+type NavigationTab = 'liberation' | 'governance' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'terms' | 'privacy';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -110,7 +112,7 @@ class ErrorBoundary extends React.Component<any, any> {
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'governance', 'about', 'stories', 'intro', 'admin', 'platform'];
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'about', 'stories', 'intro', 'admin', 'platform', 'terms', 'privacy'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
@@ -194,6 +196,10 @@ export default function App() {
         />;
       case 'governance':
         return <GovernancePage />;
+      case 'terms':
+        return <TermsOfService />;
+      case 'privacy':
+        return <PrivacyPolicy />;
       case 'platform':
         return <DiscoverPage onNavigate={changeActiveTab} />;
       case 'admin':
