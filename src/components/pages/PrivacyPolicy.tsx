@@ -46,7 +46,7 @@ const PrivacyPolicy: React.FC = () => {
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Introduction</h2>
             </div>
             <p className="text-gray-700 dark:text-gray-300 mb-4">
-              BLKOUT UK ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform and services.
+              BLKOUT Creative Ltd ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our platform and services.
             </p>
             <p className="text-gray-700 dark:text-gray-300">
               We understand the importance of privacy, especially within our community. Your trust is essential to us, and we take our responsibility to protect your data seriously.

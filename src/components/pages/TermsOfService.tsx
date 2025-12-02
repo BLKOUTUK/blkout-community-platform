@@ -46,7 +46,7 @@ const TermsOfService: React.FC = () => {
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Welcome to BLKOUT</h2>
             </div>
             <p className="text-gray-700 dark:text-gray-300 mb-4">
-              BLKOUT is a community-owned platform created for and by Black queer men in the UK. These Terms of Service govern your use of our website, applications, and services (collectively, the "Platform").
+              BLKOUT is a community-owned platform created for and by Black queer men in the UK, operated by BLKOUT Creative Ltd. These Terms of Service govern your use of our website, applications, and services (collectively, the "Platform").
             </p>
             <p className="text-gray-700 dark:text-gray-300">
               By accessing or using BLKOUT, you agree to be bound by these Terms. If you disagree with any part of these terms, you may not access the Platform.
@@ -65,10 +65,10 @@ const TermsOfService: React.FC = () => {
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">1. Who We Are</h2>
             </div>
             <p className="text-gray-700 dark:text-gray-300 mb-4">
-              BLKOUT is operated by BLKOUT UK, a community interest organisation dedicated to supporting Black queer men through connection, resources, and collective liberation.
+              BLKOUT is operated by BLKOUT Creative Ltd, a Community Benefit Society registered by the Financial Conduct Authority under the Co-operative and Community Benefit Societies Act 2014, dedicated to supporting Black queer men through connection, resources, and collective liberation.
             </p>
             <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-2">
-              <li><strong>Organisation:</strong> BLKOUT UK</li>
+              <li><strong>Organisation:</strong> BLKOUT Creative Ltd</li>
               <li><strong>Contact:</strong> hello@blkoutuk.com</li>
               <li><strong>Location:</strong> United Kingdom</li>
               <li><strong>Website:</strong> blkoutuk.com</li>
@@ -222,7 +222,7 @@ const TermsOfService: React.FC = () => {
           >
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">9. Limitation of Liability</h2>
             <p className="text-gray-700 dark:text-gray-300">
-              To the maximum extent permitted by law, BLKOUT UK shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Platform.
+              To the maximum extent permitted by law, BLKOUT Creative Ltd shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Platform.
             </p>
           </motion.div>
 
