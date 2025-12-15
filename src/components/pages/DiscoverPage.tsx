@@ -1,6 +1,6 @@
 // BLKOUT Discovery Page - What's New & How to Get Involved
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Calendar, MessageCircle, Heart, Users, TrendingUp, ArrowRight, Gift, BookOpen, Instagram, User, Clock } from 'lucide-react';
+import { Sparkles, Calendar, MessageCircle, Heart, Users, TrendingUp, ArrowRight, Gift, BookOpen, Instagram, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { AdventCalendarWidget } from '../discover/AdventCalendarWidget';
@@ -12,17 +12,16 @@ interface DiscoverPageProps {
 interface FeaturedStory {
   id: string;
   title: string;
+  excerpt: string;
   content: string;
-  author: string;
-  readTime?: number;
-  created_at: string;
+  published_at: string;
 }
 
 const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
   const [featuredStory, setFeaturedStory] = useState<FeaturedStory | null>(null);
   const [isLoadingStory, setIsLoadingStory] = useState(true);
 
-  // Fetch featured story from archive - rotates weekly
+  // Fetch featured story from legacy_articles archive - rotates weekly
   useEffect(() => {
     const fetchFeaturedStory = async () => {
       try {
@@ -30,11 +29,11 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
         const weekNumber = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000));
 
         const { data, error } = await supabase
-          .from('stories')
-          .select('id, title, content, author, readTime, created_at')
-          .eq('published', true)
-          .order('created_at', { ascending: false })
-          .limit(10);
+          .from('legacy_articles')
+          .select('id, title, excerpt, content, published_at')
+          .eq('status', 'published')
+          .order('published_at', { ascending: false })
+          .limit(20);
 
         if (error) throw error;
 
@@ -174,24 +173,24 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
                 <>
                   <div className="mb-4">
                     <span className="inline-block px-2 py-1 bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-400 rounded text-xs font-semibold mb-3">
-                      Featured Story
+                      From Our Archive
                     </span>
                     <h4 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2">
                       {featuredStory.title}
                     </h4>
                     <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
-                      {featuredStory.content.substring(0, 200)}...
+                      {featuredStory.excerpt || featuredStory.content?.substring(0, 200)}
                     </p>
                   </div>
 
                   <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4">
                     <span className="flex items-center gap-1">
-                      <User className="h-3 w-3" />
-                      {featuredStory.author}
+                      <BookOpen className="h-3 w-3" />
+                      BLKOUT Archive
                     </span>
                     <span className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
-                      {featuredStory.readTime || 5} min read
+                      {new Date(featuredStory.published_at).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })}
                     </span>
                   </div>
 
