@@ -48,12 +48,12 @@ const ModerationQueue: React.FC = () => {
     }
   }, []);
 
-  // Load submissions from Railway API - Updated 2025-01-27 (Working!)
+  // Load submissions from Coolify API - Updated 2025-12-16 (Migrated from Railway)
   const loadSubmissions = async () => {
     setLoading(true);
     try {
-      // Direct Railway admin API call - this is the working endpoint!
-      const response = await fetch('https://blkout-api-railway-production.up.railway.app/api/admin/moderation-queue');
+      // Admin API call via voices.blkoutuk.cloud
+      const response = await fetch('https://voices.blkoutuk.cloud/api/admin/moderation-queue');
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.data) {

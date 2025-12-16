@@ -372,7 +372,7 @@ export default function App() {
         </button>
 
         <a
-          href="https://voices-blkout.up.railway.app"
+          href="https://voices.blkoutuk.cloud"
           target="_blank"
           rel="noopener noreferrer"
           className="group bg-gradient-to-br from-liberation-pride-purple/90 via-liberation-gold-divine/90 to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
@@ -539,7 +539,7 @@ export default function App() {
                       <ExternalLink className="h-3 w-3 opacity-50" />
                     </a>
                     <a
-                      href="https://voices-blkout.up.railway.app"
+                      href="https://voices.blkoutuk.cloud"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-3 py-1.5 rounded-md text-sm font-bold transition-all duration-200 bg-liberation-gold-divine/10 text-liberation-gold-divine hover:bg-liberation-gold-divine/20 flex items-center gap-1.5 border border-liberation-gold-divine/30"
