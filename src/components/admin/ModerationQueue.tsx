@@ -15,6 +15,7 @@ import {
 import AdminAuth, { checkAdminAuth } from './AdminAuth';
 import { ivorIntegration } from '../../services/ivor-integration';
 import { communityAPI } from '../../services/community-api';
+import { API_ENDPOINTS } from '../../config/api';
 
 interface PendingSubmission {
   id: string;
@@ -48,12 +49,12 @@ const ModerationQueue: React.FC = () => {
     }
   }, []);
 
-  // Load submissions from Coolify API - Updated 2025-12-16 (Migrated from Railway)
+  // Load submissions from Coolify API - Updated 2025-12-16 (Migrated to dedicated API backend)
   const loadSubmissions = async () => {
     setLoading(true);
     try {
-      // Admin API call via voices.blkoutuk.cloud
-      const response = await fetch('https://voices.blkoutuk.cloud/api/admin/moderation-queue');
+      // Admin API call via centralized API config
+      const response = await fetch(API_ENDPOINTS.moderationQueue);
       if (response.ok) {
         const result = await response.json();
         if (result.success && result.data) {

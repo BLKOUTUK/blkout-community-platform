@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import ResourceCard from './ResourceCard';
+import { API_ENDPOINTS } from '../../config/api';
 
 const supabaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL;
 const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY;
@@ -11,8 +12,8 @@ if (!supabaseUrl || !supabaseKey) {
 
 const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null;
 
-// IVOR Core API endpoint
-const IVOR_API_URL = 'https://ivor.blkoutuk.com/api/chat';
+// IVOR Core API endpoint (from centralized config)
+const IVOR_API_URL = API_ENDPOINTS.ivorChat;
 
 interface Resource {
   id: string;
