@@ -268,7 +268,7 @@ export default function App() {
         </button>
 
         <a
-          href="https://events-blkout.vercel.app"
+          href="https://events.blkoutuk.cloud"
           target="_blank"
           rel="noopener noreferrer"
           className="group bg-gradient-to-br from-liberation-pride-purple/90 to-liberation-pride-pink text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
@@ -330,7 +330,7 @@ export default function App() {
         </button>
 
         <a
-          href="https://news-blkout.vercel.app"
+          href="https://news.blkoutuk.cloud"
           target="_blank"
           rel="noopener noreferrer"
           className="group bg-gradient-to-br from-liberation-gold-divine/90 to-liberation-red-liberation text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
@@ -498,7 +498,7 @@ export default function App() {
                       Home
                     </button>
                     <a
-                      href="https://comms-blkout.vercel.app/discover"
+                      href="https://blkoutuk.com/discover"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
@@ -521,7 +521,7 @@ export default function App() {
                   {/* Content Hubs */}
                   <div className="flex items-center gap-1 px-2 border-r border-liberation-gold-divine/20">
                     <a
-                      href="https://events-blkout.vercel.app"
+                      href="https://events.blkoutuk.cloud"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
@@ -530,7 +530,7 @@ export default function App() {
                       <ExternalLink className="h-3 w-3 opacity-50" />
                     </a>
                     <a
-                      href="https://news-blkout.vercel.app"
+                      href="https://news.blkoutuk.cloud"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"

@@ -12,7 +12,7 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null;
 
 // IVOR Core API endpoint
-const IVOR_API_URL = 'https://ivor-core-6ayklxl9m-robs-projects-54d653d3.vercel.app/api/chat';
+const IVOR_API_URL = 'https://ivor.blkoutuk.com/api/chat';
 
 interface Resource {
   id: string;

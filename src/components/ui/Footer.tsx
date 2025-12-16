@@ -10,8 +10,8 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
   const footerLinks = [
     { id: 'liberation', label: 'Platform', icon: Home, type: 'button' },
     { id: 'intro', label: 'IVOR', icon: Brain, type: 'button' },
-    { id: 'events', label: 'Events', icon: ExternalLink, type: 'link', href: 'https://events-blkout.vercel.app' },
-    { id: 'newsroom', label: 'Newsroom', icon: ExternalLink, type: 'link', href: 'https://news-blkout.vercel.app' },
+    { id: 'events', label: 'Events', icon: ExternalLink, type: 'link', href: 'https://events.blkoutuk.cloud' },
+    { id: 'newsroom', label: 'Newsroom', icon: ExternalLink, type: 'link', href: 'https://news.blkoutuk.cloud' },
     { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' },
     { id: 'community', label: 'Community', icon: Users, type: 'button' },
     { id: 'governance', label: 'Governance', icon: Vote, type: 'button' },

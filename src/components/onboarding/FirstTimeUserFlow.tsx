@@ -59,7 +59,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
     switch (choice) {
       case 'scrollytelling':
         // Open liberation story experience
-        window.open('https://blkout-scrollytelling.vercel.app', '_blank');
+        window.open('https://movement.blkoutuk.cloud', '_blank');
         setTimeout(() => completeOnboarding(), 1000);
         break;
 

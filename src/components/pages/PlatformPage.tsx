@@ -47,7 +47,7 @@ const PlatformPage: React.FC<PlatformPageProps> = ({ onNavigate }) => {
       description: 'Community gatherings, protests, and celebrations',
       color: 'bg-liberation-pride-pink',
       type: 'link',
-      href: 'https://events-blkout.vercel.app'
+      href: 'https://events.blkoutuk.cloud'
     },
     {
       id: 'newsroom',
@@ -56,7 +56,7 @@ const PlatformPage: React.FC<PlatformPageProps> = ({ onNavigate }) => {
       description: 'Stories, articles, and community journalism',
       color: 'bg-liberation-healing-sage',
       type: 'link',
-      href: 'https://news-blkout.vercel.app'
+      href: 'https://news.blkoutuk.cloud'
     },
     {
       id: 'about',

@@ -22,7 +22,7 @@ const ArticleCallToAction: React.FC<ArticleCallToActionProps> = ({ articleSlug }
     'default-1': {
       title: "Come Through! BLKOUTUK's Digital Home Is Open",
       linkText: "BLKOUT Platform",
-      linkUrl: "https://blkout.vercel.app",
+      linkUrl: "https://blkoutuk.com",
       icon: Home,
       bgColor: "bg-liberation-gold-divine/10",
       borderColor: "border-liberation-gold-divine/30",
@@ -32,8 +32,8 @@ const ArticleCallToAction: React.FC<ArticleCallToActionProps> = ({ articleSlug }
     // Article 2: EVENTS
     'default-2': {
       title: "EVENTS: Where Loneliness Goes to Die",
-      linkText: "events-blkout.vercel.app",
-      linkUrl: "https://events-blkout.vercel.app",
+      linkText: "events.blkoutuk.cloud",
+      linkUrl: "https://events.blkoutuk.cloud",
       icon: Calendar,
       bgColor: "bg-purple-500/10",
       borderColor: "border-purple-500/30",
@@ -44,7 +44,7 @@ const ArticleCallToAction: React.FC<ArticleCallToActionProps> = ({ articleSlug }
     'default-3': {
       title: "GOVERNANCE: Real Power, Real People, Real Change",
       linkText: "Governance",
-      linkUrl: "https://blkout.vercel.app/governance",
+      linkUrl: "https://blkoutuk.com/governance",
       icon: Users,
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/30",
@@ -54,8 +54,8 @@ const ArticleCallToAction: React.FC<ArticleCallToActionProps> = ({ articleSlug }
     // Article 4: NEWS
     'default-4': {
       title: "NEWS: Our Stories, Our Power, Our Time",
-      linkText: "news-blkout.vercel.app",
-      linkUrl: "https://news-blkout.vercel.app",
+      linkText: "news.blkoutuk.cloud",
+      linkUrl: "https://news.blkoutuk.cloud",
       icon: Newspaper,
       bgColor: "bg-red-500/10",
       borderColor: "border-red-500/30",
@@ -66,7 +66,7 @@ const ArticleCallToAction: React.FC<ArticleCallToActionProps> = ({ articleSlug }
     'default-5': {
       title: "IVOR: Your Growing Digital Companion",
       linkText: "Meet IVOR",
-      linkUrl: "https://blkout.vercel.app/intro",
+      linkUrl: "https://blkoutuk.com/intro",
       icon: Sparkles,
       bgColor: "bg-green-500/10",
       borderColor: "border-green-500/30",
@@ -88,8 +88,8 @@ const ArticleCallToAction: React.FC<ArticleCallToActionProps> = ({ articleSlug }
     // Article 7: PLATFORM
     'default-7': {
       title: "PLATFORM for community liberation",
-      linkText: "blkout.vercel.app",
-      linkUrl: "https://blkout.vercel.app",
+      linkText: "blkoutuk.com",
+      linkUrl: "https://blkoutuk.com",
       icon: Home,
       bgColor: "bg-liberation-gold-divine/10",
       borderColor: "border-liberation-gold-divine/30",

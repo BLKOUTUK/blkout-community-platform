@@ -64,7 +64,7 @@ export function AdventCalendarWidget() {
       {/* Footer Links */}
       <div className="flex justify-center gap-6 pt-2">
         <a
-          href="https://events-blkout.vercel.app"
+          href="https://events.blkoutuk.cloud"
           target="_blank"
           rel="noopener noreferrer"
           className="text-pink-600 hover:text-pink-500 font-medium"
@@ -72,7 +72,7 @@ export function AdventCalendarWidget() {
           Browse Events
         </a>
         <a
-          href="https://voices-blkout.up.railway.app"
+          href="https://voices.blkoutuk.cloud"
           target="_blank"
           rel="noopener noreferrer"
           className="text-pink-600 hover:text-pink-500 font-medium"
@@ -136,7 +136,7 @@ function CalendarDayCard({
               <p className="text-white text-xs md:text-sm font-semibold line-clamp-2 px-1">{data.title}</p>
               <div className="flex gap-2 mt-1">
                 <a
-                  href="https://events-blkout.vercel.app"
+                  href="https://events.blkoutuk.cloud"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-emerald-400 hover:text-emerald-300"
@@ -146,7 +146,7 @@ function CalendarDayCard({
                   <Calendar className="w-4 h-4 md:w-5 md:h-5" />
                 </a>
                 <a
-                  href="https://voices-blkout.up.railway.app"
+                  href="https://voices.blkoutuk.cloud"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-pink-400 hover:text-pink-300"

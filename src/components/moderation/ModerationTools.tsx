@@ -90,7 +90,7 @@ export const ModerationTools: React.FC<ModerationToolsProps> = ({
                   Download Extension
                 </button>
                 <a
-                  href="https://events-blkout.vercel.app/admin"
+                  href="https://events.blkoutuk.cloud/admin"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
@@ -141,7 +141,7 @@ export const ModerationTools: React.FC<ModerationToolsProps> = ({
                   Download Extension
                 </button>
                 <a
-                  href="https://news-blkout.vercel.app/admin"
+                  href="https://news.blkoutuk.cloud/admin"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"

@@ -681,7 +681,7 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
       {/* Discreet Admin Link */}
       <div className="py-4 text-center">
         <a
-          href="https://comms-blkout.vercel.app"
+          href="https://blkoutuk.com"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xs text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
