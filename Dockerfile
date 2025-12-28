@@ -42,7 +42,7 @@ RUN npm ci --production
 COPY --from=builder /app/dist ./dist
 
 # Copy server and API files
-COPY server.js ./
+COPY server.cjs ./
 COPY api ./api
 
 # Copy necessary source files for API
@@ -57,4 +57,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:80/api/health || exit 1
 
 # Start Express server (serves static files + API routes)
-CMD ["node", "server.js"]
+CMD ["node", "server.cjs"]
