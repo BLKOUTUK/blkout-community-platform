@@ -91,7 +91,7 @@ app.all('/api/admin/:endpoint', async (req, res) => {
 });
 
 // Webhook routes
-app.all('/api/webhooks/*', async (req, res) => {
+app.all('/api/webhooks/:webhook', async (req, res) => {
   try {
     const webhookPath = req.path.replace('/api/webhooks/', '');
     const handler = await import(`./api/webhooks/${webhookPath}.ts`);
