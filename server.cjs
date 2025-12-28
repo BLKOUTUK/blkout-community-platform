@@ -70,29 +70,13 @@ app.get('/api/content', async (req, res) => {
   }
 });
 
-// IVOR Chat - proxy to ivor-core backend
+// IVOR Chat - DISABLED (Express 5 wildcard route syntax issue)
+// Frontend calls https://ivor.blkoutuk.cloud directly
+/*
 app.all('/api/ivor/:path*', async (req, res) => {
-  try {
-    // Proxy to ivor.blkoutuk.cloud
-    const ivorUrl = process.env.IVOR_API_URL || 'https://ivor.blkoutuk.cloud';
-    const targetPath = req.path.replace('/api/ivor', '/api');
-
-    const response = await fetch(`${ivorUrl}${targetPath}`, {
-      method: req.method,
-      headers: {
-        'Content-Type': 'application/json',
-        ...req.headers
-      },
-      body: req.method !== 'GET' ? JSON.stringify(req.body) : undefined
-    });
-
-    const data = await response.json();
-    res.status(response.status).json(data);
-  } catch (error) {
-    console.error('IVOR proxy error:', error);
-    res.status(500).json({ error: 'IVOR service unavailable' });
-  }
+  // Commented out - causing server crash
 });
+*/
 
 // Admin routes
 app.all('/api/admin/*', async (req, res) => {
