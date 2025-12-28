@@ -71,7 +71,7 @@ app.get('/api/content', async (req, res) => {
 });
 
 // IVOR Chat - proxy to ivor-core backend
-app.all('/api/ivor/*', async (req, res) => {
+app.all('/api/ivor/:path*', async (req, res) => {
   try {
     // Proxy to ivor.blkoutuk.cloud
     const ivorUrl = process.env.IVOR_API_URL || 'https://ivor.blkoutuk.cloud';
