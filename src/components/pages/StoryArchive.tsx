@@ -143,9 +143,28 @@ const StoryArchive: React.FC = () => {
 
           {/* Story Content */}
           <div
-            className="prose prose-invert prose-lg max-w-none"
+            className="prose prose-invert prose-lg max-w-none story-content"
             dangerouslySetInnerHTML={{ __html: selectedStory.content }}
           />
+
+          <style>{`
+            .story-content * {
+              color: inherit !important;
+            }
+            .story-content {
+              color: #e5e7eb; /* text-gray-200 */
+            }
+            .story-content h1, .story-content h2, .story-content h3 {
+              color: #ffffff !important;
+            }
+            .story-content a {
+              color: #fbbf24 !important; /* amber-400 */
+            }
+            .story-content blockquote {
+              color: #d1d5db !important; /* gray-300 */
+              border-left-color: #fbbf24 !important;
+            }
+          `}</style>
 
           {/* Original Source Link */}
           {selectedStory.originalUrl && (
