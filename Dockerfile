@@ -52,9 +52,5 @@ COPY src/services ./src/services
 # Expose port
 EXPOSE 80
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:80/api/health || exit 1
-
 # Start Express server (serves static files + API routes)
 CMD ["node", "server.cjs"]
