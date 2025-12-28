@@ -79,7 +79,7 @@ app.all('/api/ivor/:path*', async (req, res) => {
 */
 
 // Admin routes
-app.all('/api/admin/*', async (req, res) => {
+app.all('/api/admin/:endpoint', async (req, res) => {
   try {
     const adminPath = req.path.replace('/api/admin/', '');
     const handler = await import(`./api/admin/${adminPath}.ts`);
