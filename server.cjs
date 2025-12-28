@@ -106,7 +106,11 @@ app.all('/api/webhooks/:webhook', async (req, res) => {
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // SPA fallback - serve index.html for all non-API routes
-app.get('*', (req, res) => {
+app.use((req, res, next) => {
+  // Skip if already handled by API routes
+  if (req.path.startsWith('/api/')) {
+    return next();
+  }
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
