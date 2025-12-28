@@ -148,20 +148,36 @@ const StoryArchive: React.FC = () => {
           />
 
           <style>{`
-            .story-content * {
-              color: inherit !important;
+            /* Override ALL WordPress inline styles */
+            .story-content,
+            .story-content *,
+            .story-content p,
+            .story-content div,
+            .story-content span,
+            .story-content strong,
+            .story-content em,
+            .story-content li,
+            .story-content td,
+            .story-content th {
+              color: #e5e7eb !important; /* Light gray */
             }
-            .story-content {
-              color: #e5e7eb; /* text-gray-200 */
+
+            .story-content h1,
+            .story-content h2,
+            .story-content h3,
+            .story-content h4,
+            .story-content h5,
+            .story-content h6 {
+              color: #ffffff !important; /* White */
             }
-            .story-content h1, .story-content h2, .story-content h3 {
-              color: #ffffff !important;
-            }
+
             .story-content a {
-              color: #fbbf24 !important; /* amber-400 */
+              color: #fbbf24 !important; /* Amber */
             }
-            .story-content blockquote {
-              color: #d1d5db !important; /* gray-300 */
+
+            .story-content blockquote,
+            .story-content blockquote * {
+              color: #d1d5db !important; /* Gray-300 */
               border-left-color: #fbbf24 !important;
             }
           `}</style>
