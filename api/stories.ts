@@ -190,9 +190,9 @@ async function fetchFromSupabase(req: VercelRequest, res: VercelResponse, supaba
   try {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Build query - use archived_articles table (migrated blkoutuk.com content)
+    // Build query - use legacy_articles table (migrated blkoutuk.com content - 281 articles)
     let query = supabase
-      .from('archived_articles')
+      .from('legacy_articles')
       .select('*', { count: 'exact' });
 
     // Apply filters
