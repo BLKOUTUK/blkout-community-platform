@@ -27,20 +27,34 @@ ENV VITE_API_URL=$VITE_API_URL
 # Build the frontend
 RUN npm run build
 
-# Stage 2: Serve with nginx
-FROM nginx:alpine AS production
+# Stage 2: Production with Express server
+FROM node:20-alpine AS production
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install production dependencies only
+RUN npm ci --production
 
 # Copy built frontend
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist ./dist
 
-# Copy nginx config
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy server and API files
+COPY server.js ./
+COPY api ./api
+
+# Copy necessary source files for API
+COPY src/lib ./src/lib
+COPY src/services ./src/services
 
 # Expose port
 EXPOSE 80
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:80/health || exit 1
+  CMD wget --no-verbose --tries=1 --spider http://127.0.0.1:80/api/health || exit 1
 
-CMD ["nginx", "-g", "daemon off;"]
+# Start Express server (serves static files + API routes)
+CMD ["node", "server.js"]
