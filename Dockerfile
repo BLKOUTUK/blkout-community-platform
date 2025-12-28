@@ -35,8 +35,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install production dependencies only
-RUN npm ci --production
+# Install production dependencies + tsx for TypeScript
+RUN npm ci --production && npm install tsx
 
 # Copy built frontend
 COPY --from=builder /app/dist ./dist
@@ -52,5 +52,5 @@ COPY src/services ./src/services
 # Expose port
 EXPOSE 80
 
-# Start Express server (serves static files + API routes)
-CMD ["node", "server.cjs"]
+# Start Express server with tsx for TypeScript API routes
+CMD ["npx", "tsx", "server.cjs"]
