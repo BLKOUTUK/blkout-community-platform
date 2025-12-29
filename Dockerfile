@@ -30,6 +30,12 @@ ENV VITE_SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi
 ENV NEXT_PUBLIC_SUPABASE_URL=https://bgjengudzfickgomjqmz.supabase.co
 ENV SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnamVuZ3VkemZpY2tnb21qcW16Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTYxMjc2NywiZXhwIjoyMDcxMTg4NzY3fQ.gfPHG-fLZA7Sc9vRG86cR9JgbXjDmdV9_pA_oSHIFMM
 ENV VITE_API_URL=/api
+ENV VITE_EVENTS_API_URL=https://events.blkoutuk.cloud
+ENV VITE_NEWS_API_URL=https://news.blkoutuk.cloud
+ENV VITE_IVOR_API_URL=https://ivor.blkoutuk.cloud
+ENV VITE_BLOG_API_URL=https://blog.blkoutuk.cloud
+ENV VITE_COMMS_API_URL=https://comms.blkoutuk.cloud
+ENV VITE_CRM_API_URL=https://crm.blkoutuk.cloud
 
 # Build the frontend
 RUN npm run build
