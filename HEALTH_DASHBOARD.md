@@ -114,7 +114,8 @@ The BLKOUT Unified Command Center is a comprehensive platform health monitoring 
 
 - **Auto-refresh**: Toggleable 2-minute auto-refresh
 - **Manual refresh**: Click "Refresh" button anytime
-- **Export**: Download reports as Markdown or JSON
+- **Export**: Download reports as Markdown, JSON, or comprehensive troubleshooting report
+- **Troubleshooting Report**: Comprehensive diagnostic report with failure analysis and remediation steps
 - **Real-time stats**: Services (healthy/total), Avg response time, Database status, Article count
 
 ## Usage Examples
@@ -127,9 +128,13 @@ The BLKOUT Unified Command Center is a comprehensive platform health monitoring 
 4. Check "Database" tab to confirm 281 articles
 5. Switch to "Checklist" tab
 6. Review overall status (APPROVED/WARNING/BLOCKED)
-7. Export checklist: Click "Export MD" for documentation
+7. **Export troubleshooting report**: Click "Troubleshooting Report" button
+   - Contains comprehensive diagnostics
+   - Includes failure analysis for each issue
+   - Lists recommended remediation steps
+   - Perfect for team collaboration or documentation
 8. If APPROVED: Proceed with deployment
-9. If BLOCKED: Resolve critical blockers first
+9. If BLOCKED: Use troubleshooting report to fix issues systematically
 
 ### Daily Monitoring
 
@@ -141,23 +146,41 @@ The BLKOUT Unified Command Center is a comprehensive platform health monitoring 
 
 ### Troubleshooting
 
+**NEW: Troubleshooting Report** (Recommended First Step)
+
+1. Click **"Troubleshooting Report"** button in header
+2. Download comprehensive diagnostic report (Markdown format)
+3. Report includes:
+   - Executive summary of all failures
+   - Detailed diagnosis for each failing service
+   - Database connection and data integrity issues
+   - Route validation failures
+   - Recommended remediation steps
+   - Links to relevant documentation
+4. Share report with team or use for systematic fixes
+
+**Manual Troubleshooting**:
+
 1. If service shows "down":
+   - Download troubleshooting report for detailed diagnosis
    - Check service health card for error details
    - Review "Routes" tab for affected pages
    - Check Coolify application logs
    - Verify environment variables are set
 
 2. If database shows errors:
+   - Download troubleshooting report for specific remediation steps
    - Check "Database" tab for specific issues
    - Verify Supabase credentials in environment
    - Check RLS policies in Supabase dashboard
    - Confirm article count matches 281
 
 3. If checklist shows BLOCKED:
+   - Download troubleshooting report to see all blockers
    - Review "Critical Blockers" section
    - Address each blocker before deploying
    - Re-run health check after fixes
-   - Generate new checklist to verify
+   - Generate new report to verify improvements
 
 ## Technical Details
 
