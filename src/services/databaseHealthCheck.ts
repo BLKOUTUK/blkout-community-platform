@@ -145,16 +145,38 @@ export async function checkDatabaseHealth(): Promise<DatabaseHealth> {
     }
 
     // Test 6: Check for mock/test data
+    // Updated 2025-12-29: More specific patterns to avoid false positives
+    // Only flags obvious test data, not legitimate articles with words like "test" in title
     try {
       const { data, error } = await supabase
         .from('legacy_articles')
-        .select('title')
-        .or('title.ilike.%test%,title.ilike.%mock%,title.ilike.%sample%')
-        .limit(1);
+        .select('title, status')
+        .or(
+          'title.ilike.test article%,' +
+          'title.ilike.mock article%,' +
+          'title.ilike.sample article%,' +
+          'title.eq.Test,' +
+          'title.eq.Mock,' +
+          'title.eq.Sample,' +
+          'title.ilike.Lorem ipsum%'
+        )
+        .limit(10);
 
       if (!error && data && data.length > 0) {
-        hasMockData = true;
-        errors.push('Mock/test data detected in production tables');
+        // Only flag if there are drafts or obviously named test articles
+        const obviousMockData = data.filter(
+          (article) =>
+            article.status === 'draft' ||
+            article.title === 'Test' ||
+            article.title === 'Mock' ||
+            article.title.startsWith('Test Article') ||
+            article.title.startsWith('Mock Article')
+        );
+
+        if (obviousMockData.length > 0) {
+          hasMockData = true;
+          errors.push(`${obviousMockData.length} test/draft articles detected (non-critical)`);
+        }
       }
     } catch (error) {
       // Non-critical, ignore
@@ -206,7 +228,7 @@ export function getDatabaseHealthSummary(health: DatabaseHealth): {
   if (health.hasMockData) {
     return {
       status: 'degraded',
-      message: 'Mock/test data detected in production',
+      message: 'Draft/test articles detected (non-critical)',
     };
   }
 
