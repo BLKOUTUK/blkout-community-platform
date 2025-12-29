@@ -23,6 +23,8 @@ const ServiceHealthSchema = z.object({
 export type ServiceHealth = z.infer<typeof ServiceHealthSchema>;
 
 // Production services to monitor
+// NOTE: Only actively deployed services are included
+// Commented out services are not currently deployed - uncomment when ready
 export const PRODUCTION_SERVICES = [
   {
     name: 'Main Website',
@@ -31,41 +33,43 @@ export const PRODUCTION_SERVICES = [
     criticalRoutes: ['/', '/stories', '/governance', '/movement'],
   },
   {
-    name: 'Events Calendar',
-    url: 'https://events.blkoutuk.cloud',
-    checkDatabase: true,
-    criticalRoutes: ['/'],
-  },
-  {
-    name: 'Newsroom',
-    url: 'https://news.blkoutuk.cloud',
-    checkDatabase: true,
-    criticalRoutes: ['/'],
-  },
-  {
     name: 'Blog/Voices',
     url: 'https://blog.blkoutuk.cloud',
     checkDatabase: false,
     criticalRoutes: ['/'],
   },
-  {
-    name: 'Comms Dashboard',
-    url: 'https://comms.blkoutuk.cloud',
-    checkDatabase: false,
-    criticalRoutes: ['/'],
-  },
-  {
-    name: 'CRM',
-    url: 'https://crm.blkoutuk.cloud',
-    checkDatabase: false,
-    criticalRoutes: ['/'],
-  },
-  {
-    name: 'IVOR AI',
-    url: 'https://ivor.blkoutuk.cloud',
-    checkDatabase: false,
-    criticalRoutes: ['/'],
-  },
+  // Temporarily commented out - not currently deployed (2025-12-29)
+  // Uncomment these when services are deployed to Coolify
+  // {
+  //   name: 'Events Calendar',
+  //   url: 'https://events.blkoutuk.cloud',
+  //   checkDatabase: true,
+  //   criticalRoutes: ['/'],
+  // },
+  // {
+  //   name: 'Newsroom',
+  //   url: 'https://news.blkoutuk.cloud',
+  //   checkDatabase: true,
+  //   criticalRoutes: ['/'],
+  // },
+  // {
+  //   name: 'Comms Dashboard',
+  //   url: 'https://comms.blkoutuk.cloud',
+  //   checkDatabase: false,
+  //   criticalRoutes: ['/'],
+  // },
+  // {
+  //   name: 'CRM',
+  //   url: 'https://crm.blkoutuk.cloud',
+  //   checkDatabase: false,
+  //   criticalRoutes: ['/'],
+  // },
+  // {
+  //   name: 'IVOR AI',
+  //   url: 'https://ivor.blkoutuk.cloud',
+  //   checkDatabase: false,
+  //   criticalRoutes: ['/'],
+  // },
 ];
 
 /**
