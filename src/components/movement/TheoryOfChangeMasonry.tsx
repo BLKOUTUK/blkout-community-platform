@@ -200,7 +200,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
 };
 
 // Hero Video Break component
-const HeroVideoBreak: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }) => {
+const HeroVideoBreak: React.FC<{ title: string; subtitle: string; videoUrl?: string }> = ({ title, subtitle, videoUrl }) => {
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center bg-black my-16">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-950 via-indigo-950 to-black opacity-50" />
@@ -223,9 +223,21 @@ const HeroVideoBreak: React.FC<{ title: string; subtitle: string }> = ({ title, 
         >
           {subtitle}
         </motion.p>
-        {/* Video placeholder - will be replaced with actual video */}
-        <div className="mt-12 w-full max-w-4xl mx-auto aspect-video bg-purple-950/30 rounded-2xl border border-purple-700/50 flex items-center justify-center">
-          <p className="text-purple-400 text-sm">Video Coming Soon</p>
+        {/* Video player or placeholder */}
+        <div className="mt-12 w-full max-w-4xl mx-auto aspect-video bg-purple-950/30 rounded-2xl border border-purple-700/50 overflow-hidden">
+          {videoUrl ? (
+            <video
+              src={videoUrl}
+              className="w-full h-full object-cover"
+              controls
+              playsInline
+              preload="metadata"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <p className="text-purple-400 text-sm">Video Coming Soon</p>
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -597,6 +609,7 @@ export default function TheoryOfChangeMasonry() {
         <HeroVideoBreak
           title="Heroes"
           subtitle="The team assembles"
+          videoUrl="/videos/Welcome BLKOUT TV.mp4"
         />
 
         {/* ACT 3: What We're Building - Masonry Grid */}
