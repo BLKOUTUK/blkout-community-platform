@@ -23,8 +23,10 @@ const ServiceHealthSchema = z.object({
 export type ServiceHealth = z.infer<typeof ServiceHealthSchema>;
 
 // Production services to monitor
-// Currently monitoring ONLY the main site and working services
-// External services (events, news, comms, crm, ivor) deferred for future deployment session
+// ALL 7 services now enabled (2025-12-30)
+// Events Calendar: Fixed React crashes (commits a87c5bb, d73729b)
+// News/Comms/CRM: Verified HTTP 200 responses
+// IVOR: Still 404 - will show as "down" until deployed
 export const PRODUCTION_SERVICES = [
   {
     name: 'Main Website',
@@ -38,42 +40,36 @@ export const PRODUCTION_SERVICES = [
     checkDatabase: false,
     criticalRoutes: ['/'],
   },
-  // External services deferred - need dedicated debugging sessions
-  // Events Calendar: Has React crashes despite connectivity working
-  // Newsroom: Needs deployment and testing
-  // Comms/CRM/IVOR: Lower priority, defer to Phase 2 of Command Center
-  //
-  // Uncomment when ready to deploy:
-  // {
-  //   name: 'Events Calendar',
-  //   url: 'https://events.blkoutuk.cloud',
-  //   checkDatabase: true,
-  //   criticalRoutes: ['/'],
-  // },
-  // {
-  //   name: 'Newsroom',
-  //   url: 'https://news.blkoutuk.cloud',
-  //   checkDatabase: true,
-  //   criticalRoutes: ['/'],
-  // },
-  // {
-  //   name: 'Comms Dashboard',
-  //   url: 'https://comms.blkoutuk.cloud',
-  //   checkDatabase: false,
-  //   criticalRoutes: ['/'],
-  // },
-  // {
-  //   name: 'CRM',
-  //   url: 'https://crm.blkoutuk.cloud',
-  //   checkDatabase: false,
-  //   criticalRoutes: ['/'],
-  // },
-  // {
-  //   name: 'IVOR AI',
-  //   url: 'https://ivor.blkoutuk.cloud',
-  //   checkDatabase: false,
-  //   criticalRoutes: ['/'],
-  // },
+  {
+    name: 'Events Calendar',
+    url: 'https://events.blkoutuk.cloud',
+    checkDatabase: true,
+    criticalRoutes: ['/'],
+  },
+  {
+    name: 'Newsroom',
+    url: 'https://news.blkoutuk.cloud',
+    checkDatabase: true,
+    criticalRoutes: ['/'],
+  },
+  {
+    name: 'Comms Dashboard',
+    url: 'https://comms.blkoutuk.cloud',
+    checkDatabase: false,
+    criticalRoutes: ['/'],
+  },
+  {
+    name: 'CRM',
+    url: 'https://crm.blkoutuk.cloud',
+    checkDatabase: false,
+    criticalRoutes: ['/'],
+  },
+  {
+    name: 'IVOR AI',
+    url: 'https://ivor.blkoutuk.cloud',
+    checkDatabase: false,
+    criticalRoutes: ['/'],
+  },
 ];
 
 /**
