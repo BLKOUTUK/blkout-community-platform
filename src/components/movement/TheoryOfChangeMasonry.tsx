@@ -7,6 +7,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Share2, ExternalLink } from 'lucide-react';
+import HorizontalCTAScroll from './HorizontalCTAScroll';
 
 interface Card {
   id: number;
@@ -31,7 +32,48 @@ interface Card {
     link: string;
     color?: 'amber' | 'fuchsia';
   };
+  // Dynamic enhancements
+  animationType?: 'slide' | 'bounce' | 'reveal' | 'stagger' | 'default';
+  aspectRatio?: 'tall' | 'standard' | 'squat';
+  textPosition?: 'bottomLeft' | 'topRight' | 'center' | 'topLeft';
+  purpleIntensity?: number; // 0-100, for overlay strength
 }
+
+// Animation variants for dynamism
+const cardAnimations = {
+  slide: {
+    initial: { opacity: 0, x: -100 },
+    animate: { opacity: 1, x: 0 },
+    transition: { duration: 0.4, ease: "easeOut" }
+  },
+  bounce: {
+    initial: { opacity: 0, y: 50, rotate: -5 },
+    animate: { opacity: 1, y: 0, rotate: 0 },
+    transition: { type: "spring", stiffness: 200, damping: 15 }
+  },
+  reveal: {
+    initial: { opacity: 0, scale: 0.95 },
+    animate: { opacity: 1, scale: 1 },
+    transition: { duration: 0.7, ease: "easeOut" }
+  },
+  stagger: {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    transition: { duration: 0.6, staggerChildren: 0.1 }
+  },
+  default: {
+    initial: { opacity: 0, y: 50 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 }
+  }
+};
+
+// Aspect ratio classes
+const aspectClasses = {
+  tall: 'aspect-[9/16]',      // Instagram Story style
+  standard: 'aspect-[4/5]',    // Default
+  squat: 'aspect-[16/9]'       // Landscape
+};
 
 // Masonry size classes
 const sizeClasses = {
@@ -41,11 +83,22 @@ const sizeClasses = {
   hero: 'col-span-2 row-span-3 md:col-span-3 lg:col-span-4'
 };
 
+// Mobile-optimized heights
 const heightClasses = {
-  small: 'min-h-[250px]',
-  medium: 'min-h-[400px]',
-  large: 'min-h-[500px]',
-  hero: 'min-h-[600px]'
+  small: 'h-[300px] md:h-[350px]',
+  medium: 'h-[450px] md:h-[500px]',
+  large: 'h-[550px] md:h-[650px]',
+  hero: 'h-[70vh] md:h-[80vh]'
+};
+
+// Text positioning utility
+const getTextPosition = (position?: string) => {
+  switch(position) {
+    case 'topRight': return 'items-start justify-end text-right';
+    case 'center': return 'items-center justify-center text-center';
+    case 'topLeft': return 'items-start justify-start text-left';
+    default: return 'items-end justify-start text-left'; // bottomLeft
+  }
 };
 
 // Card component for masonry grid
@@ -53,13 +106,14 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
   const [revealed, setRevealed] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
 
+  // Get animation variant
+  const animation = cardAnimations[card.animationType || 'default'];
+
   return (
     <motion.div
       className={`relative overflow-hidden rounded-2xl group ${sizeClasses[card.size]} ${heightClasses[card.size]}`}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      {...animation}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: (index % 12) * 0.05 }}
       whileHover={{ scale: 1.02 }}
     >
       {/* Background: Image, Video, or Gradient */}
@@ -82,14 +136,19 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
             alt=""
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
+          {/* Purple overlay for brand cohesion */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-fuchsia-500/15 to-transparent mix-blend-overlay pointer-events-none" />
+          {/* Sexy purple glow */}
+          <div className="absolute inset-0 bg-purple-500/10 blur-xl pointer-events-none" />
+          {/* Text readability gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
         </div>
       ) : (
         <div className={`absolute inset-0 bg-gradient-to-br ${card.bgGradient}`} />
       )}
 
-      {/* Content */}
-      <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
+      {/* Content with dynamic positioning */}
+      <div className={`relative z-10 h-full flex flex-col p-6 md:p-8 ${getTextPosition(card.textPosition)} md:${getTextPosition(card.textPosition)}`}>
         {/* Subtitle (small, uppercase, accent color) */}
         {card.content.subtitle && (
           <motion.p className="text-amber-400 text-sm md:text-base lg:text-lg font-mono uppercase tracking-widest mb-2">
@@ -272,9 +331,12 @@ export default function TheoryOfChangeMasonry() {
       bgGradient: 'from-indigo-950 to-purple-950',
       content: {
         subtitle: 'THE RECOGNITION',
-        body: 'You ever been in a room full of us',
-        highlight: 'and still felt alone?'
-      }
+        body: 'You are often the \'only Black Queer Man in the village\'',
+        highlight: 'but even in spaces full of us you can feel alone'
+      },
+      animationType: 'slide',
+      aspectRatio: 'tall',
+      textPosition: 'bottomLeft'
     },
     {
       id: 2,
@@ -283,9 +345,11 @@ export default function TheoryOfChangeMasonry() {
       imageUrl: '/images/theory-of-change/card-02-recognition.png',
       bgGradient: 'from-purple-950 to-violet-950',
       content: {
-        subtitle: 'yeah',
+        subtitle: 'me too',
         title: 'same'
-      }
+      },
+      animationType: 'bounce',
+      textPosition: 'center'
     },
     {
       id: 2.5,
@@ -309,10 +373,10 @@ export default function TheoryOfChangeMasonry() {
       size: 'large',
       bgGradient: 'from-purple-950 via-violet-950 to-indigo-950',
       content: {
-        subtitle: 'THE DESIGN',
+        subtitle: 'BY DESIGN',
         title: 'Societies pass on knowledge between generations',
-        body: 'They actively teach young people what it is to be a "good man". Many deny us knowledge of what it is to be a queer man.',
-        highlight: 'We are left to our own devices.'
+        highlight: 'They actively teach young people what it is to be a "good man", with mixed results. Schools, families, churches, mosques, police, newspapers, adverts shape and reinforce views. Many of the same institutions that a generation ago were the most active in denying us knowledge of what it is to be a queer man.',
+        body: 'We are left to our own devices. Smartphones usually!'
       }
     },
     {
@@ -322,7 +386,8 @@ export default function TheoryOfChangeMasonry() {
       imageUrl: '/images/theory-of-change/card-03-wondering.png',
       bgGradient: 'from-fuchsia-950 to-purple-950',
       content: {
-        body: 'You ever wondered who you\'d be if you actually knew us?'
+        body: 'Many of us have to search for evidence that we exist',
+        highlight: 'Imagine growing up without being taught to fear us'
       }
     },
     {
@@ -333,7 +398,7 @@ export default function TheoryOfChangeMasonry() {
       bgGradient: 'from-indigo-950 to-purple-950',
       content: {
         title: 'How many Black queer men could you call on in a crisis?',
-        highlight: '(Booty calls don\'t count.)'
+        highlight: '(Booty calls may be urgent, but they don\'t count.)'
       },
       interactive: {
         type: 'poll',
@@ -349,7 +414,7 @@ export default function TheoryOfChangeMasonry() {
       content: {
         subtitle: 'when we asked, you said:',
         title: '1 or fewer',
-        highlight: '(And that includes the group chat that\'s been on mute since 2019.)'
+        highlight: 'And that includes the GC: banter that\'s been on mute since 2019.'
       }
     },
     {
@@ -360,8 +425,8 @@ export default function TheoryOfChangeMasonry() {
       bgGradient: 'from-violet-950 to-purple-950',
       content: {
         title: 'That\'s not community.',
-        body: 'That\'s proximity.',
-        highlight: '(And proximity without knowing is just... geography.)'
+        body: 'That\'s just proximity.',
+        highlight: 'Funny fake names, borrowed pics, unclear motives'
       }
     },
     {
@@ -398,7 +463,7 @@ export default function TheoryOfChangeMasonry() {
       },
       interactive: {
         type: 'reveal',
-        data: { revealed: 'Love yourself first. Know yourself. Then connect.' }
+        data: { revealed: 'if you can\'t love yourself, how you goanna love somebody else?' }
       }
     },
     {
@@ -415,7 +480,7 @@ export default function TheoryOfChangeMasonry() {
       size: 'medium',
       bgGradient: 'from-purple-950 to-violet-950',
       content: {
-        title: 'Hold on a minute'
+        body: 'Hold on a minute, Ru'
       }
     },
     {
@@ -428,8 +493,8 @@ export default function TheoryOfChangeMasonry() {
         subtitle: 'you\'ve missed a step',
         title: 'We are...',
         heading2: 'Each others\' missing link',
-        body: 'Loving ourselves requires both personal and collective growth. Loving who we are requires empathy and care.',
-        highlight: 'Community enables love'
+        body: 'Loving ourselves is learned through community. Self-love requires both personal growth and collective healing. Loving who we are requires empathy and care - not just solo endeavour',
+        highlight: 'Without community, there is no love, and no liberation'
       }
     },
     {
@@ -439,7 +504,7 @@ export default function TheoryOfChangeMasonry() {
       imageUrl: '/images/theory-of-change/card-10-backwards.png',
       bgGradient: 'from-fuchsia-950 to-violet-950',
       content: {
-        title: 'Choose freedom'
+        body: 'Choose freedom'
       },
       cta: { text: 'Join our next gathering', link: 'https://events.blkoutuk.cloud', color: 'amber' }
     }
@@ -447,44 +512,44 @@ export default function TheoryOfChangeMasonry() {
 
   // ACT 2: The Problem (Cards 11-17)
   const act2Cards: Card[] = [
-    { id: 11, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-11-geography.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'Racism and patriarchy don\'t just harm us as individuals,', highlight: 'they stop us from healing by cutting us off from each other' }},
+    { id: 11, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-11-geography.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'Racism and patriarchy don\'t just harm our life chances,', highlight: 'they keep us from healing by cutting us off from each other' }},
     { id: 12, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-12-cascade.png', bgGradient: 'from-purple-950 to-violet-950', content: { title: 'Without each other:', body: 'We can\'t know ourselves' }},
     { id: 12.5, type: 'beauty', size: 'small', imageUrl: '/images/theory-of-change/silhouette letters black.png', bgGradient: 'from-indigo-950 to-purple-950', content: {} },
-    { id: 13, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-13-app.png', bgGradient: 'from-violet-950 to-purple-950', content: { title: 'No face, no case, no intimacy', body: 'Success on dating apps means sharing as little of yourself as possible' }},
+    { id: 13, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-13-app.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'No face, no case, no intimacy', subtitle: 'The apps reward sharing as little of yourself as possible to get what you want, not what you need' }},
     { id: 14, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-14-club.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'You can\'t know yourself in isolation.', highlight: 'The self is relational.' }},
-    { id: 15, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-15-group-chat.png', bgGradient: 'from-indigo-600 to-purple-600', content: { title: 'We come from somewhere.', body: 'Black queer elders existed. Thrived. Built community.', highlight: 'The systems that severed us also erased them from our history.' }},
-    { id: 16, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-16-swipe.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'We are scattered across cities, scrolling from behind faceless profiles, lurking in the GC.', highlight: 'Not being able to find each other makes both of us lost' }},
-    { id: 17, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-17-dont-know.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { title: 'Our heterogeneity is a power, not a problem.', body: 'It is richness we can learn to treasure.', highlight: 'Solidarity is a habit, it takes practice' }, cta: { text: '300+ articles by us, for us', link: '/stories', color: 'amber' }}
+    { id: 15, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-15-group-chat.png', bgGradient: 'from-indigo-600 to-purple-600', content: { subtitle: 'we think we are brand new.', body: 'Black queer folk always existed. Thrived. Built community.', highlight: 'An inconvenient truth erased from our history to hold back our future.' }},
+    { id: 16, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-16-swipe.png', bgGradient: 'from-violet-950 to-purple-950', content: { subtitle: 'We are scattered, scrolling from behind faceless profiles, lurking in the GC.', body: 'We are that funny guy at work, free HR consultant, seen on the recruitment promotion still unpromoted', highlight: 'Not being able to find each other means all of us are lost' }},
+    { id: 17, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-17-dont-know.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'Our differences are a strength, not a problem.', body: 'Together we represent riches we can learn to treasure.', highlight: 'Solidarity is a habit, it takes practice' }, cta: { text: 'BLKOUT newsroom; in our stories we are headliners', link: '/stories', color: 'amber' }}
   ];
 
   // ACT 3: What We're Building (Cards 19-26, 28)
   const act3Cards: Card[] = [
-    { id: 19, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-25-infrastructure.png', bgGradient: 'from-purple-950 to-indigo-950', content: { title: 'So we\'re building:', body: 'Space to be' }},
-    { id: 21, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-21-gatherings.png', bgGradient: 'from-fuchsia-600 to-purple-600', content: { title: 'A lively calendar of social events', body: 'Real conversations. Shared experiences.' }, cta: { text: 'See what\'s happening', link: 'https://events.blkoutuk.cloud', color: 'amber' }},
-    { id: 22, type: 'interactive', size: 'large', imageUrl: '/images/theory-of-change/card-22-wordcloud.png', bgGradient: 'from-indigo-950 to-purple-950', content: { title: 'What comes up when we talk:' }, interactive: { type: 'wordcloud', data: { topics: ['Family', 'Sex', 'Money', 'Health', 'Faith', 'Fear', 'Joy', 'Aging', 'Love', 'Loneliness', 'Dreams', 'Rage', 'Healing'] }}},
-    { id: 23, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-23-connection.png', bgGradient: 'from-purple-950 to-violet-950', content: { title: 'Not Networking', body: 'No transaction required.', highlight: 'Connection' }},
-    { id: 24, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-24-articles.png', bgGradient: 'from-violet-950 to-purple-950', content: { title: '300+ articles', body: '8 years building our archive', highlight: 'Telling our stories on our terms' }, cta: { text: 'Read the archive', link: '/stories', color: 'amber' }},
-    { id: 26, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-26-map.png', bgGradient: 'from-purple-950 to-indigo-950', content: { title: 'From London to Bristol to Manchester', body: 'Finding each other' }, cta: { text: 'Connect locally', link: 'https://events.blkoutuk.cloud', color: 'amber' }},
+    { id: 19, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-25-infrastructure.png', bgGradient: 'from-purple-950 to-indigo-950', content: { title: 'So we\'re building:', body: 'Space to be we', highlight: 'Space to be free' }},
+    { id: 21, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-21-gatherings.png', bgGradient: 'from-fuchsia-600 to-purple-600', content: { title: 'we\'re getting social', body: 'Real conversations. Shared experiences.' }, cta: { text: 'See what\'s happening', link: 'https://events.blkoutuk.cloud', color: 'amber' }},
+    { id: 22, type: 'interactive', size: 'large', imageUrl: '/images/theory-of-change/card-22-wordcloud.png', bgGradient: 'from-indigo-950 to-purple-950', content: { title: 'talking de tings:' }, interactive: { type: 'wordcloud', data: { topics: ['Family', 'Sex', 'Money', 'Health', 'Faith', 'Fear', 'Joy', 'Aging', 'Love', 'Loneliness', 'Dreams', 'Rage', 'Healing'] }}},
+    { id: 23, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-23-connection.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'Connecting, not networking', highlight: 'No transaction required.' }, cta: { text: 'Join the conversation', link: 'https://events.blkoutuk.cloud', color: 'amber' }},
+    { id: 24, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-24-articles.png', bgGradient: 'from-violet-950 to-purple-950', content: { title: 'storytelling', body: '8 years building our archive', highlight: 'Telling our stories on our terms' }, cta: { text: 'Read the archive', link: '/stories', color: 'amber' }},
+    { id: 26, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-26-map.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'From London to Bristol to Manchester', highlight: 'Finding each other' }, cta: { text: 'Connect locally', link: 'https://events.blkoutuk.cloud', color: 'amber' }},
     { id: 27, type: 'beauty', size: 'small', imageUrl: '/images/theory-of-change/silhouette letters white rgb.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: {} },
-    { id: 28, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-28-digital-human.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { title: 'IVOR: Your AI companion', body: 'Built to understand our experiences', highlight: 'Technology that serves, not surveils' }, cta: { text: 'Meet IVOR', link: 'https://ivor.blkoutuk.cloud', color: 'amber' }}
+    { id: 28, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-28-digital-human.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'IVOR: Your AI companion', title: 'Each one, Teach one', body: 'Built by us to understand our experiences', highlight: 'Tech that serves, not surveils' }, cta: { text: 'Meet IVOR', link: 'https://ivor.blkoutuk.cloud', color: 'amber' }}
   ];
 
   // ACT 4: The Core (Cards 30-33)
   const act4Cards: Card[] = [
-    { id: 30, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-30-isolation.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: '1970s 2nd Wave Queer rights activism sought \'free love\'', highlight: 'Today, we seek love to set us free.' }},
-    { id: 31, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-31-problem-is-us.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { body: 'Our sexuality is not a choice', highlight: 'Commitment to community is' }},
-    { id: 32, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-32-never-us.png', bgGradient: 'from-violet-600 to-purple-600', content: { title: 'Tenderness is a political act', body: 'Black queer joy is revolutionary' }, cta: { text: 'How we\'re different', link: '/governance', color: 'amber' }},
+    { id: 30, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-30-isolation.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'Activism focused on the freedom to love', highlight: 'Today, our actions turn love into liberation.' }},
+    { id: 31, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-31-problem-is-us.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { body: 'Sexual identity is not a choice', highlight: 'But choosing love is' }},
+    { id: 32, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-32-never-us.png', bgGradient: 'from-violet-600 to-purple-600', content: { title: 'Tenderness is a political act', body: 'Black queer joy is revolutionary' }, cta: { text: 'BLKOUT is different, it\'s ours', link: '/governance', color: 'amber' }},
     { id: 32.5, type: 'beauty', size: 'large', videoUrl: '/videos/Making Space For What.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
-    { id: 33, type: 'interactive', size: 'hero', imageUrl: '/images/theory-of-change/card-33-show-up.png', bgGradient: 'from-purple-950 to-violet-950', content: { title: 'How do you show up?', body: 'Choose your power' }, interactive: { type: 'poll', data: { options: ['I bring food', 'I show up', 'I listen', 'I fight', 'I laugh', 'I remember'] }}}
+    { id: 33, type: 'interactive', size: 'hero', imageUrl: '/images/theory-of-change/card-33-show-up.png', bgGradient: 'from-purple-950 to-violet-950', content: { title: 'How do you show up?', body: 'Community is not a tick box, it\'s what you do' }, interactive: { type: 'poll', data: { options: ['I bring food', 'I show up', 'I listen', 'I fight', 'I laugh', 'I remember'] }}}
   ];
 
   // ACT 5: The Invitation (Cards 35-38)
   const act5Cards: Card[] = [
-    { id: 35, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-35-structural-damage.png', bgGradient: 'from-indigo-950 to-purple-950', content: { subtitle: 'Liberation Is', title: 'Freedom from...', body: 'Ending harm, using our power to resist and dismantle injustice' }},
-    { id: 36, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-36-relational-repair.png', bgGradient: 'from-purple-950 to-violet-950', content: { subtitle: 'Liberation Is', title: 'Freedom to...', body: 'Imagine better, create the new' }},
+    { id: 35, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-35-structural-damage.png', bgGradient: 'from-indigo-950 to-purple-950', content: { subtitle: 'Liberation Is', title: 'Freedom from...', body: '...harm, using our power to resist and dismantle injustice' }},
+    { id: 36, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-36-relational-repair.png', bgGradient: 'from-purple-950 to-violet-950', content: { subtitle: 'Liberation Is', title: 'Freedom to...', body: '...Imagine better, using our power to create the new' }},
     { id: 36.5, type: 'beauty', size: 'large', videoUrl: '/videos/baldwinscroll.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
-    { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { title: 'What does liberation look like?', body: 'Your vision matters.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/api/community/join', color: 'amber' }},
-    { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', title: 'The damage is structural.', body: 'The repair is relational.', highlight: 'This is the work.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }}
+    { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { title: 'What does liberation look like?', body: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/api/community/join', color: 'amber' }},
+    { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', title: 'The damage is structural.', body: 'The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }}
   ];
 
   return (
