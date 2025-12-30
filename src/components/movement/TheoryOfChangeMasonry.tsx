@@ -75,12 +75,12 @@ const aspectClasses = {
   squat: 'aspect-[16/9]'       // Landscape
 };
 
-// Masonry size classes
+// Masonry size classes (fixed - no overlapping, consistent gaps)
 const sizeClasses = {
-  small: 'col-span-1 row-span-1',
-  medium: 'col-span-1 row-span-2',
-  large: 'col-span-2 row-span-2',
-  hero: 'col-span-2 row-span-3 md:col-span-3 lg:col-span-4'
+  small: 'col-span-1',
+  medium: 'col-span-1',
+  large: 'col-span-2',
+  hero: 'col-span-2 md:col-span-3 lg:col-span-4'
 };
 
 // Mobile-optimized heights
@@ -91,13 +91,21 @@ const heightClasses = {
   hero: 'h-[70vh] md:h-[80vh]'
 };
 
-// Text positioning utility
-const getTextPosition = (position?: string) => {
+// Text positioning with balanced layouts and 35% padding
+const getTextPosition = (position?: string, hasTopAndBottom?: boolean) => {
+  const basePadding = 'px-[35%]'; // 35% in from edges
+
+  if (hasTopAndBottom) {
+    // Split layout: content at top, CTA at bottom
+    return 'justify-between';
+  }
+
   switch(position) {
-    case 'topRight': return 'items-start justify-end text-right';
-    case 'center': return 'items-center justify-center text-center';
-    case 'topLeft': return 'items-start justify-start text-left';
-    default: return 'items-end justify-start text-left'; // bottomLeft
+    case 'topRight': return `items-start justify-end text-right pr-8 pt-8`;
+    case 'topLeft': return `items-start justify-start text-left pl-8 pt-8`;
+    case 'center': return 'items-center justify-center text-center px-8';
+    case 'bottomRight': return `items-end justify-end text-right pr-8 pb-8`;
+    default: return `items-end justify-start text-left pl-8 pb-8`; // bottomLeft
   }
 };
 
@@ -147,8 +155,10 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
         <div className={`absolute inset-0 bg-gradient-to-br ${card.bgGradient}`} />
       )}
 
-      {/* Content with dynamic positioning */}
-      <div className={`relative z-10 h-full flex flex-col p-6 md:p-8 ${getTextPosition(card.textPosition)} md:${getTextPosition(card.textPosition)}`}>
+      {/* Content with dynamic positioning - split if CTA exists */}
+      <div className={`relative z-10 h-full flex flex-col ${getTextPosition(card.textPosition, !!card.cta)}`}>
+        {/* Top content area */}
+        <div className={`${card.cta ? 'pt-8' : ''} pl-[8%] pr-[8%]`}>
         {/* Subtitle (small, uppercase, accent color) */}
         {card.content.subtitle && (
           <motion.p className="text-amber-400 text-sm md:text-base lg:text-lg font-mono uppercase tracking-widest mb-2">
@@ -239,19 +249,23 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
           </div>
         )}
 
-        {/* CTA Button */}
+        </div>
+
+        {/* Bottom CTA area - separated for visual balance */}
         {card.cta && (
-          <a
-            href={card.cta.link}
-            onClick={(e) => e.stopPropagation()}
-            className={`mt-4 inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all hover:scale-105 ${
-              card.cta.color === 'fuchsia'
-                ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
-                : 'bg-gradient-to-r from-amber-600 to-amber-500 text-black'
-            }`}
-          >
-            {card.cta.text} →
-          </a>
+          <div className="pb-8 pl-[8%] pr-[8%]">
+            <a
+              href={card.cta.link}
+              onClick={(e) => e.stopPropagation()}
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all hover:scale-105 ${
+                card.cta.color === 'fuchsia'
+                  ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
+                  : 'bg-gradient-to-r from-amber-600 to-amber-500 text-black'
+              }`}
+            >
+              {card.cta.text} →
+            </a>
+          </div>
         )}
       </div>
     </motion.div>
@@ -518,7 +532,7 @@ export default function TheoryOfChangeMasonry() {
     { id: 13, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-13-app.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'No face, no case, no intimacy', subtitle: 'The apps reward sharing as little of yourself as possible to get what you want, not what you need' }},
     { id: 14, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-14-club.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'You can\'t know yourself in isolation.', highlight: 'The self is relational.' }},
     { id: 15, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-15-group-chat.png', bgGradient: 'from-indigo-600 to-purple-600', content: { subtitle: 'we think we are brand new.', body: 'Black queer folk always existed. Thrived. Built community.', highlight: 'An inconvenient truth erased from our history to hold back our future.' }},
-    { id: 16, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-16-swipe.png', bgGradient: 'from-violet-950 to-purple-950', content: { subtitle: 'We are scattered, scrolling from behind faceless profiles, lurking in the GC.', body: 'We are that funny guy at work, free HR consultant, seen on the recruitment promotion still unpromoted', highlight: 'Not being able to find each other means all of us are lost' }},
+    { id: 16, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-16-swipe.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'We are scattered, scrolling from behind faceless profiles, lurking in the GC.', subtitle: 'We are that funny guy at work, free HR consultant, seen on the recruitment promotion still unpromoted', highlight: 'Not being able to find each other means all of us are lost' }, textPosition: 'bottomLeft' },
     { id: 17, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-17-dont-know.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'Our differences are a strength, not a problem.', body: 'Together we represent riches we can learn to treasure.', highlight: 'Solidarity is a habit, it takes practice' }, cta: { text: 'BLKOUT newsroom; in our stories we are headliners', link: '/stories', color: 'amber' }}
   ];
 
