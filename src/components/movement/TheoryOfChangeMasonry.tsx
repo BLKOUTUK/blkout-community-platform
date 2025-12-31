@@ -459,7 +459,7 @@ export default function TheoryOfChangeMasonry() {
         highlight: 'Funny fake names, borrowed pics, unclear motives'
       },
       animationType: 'slide',
-      textPosition: 'topLeft'
+      textPosition: 'bottomRight'
     },
     {
       id: 7,
