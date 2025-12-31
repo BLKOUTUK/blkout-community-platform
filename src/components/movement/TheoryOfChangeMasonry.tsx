@@ -572,7 +572,7 @@ export default function TheoryOfChangeMasonry() {
 
   // ACT 4: The Core (Cards 30-33)
   const act4Cards: Card[] = [
-    { id: 30, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-30-isolation.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'Activism focused on the freedom to love', highlight: 'Today, our actions turn love into liberation.' }, animationType: 'default', textPosition: 'topLeft' },
+    { id: 30, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-30-isolation.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'Activism has won us the freedom to love', highlight: 'Today, we battle to turn love into liberation.' }, animationType: 'default', textPosition: 'topLeft' },
     { id: 31, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-31-problem-is-us.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { body: 'Sexual identity is not a choice', highlight: 'But choosing love is' }, animationType: 'default', textPosition: 'bottomRight' },
     { id: 32, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-32-never-us.png', bgGradient: 'from-violet-600 to-purple-600', content: { body: 'Tenderness is a political act. Black queer joy is revolutionary' }, cta: { text: 'BLKOUT is different, it\'s ours', link: '/governance', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' },
     { id: 32.5, type: 'beauty', size: 'large', videoUrl: '/videos/Making Space For What.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
