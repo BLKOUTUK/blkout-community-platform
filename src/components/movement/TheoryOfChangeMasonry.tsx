@@ -75,12 +75,12 @@ const aspectClasses = {
   squat: 'aspect-[16/9]'       // Landscape
 };
 
-// Masonry size classes (fixed - no overlapping, consistent gaps)
+// Masonry size classes (RESTORE row-span to prevent overlap)
 const sizeClasses = {
-  small: 'col-span-1',
-  medium: 'col-span-1',
-  large: 'col-span-2',
-  hero: 'col-span-2 md:col-span-3 lg:col-span-4'
+  small: 'col-span-1 row-span-1',
+  medium: 'col-span-1 row-span-2',
+  large: 'col-span-2 row-span-2',
+  hero: 'col-span-2 row-span-3 md:col-span-3 md:row-span-4 lg:col-span-4 lg:row-span-4'
 };
 
 // Mobile-optimized heights
@@ -402,7 +402,10 @@ export default function TheoryOfChangeMasonry() {
       content: {
         body: 'Many of us have to search for evidence that we exist',
         highlight: 'Imagine growing up without being taught to fear us'
-      }
+      },
+      animationType: 'default',
+      aspectRatio: 'tall',
+      textPosition: 'topLeft'
     },
     {
       id: 4,
@@ -411,13 +414,15 @@ export default function TheoryOfChangeMasonry() {
       imageUrl: '/images/theory-of-change/card-04-poll.png',
       bgGradient: 'from-indigo-950 to-purple-950',
       content: {
-        title: 'How many Black queer men could you call on in a crisis?',
+        body: 'How many Black queer men could you call on in a crisis?',
         highlight: '(Booty calls may be urgent, but they don\'t count.)'
       },
       interactive: {
         type: 'poll',
         data: { options: ['0', '1-2', '3-5', 'Squad deep'] }
-      }
+      },
+      animationType: 'default',
+      textPosition: 'bottomRight'
     },
     {
       id: 5,
@@ -427,9 +432,11 @@ export default function TheoryOfChangeMasonry() {
       bgGradient: 'from-purple-950 to-fuchsia-950',
       content: {
         subtitle: 'when we asked, you said:',
-        title: '1 or fewer',
+        body: '1 or fewer',
         highlight: 'And that includes the GC: banter that\'s been on mute since 2019.'
-      }
+      },
+      animationType: 'default',
+      textPosition: 'topRight'
     },
     {
       id: 6,
