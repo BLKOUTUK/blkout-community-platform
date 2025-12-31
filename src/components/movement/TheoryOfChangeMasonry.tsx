@@ -186,19 +186,19 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
           </motion.h2>
         )}
 
-        {/* Body (main text - NOT uppercase, smaller) */}
+        {/* Body (use as secondary heading - short, bold) */}
         {card.content.body && (
           <motion.p
-            className="text-lg md:text-xl lg:text-2xl font-semibold text-white leading-snug mb-4"
-            style={{ fontFamily: "'Arial', sans-serif" }}
+            className="text-lg md:text-xl lg:text-2xl font-bold text-white uppercase leading-tight mb-4"
+            style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
           >
             {card.content.body}
           </motion.p>
         )}
 
-        {/* Highlight (emphasis text below) */}
+        {/* Highlight (use for sentences - readable, not italic) */}
         {card.content.highlight && (
-          <p className="text-base md:text-lg lg:text-xl text-purple-200 font-light leading-relaxed italic">
+          <p className="text-base md:text-lg lg:text-xl text-purple-100 font-normal leading-relaxed">
             {card.content.highlight}
           </p>
         )}
