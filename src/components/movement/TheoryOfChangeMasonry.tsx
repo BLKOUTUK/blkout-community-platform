@@ -131,10 +131,11 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
             src={card.videoUrl}
             className="w-full h-full object-contain"
             style={{ aspectRatio: '4/5' }}
+            autoPlay
             loop
+            muted
             playsInline
-            controls
-            preload="metadata"
+            preload="auto"
           />
         </div>
       ) : card.imageUrl ? (
@@ -632,10 +633,11 @@ export default function TheoryOfChangeMasonry() {
             <video
               src="/videos/Blkoutheronumber1.mp4"
               className="w-full h-full object-cover"
+              autoPlay
               loop
+              muted
               playsInline
-              controls
-              preload="metadata"
+              preload="auto"
             />
           </div>
         </div>
@@ -662,10 +664,11 @@ export default function TheoryOfChangeMasonry() {
               <video
                 src="/videos/Lordescroll.mp4"
                 className="w-full h-full object-cover"
+                autoPlay
                 loop
+                muted
                 playsInline
-                controls
-                preload="metadata"
+                preload="auto"
               />
             </div>
           </div>
@@ -687,10 +690,11 @@ export default function TheoryOfChangeMasonry() {
               <video
                 src="/videos/Welcome BLKOUT TV.mp4"
                 className="w-full h-full object-cover"
+                autoPlay
                 loop
+                muted
                 playsInline
-                controls
-                preload="metadata"
+                preload="auto"
               />
             </div>
           </div>
