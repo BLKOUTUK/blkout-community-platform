@@ -158,7 +158,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
       {/* Content with dynamic positioning - split if CTA exists */}
       <div className={`relative z-10 h-full flex flex-col ${getTextPosition(card.textPosition, !!card.cta)}`}>
         {/* Top content area */}
-        <div className={`${card.cta ? 'pt-8 pb-8' : 'py-8'} px-[12%]`}>
+        <div className={`${card.cta ? (card.id === 17 ? 'pt-20 pb-8' : 'pt-8 pb-8') : 'py-8'} px-[12%]`}>
         {/* Subtitle (small, uppercase, accent color) */}
         {card.content.subtitle && (
           <motion.p className="text-amber-400 text-xs md:text-sm font-mono uppercase tracking-widest mb-2">
@@ -253,7 +253,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
 
         {/* Bottom CTA area - separated for visual balance */}
         {card.cta && (
-          <div className="pb-8 px-[12%]">
+          <div className={`${card.id === 17 ? 'pb-2' : 'pb-8'} px-[12%]`}>
             <a
               href={card.cta.link}
               onClick={(e) => e.stopPropagation()}
