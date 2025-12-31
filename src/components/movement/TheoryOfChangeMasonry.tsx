@@ -232,7 +232,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
         )}
 
         {card.interactive?.type === 'wordcloud' && (
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className={`${card.id === 22 ? 'mt-16' : 'mt-4'} flex flex-wrap gap-2`}>
             {card.interactive.data.topics.map((topic: string) => (
               <button
                 key={topic}
