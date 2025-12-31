@@ -265,6 +265,13 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
             >
               {card.cta.text} →
             </a>
+
+            {/* HorizontalCTAScroll for cards 37-38 */}
+            {(card.id === 37 || card.id === 38) && (
+              <div className="mt-8">
+                <HorizontalCTAScroll cardId={card.id} />
+              </div>
+            )}
           </div>
         )}
       </div>
