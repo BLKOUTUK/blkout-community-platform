@@ -640,16 +640,16 @@ export default function TheoryOfChangeMasonry() {
 
       {/* Main Content */}
       <main className="pt-0">
-        {/* ACT 1: Recognition - Masonry Grid (Cards 1-7) */}
+        {/* ACT 1: Recognition - Masonry Grid (Cards 1-6) */}
         <section className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
-            {act1Cards.filter(c => c.id <= 7).map((card, i) => (
+            {act1Cards.filter(c => c.id <= 6).map((card, i) => (
               <MasonryCard key={card.id} card={card} index={i} />
             ))}
           </div>
         </section>
 
-        {/* LORDE VIDEO: Single column width (decorative) */}
+        {/* LORDE VIDEO: Single column width (decorative) - directly after Card 6 */}
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-md">
             <div className="relative overflow-hidden rounded-2xl" style={{ height: '750px' }}>
@@ -665,10 +665,10 @@ export default function TheoryOfChangeMasonry() {
           </div>
         </section>
 
-        {/* Continue Act 1 (Cards 7.5-10) */}
+        {/* Continue Act 1 (Cards 7-10) */}
         <section className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
-            {act1Cards.filter(c => c.id > 7).map((card, i) => (
+            {act1Cards.filter(c => c.id > 6).map((card, i) => (
               <MasonryCard key={card.id} card={card} index={i} />
             ))}
           </div>
