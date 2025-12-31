@@ -119,7 +119,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
 
   return (
     <motion.div
-      className={`relative overflow-hidden rounded-2xl group ${sizeClasses[card.size]} ${heightClasses[card.size]}`}
+      className={`relative overflow-hidden rounded-2xl group ${sizeClasses[card.size]}`}
       {...animation}
       viewport={{ once: true, margin: "-50px" }}
       whileHover={{ scale: 1.02 }}
