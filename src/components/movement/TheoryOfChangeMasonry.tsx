@@ -637,10 +637,10 @@ export default function TheoryOfChangeMasonry() {
           </div>
         </section>
 
-        {/* LORDE VIDEO: In column as part of masonry (decorative) */}
+        {/* LORDE VIDEO: Single column width (decorative) */}
         <section className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
-            <div className="col-span-1 row-span-3 relative overflow-hidden rounded-2xl">
+          <div className="max-w-md">
+            <div className="relative overflow-hidden rounded-2xl" style={{ height: '750px' }}>
               <video
                 src="/videos/Lordescroll.mp4"
                 className="w-full h-full object-cover"
