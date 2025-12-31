@@ -189,7 +189,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
         {/* Body (use as secondary heading - short, bold) */}
         {card.content.body && (
           <motion.p
-            className="text-lg md:text-xl lg:text-2xl font-bold text-white uppercase leading-tight mb-4"
+            className={`text-lg md:text-xl lg:text-2xl font-bold text-white uppercase leading-tight ${card.id === 11 ? 'mb-12' : 'mb-4'}`}
             style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
           >
             {card.content.body}
