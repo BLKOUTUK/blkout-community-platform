@@ -593,37 +593,31 @@ export default function TheoryOfChangeMasonry() {
         </motion.div>
       </div>
 
-      {/* Hero Introduction */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Custom Hero Design */}
+      {/* Hero Introduction with User Video */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
+        {/* Hero Video Background */}
         <div className="absolute inset-0">
-          <img
-            src="/images/theory-of-change/WHY BLKOUT HERO.png"
-            alt="Why BLKOUT Matters"
+          <video
+            src="/videos/Blkoutheronumber1.mp4"
             className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
           />
+          {/* Dark overlay for scroll prompt visibility */}
+          <div className="absolute inset-0 bg-black/30" />
         </div>
-
-        {/* Context overlay */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="absolute bottom-32 left-1/2 transform -translate-x-1/2 z-10 text-center"
-        >
-          <p className="text-lg md:text-xl text-purple-300 italic">
-            (That's us. Welcome.)
-          </p>
-        </motion.div>
 
         {/* Scroll prompt */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
+          transition={{ delay: 1.5 }}
           className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-10"
         >
-          <p className="text-white text-sm animate-pulse">
+          <p className="text-white text-sm animate-pulse drop-shadow-lg">
             Scroll to begin ↓
           </p>
         </motion.div>
