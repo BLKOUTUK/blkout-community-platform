@@ -414,7 +414,7 @@ export default function TheoryOfChangeMasonry() {
       },
       animationType: 'default',
       aspectRatio: 'tall',
-      textPosition: 'topLeft'
+      textPosition: 'bottomLeft'
     },
     {
       id: 4,
