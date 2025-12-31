@@ -608,34 +608,20 @@ export default function TheoryOfChangeMasonry() {
         </motion.div>
       </div>
 
-      {/* Hero Introduction with User Video */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-black">
-        {/* Hero Video Background */}
-        <div className="absolute inset-0">
-          <video
-            src="/videos/Blkoutheronumber1.mp4"
-            className="w-full h-full object-cover"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-          />
-          {/* Dark overlay for scroll prompt visibility */}
-          <div className="absolute inset-0 bg-black/30" />
+      {/* Hero Video: Full width (similar to Welcome video) */}
+      <section className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
+          <div className="col-span-2 md:col-span-3 lg:col-span-4 row-span-2 relative overflow-hidden rounded-2xl">
+            <video
+              src="/videos/Blkoutheronumber1.mp4"
+              className="w-full h-full object-cover"
+              loop
+              playsInline
+              controls
+              preload="metadata"
+            />
+          </div>
         </div>
-
-        {/* Scroll prompt */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-          className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-10"
-        >
-          <p className="text-white text-sm animate-pulse drop-shadow-lg">
-            Scroll to begin ↓
-          </p>
-        </motion.div>
       </section>
 
       {/* Elegant Disclaimer - Bottom overlay */}
