@@ -158,10 +158,10 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
       {/* Content with dynamic positioning - split if CTA exists */}
       <div className={`relative z-10 h-full flex flex-col ${getTextPosition(card.textPosition, !!card.cta)}`}>
         {/* Top content area */}
-        <div className={`${card.cta ? 'pt-8' : ''} pl-[8%] pr-[8%]`}>
+        <div className={`${card.cta ? 'pt-8 pb-8' : 'py-8'} px-[12%]`}>
         {/* Subtitle (small, uppercase, accent color) */}
         {card.content.subtitle && (
-          <motion.p className="text-amber-400 text-sm md:text-base lg:text-lg font-mono uppercase tracking-widest mb-2">
+          <motion.p className="text-amber-400 text-xs md:text-sm font-mono uppercase tracking-widest mb-2">
             {card.content.subtitle}
           </motion.p>
         )}
@@ -169,7 +169,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
         {/* Title (primary heading - largest) */}
         {card.content.title && (
           <motion.h1
-            className="text-3xl md:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight leading-tight mb-3"
+            className="text-2xl md:text-3xl lg:text-4xl font-black text-white uppercase tracking-tight leading-tight mb-3"
             style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
           >
             {card.content.title}
@@ -179,18 +179,18 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
         {/* Heading2 (secondary heading) */}
         {card.content.heading2 && (
           <motion.h2
-            className="text-2xl md:text-3xl font-bold text-purple-100 uppercase tracking-tight leading-tight mb-3"
+            className="text-xl md:text-2xl font-bold text-purple-100 uppercase tracking-tight leading-tight mb-3"
             style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
           >
             {card.content.heading2}
           </motion.h2>
         )}
 
-        {/* Body (main text) */}
+        {/* Body (main text - NOT uppercase, smaller) */}
         {card.content.body && (
           <motion.p
-            className="text-xl md:text-2xl lg:text-3xl font-black text-white uppercase tracking-tight leading-tight mb-4"
-            style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
+            className="text-lg md:text-xl lg:text-2xl font-semibold text-white leading-snug mb-4"
+            style={{ fontFamily: "'Arial', sans-serif" }}
           >
             {card.content.body}
           </motion.p>
@@ -198,7 +198,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
 
         {/* Highlight (emphasis text below) */}
         {card.content.highlight && (
-          <p className="text-lg md:text-xl lg:text-2xl text-purple-200 font-light leading-relaxed italic">
+          <p className="text-base md:text-lg lg:text-xl text-purple-200 font-light leading-relaxed italic">
             {card.content.highlight}
           </p>
         )}
@@ -253,7 +253,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
 
         {/* Bottom CTA area - separated for visual balance */}
         {card.cta && (
-          <div className="pb-8 pl-[8%] pr-[8%]">
+          <div className="pb-8 px-[12%]">
             <a
               href={card.cta.link}
               onClick={(e) => e.stopPropagation()}
