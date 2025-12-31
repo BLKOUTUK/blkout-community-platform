@@ -525,9 +525,12 @@ export default function TheoryOfChangeMasonry() {
         subtitle: 'you\'ve missed a step',
         title: 'We are...',
         heading2: 'Each others\' missing link',
-        body: 'Loving ourselves is learned through community. Self-love requires both personal growth and collective healing. Loving who we are requires empathy and care - not just solo endeavour',
-        highlight: 'Without community, there is no love, and no liberation'
-      }
+        highlight: 'Loving ourselves is learned through community. Self-love requires both personal growth and collective healing. Loving who we are requires empathy and care - not just solo endeavour',
+        body: 'Without community, there is no love, and no liberation'
+      },
+      animationType: 'stagger',
+      aspectRatio: 'tall',
+      textPosition: 'bottomRight'
     },
     {
       id: 10,
