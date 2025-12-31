@@ -316,6 +316,26 @@ export default function App() {
         </button>
 
         <button
+          onClick={() => changeActiveTab('movement')}
+          className="group bg-gradient-to-br from-purple-600/90 to-fuchsia-600 text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
+        >
+          <div className="flex justify-center mb-4">
+            <img
+              src="/Branding and logos/blkoutlogo_wht_transparent.png"
+              alt="BLKOUT"
+              className="h-12 w-auto"
+            />
+          </div>
+          <h3 className="text-lg font-black mb-2 uppercase tracking-wide text-center" style={{
+            WebkitTextStroke: '2px #fff',
+            color: 'transparent'
+          }}>THEORY OF CHANGE</h3>
+          <p className="text-white text-sm mb-4 leading-relaxed text-center">
+            Our story. Our vision.<br/>How we build liberation together.
+          </p>
+        </button>
+
+        <button
           onClick={() => changeActiveTab('platform')}
           className="group bg-gradient-to-br from-liberation-purple-spirit/90 to-liberation-black-power text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >

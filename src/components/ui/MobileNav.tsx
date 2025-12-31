@@ -19,6 +19,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
 
   const navigationItems = [
     { id: 'liberation', label: 'Platform', icon: Heart, type: 'button' },
+    { id: 'movement', label: 'Theory of Change', icon: Play, type: 'button' },
     { id: 'discover', label: 'Discover', icon: ExternalLink, type: 'link', href: 'https://blkoutuk.com/discover' },
     { id: 'governance', label: 'Ownership', icon: Vote, type: 'button' },
     { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' },
