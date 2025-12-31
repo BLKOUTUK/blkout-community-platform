@@ -156,9 +156,9 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
       )}
 
       {/* Content with dynamic positioning - split if CTA exists */}
-      <div className={`relative z-10 h-full flex flex-col ${getTextPosition(card.textPosition, !!card.cta)}`}>
+      <div className={`relative z-10 h-full flex ${card.id === 32 ? 'flex-row items-start justify-between p-8' : `flex-col ${getTextPosition(card.textPosition, !!card.cta)}`}`}>
         {/* Top content area */}
-        <div className={`${card.cta ? (card.id === 17 ? 'pt-20 pb-8' : card.id === 26 ? 'pt-24 pb-4' : 'pt-8 pb-8') : 'py-8'} px-[12%]`}>
+        <div className={`${card.id === 32 ? 'flex-1 pr-4 flex flex-col justify-end pb-8' : card.cta ? (card.id === 17 ? 'pt-20 pb-8' : card.id === 26 ? 'pt-24 pb-4' : 'pt-8 pb-8') : 'py-8'} ${card.id === 32 ? '' : 'px-[12%]'}`}>
         {/* Subtitle (small, uppercase, accent color) */}
         {card.content.subtitle && (
           <motion.p className="text-amber-400 text-xs md:text-sm font-mono uppercase tracking-widest mb-2">
@@ -251,8 +251,25 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
 
         </div>
 
+        {/* Right column CTA for Card 32 */}
+        {card.cta && card.id === 32 && (
+          <div className="flex-shrink-0 pl-4 pt-0">
+            <a
+              href={card.cta.link}
+              onClick={(e) => e.stopPropagation()}
+              className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all hover:scale-105 ${
+                card.cta.color === 'fuchsia'
+                  ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
+                  : 'bg-gradient-to-r from-amber-600 to-amber-500 text-black'
+              }`}
+            >
+              {card.cta.text} →
+            </a>
+          </div>
+        )}
+
         {/* Bottom CTA area - separated for visual balance */}
-        {card.cta && (
+        {card.cta && card.id !== 32 && (
           <div className={`${card.id === 17 ? 'pb-2' : 'pb-8'} px-[12%]`}>
             <a
               href={card.cta.link}
@@ -574,7 +591,7 @@ export default function TheoryOfChangeMasonry() {
   const act4Cards: Card[] = [
     { id: 30, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-30-isolation.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'Activism has won us the freedom to love', highlight: 'Today, we battle to turn love into liberation.' }, animationType: 'default', textPosition: 'bottomRight' },
     { id: 31, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-31-problem-is-us.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { body: 'Sexual identity is not a choice', highlight: 'But choosing love is' }, animationType: 'default', textPosition: 'bottomRight' },
-    { id: 32, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-32-never-us.png', bgGradient: 'from-violet-600 to-purple-600', content: { body: 'Tenderness is a political act. Black queer joy is revolutionary' }, cta: { text: 'BLKOUT is different, it\'s ours', link: '/governance', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' },
+    { id: 32, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-32-never-us.png', bgGradient: 'from-violet-600 to-purple-600', content: { body: 'Tenderness is a political act. Black queer joy is revolutionary' }, cta: { text: 'BLKOUT is different, it\'s ours', link: '/governance', color: 'amber' }, animationType: 'reveal' },
     { id: 32.5, type: 'beauty', size: 'large', videoUrl: '/videos/Making Space For What.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
     { id: 33, type: 'interactive', size: 'hero', imageUrl: '/images/theory-of-change/card-33-show-up.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'How do you show up?', highlight: 'Community is not a tick box, it\'s what you do' }, interactive: { type: 'poll', data: { options: ['I bring food', 'I show up', 'I listen', 'I fight', 'I laugh', 'I remember'] }}, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'center'}
   ];
