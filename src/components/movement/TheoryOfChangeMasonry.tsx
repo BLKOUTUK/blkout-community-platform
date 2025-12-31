@@ -743,7 +743,6 @@ export default function TheoryOfChangeMasonry() {
         <section className="relative w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-950 via-indigo-950 to-black py-24">
           <div className="container mx-auto px-4 max-w-6xl">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} className="text-center mb-16">
-              <h2 className="text-5xl md:text-7xl font-black text-white uppercase mb-6" style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}>What's Next?</h2>
               <p className="text-xl md:text-2xl text-purple-300 font-light">Choose your path into the collective</p>
             </motion.div>
 
