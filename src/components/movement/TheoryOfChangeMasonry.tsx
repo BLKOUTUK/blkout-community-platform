@@ -479,10 +479,10 @@ export default function TheoryOfChangeMasonry() {
       imageUrl: '/images/theory-of-change/survival is a good start.png',
       bgGradient: 'from-violet-950 to-purple-950',
       content: {
-        title: 'Survival is a good start.',
-        body: 'If we want to thrive',
-        highlight: '"alone together" is not enough.'
-      }
+        highlight: 'Survival is a good start. If we want to thrive',
+        body: '"alone together" is not enough.'
+      },
+      textPosition: 'bottomLeft'
     },
     {
       id: 8,
