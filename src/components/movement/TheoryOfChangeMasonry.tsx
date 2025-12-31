@@ -434,7 +434,7 @@ export default function TheoryOfChangeMasonry() {
     {
       id: 5,
       type: 'statement',
-      size: 'large',
+      size: 'hero',
       imageUrl: '/images/theory-of-change/card-05-one-or-fewer.png',
       bgGradient: 'from-purple-950 to-fuchsia-950',
       content: {
@@ -443,6 +443,7 @@ export default function TheoryOfChangeMasonry() {
         highlight: 'And that includes the GC: banter that\'s been on mute since 2019.'
       },
       animationType: 'default',
+      aspectRatio: 'tall',
       textPosition: 'topRight'
     },
     {
@@ -455,7 +456,9 @@ export default function TheoryOfChangeMasonry() {
         title: 'That\'s not community.',
         body: 'That\'s just proximity.',
         highlight: 'Funny fake names, borrowed pics, unclear motives'
-      }
+      },
+      animationType: 'slide',
+      textPosition: 'topLeft'
     },
     {
       id: 7,
