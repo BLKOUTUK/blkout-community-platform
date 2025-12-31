@@ -391,16 +391,16 @@ export default function TheoryOfChangeMasonry() {
     {
       id: 2.75,
       type: 'statement',
-      size: 'large',
-      imageUrl: '/images/theory-of-change/card-05-one-or-fewer.png',
-      bgGradient: 'from-purple-950 to-fuchsia-950',
+      size: 'hero',
+      bgGradient: 'from-purple-950 via-violet-950 to-indigo-950',
       content: {
-        subtitle: 'when we asked, you said:',
-        body: '1 or fewer',
-        highlight: 'And that includes the GC: banter that\'s been on mute since 2019.'
+        subtitle: 'BY DESIGN',
+        title: 'Societies pass on knowledge between generations',
+        highlight: 'They actively teach young people what it is to be a "good man", with mixed results. Schools, families, churches, mosques, police, newspapers, adverts shape and reinforce views. Many of the same institutions that a generation ago were the most active in denying us knowledge of what it is to be a queer man.',
+        body: 'We are left to our own devices. Smartphones usually!'
       },
-      animationType: 'default',
-      textPosition: 'topRight'
+      aspectRatio: 'tall',
+      textPosition: 'center'
     },
     {
       id: 3,
@@ -436,16 +436,16 @@ export default function TheoryOfChangeMasonry() {
     {
       id: 5,
       type: 'statement',
-      size: 'hero',
-      bgGradient: 'from-purple-950 via-violet-950 to-indigo-950',
+      size: 'large',
+      imageUrl: '/images/theory-of-change/card-05-one-or-fewer.png',
+      bgGradient: 'from-purple-950 to-fuchsia-950',
       content: {
-        subtitle: 'BY DESIGN',
-        title: 'Societies pass on knowledge between generations',
-        highlight: 'They actively teach young people what it is to be a "good man", with mixed results. Schools, families, churches, mosques, police, newspapers, adverts shape and reinforce views. Many of the same institutions that a generation ago were the most active in denying us knowledge of what it is to be a queer man.',
-        body: 'We are left to our own devices. Smartphones usually!'
+        subtitle: 'when we asked, you said:',
+        body: '1 or fewer',
+        highlight: 'And that includes the GC: banter that\'s been on mute since 2019.'
       },
-      aspectRatio: 'tall',
-      textPosition: 'center'
+      animationType: 'default',
+      textPosition: 'topRight'
     },
     {
       id: 6,
