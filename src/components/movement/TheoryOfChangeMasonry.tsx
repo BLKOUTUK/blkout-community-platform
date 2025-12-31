@@ -578,8 +578,8 @@ export default function TheoryOfChangeMasonry() {
       {/* Progress Bar */}
       <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-amber-500 z-50" />
 
-      {/* Ticker Header */}
-      <div className="fixed top-1 left-0 right-0 z-40 overflow-hidden bg-black/80 backdrop-blur-sm">
+      {/* Ticker Header - below nav menu */}
+      <div className="fixed top-1 left-0 right-0 z-10 overflow-hidden bg-black/80 backdrop-blur-sm">
         <motion.div
           className="flex whitespace-nowrap py-2"
           animate={{ x: [0, -1000] }}
@@ -637,18 +637,19 @@ export default function TheoryOfChangeMasonry() {
           </div>
         </section>
 
-        {/* LORDE VIDEO BREAK: Transition from Survival to Thriving */}
-        <section className="relative w-full flex items-center justify-center bg-black my-8 py-16">
-          <div className="w-auto max-w-2xl px-4">
-            <video
-              src="/videos/Lordescroll.mp4"
-              className="w-full rounded-2xl"
-              style={{ aspectRatio: '4/5' }}
-              loop
-              playsInline
-              controls
-              preload="metadata"
-            />
+        {/* LORDE VIDEO: In column as part of masonry (decorative) */}
+        <section className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
+            <div className="col-span-1 row-span-3 relative overflow-hidden rounded-2xl">
+              <video
+                src="/videos/Lordescroll.mp4"
+                className="w-full h-full object-cover"
+                loop
+                playsInline
+                controls
+                preload="metadata"
+              />
+            </div>
           </div>
         </section>
 
@@ -661,18 +662,19 @@ export default function TheoryOfChangeMasonry() {
           </div>
         </section>
 
-        {/* VIDEO BREAK 1: Welcome BLKOUT TV */}
-        <section className="relative w-full flex items-center justify-center bg-black my-8 py-16">
-          <div className="w-auto max-w-2xl px-4">
-            <video
-              src="/videos/Welcome BLKOUT TV.mp4"
-              className="w-full rounded-2xl"
-              style={{ aspectRatio: '4/5' }}
-              loop
-              playsInline
-              controls
-              preload="metadata"
-            />
+        {/* WELCOME VIDEO: Full width across columns (decorative) */}
+        <section className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
+            <div className="col-span-2 md:col-span-3 lg:col-span-4 row-span-2 relative overflow-hidden rounded-2xl">
+              <video
+                src="/videos/Welcome BLKOUT TV.mp4"
+                className="w-full h-full object-cover"
+                loop
+                playsInline
+                controls
+                preload="metadata"
+              />
+            </div>
           </div>
         </section>
 
