@@ -35,8 +35,15 @@ import {
   type PromotionChecklist,
 } from '@/services/promotionChecklist';
 import { diagnoseFailure, formatDiagnosis } from '@/services/failureDiagnosis';
+import {
+  checkAllContainers,
+  getCategorySummary,
+  getCriticalIssues,
+  getTotalResourceUsage,
+  type ContainerHealth,
+} from '@/services/dockerHealthCheck';
 
-type Tab = 'overview' | 'routes' | 'database' | 'checklist';
+type Tab = 'overview' | 'routes' | 'database' | 'infrastructure' | 'checklist';
 
 const HealthDashboard: React.FC = () => {
   // State
@@ -49,6 +56,7 @@ const HealthDashboard: React.FC = () => {
   const [services, setServices] = useState<ServiceHealth[]>([]);
   const [database, setDatabase] = useState<DatabaseHealth | null>(null);
   const [routes, setRoutes] = useState<RouteCheck[]>([]);
+  const [containers, setContainers] = useState<ContainerHealth[]>([]);
   const [checklist, setChecklist] = useState<PromotionChecklist | null>(null);
 
   /**
@@ -58,16 +66,18 @@ const HealthDashboard: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Run all health checks in parallel
-      const [servicesData, databaseData, routesData] = await Promise.all([
+      // Run all health checks in parallel (including new Docker infrastructure)
+      const [servicesData, databaseData, routesData, containersData] = await Promise.all([
         checkAllServices(),
         checkDatabaseHealth(),
         checkAllRoutes(),
+        checkAllContainers(),
       ]);
 
       setServices(servicesData);
       setDatabase(databaseData);
       setRoutes(routesData);
+      setContainers(containersData);
 
       // Generate promotion checklist
       const checklistData = generatePromotionChecklist(servicesData, databaseData, routesData);
@@ -611,7 +621,7 @@ const HealthDashboard: React.FC = () => {
       <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex gap-1">
-            {(['overview', 'routes', 'database', 'checklist'] as Tab[]).map((tab) => (
+            {(['overview', 'routes', 'database', 'infrastructure', 'checklist'] as Tab[]).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -967,6 +977,254 @@ const HealthDashboard: React.FC = () => {
                   </ul>
                 </div>
               )}
+            </motion.div>
+          )}
+
+          {activeTab === 'infrastructure' && (
+            <motion.div
+              key="infrastructure"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+                Docker Infrastructure Status
+              </h2>
+
+              {/* Category Summary Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                {(() => {
+                  const categorySummary = getCategorySummary(containers);
+                  const criticalIssues = getCriticalIssues(containers);
+                  const resourceUsage = getTotalResourceUsage(containers);
+
+                  return (
+                    <>
+                      {/* IVOR Services Summary */}
+                      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                        <div className="flex items-center gap-3 mb-4">
+                          <Activity className="w-6 h-6 text-purple-600" />
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                            IVOR Services
+                          </h3>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600 dark:text-gray-400">Running</span>
+                            <span className="font-semibold text-gray-900 dark:text-gray-100">
+                              {categorySummary.ivor.running}/{categorySummary.ivor.total}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600 dark:text-gray-400">Critical</span>
+                            <span className="font-semibold text-gray-900 dark:text-gray-100">
+                              {categorySummary.ivor.critical} services
+                            </span>
+                          </div>
+                          {categorySummary.ivor.running === categorySummary.ivor.total ? (
+                            <div className="flex items-center gap-2 text-green-600 mt-2">
+                              <CheckCircle className="w-4 h-4" />
+                              <span className="text-sm font-medium">All systems operational</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2 text-red-600 mt-2">
+                              <AlertCircle className="w-4 h-4" />
+                              <span className="text-sm font-medium">Services degraded</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Coolify Summary */}
+                      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                        <div className="flex items-center gap-3 mb-4">
+                          <Server className="w-6 h-6 text-blue-600" />
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                            Coolify Platform
+                          </h3>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600 dark:text-gray-400">Running</span>
+                            <span className="font-semibold text-gray-900 dark:text-gray-100">
+                              {categorySummary.coolify.running}/{categorySummary.coolify.total}
+                            </span>
+                          </div>
+                          {categorySummary.coolify.running === categorySummary.coolify.total ? (
+                            <div className="flex items-center gap-2 text-green-600 mt-2">
+                              <CheckCircle className="w-4 h-4" />
+                              <span className="text-sm font-medium">Platform operational</span>
+                            </div>
+                          ) : (
+                            <div className="flex items-center gap-2 text-red-600 mt-2">
+                              <AlertCircle className="w-4 h-4" />
+                              <span className="text-sm font-medium">Platform degraded</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Critical Issues Alert */}
+                      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                        <div className="flex items-center gap-3 mb-4">
+                          <AlertTriangle className="w-6 h-6 text-orange-600" />
+                          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                            Critical Alerts
+                          </h3>
+                        </div>
+                        {criticalIssues.length > 0 ? (
+                          <div className="space-y-2">
+                            {criticalIssues.map((issue, idx) => (
+                              <div key={idx} className="flex items-start gap-2 text-sm">
+                                <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
+                                <span className="text-red-600">{issue}</span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-2 text-green-600">
+                            <CheckCircle className="w-4 h-4" />
+                            <span className="text-sm font-medium">No critical issues</span>
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+
+              {/* Container List */}
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">
+                  Container Details
+                </h3>
+
+                {/* IVOR Microservices */}
+                <div className="mb-6">
+                  <h4 className="text-lg font-semibold text-purple-600 dark:text-purple-400 mb-3 flex items-center gap-2">
+                    <Activity className="w-5 h-5" />
+                    IVOR Microservices (Voice Chatbot Foundation)
+                  </h4>
+                  <div className="grid grid-cols-1 gap-3">
+                    {containers.filter(c => c.category === 'ivor').map((container) => (
+                      <div
+                        key={container.container}
+                        className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4"
+                      >
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3">
+                              <h5 className="font-semibold text-gray-900 dark:text-gray-100">
+                                {container.name}
+                              </h5>
+                              {container.status === 'running' ? (
+                                <CheckCircle className="w-5 h-5 text-green-600" />
+                              ) : container.status === 'restarting' ? (
+                                <RefreshCw className="w-5 h-5 text-yellow-600 animate-spin" />
+                              ) : (
+                                <XCircle className="w-5 h-5 text-red-600" />
+                              )}
+                            </div>
+                            <div className="mt-2 grid grid-cols-4 gap-4 text-sm">
+                              <div>
+                                <span className="text-gray-600 dark:text-gray-400">Status:</span>{' '}
+                                <span className="font-medium text-gray-900 dark:text-gray-100">{container.status}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-600 dark:text-gray-400">Uptime:</span>{' '}
+                                <span className="font-medium text-gray-900 dark:text-gray-100">{container.uptime}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-600 dark:text-gray-400">CPU:</span>{' '}
+                                <span className="font-medium text-gray-900 dark:text-gray-100">{container.cpu}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-600 dark:text-gray-400">Memory:</span>{' '}
+                                <span className="font-medium text-gray-900 dark:text-gray-100">{container.memory}</span>
+                              </div>
+                            </div>
+                            {container.details.ports && container.details.ports.length > 0 && (
+                              <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                                Ports: {container.details.ports.join(', ')}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Coolify Platform */}
+                <div className="mb-6">
+                  <h4 className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-3 flex items-center gap-2">
+                    <Server className="w-5 h-5" />
+                    Coolify Platform Management
+                  </h4>
+                  <div className="grid grid-cols-1 gap-3">
+                    {containers.filter(c => c.category === 'coolify').map((container) => (
+                      <div
+                        key={container.container}
+                        className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4"
+                      >
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3">
+                              <h5 className="font-semibold text-gray-900 dark:text-gray-100">
+                                {container.name}
+                              </h5>
+                              {container.status === 'running' ? (
+                                <CheckCircle className="w-5 h-5 text-green-600" />
+                              ) : (
+                                <XCircle className="w-5 h-5 text-red-600" />
+                              )}
+                            </div>
+                            <div className="mt-2 grid grid-cols-4 gap-4 text-sm">
+                              <div>
+                                <span className="text-gray-600 dark:text-gray-400">Status:</span>{' '}
+                                <span className="font-medium text-gray-900 dark:text-gray-100">{container.status}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-600 dark:text-gray-400">Uptime:</span>{' '}
+                                <span className="font-medium text-gray-900 dark:text-gray-100">{container.uptime}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-600 dark:text-gray-400">CPU:</span>{' '}
+                                <span className="font-medium text-gray-900 dark:text-gray-100">{container.cpu}</span>
+                              </div>
+                              <div>
+                                <span className="text-gray-600 dark:text-gray-400">Memory:</span>{' '}
+                                <span className="font-medium text-gray-900 dark:text-gray-100">{container.memory}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Future Infrastructure Note */}
+                <div className="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                  <div className="flex items-start gap-3">
+                    <FileText className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                        Phase 1: Core Infrastructure (Current)
+                      </h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                        Monitoring IVOR microservices (6) and Coolify platform (2) - critical for February 2026 voice chatbot launch.
+                      </p>
+                      <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2 mt-4">
+                        Phase 2: Admin & Analytics (Planned)
+                      </h4>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Future expansion will include: Research Agent, Impact Analytics, Admin Tools, and other backend services.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </motion.div>
           )}
 
