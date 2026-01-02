@@ -136,8 +136,6 @@ export const INFRASTRUCTURE_CONTAINERS = [
 async function checkContainerHealth(
   container: typeof INFRASTRUCTURE_CONTAINERS[0]
 ): Promise<ContainerHealth> {
-  const startTime = Date.now();
-
   try {
     // MOCK DATA - In production, replace with actual Docker API calls
     // Example real implementation:
