@@ -577,6 +577,21 @@ export default function App() {
                     </a>
                   </div>
 
+                  {/* Shop */}
+                  <div className="flex items-center gap-1 px-2 border-r border-liberation-gold-divine/20">
+                    <button
+                      onClick={() => changeActiveTab('shop')}
+                      className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 flex items-center gap-1.5 ${
+                        activeTab === 'shop'
+                          ? 'bg-yellow-500/20 text-yellow-500 border border-yellow-500/30'
+                          : 'text-liberation-silver/80 hover:text-yellow-500 hover:bg-white/5'
+                      }`}
+                    >
+                      <DollarSign className="h-4 w-4" />
+                      Shop
+                    </button>
+                  </div>
+
                   {/* Info & Tools */}
                   <div className="flex items-center gap-1 px-2">
                     <button
