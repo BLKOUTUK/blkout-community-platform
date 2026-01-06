@@ -28,7 +28,7 @@ import InstallPrompt from '@/components/ui/InstallPrompt';
 import FirstTimeUserFlow from '@/components/onboarding/FirstTimeUserFlow';
 import VideoHero from '@/components/ui/VideoHero';
 import TheoryOfChangeMasonry from '@/components/movement/TheoryOfChangeMasonry';
-
+import ShopPage from '@/components/pages/ShopPage';
 
 // API Configuration - Working backend
 const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
@@ -42,7 +42,7 @@ const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'terms' | 'privacy' | 'health-dashboard' | 'movement';
+type NavigationTab = 'liberation' | 'governance' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -210,6 +210,8 @@ export default function App() {
         return <HealthDashboard />;
       case 'movement':
         return <TheoryOfChangeMasonry />;
+      case 'shop':
+        return <ShopPage />;
       default:
         return renderLiberationDashboard();
     }
