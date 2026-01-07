@@ -21,6 +21,7 @@ import IVORIntroduction from '@/components/pages/IVORIntroduction';
 import IVORAssistant from './components/ivor/IVORAssistant';
 import GovernancePage from '@/components/pages/GovernancePage';
 import GovernanceProposalsPage from '@/components/pages/GovernanceProposalsPage';
+import MemberPortalPage from '@/components/pages/MemberPortalPage';
 import TermsOfService from '@/components/pages/TermsOfService';
 import PrivacyPolicy from '@/components/pages/PrivacyPolicy';
 import HealthDashboard from '@/components/pages/HealthDashboard';
@@ -202,7 +203,7 @@ export default function App() {
       case 'governance-proposals':
         return <GovernanceProposalsPage />;
       case 'my-account':
-        return <div className="text-white p-8">Member Portal - Coming soon!</div>;
+        return <MemberPortalPage />;
       case 'terms':
         return <TermsOfService />;
       case 'privacy':
