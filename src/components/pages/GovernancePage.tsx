@@ -209,8 +209,7 @@ const GovernancePage: React.FC = () => {
                     and work together to make them real. Your ideas matter here.
                   </p>
                   <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); window.location.hash = '#governance-proposals'; window.location.reload(); }}
+                    href="/governance-proposals"
                     className="flex items-center space-x-2 text-purple-600 hover:text-purple-700 font-semibold"
                   >
                     <span>Share Your Idea</span>
@@ -234,8 +233,7 @@ const GovernancePage: React.FC = () => {
                     and we take time to understand all perspectives before choosing our path.
                   </p>
                   <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); window.location.hash = '#governance-proposals'; window.location.reload(); }}
+                    href="/governance-proposals"
                     className="flex items-center space-x-2 text-yellow-600 hover:text-yellow-700 font-semibold"
                   >
                     <span>View Active Votes</span>

@@ -415,16 +415,14 @@ export default function MemberPortalPage() {
               <h3 className="text-xl font-bold text-white mb-4">Quick Actions</h3>
               <div className="space-y-3">
                 <a
-                  href="#"
-                  onClick={(e) => { e.preventDefault(); window.location.hash = '#governance-proposals'; window.location.reload(); }}
+                  href="/governance-proposals"
                   className="block w-full bg-purple-500/20 border border-purple-500 text-purple-400 py-2 px-4 rounded-lg font-semibold hover:bg-purple-500/30 text-center transition-colors"
                 >
                   View Active Proposals
                 </a>
                 {['proposer', 'facilitator', 'admin'].includes(member.participation_level) && (
                   <a
-                    href="#"
-                    onClick={(e) => { e.preventDefault(); window.location.hash = '#governance-proposals'; window.location.reload(); }}
+                    href="/governance-proposals"
                     className="block w-full bg-yellow-500/20 border border-yellow-500 text-yellow-400 py-2 px-4 rounded-lg font-semibold hover:bg-yellow-500/30 text-center transition-colors"
                   >
                     Create Proposal
