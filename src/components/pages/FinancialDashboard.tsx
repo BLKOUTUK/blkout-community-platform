@@ -433,7 +433,7 @@ export default function FinancialDashboard() {
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5" />
                   <div>
-                    <h3 className="font-semibold text-yellow-400 mb-2">Budget Variance Alerts (>{20}%)</h3>
+                    <h3 className="font-semibold text-yellow-400 mb-2">Budget Variance Alerts (&gt;20%)</h3>
                     <ul className="text-sm text-gray-300 space-y-1">
                       {budgetLines
                         .filter(l => Math.abs(l.variance_percentage) > 20)
