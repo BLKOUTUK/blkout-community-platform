@@ -116,7 +116,7 @@ class ErrorBoundary extends React.Component<any, any> {
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'governance', 'about', 'stories', 'intro', 'admin', 'platform', 'terms', 'privacy', 'health-dashboard', 'movement'];
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'about', 'stories', 'intro', 'admin', 'platform', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
