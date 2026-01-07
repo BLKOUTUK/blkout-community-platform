@@ -24,7 +24,12 @@ interface Product {
   image_urls?: any;
 }
 
-const IVOR_API = import.meta.env.VITE_IVOR_API_URL || 'https://ivor.blkoutuk.cloud';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(
+  'https://bgjengudzfickgomjqmz.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnamVuZ3VkemZpY2tnb21qcW16Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MTI3NjcsImV4cCI6MjA3MTE4ODc2N30.kYQ2oFuQBGmu4V_dnj_1zDMDVsd-qpDZJwNvswzO6M0'
+);
 
 export default function ShopPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -38,9 +43,14 @@ export default function ShopPage() {
 
   const loadProducts = async () => {
     try {
-      const response = await fetch(`${IVOR_API}/api/shop/products`);
-      const data = await response.json();
-      setProducts(data.products || []);
+      const { data, error } = await supabase
+        .from('shop_products')
+        .select('*')
+        .eq('status', 'active')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setProducts(data || []);
     } catch (error) {
       console.error('Error loading products:', error);
     } finally {
