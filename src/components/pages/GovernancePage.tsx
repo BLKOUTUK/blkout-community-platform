@@ -208,10 +208,14 @@ const GovernancePage: React.FC = () => {
                     Any member can bring ideas to the table. We listen to each other's dreams
                     and work together to make them real. Your ideas matter here.
                   </p>
-                  <button className="flex items-center space-x-2 text-purple-600 hover:text-purple-700 font-semibold">
+                  <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); window.location.hash = '#governance-proposals'; window.location.reload(); }}
+                    className="flex items-center space-x-2 text-purple-600 hover:text-purple-700 font-semibold"
+                  >
                     <span>Share Your Idea</span>
                     <ArrowRight className="w-4 h-4" />
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -229,10 +233,14 @@ const GovernancePage: React.FC = () => {
                     We vote on important decisions together. Each member has equal say,
                     and we take time to understand all perspectives before choosing our path.
                   </p>
-                  <button className="flex items-center space-x-2 text-yellow-600 hover:text-yellow-700 font-semibold">
+                  <a
+                    href="#"
+                    onClick={(e) => { e.preventDefault(); window.location.hash = '#governance-proposals'; window.location.reload(); }}
+                    className="flex items-center space-x-2 text-yellow-600 hover:text-yellow-700 font-semibold"
+                  >
                     <span>View Active Votes</span>
                     <ArrowRight className="w-4 h-4" />
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
