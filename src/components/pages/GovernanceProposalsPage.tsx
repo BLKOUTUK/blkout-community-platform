@@ -74,7 +74,9 @@ export default function GovernanceProposalsPage() {
   };
 
   const createProposal = async () => {
-    if (!member || !member.can_propose) {
+    // Check participation_level (existing schema uses this instead of can_propose)
+    const canPropose = member && ['proposer', 'facilitator', 'admin'].includes(member.participation_level);
+    if (!canPropose) {
       alert('You need proposer permissions to create proposals');
       return;
     }
@@ -106,7 +108,9 @@ export default function GovernanceProposalsPage() {
   };
 
   const castVote = async (proposalId: string, voteChoice: 'support' | 'oppose' | 'abstain') => {
-    if (!member || !member.can_vote) {
+    // Check participation_level (existing schema)
+    const canVote = member && member.membership_status === 'active' && ['voter', 'proposer', 'facilitator', 'admin'].includes(member.participation_level);
+    if (!canVote) {
       alert('You need voting permissions');
       return;
     }
@@ -243,7 +247,7 @@ export default function GovernanceProposalsPage() {
                 )}
 
                 {/* Vote Buttons */}
-                {proposal.status === 'active' && member && member.can_vote && (
+                {proposal.status === 'active' && member && member.membership_status === 'active' && ['voter', 'proposer', 'facilitator', 'admin'].includes(member.participation_level) && (
                   <div className="flex gap-3">
                     <button
                       onClick={() => castVote(proposal.id, 'support')}
@@ -265,8 +269,8 @@ export default function GovernanceProposalsPage() {
                     </button>
                   </div>
                 )}
-                {proposal.status === 'active' && (!member || !member.can_vote) && (
-                  <div className="text-gray-500 text-sm italic">Sign in as active member to vote</div>
+                {proposal.status === 'active' && (!member || member.membership_status !== 'active' || !['voter', 'proposer', 'facilitator', 'admin'].includes(member.participation_level)) && (
+                  <div className="text-gray-500 text-sm italic">Sign in as active member with voting permissions to vote</div>
                 )}
               </div>
             );
