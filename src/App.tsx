@@ -20,6 +20,7 @@ import Footer from '@/components/ui/Footer';
 import IVORIntroduction from '@/components/pages/IVORIntroduction';
 import IVORAssistant from './components/ivor/IVORAssistant';
 import GovernancePage from '@/components/pages/GovernancePage';
+import GovernanceProposalsPage from '@/components/pages/GovernanceProposalsPage';
 import TermsOfService from '@/components/pages/TermsOfService';
 import PrivacyPolicy from '@/components/pages/PrivacyPolicy';
 import HealthDashboard from '@/components/pages/HealthDashboard';
@@ -42,7 +43,7 @@ const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop';
+type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -198,6 +199,10 @@ export default function App() {
         />;
       case 'governance':
         return <GovernancePage />;
+      case 'governance-proposals':
+        return <GovernanceProposalsPage />;
+      case 'my-account':
+        return <div className="text-white p-8">Member Portal - Coming soon!</div>;
       case 'terms':
         return <TermsOfService />;
       case 'privacy':
