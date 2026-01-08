@@ -9,6 +9,7 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
   const footerLinks = [
     { id: 'liberation', label: 'Platform', icon: Home, type: 'button' },
+    { id: 'movement', label: 'Theory of Change', icon: Play, type: 'button' },
     { id: 'intro', label: 'IVOR', icon: Brain, type: 'button' },
     { id: 'events', label: 'Events', icon: ExternalLink, type: 'link', href: 'https://events.blkoutuk.cloud' },
     { id: 'newsroom', label: 'Newsroom', icon: ExternalLink, type: 'link', href: 'https://news.blkoutuk.cloud' },
