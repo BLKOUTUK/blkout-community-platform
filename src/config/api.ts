@@ -5,7 +5,7 @@
 export const ADMIN_API_URL = import.meta.env.VITE_ADMIN_API_URL || 'https://api.blkoutuk.cloud';
 
 // IVOR AI Assistant
-export const IVOR_API_URL = import.meta.env.VITE_IVOR_API_URL || 'https://ivor.blkoutuk.com';
+export const IVOR_API_URL = import.meta.env.VITE_IVOR_API_URL || 'https://ivor.blkoutuk.cloud';
 
 // Voices Backend (articles/stories)
 export const VOICES_API_URL = import.meta.env.VITE_VOICES_API_URL || 'https://voices.blkoutuk.cloud';
