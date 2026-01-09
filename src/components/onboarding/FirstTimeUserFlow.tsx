@@ -58,9 +58,10 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
 
     switch (choice) {
       case 'scrollytelling':
-        // Open liberation story experience
-        window.open('https://movement.blkoutuk.cloud', '_blank');
-        setTimeout(() => completeOnboarding(), 1000);
+        // Navigate to Theory of Change (movement page) internally
+        completeOnboarding();
+        window.location.hash = 'movement';
+        window.location.href = '/movement';
         break;
 
       case 'ivor':
@@ -197,23 +198,23 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
           >
             {steps[currentStep].action === 'ecosystem' && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto max-h-[70vh] overflow-y-auto px-4">
-                {/* Liberation Story */}
+                {/* Theory of Change - FEATURED */}
                 <motion.button
                   onClick={() => handleEcosystemChoice('scrollytelling')}
-                  className="group bg-gradient-to-br from-liberation-red-liberation to-liberation-purple-spirit text-white p-6 rounded-xl hover:scale-105 transition-all duration-300"
+                  className="group bg-gradient-to-br from-liberation-red-liberation to-liberation-purple-spirit text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 ring-2 ring-liberation-gold-divine"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
                   <div className="flex items-center justify-center mb-4">
-                    <img src="/blkout-logo.png" alt="BLKOUT Logo" className="h-8 w-8 rounded-full" />
+                    <img src="/Branding and logos/blkoutlogo_wht_transparent.png" alt="BLKOUT" className="h-12 w-12" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">Liberation Story</h3>
-                  <p className="text-liberation-silver text-sm mb-4">
-                    Experience our immersive scrollytelling journey through Black queer liberation.
+                  <h3 className="text-xl font-black mb-2 uppercase">Our Story</h3>
+                  <p className="text-white text-sm mb-4">
+                    Start here: Discover why we exist and how we're building liberation together.
                   </p>
-                  <div className="flex items-center justify-center text-liberation-gold-divine font-semibold text-sm">
-                    Watch Story
-                    <ExternalLink className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <div className="flex items-center justify-center text-liberation-gold-divine font-bold text-sm uppercase">
+                    Begin Journey
+                    <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </motion.button>
 

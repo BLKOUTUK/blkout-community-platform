@@ -2,7 +2,7 @@
 // Comprehensive transparency, policies, and technical information
 
 import React, { useState } from 'react';
-import { Shield, Heart, Users, FileText, MapPin, Phone, Mail, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
+import { Shield, Heart, Users, MapPin, Mail, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react';
 import VideoHero from '@/components/ui/VideoHero';
 
 interface CollapsibleSectionProps {
@@ -73,6 +73,27 @@ export default function AboutUs() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Theory of Change CTA - Featured Introduction */}
+      <div className="max-w-4xl mx-auto px-6 py-8">
+        <a
+          href="/movement"
+          className="block bg-gradient-to-br from-purple-600 to-fuchsia-600 rounded-2xl p-8 hover:scale-[1.02] transition-all duration-300 group"
+        >
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-black text-white uppercase mb-4 group-hover:text-liberation-gold-divine transition-colors">
+              Our Theory of Change
+            </h2>
+            <p className="text-white text-lg mb-6">
+              New to BLKOUT? Start with our story - an immersive journey through isolation to liberation.
+            </p>
+            <div className="inline-flex items-center gap-2 bg-liberation-gold-divine text-black px-6 py-3 rounded-lg font-bold uppercase">
+              Experience Our Story
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </div>
+          </div>
+        </a>
       </div>
 
       {/* Main Content */}
