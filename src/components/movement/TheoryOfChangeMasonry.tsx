@@ -35,7 +35,7 @@ interface Card {
   // Dynamic enhancements
   animationType?: 'slide' | 'bounce' | 'reveal' | 'stagger' | 'default';
   aspectRatio?: 'tall' | 'standard' | 'squat';
-  textPosition?: 'bottomLeft' | 'topRight' | 'center' | 'topLeft';
+  textPosition?: 'bottomLeft' | 'topRight' | 'center' | 'topLeft' | 'bottomRight';
   purpleIntensity?: number; // 0-100, for overlay strength
 }
 
@@ -157,9 +157,9 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
       )}
 
       {/* Content with dynamic positioning - split if CTA exists */}
-      <div className={`relative z-10 h-full flex ${card.id === 32 ? 'flex-row items-start justify-between p-8' : `flex-col ${getTextPosition(card.textPosition, !!card.cta)}`}`}>
+      <div className={`relative z-10 h-full flex ${card.id === 32 ? 'flex-col justify-between' : `flex-col ${getTextPosition(card.textPosition, !!card.cta)}`}`}>
         {/* Top content area */}
-        <div className={`${card.id === 32 ? 'flex-1 pr-4 flex flex-col justify-end pb-8' : card.cta ? (card.id === 17 ? 'pt-20 pb-8' : card.id === 26 ? 'pt-24 pb-4' : 'pt-8 pb-8') : 'py-8'} ${card.id === 32 ? '' : 'px-[12%]'}`}>
+        <div className={`${card.id === 32 ? 'p-8' : card.cta ? (card.id === 17 ? 'pt-20 pb-8' : card.id === 26 ? 'pt-24 pb-4' : 'pt-8 pb-8') : 'py-8'} ${card.id === 32 ? '' : 'px-[12%]'}`}>
         {/* Subtitle (small, uppercase, accent color) */}
         {card.content.subtitle && (
           <motion.p className="text-amber-400 text-xs md:text-sm font-mono uppercase tracking-widest mb-2">
@@ -198,7 +198,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
         )}
 
         {/* Highlight (use for sentences - readable, not italic) */}
-        {card.content.highlight && (
+        {card.content.highlight && card.id !== 32 && (
           <p className="text-base md:text-lg lg:text-xl text-purple-100 font-normal leading-relaxed">
             {card.content.highlight}
           </p>
@@ -252,20 +252,29 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
 
         </div>
 
-        {/* Right column CTA for Card 32 */}
-        {card.cta && card.id === 32 && (
-          <div className="flex-shrink-0 pl-4 pt-0">
-            <a
-              href={card.cta.link}
-              onClick={(e) => e.stopPropagation()}
-              className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all hover:scale-105 ${
-                card.cta.color === 'fuchsia'
-                  ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
-                  : 'bg-gradient-to-r from-amber-600 to-amber-500 text-black'
-              }`}
-            >
-              {card.cta.text} →
-            </a>
+        {/* Bottom-right content for Card 32 */}
+        {card.id === 32 && (
+          <div className="p-8 flex justify-end items-end">
+            <div className="text-right space-y-4">
+              {card.content.highlight && (
+                <p className="text-base md:text-lg lg:text-xl text-purple-100 font-normal leading-relaxed">
+                  {card.content.highlight}
+                </p>
+              )}
+              {card.cta && (
+                <a
+                  href={card.cta.link}
+                  onClick={(e) => e.stopPropagation()}
+                  className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all hover:scale-105 ${
+                    card.cta.color === 'fuchsia'
+                      ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
+                      : 'bg-gradient-to-r from-amber-600 to-amber-500 text-black'
+                  }`}
+                >
+                  {card.cta.text} →
+                </a>
+              )}
+            </div>
           </div>
         )}
 
@@ -578,7 +587,7 @@ export default function TheoryOfChangeMasonry() {
     { id: 22, type: 'interactive', size: 'large', imageUrl: '/images/theory-of-change/card-22-wordcloud.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'talking de tings:' }, interactive: { type: 'wordcloud', data: { topics: ['Family', 'Sex', 'Money', 'Health', 'Faith', 'Fear', 'Joy', 'Aging', 'Love', 'Loneliness', 'Dreams', 'Rage', 'Healing'] }}, animationType: 'default', textPosition: 'topLeft' },
     { id: 23, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-23-connection.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'Connecting, not networking', highlight: 'No transaction required.' }, cta: { text: 'Join the conversation', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'bounce', textPosition: 'topRight' },
     { id: 24, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-24-articles.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'storytelling', highlight: '8 years building our archive. Telling our stories. On our terms.' }, cta: { text: 'Read the archive', link: '/stories', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomRight' },
-    { id: 26, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-26-map.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'From London to Bristol to Manchester', highlight: 'Finding each other' }, cta: { text: 'Connect locally', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'default', textPosition: 'bottomLeft' },
+    { id: 26, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-26-map.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'From London to Bristol to Manchester', highlight: 'Finding each other' }, cta: { text: 'Connect locally', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'default', textPosition: 'bottomRight' },
     { id: 27, type: 'beauty', size: 'small', imageUrl: '/images/theory-of-change/silhouette letters white rgb.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: {} },
     { id: 28, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-28-digital-human.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'IVOR: Your AI companion', body: 'Each one, Teach one', highlight: 'Tech that serves, not surveils' }, cta: { text: 'Meet IVOR', link: 'https://ivor.blkoutuk.cloud', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' }
   ];
@@ -587,9 +596,9 @@ export default function TheoryOfChangeMasonry() {
   const act4Cards: Card[] = [
     { id: 30, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-30-isolation.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'Activism has won us the freedom to love', highlight: 'Today, we battle to turn love into liberation.' }, animationType: 'default', textPosition: 'bottomRight' },
     { id: 31, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-31-problem-is-us.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { body: 'Sexual identity is not a choice', highlight: 'But choosing love is' }, animationType: 'default', textPosition: 'bottomRight' },
-    { id: 32, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-32-never-us.png', bgGradient: 'from-violet-600 to-purple-600', content: { body: 'Tenderness is a political act. Black queer joy is revolutionary' }, cta: { text: 'BLKOUT is different, it\'s ours', link: '/governance', color: 'amber' }, animationType: 'reveal' },
+    { id: 32, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-32-never-us.png', bgGradient: 'from-violet-600 to-purple-600', content: { title: 'Tenderness is a political act.', highlight: 'Black queer joy is revolutionary' }, cta: { text: 'BLKOUT is different, it\'s ours', link: '/governance', color: 'amber' }, animationType: 'reveal', textPosition: 'topLeft' },
     { id: 32.5, type: 'beauty', size: 'large', videoUrl: '/videos/Making Space For What.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
-    { id: 33, type: 'interactive', size: 'hero', imageUrl: '/images/theory-of-change/card-33-show-up.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'How do you show up?', highlight: 'Community is not a tick box, it\'s what you do' }, interactive: { type: 'poll', data: { options: ['I bring food', 'I show up', 'I listen', 'I fight', 'I laugh', 'I remember'] }}, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'center'}
+    { id: 33, type: 'interactive', size: 'hero', imageUrl: '/images/theory-of-change/card-33-show-up.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'How do you show up?', highlight: 'Community is not a tick box, it\'s what you do' }, interactive: { type: 'poll', data: { options: ['I bring food', 'I show up', 'I listen', 'I fight', 'I laugh', 'I remember'] }}, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'topLeft'}
   ];
 
   // ACT 5: The Invitation (Cards 35-38)
