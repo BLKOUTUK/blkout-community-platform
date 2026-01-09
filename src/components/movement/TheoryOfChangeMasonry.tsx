@@ -160,8 +160,8 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
       <div className={`relative z-10 h-full flex ${card.id === 32 ? 'flex-col justify-between' : `flex-col ${getTextPosition(card.textPosition, !!card.cta)}`}`}>
         {/* Top content area */}
         <div className={`${card.id === 32 ? 'p-8' : card.cta ? (card.id === 17 ? 'pt-20 pb-8' : card.id === 26 ? 'pt-24 pb-4' : 'pt-8 pb-8') : 'py-8'} ${card.id === 32 ? '' : 'px-[12%]'}`}>
-        {/* Subtitle (small, uppercase, accent color) */}
-        {card.content.subtitle && (
+        {/* Subtitle (small, uppercase, accent color) - Skip for cards 15 & 16 (render after body) */}
+        {card.content.subtitle && card.id !== 15 && card.id !== 16 && card.id !== 32 && (
           <motion.p className="text-amber-400 text-xs md:text-sm font-mono uppercase tracking-widest mb-2">
             {card.content.subtitle}
           </motion.p>
@@ -194,6 +194,13 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
             style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
           >
             {card.content.body}
+          </motion.p>
+        )}
+
+        {/* Subtitle for cards 15 & 16 - appears after body in yellow */}
+        {card.content.subtitle && (card.id === 15 || card.id === 16) && (
+          <motion.p className="text-amber-400 text-sm md:text-base font-normal tracking-wide leading-relaxed mt-3">
+            {card.content.subtitle}
           </motion.p>
         )}
 
@@ -579,8 +586,8 @@ export default function TheoryOfChangeMasonry() {
     { id: 13, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-13-app.png', bgGradient: 'from-violet-950 to-purple-950', content: {} },
     { id: 13.5, type: 'statement', size: 'medium', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'No face, no case, no intimacy', subtitle: 'The apps reward sharing as little of yourself as possible to get what you want, not what you need' }, textPosition: 'center', animationType: 'default' },
     { id: 14, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-14-club.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'You can\'t know yourself in isolation.', highlight: 'The self is relational.' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'center' },
-    { id: 15, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-15-group-chat.png', bgGradient: 'from-indigo-600 to-purple-600', content: { subtitle: 'we think we are brand new.', body: 'Black queer folk always existed. Thrived. Built community.', highlight: 'An inconvenient truth erased from our history to hold back our future.' }, animationType: 'default', textPosition: 'bottomLeft' },
-    { id: 16, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/video1-scene2-invisible-walls.png', bgGradient: 'from-violet-950 to-purple-950', content: { subtitle: 'We are scattered, scrolling from behind faceless profiles, lurking in the GC.', body: 'Not being able to find each other means all of us are lost', highlight: 'We are that funny guy at work, free HR consultant, seen on the recruitment promotion still unpromoted' }, textPosition: 'center' },
+    { id: 15, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-15-group-chat.png', bgGradient: 'from-indigo-600 to-purple-600', content: { body: 'we think we are brand new.', heading2: 'Black queer folk always existed. Thrived. Built community.', subtitle: 'An inconvenient truth erased from our history to hold back our future.' }, animationType: 'default', textPosition: 'bottomLeft' },
+    { id: 16, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/video1-scene2-invisible-walls.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'Not being able to find each other means all of us are lost', heading2: 'We are that funny guy at work, free HR consultant, seen on the recruitment promotion still unpromoted', subtitle: 'We are scattered, scrolling from behind faceless profiles, lurking in the GC.' }, textPosition: 'bottomLeft' },
     { id: 17, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-17-dont-know.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'Our differences are a strength, not a problem.', body: 'Together we represent riches we can learn to treasure.', highlight: 'Solidarity is a habit, it takes practice' }, cta: { text: 'BLKOUT newsroom; in our stories we are headliners', link: '/stories', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'center' }
   ];
 
