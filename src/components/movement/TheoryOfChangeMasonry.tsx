@@ -149,9 +149,9 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
           <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-fuchsia-500/15 to-transparent mix-blend-overlay pointer-events-none" />
           {/* Sexy purple glow */}
           <div className="absolute inset-0 bg-purple-500/10 blur-xl pointer-events-none" />
-          {/* Text readability gradient - only for statement cards with text, lighter for cards with faces (6, 7, 15, 16) */}
+          {/* Text readability gradient - lighter for ALL cards with people to preserve face visibility */}
           {card.type !== 'beauty' && (
-            <div className={`absolute inset-0 ${(card.id === 6 || card.id === 7 || card.id === 15 || card.id === 16) ? 'bg-gradient-to-t from-black/80 via-black/20 to-transparent' : 'bg-gradient-to-t from-black/90 via-black/40 to-black/20'}`} />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
           )}
         </div>
       ) : (
@@ -615,7 +615,7 @@ export default function TheoryOfChangeMasonry() {
     { id: 19, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-25-infrastructure.png', bgGradient: 'from-purple-950 to-indigo-950', content: { title: 'So we\'re building:', heading2: 'Space to be we', body: 'Space to be free' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomRight' },
     { id: 21, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-21-gatherings.png', bgGradient: 'from-fuchsia-600 to-purple-600', content: { body: 'we\'re getting social', highlight: 'Real conversations. Shared experiences.' }, cta: { text: 'See what\'s happening', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' },
     { id: 22, type: 'interactive', size: 'large', imageUrl: '/images/theory-of-change/card-22-wordcloud.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'talking de tings:' }, interactive: { type: 'wordcloud', data: { topics: ['Family', 'Sex', 'Money', 'Health', 'Faith', 'Fear', 'Joy', 'Aging', 'Love', 'Loneliness', 'Dreams', 'Rage', 'Healing'] }}, animationType: 'default', textPosition: 'bottomLeft' },
-    { id: 23, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-23-connection.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'Connecting, not networking', highlight: 'No transaction required.' }, cta: { text: 'Join the conversation', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'bounce', textPosition: 'topRight' },
+    { id: 23, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-23-connection.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'Connecting, not networking', highlight: 'No transaction required.' }, cta: { text: 'Join the conversation', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'bounce', textPosition: 'bottomLeft' },
     { id: 24, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-24-articles.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'storytelling', heading2: '8 years building our archive.\nTelling our stories.\nOn our terms.' }, cta: { text: 'Read the archive', link: '/stories', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomRight' },
     { id: 26, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-26-map.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'From London to Bristol to Manchester', highlight: 'Finding each other' }, cta: { text: 'Connect locally', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'default', textPosition: 'bottomRight' },
     { id: 27, type: 'beauty', size: 'small', imageUrl: '/images/theory-of-change/silhouette letters white rgb.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: {} },
@@ -634,7 +634,7 @@ export default function TheoryOfChangeMasonry() {
   // ACT 5: The Invitation (Cards 35-38)
   const act5Cards: Card[] = [
     { id: 35, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-35-structural-damage.png', bgGradient: 'from-indigo-950 to-purple-950', content: { subtitle: 'Liberation Is', body: 'Freedom from harm', highlight: 'using our power to resist and dismantle injustice' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' },
-    { id: 36, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-36-relational-repair.png', bgGradient: 'from-purple-950 to-violet-950', content: { subtitle: 'Liberation Is', body: 'Freedom to imagine better', highlight: 'using our power to create the new' }, animationType: 'default', textPosition: 'topRight' },
+    { id: 36, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-36-relational-repair.png', bgGradient: 'from-purple-950 to-violet-950', content: { subtitle: 'Liberation Is', body: 'Freedom to imagine better', highlight: 'using our power to create the new' }, animationType: 'default', textPosition: 'bottomLeft' },
     { id: 36.5, type: 'beauty', size: 'large', videoUrl: '/videos/baldwinscroll.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
     { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/api/community/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft' },
     { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', body: 'The damage is structural. The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' }
@@ -653,7 +653,7 @@ export default function TheoryOfChangeMasonry() {
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         >
           {[...Array(10)].map((_, i) => (
-            <span key={i} className="text-xs font-mono uppercase tracking-widest text-gray-400 mx-8">
+            <span key={i} className="text-2xl font-mono uppercase tracking-widest text-gray-400 mx-8">
               LIBERATION • COMMUNITY • POWER • HEALING • CONNECTION • COLLECTIVE •
             </span>
           ))}
@@ -685,7 +685,7 @@ export default function TheoryOfChangeMasonry() {
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         >
           {[...Array(10)].map((_, i) => (
-            <span key={i} className="text-xs font-mono uppercase tracking-widest text-gray-400 mx-8">
+            <span key={i} className="text-2xl font-mono uppercase tracking-widest text-gray-400 mx-8">
               LIBERATION • COMMUNITY • POWER • HEALING • CONNECTION • COLLECTIVE •
             </span>
           ))}
@@ -757,7 +757,7 @@ export default function TheoryOfChangeMasonry() {
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
             {[...Array(10)].map((_, i) => (
-              <span key={i} className="text-xs font-mono uppercase tracking-widest text-gray-400 mx-8">
+              <span key={i} className="text-2xl font-mono uppercase tracking-widest text-gray-400 mx-8">
                 LIBERATION • COMMUNITY • POWER • HEALING • CONNECTION • COLLECTIVE •
               </span>
             ))}
@@ -786,7 +786,7 @@ export default function TheoryOfChangeMasonry() {
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
             {[...Array(10)].map((_, i) => (
-              <span key={i} className="text-xs font-mono uppercase tracking-widest text-gray-400 mx-8">
+              <span key={i} className="text-2xl font-mono uppercase tracking-widest text-gray-400 mx-8">
                 LIBERATION • COMMUNITY • POWER • HEALING • CONNECTION • COLLECTIVE •
               </span>
             ))}
