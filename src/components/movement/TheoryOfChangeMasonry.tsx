@@ -149,9 +149,9 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
           <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-fuchsia-500/15 to-transparent mix-blend-overlay pointer-events-none" />
           {/* Sexy purple glow */}
           <div className="absolute inset-0 bg-purple-500/10 blur-xl pointer-events-none" />
-          {/* Text readability gradient - only for statement cards with text, lighter for cards 15 & 16 */}
+          {/* Text readability gradient - only for statement cards with text, lighter for cards with faces (6, 7, 15, 16) */}
           {card.type !== 'beauty' && (
-            <div className={`absolute inset-0 ${(card.id === 15 || card.id === 16) ? 'bg-gradient-to-t from-black/80 via-black/20 to-transparent' : 'bg-gradient-to-t from-black/90 via-black/40 to-black/20'}`} />
+            <div className={`absolute inset-0 ${(card.id === 6 || card.id === 7 || card.id === 15 || card.id === 16) ? 'bg-gradient-to-t from-black/80 via-black/20 to-transparent' : 'bg-gradient-to-t from-black/90 via-black/40 to-black/20'}`} />
           )}
         </div>
       ) : (
@@ -498,14 +498,15 @@ export default function TheoryOfChangeMasonry() {
     },
     {
       id: 7,
-      type: 'beauty',
+      type: 'statement',
       size: 'large',
       imageUrl: '/images/theory-of-change/card-07-survive-alone.png',
       bgGradient: 'from-fuchsia-600 to-purple-600',
       content: {
         title: 'We\'ve learned to survive alone together.'
       },
-      cta: { text: 'In The Picture: Loneliness Report', link: 'https://blkoutuk.com/in-the-picture', color: 'amber' }
+      cta: { text: 'In The Picture: Loneliness Report', link: 'https://blkoutuk.com/in-the-picture', color: 'amber' },
+      textPosition: 'bottomLeft'
     },
     {
       id: 7.5,
