@@ -582,7 +582,7 @@ export default function TheoryOfChangeMasonry() {
       id: 10,
       type: 'statement',
       size: 'large',
-      imageUrl: '/images/theory-of-change/card-10-backwards.png',
+      imageUrl: '/images/theory-of-change/survival is a good start.png',
       bgGradient: 'from-fuchsia-950 to-violet-950',
       content: {
         body: 'Survival is a good start. If we want to thrive',
