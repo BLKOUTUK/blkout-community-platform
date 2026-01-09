@@ -162,17 +162,17 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
       <div className={`relative z-10 h-full flex ${card.id === 32 ? 'flex-col justify-between' : `flex-col ${getTextPosition(card.textPosition, !!card.cta)}`}`}>
         {/* Top content area */}
         <div className={`${card.id === 32 ? 'p-8' : card.cta ? (card.id === 17 ? 'pt-20 pb-8' : card.id === 26 ? 'pt-24 pb-4' : 'pt-8 pb-8') : 'py-8'} ${card.id === 32 ? '' : 'px-[12%]'}`}>
-        {/* Subtitle (small, uppercase, accent color) - Skip for cards 15 & 16 (render after body) */}
-        {card.content.subtitle && card.id !== 15 && card.id !== 16 && card.id !== 32 && (
+        {/* Subtitle (small, uppercase, accent color) - Skip for card 32 (has special layout) */}
+        {card.content.subtitle && card.id !== 32 && (
           <motion.p className="text-amber-400 text-xs md:text-sm font-mono uppercase tracking-widest mb-2">
             {card.content.subtitle}
           </motion.p>
         )}
 
-        {/* Title (primary heading - largest) */}
+        {/* Title (primary heading - largest) - Yellow for cards 15 & 16 */}
         {card.content.title && (
           <motion.h1
-            className="text-2xl md:text-3xl lg:text-4xl font-black text-white uppercase tracking-tight leading-tight mb-3"
+            className={`text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tight leading-tight mb-3 ${(card.id === 15 || card.id === 16) ? 'text-amber-400' : 'text-white'}`}
             style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
           >
             {card.content.title}
@@ -192,23 +192,16 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
         {/* Body (use as secondary heading - short, bold) */}
         {card.content.body && (
           <motion.p
-            className={`text-lg md:text-xl lg:text-2xl font-bold text-white uppercase leading-tight ${card.id === 11 ? 'mb-12' : 'mb-4'}`}
+            className={`text-lg md:text-xl lg:text-2xl font-bold text-white uppercase leading-tight whitespace-pre-line ${card.id === 11 ? 'mb-12' : 'mb-4'}`}
             style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
           >
             {card.content.body}
           </motion.p>
         )}
 
-        {/* Subtitle for cards 15 & 16 - appears after body in yellow */}
-        {card.content.subtitle && (card.id === 15 || card.id === 16) && (
-          <motion.p className="text-amber-400 text-sm md:text-base font-normal tracking-wide leading-relaxed mt-3 whitespace-pre-line">
-            {card.content.subtitle}
-          </motion.p>
-        )}
-
-        {/* Highlight (use for sentences - readable, not italic) */}
+        {/* Highlight (use for sentences - readable, not italic) - Yellow for cards 15 & 16 */}
         {card.content.highlight && card.id !== 32 && (
-          <p className="text-base md:text-lg lg:text-xl text-purple-100 font-normal leading-relaxed">
+          <p className={`text-base md:text-lg lg:text-xl font-normal leading-relaxed ${(card.id === 15 || card.id === 16) ? 'text-amber-400' : 'text-purple-100'}`}>
             {card.content.highlight}
           </p>
         )}
@@ -605,8 +598,8 @@ export default function TheoryOfChangeMasonry() {
     { id: 13, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-13-app.png', bgGradient: 'from-violet-950 to-purple-950', content: {} },
     { id: 13.5, type: 'statement', size: 'medium', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'No face, no case, no intimacy', subtitle: 'The apps reward sharing as little of yourself as possible to get what you want, not what you need' }, textPosition: 'center', animationType: 'default' },
     { id: 14, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-14-club.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'You can\'t know yourself in isolation.', highlight: 'The self is relational.' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' },
-    { id: 15, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-15-group-chat.png', bgGradient: 'from-indigo-600 to-purple-600', content: { heading2: 'Black queer folk always existed. Thrived. Built community.', subtitle: 'we think we are brand new.\nAn inconvenient truth erased from our history to hold back our future.' }, animationType: 'default', textPosition: 'bottomLeft' },
-    { id: 16, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/video1-scene2-invisible-walls.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'Not being able to find each other means all of us are lost', subtitle: 'We are scattered, scrolling from behind faceless profiles, lurking in the GC.\nWe are that funny guy at work, free HR consultant, seen on the recruitment promotion still unpromoted' }, textPosition: 'bottomLeft' },
+    { id: 15, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-15-group-chat.png', bgGradient: 'from-indigo-600 to-purple-600', content: { title: 'we think we are brand new.', heading2: 'Black queer folk always existed. Thrived. Built community.', highlight: 'An inconvenient truth erased from our history to hold back our future.' }, animationType: 'default', textPosition: 'bottomLeft' },
+    { id: 16, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/video1-scene2-invisible-walls.png', bgGradient: 'from-violet-950 to-purple-950', content: { title: 'We are scattered, scrolling from behind faceless profiles, lurking in the GC.', body: 'Not being able to find each other means all of us are lost', highlight: 'We are that funny guy at work, free HR consultant, seen on the recruitment promotion still unpromoted' }, textPosition: 'bottomLeft' },
     { id: 17, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-17-dont-know.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'Our differences are a strength, not a problem.', body: 'Together we represent riches we can learn to treasure.', highlight: 'Solidarity is a habit, it takes practice' }, cta: { text: 'BLKOUT newsroom; in our stories we are headliners', link: '/stories', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft' }
   ];
 
@@ -616,7 +609,7 @@ export default function TheoryOfChangeMasonry() {
     { id: 21, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-21-gatherings.png', bgGradient: 'from-fuchsia-600 to-purple-600', content: { body: 'we\'re getting social', highlight: 'Real conversations. Shared experiences.' }, cta: { text: 'See what\'s happening', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' },
     { id: 22, type: 'interactive', size: 'large', imageUrl: '/images/theory-of-change/card-22-wordcloud.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'talking de tings:' }, interactive: { type: 'wordcloud', data: { topics: ['Family', 'Sex', 'Money', 'Health', 'Faith', 'Fear', 'Joy', 'Aging', 'Love', 'Loneliness', 'Dreams', 'Rage', 'Healing'] }}, animationType: 'default', textPosition: 'bottomLeft' },
     { id: 23, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-23-connection.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'Connecting, not networking', highlight: 'No transaction required.' }, cta: { text: 'Join the conversation', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'bounce', textPosition: 'bottomLeft' },
-    { id: 24, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-24-articles.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'storytelling', heading2: '8 years building our archive.\nTelling our stories.\nOn our terms.' }, cta: { text: 'Read the archive', link: '/stories', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomRight' },
+    { id: 24, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-24-articles.png', bgGradient: 'from-violet-950 to-purple-950', content: { subtitle: 'storytelling', body: '8 years building our archive.\nTelling our stories.\nOn our terms.' }, cta: { text: 'Read the archive', link: '/stories', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomRight' },
     { id: 26, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-26-map.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'From London to Bristol to Manchester', highlight: 'Finding each other' }, cta: { text: 'Connect locally', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'default', textPosition: 'bottomRight' },
     { id: 27, type: 'beauty', size: 'small', imageUrl: '/images/theory-of-change/silhouette letters white rgb.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: {} },
     { id: 28, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-28-digital-human.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'IVOR: Your AI companion', body: 'Each one, Teach one', highlight: 'Tech that serves, not surveils' }, cta: { text: 'Meet IVOR', link: 'https://ivor.blkoutuk.cloud', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' }
