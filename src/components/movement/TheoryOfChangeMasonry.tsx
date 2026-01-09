@@ -143,14 +143,16 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
           <img
             src={card.imageUrl}
             alt=""
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            className={`w-full h-full ${card.type === 'beauty' ? 'object-contain' : 'object-cover'} transition-transform duration-700 group-hover:scale-110`}
           />
           {/* Purple overlay for brand cohesion */}
           <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-fuchsia-500/15 to-transparent mix-blend-overlay pointer-events-none" />
           {/* Sexy purple glow */}
           <div className="absolute inset-0 bg-purple-500/10 blur-xl pointer-events-none" />
-          {/* Text readability gradient */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
+          {/* Text readability gradient - only for statement cards with text */}
+          {card.type !== 'beauty' && (
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
+          )}
         </div>
       ) : (
         <div className={`absolute inset-0 bg-gradient-to-br ${card.bgGradient}`} />
