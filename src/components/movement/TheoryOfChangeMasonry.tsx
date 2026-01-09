@@ -164,7 +164,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
         <div className={`${card.id === 32 ? 'p-8' : card.cta ? (card.id === 17 ? 'pt-20 pb-8' : card.id === 26 ? 'pt-24 pb-4' : 'pt-8 pb-8') : 'py-8'} ${card.id === 32 ? '' : 'px-[12%]'}`}>
         {/* Subtitle (small, uppercase, accent color) - Skip for card 32 (has special layout) */}
         {card.content.subtitle && card.id !== 32 && (
-          <motion.p className="text-amber-400 text-xs md:text-sm font-mono uppercase tracking-widest mb-2">
+          <motion.p className="text-amber-400 text-sm md:text-base font-mono uppercase tracking-widest mb-2">
             {card.content.subtitle}
           </motion.p>
         )}
