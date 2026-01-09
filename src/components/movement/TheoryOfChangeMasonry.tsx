@@ -548,10 +548,21 @@ export default function TheoryOfChangeMasonry() {
     {
       id: 8.85,
       type: 'beauty',
-      size: 'medium',
+      size: 'small',
       videoUrl: '/videos/and-i-oop.mp4',
       bgGradient: 'from-fuchsia-600 to-pink-600',
       content: {}
+    },
+    {
+      id: 8.86,
+      type: 'statement',
+      size: 'small',
+      bgGradient: 'from-indigo-950 to-purple-950',
+      content: {
+        body: '⏱️',
+        highlight: 'Countdown to liberation'
+      },
+      textPosition: 'center'
     },
     {
       id: 9,
@@ -590,6 +601,17 @@ export default function TheoryOfChangeMasonry() {
       },
       cta: { text: 'Join our next gathering', link: 'https://events.blkoutuk.cloud', color: 'amber' },
       textPosition: 'bottomLeft'
+    },
+    {
+      id: 10.5,
+      type: 'statement',
+      size: 'large',
+      imageUrl: '/images/theory-of-change/card-10-backwards.png',
+      bgGradient: 'from-purple-950 to-fuchsia-950',
+      content: {
+        body: 'Choose freedom'
+      },
+      textPosition: 'center'
     }
   ];
 
@@ -632,6 +654,18 @@ export default function TheoryOfChangeMasonry() {
     { id: 35, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-35-structural-damage.png', bgGradient: 'from-indigo-950 to-purple-950', content: { subtitle: 'Liberation Is', body: 'Freedom from harm', highlight: 'using our power to resist and dismantle injustice' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' },
     { id: 36, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-36-relational-repair.png', bgGradient: 'from-purple-950 to-violet-950', content: { subtitle: 'Liberation Is', body: 'Freedom to imagine better', highlight: 'using our power to create the new' }, animationType: 'default', textPosition: 'bottomLeft' },
     { id: 36.5, type: 'beauty', size: 'large', videoUrl: '/videos/baldwinscroll.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
+    {
+      id: 36.6,
+      type: 'statement',
+      size: 'medium',
+      bgGradient: 'from-amber-600 to-amber-500',
+      content: {
+        body: '⛽',
+        subtitle: 'Tank Full',
+        highlight: 'Ancestral Wisdom Loaded'
+      },
+      textPosition: 'center'
+    },
     { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/api/community/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft' },
     { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', body: 'The damage is structural. The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' }
   ];
