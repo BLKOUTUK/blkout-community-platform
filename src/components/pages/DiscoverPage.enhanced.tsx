@@ -14,7 +14,6 @@ import { motion } from 'framer-motion';
 import { HeroSection } from '../discover/HeroSection';
 import { BlkoutHubWidget } from '../discover/BlkoutHubWidget';
 import { YouTubeEmbed } from '../discover/YouTubeEmbed';
-import { AdventCalendarWidget } from '../discover/AdventCalendarWidget';
 import { SocialMediaEmbeds } from '../discover/SocialMediaEmbeds';
 
 interface DiscoverPageProps {
@@ -42,14 +41,39 @@ export default function DiscoverPage({ onNavigate }: DiscoverPageProps) {
           <BlkoutHubWidget />
         </motion.div>
 
-        {/* Advent Calendar Section - December Feature */}
+        {/* Heroes Video - Theory of Change */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.5 }}
-          className="mb-16 p-8 bg-gradient-to-br from-red-50 via-green-50 to-white dark:from-red-900/20 dark:via-green-900/20 dark:to-gray-900 rounded-2xl"
+          className="mb-16"
         >
-          <AdventCalendarWidget />
+          <div
+            onClick={() => onNavigate?.('movement')}
+            className="bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 cursor-pointer group"
+          >
+            <div className="text-center">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4 group-hover:text-liberation-gold-divine transition-colors">
+                Our Heroes, Our Story
+              </h2>
+              <p className="text-xl mb-6 opacity-90">
+                Discover how we're building liberation together
+              </p>
+              <div className="relative rounded-xl overflow-hidden mb-6 max-w-5xl mx-auto shadow-2xl" style={{ aspectRatio: '16/9' }}>
+                <video
+                  src="/videos/Heroes2.mp4"
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              </div>
+              <button className="bg-liberation-gold-divine text-liberation-black-power px-8 py-3 rounded-lg font-bold hover:bg-liberation-gold-divine/90 transition-all transform hover:scale-105">
+                Explore Our Theory of Change →
+              </button>
+            </div>
+          </div>
         </motion.div>
 
         {/* YouTube Embed - Full width */}

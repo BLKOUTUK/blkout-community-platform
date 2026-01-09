@@ -3,7 +3,7 @@
 // STRICT SEPARATION: Application shell only - NO business logic
 
 import React, { useState, useEffect } from 'react';
-import { Heart, DollarSign, Vote, Shield, Info, Play, Users, Brain, ArrowRight, ExternalLink, Globe, Mail, Calendar, PenTool } from 'lucide-react';
+import { DollarSign, Brain, ExternalLink } from 'lucide-react';
 import {
   cn,
   culturalUtils,
@@ -451,29 +451,31 @@ export default function App() {
         </button>
       </section>
 
-      {/* Advent Calendar Widget */}
-      <section className="bg-gradient-to-br from-liberation-red-liberation to-liberation-green-africa text-white p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-shadow duration-300 mb-8">
+      {/* Heroes Video - Theory of Change */}
+      <section
+        onClick={() => changeActiveTab('movement')}
+        className="bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 mb-8 cursor-pointer group"
+      >
         <div className="text-center">
-          <div className="flex justify-center mb-6">
-            <Calendar className="w-16 h-16 text-liberation-gold-divine" />
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">BLKOUT Advent Calendar 2025</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 group-hover:text-liberation-gold-divine transition-colors">
+            Our Heroes, Our Story
+          </h2>
           <p className="text-xl mb-6 opacity-90">
-            24 days of Black queer joy, community, and celebration
+            Discover how we're building liberation together
           </p>
-          <div className="relative rounded-xl overflow-hidden mb-6 max-w-5xl mx-auto" style={{ aspectRatio: '16/9' }}>
-            <iframe
-              src="https://www.flexclip.com/embed/12797929e05ada2d26d26d1916680d12093ac71.html"
-              className="w-full h-full"
-              style={{ border: 'none' }}
-              allowFullScreen
-              allow="autoplay; encrypted-media"
-              title="BLKOUT Advent Calendar 2025"
+          <div className="relative rounded-xl overflow-hidden mb-6 max-w-5xl mx-auto shadow-2xl" style={{ aspectRatio: '16/9' }}>
+            <video
+              src="/videos/Heroes2.mp4"
+              className="w-full h-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
             />
           </div>
-          <p className="text-sm mt-4 opacity-75">
-            Unwrap something special every day this December
-          </p>
+          <button className="bg-liberation-gold-divine text-liberation-black-power px-8 py-3 rounded-lg font-bold hover:bg-liberation-gold-divine/90 transition-all transform hover:scale-105">
+            Explore Our Theory of Change →
+          </button>
         </div>
       </section>
 
