@@ -307,29 +307,33 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
 };
 
 // Hero Video Break component
-const HeroVideoBreak: React.FC<{ title: string; subtitle: string; videoUrl?: string }> = ({ title, subtitle, videoUrl }) => {
+const HeroVideoBreak: React.FC<{ title?: string; subtitle?: string; videoUrl?: string }> = ({ title, subtitle, videoUrl }) => {
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center bg-black my-16">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-950 via-indigo-950 to-black opacity-50" />
       <div className="relative z-10 text-center px-4">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-6xl md:text-8xl font-black text-white uppercase mb-6"
-          style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
-        >
-          {title}
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="text-xl md:text-2xl text-amber-400 font-bold"
-        >
-          {subtitle}
-        </motion.p>
+        {title && (
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-6xl md:text-8xl font-black text-white uppercase mb-6"
+            style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
+          >
+            {title}
+          </motion.h2>
+        )}
+        {subtitle && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="text-xl md:text-2xl text-amber-400 font-bold"
+          >
+            {subtitle}
+          </motion.p>
+        )}
         {/* Video player or placeholder */}
         <div className="mt-12 w-full max-w-4xl mx-auto aspect-video bg-purple-950/30 rounded-2xl border border-purple-700/50 overflow-hidden">
           {videoUrl ? (
@@ -715,8 +719,6 @@ export default function TheoryOfChangeMasonry() {
 
         {/* VIDEO BREAK 2: Heroes */}
         <HeroVideoBreak
-          title="Heroes"
-          subtitle="The team assembles"
           videoUrl="/videos/Heroes2.mp4"
         />
 
