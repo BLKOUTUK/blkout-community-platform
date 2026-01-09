@@ -553,7 +553,7 @@ export default function TheoryOfChangeMasonry() {
     {
       id: 8.85,
       type: 'beauty',
-      size: 'large',
+      size: 'medium',
       videoUrl: '/videos/and-i-oop.mp4',
       bgGradient: 'from-fuchsia-600 to-pink-600',
       content: {}
