@@ -132,9 +132,10 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
             src={card.videoUrl}
             className="w-full h-full object-contain"
             style={{ aspectRatio: '4/5' }}
-            autoPlay
+            autoPlay={card.id !== 8.85}
             loop
-            muted
+            muted={card.id !== 8.85}
+            controls={card.id === 8.85}
             playsInline
             preload="auto"
           />
@@ -190,11 +191,11 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
           </motion.h2>
         )}
 
-        {/* Body (use as secondary heading - short, bold) */}
+        {/* Body (use as secondary heading - short, bold) - Normal text for card 24 */}
         {card.content.body && (
           <motion.p
-            className={`text-lg md:text-xl lg:text-2xl font-bold text-white uppercase leading-tight whitespace-pre-line ${card.id === 11 ? 'mb-12' : 'mb-4'}`}
-            style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
+            className={`${card.id === 24 ? 'text-base md:text-lg text-white font-normal leading-relaxed' : 'text-lg md:text-xl lg:text-2xl font-bold text-white uppercase leading-tight'} whitespace-pre-line ${card.id === 11 ? 'mb-12' : 'mb-4'}`}
+            style={card.id === 24 ? {} : { fontFamily: "'Arial Black', 'Arial', sans-serif" }}
           >
             {card.content.body}
           </motion.p>
