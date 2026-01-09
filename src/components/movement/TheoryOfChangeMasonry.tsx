@@ -149,9 +149,9 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
           <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-fuchsia-500/15 to-transparent mix-blend-overlay pointer-events-none" />
           {/* Sexy purple glow */}
           <div className="absolute inset-0 bg-purple-500/10 blur-xl pointer-events-none" />
-          {/* Text readability gradient - only for statement cards with text */}
+          {/* Text readability gradient - only for statement cards with text, lighter for cards 15 & 16 */}
           {card.type !== 'beauty' && (
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
+            <div className={`absolute inset-0 ${(card.id === 15 || card.id === 16) ? 'bg-gradient-to-t from-black/80 via-black/20 to-transparent' : 'bg-gradient-to-t from-black/90 via-black/40 to-black/20'}`} />
           )}
         </div>
       ) : (
@@ -551,6 +551,14 @@ export default function TheoryOfChangeMasonry() {
       }
     },
     {
+      id: 8.85,
+      type: 'beauty',
+      size: 'large',
+      videoUrl: '/videos/and-i-oop.mp4',
+      bgGradient: 'from-fuchsia-600 to-pink-600',
+      content: {}
+    },
+    {
       id: 9,
       type: 'statement',
       size: 'hero',
@@ -566,6 +574,14 @@ export default function TheoryOfChangeMasonry() {
       animationType: 'stagger',
       aspectRatio: 'tall',
       textPosition: 'bottomRight'
+    },
+    {
+      id: 9.5,
+      type: 'beauty',
+      size: 'large',
+      videoUrl: '/videos/been-waiting.mp4',
+      bgGradient: 'from-purple-950 to-indigo-950',
+      content: {}
     },
     {
       id: 10,
@@ -587,10 +603,10 @@ export default function TheoryOfChangeMasonry() {
     { id: 12.5, type: 'beauty', size: 'small', imageUrl: '/images/theory-of-change/silhouette letters black.png', bgGradient: 'from-indigo-950 to-purple-950', content: {} },
     { id: 13, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-13-app.png', bgGradient: 'from-violet-950 to-purple-950', content: {} },
     { id: 13.5, type: 'statement', size: 'medium', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'No face, no case, no intimacy', subtitle: 'The apps reward sharing as little of yourself as possible to get what you want, not what you need' }, textPosition: 'center', animationType: 'default' },
-    { id: 14, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-14-club.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'You can\'t know yourself in isolation.', highlight: 'The self is relational.' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'center' },
+    { id: 14, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-14-club.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'You can\'t know yourself in isolation.', highlight: 'The self is relational.' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' },
     { id: 15, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-15-group-chat.png', bgGradient: 'from-indigo-600 to-purple-600', content: { heading2: 'Black queer folk always existed. Thrived. Built community.', subtitle: 'we think we are brand new.\nAn inconvenient truth erased from our history to hold back our future.' }, animationType: 'default', textPosition: 'bottomLeft' },
     { id: 16, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/video1-scene2-invisible-walls.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'Not being able to find each other means all of us are lost', subtitle: 'We are scattered, scrolling from behind faceless profiles, lurking in the GC.\nWe are that funny guy at work, free HR consultant, seen on the recruitment promotion still unpromoted' }, textPosition: 'bottomLeft' },
-    { id: 17, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-17-dont-know.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'Our differences are a strength, not a problem.', body: 'Together we represent riches we can learn to treasure.', highlight: 'Solidarity is a habit, it takes practice' }, cta: { text: 'BLKOUT newsroom; in our stories we are headliners', link: '/stories', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'center' }
+    { id: 17, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-17-dont-know.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'Our differences are a strength, not a problem.', body: 'Together we represent riches we can learn to treasure.', highlight: 'Solidarity is a habit, it takes practice' }, cta: { text: 'BLKOUT newsroom; in our stories we are headliners', link: '/stories', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft' }
   ];
 
   // ACT 3: What We're Building (Cards 19-26, 28)
@@ -619,8 +635,8 @@ export default function TheoryOfChangeMasonry() {
     { id: 35, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-35-structural-damage.png', bgGradient: 'from-indigo-950 to-purple-950', content: { subtitle: 'Liberation Is', body: 'Freedom from harm', highlight: 'using our power to resist and dismantle injustice' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' },
     { id: 36, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-36-relational-repair.png', bgGradient: 'from-purple-950 to-violet-950', content: { subtitle: 'Liberation Is', body: 'Freedom to imagine better', highlight: 'using our power to create the new' }, animationType: 'default', textPosition: 'topRight' },
     { id: 36.5, type: 'beauty', size: 'large', videoUrl: '/videos/baldwinscroll.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
-    { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/api/community/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'center' },
-    { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', body: 'The damage is structural. The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'center' }
+    { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/api/community/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft' },
+    { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', body: 'The damage is structural. The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' }
   ];
 
   return (
