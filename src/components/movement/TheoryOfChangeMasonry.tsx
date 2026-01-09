@@ -132,10 +132,10 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
             src={card.videoUrl}
             className="w-full h-full object-contain"
             style={{ aspectRatio: '4/5' }}
-            autoPlay={card.id !== 8.85}
+            autoPlay={card.id !== 8.85 && card.id !== 36.5}
             loop
-            muted={card.id !== 8.85}
-            controls={card.id === 8.85}
+            muted={card.id !== 8.85 && card.id !== 36.5}
+            controls={card.id === 8.85 || card.id === 36.5}
             playsInline
             preload="auto"
           />
@@ -338,8 +338,8 @@ const HeroVideoBreak: React.FC<{ title?: string; subtitle?: string; videoUrl?: s
             {subtitle}
           </motion.p>
         )}
-        {/* Video player or placeholder */}
-        <div className="mt-12 w-full max-w-4xl mx-auto aspect-video bg-purple-950/30 rounded-2xl border border-purple-700/50 overflow-hidden">
+        {/* Video player - full width with controls */}
+        <div className="mt-12 w-full aspect-video bg-purple-950/30 rounded-2xl border border-purple-700/50 overflow-hidden">
           {videoUrl ? (
             <video
               src={videoUrl}
@@ -605,14 +605,11 @@ export default function TheoryOfChangeMasonry() {
     },
     {
       id: 10.5,
-      type: 'statement',
-      size: 'large',
-      imageUrl: '/images/theory-of-change/card-10-backwards.png',
+      type: 'beauty',
+      size: 'small',
+      imageUrl: '/images/theory-of-change/silhouette letters white rgb.png',
       bgGradient: 'from-purple-950 to-fuchsia-950',
-      content: {
-        body: 'Choose freedom'
-      },
-      textPosition: 'center'
+      content: {}
     }
   ];
 
@@ -737,16 +734,15 @@ export default function TheoryOfChangeMasonry() {
           </div>
         </section>
 
-        {/* LORDE VIDEO: Single column width (decorative) - directly after Card 6 */}
+        {/* LORDE VIDEO: Single column width with sound option */}
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-md">
             <div className="relative overflow-hidden rounded-2xl" style={{ height: '750px' }}>
               <video
                 src="/videos/Lordescroll.mp4"
                 className="w-full h-full object-cover"
-                autoPlay
                 loop
-                muted
+                controls
                 playsInline
                 preload="auto"
               />
