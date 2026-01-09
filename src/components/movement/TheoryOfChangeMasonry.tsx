@@ -676,6 +676,21 @@ export default function TheoryOfChangeMasonry() {
         </div>
       </section>
 
+      {/* Ticker Tape 1 */}
+      <div className="overflow-hidden bg-black/80 backdrop-blur-sm py-3">
+        <motion.div
+          className="flex whitespace-nowrap"
+          animate={{ x: [0, -1000] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        >
+          {[...Array(10)].map((_, i) => (
+            <span key={i} className="text-xs font-mono uppercase tracking-widest text-gray-400 mx-8">
+              LIBERATION • COMMUNITY • POWER • HEALING • CONNECTION • COLLECTIVE •
+            </span>
+          ))}
+        </motion.div>
+      </div>
+
       {/* Elegant Disclaimer - Bottom overlay */}
       <DisclaimerNote />
 
@@ -733,6 +748,21 @@ export default function TheoryOfChangeMasonry() {
           </div>
         </section>
 
+        {/* Ticker Tape 2 */}
+        <div className="overflow-hidden bg-black/80 backdrop-blur-sm py-3 mb-8">
+          <motion.div
+            className="flex whitespace-nowrap"
+            animate={{ x: [0, -1000] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          >
+            {[...Array(10)].map((_, i) => (
+              <span key={i} className="text-xs font-mono uppercase tracking-widest text-gray-400 mx-8">
+                LIBERATION • COMMUNITY • POWER • HEALING • CONNECTION • COLLECTIVE •
+              </span>
+            ))}
+          </motion.div>
+        </div>
+
         {/* ACT 2: The Problem - Masonry Grid */}
         <section className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
@@ -746,6 +776,21 @@ export default function TheoryOfChangeMasonry() {
         <HeroVideoBreak
           videoUrl="/videos/Heroes2.mp4"
         />
+
+        {/* Ticker Tape 3 */}
+        <div className="overflow-hidden bg-black/80 backdrop-blur-sm py-3 mb-8">
+          <motion.div
+            className="flex whitespace-nowrap"
+            animate={{ x: [0, -1000] }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          >
+            {[...Array(10)].map((_, i) => (
+              <span key={i} className="text-xs font-mono uppercase tracking-widest text-gray-400 mx-8">
+                LIBERATION • COMMUNITY • POWER • HEALING • CONNECTION • COLLECTIVE •
+              </span>
+            ))}
+          </motion.div>
+        </div>
 
         {/* ACT 3: What We're Building - Masonry Grid */}
         <section className="container mx-auto px-4 py-8">
