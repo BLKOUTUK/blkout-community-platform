@@ -7,14 +7,12 @@
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  // Use liberation design system preset
-  presets: [require('../../packages/shared/design-system/tailwind.preset')],
+  // Use liberation design system preset (local copy for Coolify deployment)
+  presets: [require('./tailwind.preset')],
 
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
-    // Include design system components
-    '../../packages/shared/design-system/components/**/*.{js,ts,jsx,tsx}',
   ],
 
   theme: {
