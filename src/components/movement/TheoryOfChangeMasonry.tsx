@@ -132,10 +132,10 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
             src={card.videoUrl}
             className="w-full h-full object-contain"
             style={{ aspectRatio: '4/5' }}
-            autoPlay={card.id !== 8.85 && card.id !== 36.5}
+            autoPlay={card.id !== 8.85 && card.id !== 36.5 && card.id !== 36.6}
             loop
-            muted={card.id !== 8.85 && card.id !== 36.5}
-            controls={card.id === 8.85 || card.id === 36.5}
+            muted={card.id !== 8.85 && card.id !== 36.5 && card.id !== 36.6}
+            controls={card.id === 8.85 || card.id === 36.5 || card.id === 36.6}
             playsInline
             preload="auto"
           />
@@ -549,21 +549,18 @@ export default function TheoryOfChangeMasonry() {
     {
       id: 8.85,
       type: 'beauty',
-      size: 'small',
+      size: 'large',
       videoUrl: '/videos/and-i-oop.mp4',
       bgGradient: 'from-fuchsia-600 to-pink-600',
       content: {}
     },
     {
       id: 8.86,
-      type: 'statement',
+      type: 'beauty',
       size: 'small',
+      videoUrl: '/videos/Mandalaspace.mp4',
       bgGradient: 'from-indigo-950 to-purple-950',
-      content: {
-        body: '⏱️',
-        highlight: 'Countdown to liberation'
-      },
-      textPosition: 'center'
+      content: {}
     },
     {
       id: 9,
@@ -654,15 +651,11 @@ export default function TheoryOfChangeMasonry() {
     { id: 36.5, type: 'beauty', size: 'large', videoUrl: '/videos/baldwinscroll.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
     {
       id: 36.6,
-      type: 'statement',
-      size: 'medium',
+      type: 'beauty',
+      size: 'small',
+      videoUrl: '/videos/ancestral wisdom.mp4',
       bgGradient: 'from-amber-600 to-amber-500',
-      content: {
-        body: '⛽',
-        subtitle: 'Tank Full',
-        highlight: 'Ancestral Wisdom Loaded'
-      },
-      textPosition: 'center'
+      content: {}
     },
     { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/api/community/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft' },
     { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', body: 'The damage is structural. The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' }
@@ -743,6 +736,23 @@ export default function TheoryOfChangeMasonry() {
                 className="w-full h-full object-cover"
                 loop
                 controls
+                playsInline
+                preload="auto"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ANCESTRAL WISDOM: Small insert after Lorde */}
+        <section className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
+            <div className="col-span-1 row-span-1 relative overflow-hidden rounded-2xl">
+              <video
+                src="/videos/ancestral wisdom.mp4"
+                className="w-full h-full object-cover"
+                loop
+                muted
+                autoPlay
                 playsInline
                 preload="auto"
               />
