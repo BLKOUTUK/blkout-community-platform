@@ -22,9 +22,10 @@
   }
 
   body {
-    @apply font-liberation text-liberation-black-power;
-    @apply antialiased leading-relaxed; /* Better readability */
-    background-color: #fafafa; /* Soft background for comfortable reading */
+    @apply font-sans antialiased leading-relaxed;
+    /* Black liberation aesthetic - dark background with light text */
+    background-color: #000000;
+    color: #FFFFFF;
   }
 
   /* Accessibility: Focus indicators with liberation colors */
