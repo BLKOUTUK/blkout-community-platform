@@ -28,6 +28,11 @@
     color: #FFFFFF;
   }
 
+  /* Override any dark text classes - ensure light text on dark background */
+  p, span, div, a, li, td, th, label {
+    color: inherit; /* Inherit white from body */
+  }
+
   /* Accessibility: Focus indicators with liberation colors */
   *:focus-visible {
     @apply outline-2 outline-offset-2 outline-liberation-pride-purple;
@@ -61,8 +66,9 @@
 
   /* Liberation heading hierarchy */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-liberation font-semibold text-liberation-black-power;
+    @apply font-sans font-semibold;
     line-height: 1.2;
+    color: #FFFFFF; /* White text for dark background */
   }
 
   h1 { @apply text-3xl lg:text-4xl; }
