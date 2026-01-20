@@ -361,9 +361,31 @@ export default function AboutUs() {
                   <h4 className="text-lg font-bold text-liberation-pride-purple mb-4">Organizational Structure</h4>
                   <div className="space-y-3 text-sm text-gray-300">
                     <div>
+                      <strong className="text-white">Legal Name:</strong><br />
+                      BLKOUT Creative Limited
+                    </div>
+                    <div>
                       <strong className="text-white">Legal Status:</strong><br />
-                      Community Benefit Society (CBS)<br />
-                      Registration Number: [To be registered]
+                      Community Benefit Society (CBS)
+                    </div>
+                    <div>
+                      <strong className="text-white">Registration Number:</strong><br />
+                      <a
+                        href="https://find-and-update.company-information.service.gov.uk/company/RS009639"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-liberation-sovereignty-gold hover:underline font-semibold"
+                      >
+                        RS009639
+                      </a>
+                    </div>
+                    <div>
+                      <strong className="text-white">Registered With:</strong><br />
+                      Financial Conduct Authority (FCA), London
+                    </div>
+                    <div>
+                      <strong className="text-white">Legislation:</strong><br />
+                      Co-operative and Community Benefit Societies Act 2014
                     </div>
                     <div>
                       <strong className="text-white">Governance Model:</strong><br />
@@ -384,15 +406,31 @@ export default function AboutUs() {
                       <MapPin className="w-4 h-4 text-liberation-healing-sage mt-1 flex-shrink-0" />
                       <div>
                         <strong className="text-white">Registered Office:</strong><br />
-                        [To be determined upon CBS registration]<br />
-                        United Kingdom
+                        London, United Kingdom<br />
+                        <span className="text-xs text-gray-400">(full address available on application)</span>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Mail className="w-4 h-4 text-liberation-healing-sage" />
+                    <div className="flex items-start space-x-2">
+                      <Mail className="w-4 h-4 text-liberation-healing-sage mt-1 flex-shrink-0" />
                       <div>
                         <strong className="text-white">Contact:</strong><br />
-                        info@blkoutcollective.org
+                        <a href="mailto:editor@blkoutuk.com" className="text-liberation-sovereignty-gold hover:underline">
+                          editor@blkoutuk.com
+                        </a>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <Shield className="w-4 h-4 text-liberation-healing-sage mt-1 flex-shrink-0" />
+                      <div>
+                        <strong className="text-white">Public Register:</strong><br />
+                        <a
+                          href="https://find-and-update.company-information.service.gov.uk/company/RS009639"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-liberation-sovereignty-gold hover:underline text-xs"
+                        >
+                          View on Companies House
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -406,7 +444,7 @@ export default function AboutUs() {
                   <li>• Asset lock - community assets cannot be extracted by private interests</li>
                   <li>• Community purpose priority over profit maximization</li>
                   <li>• Tax advantages for community benefit activities</li>
-                  <li>• Regulatory oversight ensuring community benefit compliance</li>
+                  <li>• FCA regulatory oversight ensuring community benefit compliance</li>
                 </ul>
               </div>
             </div>
@@ -495,6 +533,303 @@ export default function AboutUs() {
                   <li>• External mediation available for unresolved conflicts</li>
                   <li>• Annual third-party audits of community benefit compliance</li>
                 </ul>
+              </div>
+            </div>
+          </CollapsibleSection>
+
+          {/* Brand Guidelines & Media Kit */}
+          <CollapsibleSection title="Brand Guidelines & Media Kit">
+            <div className="space-y-6">
+              <div>
+                <h4 className="text-lg font-bold text-liberation-sovereignty-gold mb-3">For Partners & Media</h4>
+                <p className="text-gray-300 leading-relaxed mb-4">
+                  Creating content about BLKOUT? Our brand guidelines ensure authentic, consistent representation
+                  of The Black Queer Men's Liberation Collective across all platforms and materials.
+                </p>
+              </div>
+
+              {/* About the Editor */}
+              <div className="bg-gradient-to-br from-purple-900/30 to-fuchsia-900/30 p-6 rounded-xl border-2 border-liberation-sovereignty-gold">
+                <h5 className="font-bold text-liberation-sovereignty-gold mb-4 text-xl">About the Editor</h5>
+                <div className="flex flex-col md:flex-row items-start gap-6">
+                  <div className="flex-shrink-0">
+                    <img
+                      src="/Branding and logos/Robwebsite.png"
+                      alt="Dr Rob Berkeley - Site Editor & Creator"
+                      className="w-32 h-32 md:w-40 md:h-40 rounded-lg object-cover shadow-lg border-2 border-liberation-sovereignty-gold"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <div className="mb-3">
+                      <h6 className="text-xl font-bold text-white mb-1">Dr Rob Berkeley</h6>
+                      <p className="text-liberation-pride-pink font-semibold">Site Editor & Creator</p>
+                    </div>
+                    <p className="text-gray-300 leading-relaxed mb-3 text-sm">
+                      Award-winning busybody and recovering academic, Dr Rob Berkeley leads the development of BLKOUT Media.
+                      He was director of the racial justice think-tank, Runnymede Trust (2009-14), before a stint advising
+                      the BBC on audience accountability. He serves on the boards of Stanley Arts (SE25), the Black Boy Joy
+                      Club CIC, and is a Chair of Doc Society, and the Black Researcher Consortium. Rob was awarded an MBE
+                      in 2015 for services to equality.
+                    </p>
+                    <p className="text-xs text-gray-400 italic">
+                      <strong className="text-white">Transparency commitment:</strong> You have a right to know who makes decisions
+                      that affect your community experience. Questions and feedback welcomed at{' '}
+                      <a href="mailto:editor@blkoutuk.com" className="text-liberation-sovereignty-gold hover:underline">editor@blkoutuk.com</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Download Logo */}
+              <div className="bg-gray-800 p-6 rounded-xl border-l-4 border-liberation-sovereignty-gold">
+                <h5 className="font-bold text-liberation-sovereignty-gold mb-4">Download Official Logo</h5>
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-20 h-20 bg-black rounded-lg border-2 border-gray-700 p-2 flex items-center justify-center">
+                    <img
+                      src="/brand/BLKOUT_Logo_1024px.png"
+                      alt="BLKOUT Logo"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm text-gray-300 mb-2">
+                      <strong className="text-white">BLKOUT Logo:</strong> Circular badge design with "BLK OUT" text
+                    </p>
+                    <a
+                      href="/brand/BLKOUT_Logo_1024px.png"
+                      download
+                      className="inline-flex items-center gap-2 text-liberation-sovereignty-gold hover:underline text-sm font-semibold"
+                    >
+                      ⬇️ Download Logo (PNG, 1024x1024)
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3 Required Elements */}
+              <div className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 p-6 rounded-xl border-2 border-liberation-pride-pink">
+                <h5 className="font-bold text-white mb-4 text-xl">🎯 3 Required Elements on EVERY Asset</h5>
+                <p className="text-gray-300 mb-4">Every BLKOUT-branded design must include:</p>
+
+                <div className="space-y-4">
+                  <div className="bg-black/30 p-4 rounded-lg">
+                    <h6 className="font-bold text-liberation-sovereignty-gold mb-2">1. Logo (Top-Left or Top-Center)</h6>
+                    <ul className="text-sm text-gray-300 space-y-1">
+                      <li>• Minimum size: 80px</li>
+                      <li>• Recommended: 120-150px</li>
+                      <li>• Clear space: 20px around logo</li>
+                      <li>• Color: White logo on dark backgrounds</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-black/30 p-4 rounded-lg">
+                    <h6 className="font-bold text-liberation-sovereignty-gold mb-2">2. Byline (Bottom of Design)</h6>
+                    <p className="text-white font-mono bg-black/50 p-2 rounded text-sm mb-2">
+                      The Black Queer Men's Liberation Collective
+                    </p>
+                    <ul className="text-sm text-gray-300 space-y-1">
+                      <li>• Font: Inter, 14-16px</li>
+                      <li>• Color: White (#FFFFFF)</li>
+                      <li>• Position: Centered, 30-40px from bottom</li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-black/30 p-4 rounded-lg">
+                    <h6 className="font-bold text-liberation-sovereignty-gold mb-2">3. Website (Below Byline)</h6>
+                    <p className="text-liberation-sovereignty-gold font-mono bg-black/50 p-2 rounded text-sm mb-2 font-semibold">
+                      blkoutuk.com
+                    </p>
+                    <ul className="text-sm text-gray-300 space-y-1">
+                      <li>• Font: Inter, 14-16px</li>
+                      <li>• Color: <span className="text-liberation-sovereignty-gold font-bold">Liberation Gold (#FFD700)</span> — CRITICAL!</li>
+                      <li>• Position: Centered, directly below byline</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Color Palette */}
+              <div className="bg-gray-800 p-6 rounded-xl">
+                <h5 className="font-bold text-liberation-sovereignty-gold mb-4">🎨 Brand Color Palette</h5>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="bg-gray-900 p-3 rounded-lg">
+                    <div className="h-16 rounded-lg mb-2" style={{ background: '#000000', border: '2px solid #404040' }}></div>
+                    <p className="text-xs font-bold text-white">Black</p>
+                    <p className="text-xs text-gray-400 font-mono">#000000</p>
+                    <p className="text-xs text-gray-500">Backgrounds</p>
+                  </div>
+                  <div className="bg-gray-900 p-3 rounded-lg">
+                    <div className="h-16 rounded-lg mb-2" style={{ background: '#FFFFFF' }}></div>
+                    <p className="text-xs font-bold text-white">White</p>
+                    <p className="text-xs text-gray-400 font-mono">#FFFFFF</p>
+                    <p className="text-xs text-gray-500">Text</p>
+                  </div>
+                  <div className="bg-gray-900 p-3 rounded-lg">
+                    <div className="h-16 rounded-lg mb-2" style={{ background: '#a855f7' }}></div>
+                    <p className="text-xs font-bold text-white">Purple</p>
+                    <p className="text-xs text-gray-400 font-mono">#a855f7</p>
+                    <p className="text-xs text-gray-500">Brand primary</p>
+                  </div>
+                  <div className="bg-gray-900 p-3 rounded-lg">
+                    <div className="h-16 rounded-lg mb-2" style={{ background: '#FFD700' }}></div>
+                    <p className="text-xs font-bold text-white">Liberation Gold</p>
+                    <p className="text-xs text-gray-400 font-mono">#FFD700</p>
+                    <p className="text-xs text-gray-500">Website URL!</p>
+                  </div>
+                  <div className="bg-gray-900 p-3 rounded-lg">
+                    <div className="h-16 rounded-lg mb-2" style={{ background: '#FFB3DA' }}></div>
+                    <p className="text-xs font-bold text-white">Pride Pink</p>
+                    <p className="text-xs text-gray-400 font-mono">#FFB3DA</p>
+                    <p className="text-xs text-gray-500">Joy</p>
+                  </div>
+                  <div className="bg-gray-900 p-3 rounded-lg">
+                    <div className="h-16 rounded-lg mb-2" style={{ background: '#4DA6FF' }}></div>
+                    <p className="text-xs font-bold text-white">Pride Blue</p>
+                    <p className="text-xs text-gray-400 font-mono">#4DA6FF</p>
+                    <p className="text-xs text-gray-500">Community</p>
+                  </div>
+                </div>
+                <div className="mt-4 pt-4 border-t border-gray-700">
+                  <p className="text-xs text-gray-400">
+                    <strong className="text-white">Pan-African Accents (optional):</strong> Red #E31E24, Green #00A86B
+                  </p>
+                </div>
+              </div>
+
+              {/* Typography */}
+              <div className="bg-gray-800 p-6 rounded-xl">
+                <h5 className="font-bold text-liberation-sovereignty-gold mb-4">📝 Typography</h5>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-gray-900 rounded-lg">
+                    <span className="text-white font-semibold">Headings</span>
+                    <span className="text-gray-400 text-sm">Space Grotesk, Bold (600-700)</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-900 rounded-lg">
+                    <span className="text-white font-semibold">Body Text</span>
+                    <span className="text-gray-400 text-sm">Inter, Regular (400)</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 bg-gray-900 rounded-lg">
+                    <span className="text-liberation-sovereignty-gold font-semibold">Website URL</span>
+                    <span className="text-gray-400 text-sm">Inter, Regular, Gold #FFD700</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* DO's and DON'Ts */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="bg-gradient-to-br from-green-900/30 to-emerald-900/30 p-6 rounded-xl border-2 border-liberation-success">
+                  <h5 className="font-bold text-liberation-success mb-3">✅ DO (Maintains Brand Integrity)</h5>
+                  <ul className="text-sm text-gray-300 space-y-2">
+                    <li>✅ Black backgrounds (#000000)</li>
+                    <li>✅ Logo in top-left/center (small)</li>
+                    <li>✅ Footer with byline + website</li>
+                    <li>✅ Website in gold (#FFD700)</li>
+                    <li>✅ Rounded corners (12px+)</li>
+                    <li>✅ High contrast white/black</li>
+                    <li>✅ Joyful, celebratory mood</li>
+                    <li>✅ Pride color accents</li>
+                    <li>✅ Generous spacing</li>
+                  </ul>
+                </div>
+
+                <div className="bg-gradient-to-br from-red-900/30 to-rose-900/30 p-6 rounded-xl border-2 border-liberation-error">
+                  <h5 className="font-bold text-liberation-error mb-3">❌ DON'T (Breaks Brand)</h5>
+                  <ul className="text-sm text-gray-300 space-y-2">
+                    <li>❌ White/light backgrounds</li>
+                    <li>❌ Centered/huge logo</li>
+                    <li>❌ Missing footer elements</li>
+                    <li>❌ White website URL (must be gold!)</li>
+                    <li>❌ Sharp/angular edges</li>
+                    <li>❌ Low contrast text</li>
+                    <li>❌ Stretch/distort logo</li>
+                    <li>❌ Change logo colors</li>
+                    <li>❌ Corporate/sterile aesthetics</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Size Recommendations */}
+              <div className="bg-gray-800 p-6 rounded-xl">
+                <h5 className="font-bold text-liberation-sovereignty-gold mb-4">📱 Size Recommendations by Platform</h5>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center p-3 bg-gray-900 rounded-lg">
+                    <span className="text-white font-semibold text-sm">Instagram Post</span>
+                    <span className="text-gray-400 text-sm">1080x1080px • Logo: 120-150px</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-gray-900 rounded-lg">
+                    <span className="text-white font-semibold text-sm">Instagram Story</span>
+                    <span className="text-gray-400 text-sm">1080x1920px • Logo: 100-120px</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-gray-900 rounded-lg">
+                    <span className="text-white font-semibold text-sm">LinkedIn Post</span>
+                    <span className="text-gray-400 text-sm">1200x627px • Logo: 120-150px</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-gray-900 rounded-lg">
+                    <span className="text-white font-semibold text-sm">Print Flyer</span>
+                    <span className="text-gray-400 text-sm">300 DPI • Logo: 1 inch minimum</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pre-Flight Checklist */}
+              <div className="bg-gradient-to-br from-yellow-900/30 to-amber-900/30 p-6 rounded-xl border-2 border-liberation-sovereignty-gold">
+                <h5 className="font-bold text-liberation-sovereignty-gold mb-4 text-xl">🎯 Pre-Flight Checklist</h5>
+                <p className="text-gray-300 mb-4 text-sm">Before finalizing any BLKOUT-branded design, verify:</p>
+                <div className="grid md:grid-cols-2 gap-x-6 gap-y-2">
+                  <div className="flex items-start gap-2">
+                    <span className="text-liberation-sovereignty-gold font-bold">☐</span>
+                    <span className="text-sm text-gray-300">Logo present in top-left or top-center?</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-liberation-sovereignty-gold font-bold">☐</span>
+                    <span className="text-sm text-gray-300">Logo is 80px minimum?</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-liberation-sovereignty-gold font-bold">☐</span>
+                    <span className="text-sm text-gray-300">Logo has 20px clear space?</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-liberation-sovereignty-gold font-bold">☐</span>
+                    <span className="text-sm text-gray-300">Background is pure black (#000000)?</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-liberation-sovereignty-gold font-bold">☐</span>
+                    <span className="text-sm text-gray-300">Text is white (#FFFFFF)?</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-liberation-sovereignty-gold font-bold">☐</span>
+                    <span className="text-sm text-gray-300">Footer includes byline?</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-liberation-sovereignty-gold font-bold">☐</span>
+                    <span className="text-sm text-gray-300">Website "blkoutuk.com" included?</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-liberation-sovereignty-gold font-bold">☐</span>
+                    <span className="text-sm text-gray-300"><strong>Website in gold (#FFD700)?</strong></span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-liberation-sovereignty-gold font-bold">☐</span>
+                    <span className="text-sm text-gray-300">Rounded corners (12px+)?</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-liberation-sovereignty-gold font-bold">☐</span>
+                    <span className="text-sm text-gray-300">Design feels joyful and celebratory?</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-liberation-sovereignty-gold font-bold">☐</span>
+                    <span className="text-sm text-gray-300">High contrast throughout?</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Contact */}
+              <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-liberation-pride-purple">
+                <h5 className="font-bold text-liberation-pride-purple mb-2">Need Custom Assets or Have Questions?</h5>
+                <p className="text-sm text-gray-300">
+                  For custom design requests, partnership inquiries, or questions about brand usage,
+                  email <a href="mailto:editor@blkoutuk.com" className="text-liberation-sovereignty-gold hover:underline font-semibold">editor@blkoutuk.com</a>
+                </p>
               </div>
             </div>
           </CollapsibleSection>

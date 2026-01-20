@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Official brand guidelines for BLKOUT - The Black Queer Men's Liberation Collective. Logo usage, colors, typography, and design standards.">
+    <title>Brand Guidelines | BLKOUT - The Black Queer Men's Liberation Collective</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.75;
+            color: #FFFFFF;
+            background: #000000;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #a855f7;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #FFFFFF;
+        }
+
+        .subtitle {
+            font-size: clamp(1.125rem, 3vw, 1.5rem);
+            color: #a855f7;
+            margin-bottom: 24px;
+        }
+
+        .intro {
+            font-size: 1.125rem;
+            color: #d4d4d4;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 600;
+            margin-top: 60px;
+            margin-bottom: 24px;
+            color: #FFFFFF;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #a855f7;
+        }
+
+        h3 {
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            font-weight: 600;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            color: #FFD700;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: #e5e5e5;
+        }
+
+        ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #e5e5e5;
+        }
+
+        .required-box {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2a1a4a 100%);
+            border: 2px solid #a855f7;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+        }
+
+        .required-box h2 {
+            margin-top: 0;
+            border-bottom: none;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .color-card {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #404040;
+        }
+
+        .color-swatch {
+            width: 100%;
+            height: 100px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            border: 2px solid #404040;
+        }
+
+        .color-name {
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 8px;
+            color: #FFFFFF;
+        }
+
+        .color-code {
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            color: #a855f7;
+            background: #0a0a0a;
+            padding: 4px 12px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .do-dont-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .do-box, .dont-box {
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .do-box {
+            background: linear-gradient(135deg, #0a2a1a 0%, #1a4a2a 100%);
+            border: 2px solid #00d68f;
+        }
+
+        .dont-box {
+            background: linear-gradient(135deg, #2a0a0a 0%, #4a1a1a 100%);
+            border: 2px solid #ff6b6b;
+        }
+
+        .do-box h3, .dont-box h3 {
+            margin-top: 0;
+        }
+
+        .do-box h3 {
+            color: #00d68f;
+        }
+
+        .dont-box h3 {
+            color: #ff6b6b;
+        }
+
+        .checklist {
+            background: linear-gradient(135deg, #2a2a0a 0%, #4a4a1a 100%);
+            border: 2px solid #FFD700;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 32px 0;
+        }
+
+        .checklist h2 {
+            margin-top: 0;
+            border-bottom: none;
+        }
+
+        .checklist ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checklist li {
+            padding-left: 32px;
+            position: relative;
+        }
+
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #2a1a4a 100%);
+            border: 2px solid #a855f7;
+            border-radius: 12px;
+            padding: 32px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .download-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f59e0b 100%);
+            color: #FFFFFF;
+            padding: 16px 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin: 12px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .layout-diagram {
+            background: #1a1a1a;
+            border: 2px solid #404040;
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.875rem;
+            line-height: 1.4;
+            color: #a3a3a3;
+        }
+
+        .size-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .size-table th {
+            background: #a855f7;
+            color: #FFFFFF;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .size-table td {
+            padding: 16px;
+            border-bottom: 1px solid #404040;
+            color: #e5e5e5;
+        }
+
+        .size-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 2px solid #404040;
+            text-align: center;
+        }
+
+        footer p {
+            color: #a3a3a3;
+            font-size: 0.875rem;
+        }
+
+        .footer-byline {
+            font-size: 1rem;
+            color: #FFFFFF;
+            margin-bottom: 8px;
+        }
+
+        .footer-website {
+            font-size: 1rem;
+            color: #FFD700;
+            font-weight: 600;
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .container {
+                max-width: none;
+            }
+
+            .download-section {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px 16px;
+            }
+
+            .do-dont-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Brand Guidelines</h1>
+            <div class="subtitle">The Black Queer Men's Liberation Collective</div>
+            <p class="intro">
+                These guidelines ensure consistent, authentic representation of BLKOUT across all platforms and materials.
+                Use these standards to maintain our visual identity while creating powerful, joyful content that celebrates Black queer liberation.
+            </p>
+        </header>
+
+        <div class="download-section">
+            <h2 style="margin-top: 0; border-bottom: none;">📦 Download Brand Assets</h2>
+            <p style="color: #d4d4d4;">Download our logo and brand guidelines for your design projects</p>
+            <a href="/brand/BLKOUT_Logo_1024px.png" download class="download-button">
+                ⬇️ Download Logo (PNG)
+            </a>
+            <a href="/brand-guidelines.html" onclick="window.print(); return false;" class="download-button">
+                📄 Save as PDF
+            </a>
+        </div>
+
+        <div class="required-box">
+            <h2>🎯 3 Required Elements on EVERY Asset</h2>
+            <p>Every BLKOUT-branded design must include these three elements:</p>
+
+            <h3>1. Logo (Top-Left or Top-Center)</h3>
+            <ul>
+                <li><strong>Minimum size:</strong> 80px</li>
+                <li><strong>Recommended:</strong> 120-150px</li>
+                <li><strong>Clear space:</strong> 20px around logo</li>
+                <li><strong>Color:</strong> White logo on dark backgrounds</li>
+            </ul>
+
+            <h3>2. Byline (Bottom of Design)</h3>
+            <p style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 8px; font-family: monospace;">
+                The Black Queer Men's Liberation Collective
+            </p>
+            <ul>
+                <li><strong>Font:</strong> Inter, 14-16px</li>
+                <li><strong>Color:</strong> White (#FFFFFF)</li>
+                <li><strong>Position:</strong> Centered, 30-40px from bottom</li>
+            </ul>
+
+            <h3>3. Website (Below Byline)</h3>
+            <p style="background: rgba(255,215,0,0.1); padding: 12px; border-radius: 8px; font-family: monospace; color: #FFD700;">
+                blkoutuk.com
+            </p>
+            <ul>
+                <li><strong>Font:</strong> Inter, 14-16px</li>
+                <li><strong>Color:</strong> <span style="color: #FFD700;">Liberation Gold (#FFD700)</span> — CRITICAL!</li>
+                <li><strong>Position:</strong> Centered, directly below byline</li>
+            </ul>
+        </div>
+
+        <section>
+            <h2>🎨 Brand Colors</h2>
+
+            <h3>Foundation Colors</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #000000;"></div>
+                    <div class="color-name">Black</div>
+                    <div class="color-code">#000000</div>
+                    <p style="font-size: 0.875rem; margin-top: 8px;">Primary background (use black, NOT dark gray)</p>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #FFFFFF; border-color: #404040;"></div>
+                    <div class="color-name">White</div>
+                    <div class="color-code">#FFFFFF</div>
+                    <p style="font-size: 0.875rem; margin-top: 8px;">Primary text</p>
+                </div>
+            </div>
+
+            <h3>Brand Colors</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #a855f7;"></div>
+                    <div class="color-name">Purple</div>
+                    <div class="color-code">#a855f7</div>
+                    <p style="font-size: 0.875rem; margin-top: 8px;">Brand primary, cooperative identity</p>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #FFD700;"></div>
+                    <div class="color-name">Liberation Gold</div>
+                    <div class="color-code">#FFD700</div>
+                    <p style="font-size: 0.875rem; margin-top: 8px;">Website URL, sovereignty accents</p>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #FFB3DA;"></div>
+                    <div class="color-name">Pride Pink</div>
+                    <div class="color-code">#FFB3DA</div>
+                    <p style="font-size: 0.875rem; margin-top: 8px;">Joy, celebration</p>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #4DA6FF;"></div>
+                    <div class="color-name">Pride Blue</div>
+                    <div class="color-code">#4DA6FF</div>
+                    <p style="font-size: 0.875rem; margin-top: 8px;">Community, trust</p>
+                </div>
+            </div>
+
+            <h3>Pan-African Accents (Optional)</h3>
+            <div class="color-grid">
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #E31E24;"></div>
+                    <div class="color-name">Liberation Red</div>
+                    <div class="color-code">#E31E24</div>
+                </div>
+                <div class="color-card">
+                    <div class="color-swatch" style="background: #00A86B;"></div>
+                    <div class="color-name">Africa Green</div>
+                    <div class="color-code">#00A86B</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📝 Typography</h2>
+            <p><strong>Headings:</strong> Space Grotesk, Bold (600-700 weight)</p>
+            <p><strong>Body Text:</strong> Inter, Regular (400 weight)</p>
+            <p><strong>Website URL:</strong> Inter, Regular (400 weight), <span style="color: #FFD700; font-weight: 600;">Gold color</span></p>
+        </section>
+
+        <section>
+            <h2>📐 Layout Template</h2>
+            <div class="layout-diagram">┌─────────────────────────────────────┐
+│ [LOGO]                              │  ← Top-left, 120px
+│  (120px)                            │
+│                                     │
+│                                     │
+│        MAIN CONTENT AREA            │
+│     (Your text/graphics here)       │
+│                                     │
+│                                     │
+│                                     │
+├─────────────────────────────────────┤
+│  The Black Queer Men's Liberation   │  ← Footer, white
+│         Collective                  │
+│         blkoutuk.com               │  ← Gold!
+│                                     │
+└─────────────────────────────────────┘
+         30-40px from bottom</div>
+        </section>
+
+        <section>
+            <h2>📱 Size Recommendations</h2>
+            <table class="size-table">
+                <thead>
+                    <tr>
+                        <th>Platform</th>
+                        <th>Dimensions</th>
+                        <th>Logo Size</th>
+                        <th>Footer Text</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Instagram Post</td>
+                        <td>1080x1080px</td>
+                        <td>120-150px</td>
+                        <td>16px</td>
+                    </tr>
+                    <tr>
+                        <td>Instagram Story</td>
+                        <td>1080x1920px</td>
+                        <td>100-120px</td>
+                        <td>16px</td>
+                    </tr>
+                    <tr>
+                        <td>LinkedIn Post</td>
+                        <td>1200x627px</td>
+                        <td>120-150px</td>
+                        <td>16px</td>
+                    </tr>
+                    <tr>
+                        <td>Print Flyer</td>
+                        <td>300 DPI</td>
+                        <td>1 inch min</td>
+                        <td>12-14pt</td>
+                    </tr>
+                    <tr>
+                        <td>Website</td>
+                        <td>Variable</td>
+                        <td>80-150px</td>
+                        <td>14-16px</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>✅ DO's & ❌ DON'Ts</h2>
+
+            <div class="do-dont-grid">
+                <div class="do-box">
+                    <h3>✅ DO (Maintains Brand Integrity)</h3>
+                    <ul>
+                        <li>Black backgrounds (#000000)</li>
+                        <li>Logo in top-left/center (small)</li>
+                        <li>Footer with byline + website</li>
+                        <li>Website in gold (#FFD700)</li>
+                        <li>Rounded corners (12px+)</li>
+                        <li>High contrast white/black</li>
+                        <li>Joyful, celebratory mood</li>
+                        <li>Pride color accents</li>
+                        <li>Generous spacing</li>
+                    </ul>
+                </div>
+
+                <div class="dont-box">
+                    <h3>❌ DON'T (Breaks Brand)</h3>
+                    <ul>
+                        <li>White/light backgrounds</li>
+                        <li>Centered/huge logo</li>
+                        <li>Missing footer elements</li>
+                        <li>White website URL (must be gold!)</li>
+                        <li>Sharp/angular edges</li>
+                        <li>Low contrast text</li>
+                        <li>Stretch/distort logo</li>
+                        <li>Change logo colors</li>
+                        <li>Corporate/sterile aesthetics</li>
+                        <li>Generic stock photos</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="checklist">
+            <h2>🎯 Pre-Flight Checklist</h2>
+            <p>Before finalizing any BLKOUT-branded design, verify:</p>
+            <ul>
+                <li>Logo present in top-left or top-center?</li>
+                <li>Logo is 80px minimum (120-150px ideal)?</li>
+                <li>Logo has 20px clear space around it?</li>
+                <li>Background is pure black (#000000)?</li>
+                <li>Text is white (#FFFFFF)?</li>
+                <li>Footer includes "The Black Queer Men's Liberation Collective"?</li>
+                <li>Website "blkoutuk.com" is included?</li>
+                <li>Website is in <strong style="color: #FFD700;">gold color (#FFD700)</strong>?</li>
+                <li>Rounded corners on cards/buttons (12px+)?</li>
+                <li>Design feels joyful and celebratory?</li>
+                <li>High contrast throughout?</li>
+            </ul>
+        </div>
+
+        <section>
+            <h2>👤 About the Editor</h2>
+            <div class="color-card" style="background: linear-gradient(135deg, #1a1a2e 0%, #2a1a4a 100%); border: 2px solid #a855f7; padding: 32px;">
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <div style="display: flex; flex-direction: row; gap: 24px; align-items: start; flex-wrap: wrap;">
+                        <div style="flex-shrink: 0;">
+                            <img
+                                src="/Branding and logos/Robwebsite.png"
+                                alt="Dr Rob Berkeley"
+                                style="width: 160px; height: 160px; border-radius: 12px; object-fit: cover; border: 3px solid #FFD700;"
+                            />
+                        </div>
+                        <div style="flex: 1; min-width: 300px;">
+                            <h3 style="margin-top: 0; color: #FFD700; font-size: 1.5rem;">Dr Rob Berkeley</h3>
+                            <p style="color: #FFB3DA; font-weight: 600; margin-bottom: 16px;">Site Editor & Creator</p>
+                            <p style="color: #e5e5e5; line-height: 1.75; margin-bottom: 16px;">
+                                Award-winning busybody and recovering academic, Dr Rob Berkeley leads the development of BLKOUT Media.
+                                He was director of the racial justice think-tank, Runnymede Trust (2009-14), before a stint advising
+                                the BBC on audience accountability. He serves on the boards of Stanley Arts (SE25), the Black Boy Joy
+                                Club CIC, and is a Chair of Doc Society, and the Black Researcher Consortium. Rob was awarded an MBE
+                                in 2015 for services to equality.
+                            </p>
+                            <p style="color: #a3a3a3; font-size: 0.875rem; font-style: italic;">
+                                <strong style="color: #FFFFFF;">Transparency commitment:</strong> You have a right to know who makes decisions
+                                that affect your community experience. Questions and feedback welcomed at
+                                <a href="mailto:editor@blkoutuk.com" style="color: #FFD700; text-decoration: none;">editor@blkoutuk.com</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📧 Contact & Questions</h2>
+            <div class="color-card" style="background: linear-gradient(135deg, #1a1a2e 0%, #2a1a4a 100%); border: 2px solid #a855f7;">
+                <h3 style="margin-top: 0; color: #FFD700;">Need Custom Assets or Have Questions?</h3>
+                <p style="color: #e5e5e5;">
+                    For custom design requests, partnership inquiries, or questions about brand usage:
+                </p>
+                <p style="margin-top: 16px;">
+                    <strong style="color: #FFFFFF;">Email:</strong>
+                    <a href="mailto:editor@blkoutuk.com" style="color: #FFD700; text-decoration: none; font-weight: 600;">editor@blkoutuk.com</a>
+                </p>
+                <p style="margin-top: 12px;">
+                    <strong style="color: #FFFFFF;">Website:</strong>
+                    <a href="https://blkoutuk.com" style="color: #FFD700; text-decoration: none; font-weight: 600;">blkoutuk.com</a>
+                </p>
+            </div>
+        </section>
+
+        <footer>
+            <p class="footer-byline">The Black Queer Men's Liberation Collective</p>
+            <p class="footer-website">blkoutuk.com</p>
+            <p style="margin-top: 24px;">© 2026 BLKOUT UK - Community-Owned Cooperative Platform</p>
+            <p style="margin-top: 8px;"><em>These guidelines ensure brand consistency. Thank you for helping maintain our visual identity!</em></p>
+        </footer>
+    </div>
+</body>
+</html>
