@@ -184,7 +184,18 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
         },
         body: JSON.stringify({
           message: content,
-          conversationHistory: conversationHistory
+          sessionId: `webapp-${Date.now()}`,
+          conversationHistory: conversationHistory,
+          userContext: {
+            source: 'web-widget',
+            platform: 'community-platform'
+          },
+          liberationContext: {
+            communityProtectionRequired: true,
+            creatorSovereigntyEnforcement: true,
+            culturalAuthenticityValidation: true,
+            antiOppressionActive: true
+          }
         })
       });
 
