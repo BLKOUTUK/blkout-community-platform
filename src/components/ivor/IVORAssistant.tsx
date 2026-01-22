@@ -191,10 +191,12 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
             platform: 'community-platform'
           },
           liberationContext: {
-            communityProtectionRequired: true,
-            creatorSovereigntyEnforcement: true,
-            culturalAuthenticityValidation: true,
-            antiOppressionActive: true
+            liberationValues: {
+              communityProtectionRequired: true,
+              creatorSovereigntyEnforcement: true,
+              culturalAuthenticityValidation: true,
+              antiOppressionActive: true
+            }
           }
         })
       });
