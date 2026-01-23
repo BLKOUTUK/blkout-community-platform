@@ -32,6 +32,7 @@ import FirstTimeUserFlow from '@/components/onboarding/FirstTimeUserFlow';
 import VideoHero from '@/components/ui/VideoHero';
 import TheoryOfChangeMasonry from '@/components/movement/TheoryOfChangeMasonry';
 import ShopPage from '@/components/pages/ShopPage';
+import BoardNavigationHub from '@/components/governance/board/BoardNavigationHub';
 
 // API Configuration - Working backend
 const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
@@ -45,7 +46,7 @@ const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop';
+type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'board';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -117,7 +118,7 @@ class ErrorBoundary extends React.Component<any, any> {
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop'];
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'board'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
@@ -221,6 +222,8 @@ export default function App() {
         return <TheoryOfChangeMasonry />;
       case 'shop':
         return <ShopPage />;
+      case 'board':
+        return <BoardNavigationHub />;
       default:
         return renderLiberationDashboard();
     }
@@ -308,7 +311,7 @@ export default function App() {
 
         <button
           onClick={() => changeActiveTab('intro')}
-          className="group bg-gradient-to-br from-liberation-green-africa/90 to-liberation-gold-divine text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
+          className="group bg-gradient-to-br from-liberation-green-africa/90 to-liberation-gold-divine text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex justify-center mb-4">
             <img
@@ -321,7 +324,7 @@ export default function App() {
             WebkitTextStroke: '2px #000',
             color: 'transparent'
           }}>ASK IVOR</h3>
-          <p className="text-liberation-black-power text-sm mb-4 leading-relaxed text-center">
+          <p className="text-white text-sm mb-4 leading-relaxed text-center">
             Our AI Community Liberation Assistant
           </p>
         </button>
@@ -390,7 +393,7 @@ export default function App() {
 
         <button
           onClick={() => changeActiveTab('about')}
-          className="group bg-gradient-to-br from-liberation-silver/90 to-liberation-purple-spirit text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
+          className="group bg-gradient-to-br from-liberation-silver/90 to-liberation-purple-spirit text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 text-left shadow-lg hover:shadow-2xl"
         >
           <div className="flex justify-center mb-4">
             <img
@@ -403,7 +406,7 @@ export default function App() {
             WebkitTextStroke: '2px #000',
             color: 'transparent'
           }}>ABOUT</h3>
-          <p className="text-liberation-black-power text-sm mb-4 leading-relaxed text-center">
+          <p className="text-white text-sm mb-4 leading-relaxed text-center">
             For and By Black Queer Men<br/>"Without community, there is no liberation"
           </p>
         </button>
@@ -545,6 +548,16 @@ export default function App() {
                       Discover
                       <ExternalLink className="h-3 w-3 opacity-50" />
                     </a>
+                    <a
+                      href="https://blkouthub.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
+                      title="Join our community discussion platform"
+                    >
+                      Community
+                      <ExternalLink className="h-3 w-3 opacity-50" />
+                    </a>
                     <button
                       onClick={() => changeActiveTab('stories')}
                       className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
@@ -614,6 +627,16 @@ export default function App() {
                       }`}
                     >
                       Ownership
+                    </button>
+                    <button
+                      onClick={() => changeActiveTab('board')}
+                      className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
+                        activeTab === 'board'
+                          ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine border border-liberation-gold-divine/30'
+                          : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
+                      }`}
+                    >
+                      Board
                     </button>
                     <button
                       onClick={() => changeActiveTab('about')}
