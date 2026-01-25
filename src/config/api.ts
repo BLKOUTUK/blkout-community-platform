@@ -28,6 +28,7 @@ export const API_ENDPOINTS = {
   // IVOR endpoints
   ivorChat: `${IVOR_API_URL}/api/chat`,
   ivorStream: `${IVOR_API_URL}/api/stream`,
+  ivorVoice: `${IVOR_API_URL}/api/voice`,
 
   // Content endpoints
   voicesArticles: `${VOICES_API_URL}/api/articles`,
