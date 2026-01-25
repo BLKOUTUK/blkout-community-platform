@@ -24,25 +24,17 @@ export default defineConfig({
           'vendor-utils': ['clsx', 'tailwind-merge'],
           'vendor-other': ['framer-motion']
         },
-        // Ensure consistent hashing across environments
+        // Content-based hashing ensures browsers fetch new versions when code changes
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name.split('.');
           const extType = info[info.length - 1];
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
             return `assets/images/[name]-[hash][extname]`;
           }
-          if (/css/i.test(extType)) {
-            return `assets/[name]-DmThh6WA[extname]`;
-          }
           return `assets/[name]-[hash][extname]`;
         },
-        chunkFileNames: (chunkInfo) => {
-          if (chunkInfo.name === 'index') {
-            return 'assets/index-UoDTxSgs.js';
-          }
-          return 'assets/[name]-[hash].js';
-        },
-        entryFileNames: 'assets/index-UoDTxSgs.js'
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js'
       }
     },
     sourcemap: false,
