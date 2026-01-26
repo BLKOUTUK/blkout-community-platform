@@ -86,12 +86,12 @@ export const gridItems: GridItem[] = [
   },
   {
     id: 8,
-    heading: "Our Movement",
-    description: "Theory of change in action. See how we're building toward collective liberation for Black queer communities.",
-    link: "/movement",
-    linkLabel: "See Vision",
+    heading: "Discover",
+    description: "Resources, guides, and pathways curated for your journey. Find what you need, when you need it.",
+    link: "/discover",
+    linkLabel: "Start Exploring",
     isExternal: false,
-    tabName: "movement",
+    tabName: "discover",
     imagePosition: { x: 50, y: 100 }
   },
   {
