@@ -106,9 +106,8 @@ export const gridItems: GridItem[] = [
   }
 ];
 
-// Collective image - represents Black queer liberation
-// Using a community-appropriate placeholder - should be replaced with actual BLKOUT imagery
-export const collectiveImageUrl = "/images/collective-liberation.jpg";
+// Collective reveal - video representing Black queer community
+export const collectiveVideoUrl = "/videos/onboarding/photo collage Video.mp4";
 
-// Fallback if no custom image
-export const collectiveImageFallback = "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80";
+// Fallback image if video fails
+export const collectiveFallbackImage = "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1200&q=80";

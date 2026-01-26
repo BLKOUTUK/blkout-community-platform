@@ -14,7 +14,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { cn } from '@/lib/liberation-utils';
-import { gridItems, collectiveImageUrl, collectiveImageFallback } from './gridContent';
+import { gridItems, collectiveVideoUrl, collectiveFallbackImage } from './gridContent';
 import { ExternalLink } from 'lucide-react';
 
 type SquareState = 'initial' | 'first-click' | 'second-click' | 'visited';
@@ -31,7 +31,7 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
   const [visitedLinks, setVisitedLinks] = useState<Record<number, boolean>>({});
   const [collectiveImageRevealed, setCollectiveImageRevealed] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [imageError, setImageError] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
   // Check for reduced motion preference
   useEffect(() => {
@@ -110,8 +110,6 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
   const visitedCount = Object.values(visitedLinks).filter(Boolean).length;
   const progressPercentage = (visitedCount / gridItems.length) * 100;
 
-  const imageUrl = imageError ? collectiveImageFallback : collectiveImageUrl;
-
   return (
     <section className="py-8" aria-label="Explore BLKOUT - Interactive Grid">
       {/* Instructions */}
@@ -175,13 +173,6 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
               )}
               style={{
                 animationDelay: prefersReducedMotion ? '0s' : `${item.id * 0.1}s`,
-                backgroundImage: collectiveImageRevealed && isVisited
-                  ? `url(${imageUrl})`
-                  : undefined,
-                backgroundPosition: collectiveImageRevealed && isVisited
-                  ? `${item.imagePosition.x}% ${item.imagePosition.y}%`
-                  : undefined,
-                backgroundSize: collectiveImageRevealed ? '300% 300%' : 'cover',
               }}
               onClick={() => !isVisited && handleSquareClick(item.id)}
               onKeyDown={(e) => handleKeyDown(e, item.id, item)}
@@ -317,12 +308,26 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
                 </p>
               </div>
               <div className="aspect-video rounded-lg overflow-hidden border-2 border-liberation-gold-divine">
-                <img
-                  src={imageUrl}
-                  alt="Collective vision of Black queer liberation - community members together"
-                  className="w-full h-full object-cover"
-                  onError={() => setImageError(true)}
-                />
+                {videoError ? (
+                  <img
+                    src={collectiveFallbackImage}
+                    alt="Collective vision of Black queer liberation - community members together"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <video
+                    src={collectiveVideoUrl}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover"
+                    onError={() => setVideoError(true)}
+                  >
+                    <track kind="captions" />
+                    Your browser does not support the video tag.
+                  </video>
+                )}
               </div>
             </div>
           )}
