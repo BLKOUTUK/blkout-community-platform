@@ -19,6 +19,8 @@ import { ExternalLink } from 'lucide-react';
 
 type SquareState = 'initial' | 'first-click' | 'second-click' | 'visited';
 
+const STORAGE_KEY = 'blkout-grid-visited';
+
 interface AnimatedLiberationGridProps {
   onNavigate: (tab: string) => void;
 }
@@ -32,6 +34,37 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
   const [collectiveImageRevealed, setCollectiveImageRevealed] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [videoError, setVideoError] = useState(false);
+
+  // Restore visited state from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const visitedIds: number[] = JSON.parse(saved);
+        const restoredVisited: Record<number, boolean> = {};
+        const restoredStates: Record<number, SquareState> = {};
+
+        gridItems.forEach(item => {
+          if (visitedIds.includes(item.id)) {
+            restoredVisited[item.id] = true;
+            restoredStates[item.id] = 'visited';
+          } else {
+            restoredStates[item.id] = 'initial';
+          }
+        });
+
+        setVisitedLinks(restoredVisited);
+        setSquareStates(restoredStates);
+
+        // Check if all were already visited
+        if (visitedIds.length === gridItems.length) {
+          setCollectiveImageRevealed(true);
+        }
+      }
+    } catch (e) {
+      // localStorage not available or corrupted, start fresh
+    }
+  }, []);
 
   // Check for reduced motion preference
   useEffect(() => {
@@ -77,6 +110,17 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
     // Mark as visited
     setVisitedLinks(prev => {
       const newVisited = { ...prev, [id]: true };
+
+      // Save to localStorage
+      try {
+        const visitedIds = Object.keys(newVisited)
+          .filter(key => newVisited[Number(key)])
+          .map(Number);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(visitedIds));
+      } catch (e) {
+        // localStorage not available, continue without persistence
+      }
+
       // Check if all links have been visited to reveal collective image
       const allVisited = gridItems.every(gridItem => newVisited[gridItem.id]);
       if (allVisited) {
