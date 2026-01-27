@@ -4,10 +4,54 @@
  * Multi-column responsive grid with hero video breaks
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Share2, ExternalLink } from 'lucide-react';
 import HorizontalCTAScroll from './HorizontalCTAScroll';
+
+// Scroll-triggered video component
+const ScrollVideo: React.FC<{
+  src: string;
+  className?: string;
+  controls?: boolean;
+  muted?: boolean;
+}> = ({ src, className = '', controls = false, muted = true }) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {}); // Catch autoplay restrictions
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.3 } // Play when 30% visible
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      src={src}
+      className={className}
+      loop
+      muted={muted}
+      controls={controls}
+      playsInline
+      preload="metadata"
+    />
+  );
+};
 
 interface Card {
   id: number;
@@ -68,76 +112,73 @@ const cardAnimations = {
   }
 };
 
-// Aspect ratio classes
-const aspectClasses = {
-  tall: 'aspect-[9/16]',      // Instagram Story style
-  standard: 'aspect-[4/5]',    // Default
-  squat: 'aspect-[16/9]'       // Landscape
-};
+// Aspect ratio classes (available for future use)
+// tall: 'aspect-[9/16]' - Instagram Story style
+// standard: 'aspect-[4/5]' - Default
+// squat: 'aspect-[16/9]' - Landscape
 
-// Masonry size classes (RESTORE row-span to prevent overlap)
+// Masonry size classes - standardized for level alignment
 const sizeClasses = {
-  small: 'col-span-1 row-span-1',
+  small: 'col-span-1 row-span-2',
   medium: 'col-span-1 row-span-2',
   large: 'col-span-2 row-span-2',
-  hero: 'col-span-2 row-span-3 md:col-span-3 md:row-span-4 lg:col-span-4 lg:row-span-4'
+  hero: 'col-span-2 row-span-3 md:col-span-3 md:row-span-3 lg:col-span-4 lg:row-span-3'
 };
 
-// Mobile-optimized heights
+// Consistent heights for level cards
 const heightClasses = {
-  small: 'h-[300px] md:h-[350px]',
-  medium: 'h-[450px] md:h-[500px]',
-  large: 'h-[550px] md:h-[650px]',
-  hero: 'h-[70vh] md:h-[80vh]'
+  small: 'min-h-[400px] md:min-h-[500px]',
+  medium: 'min-h-[400px] md:min-h-[500px]',
+  large: 'min-h-[400px] md:min-h-[500px]',
+  hero: 'min-h-[500px] md:min-h-[600px]'
 };
 
-// Text positioning with balanced layouts and 35% padding
+// Text positioning - consistent padding, faces preserved
 const getTextPosition = (position?: string, hasTopAndBottom?: boolean) => {
-  const basePadding = 'px-[35%]'; // 35% in from edges
-
   if (hasTopAndBottom) {
-    // Split layout: content at top, CTA at bottom
-    return 'justify-between';
+    return 'justify-end'; // Push content to bottom
   }
 
+  // All positions push content to bottom to preserve faces in images
+  // Text backgrounds handle readability
   switch(position) {
-    case 'topRight': return `items-start justify-end text-right pr-8 pt-8`;
-    case 'topLeft': return `items-start justify-start text-left pl-8 pt-8`;
-    case 'center': return 'items-center justify-center text-center px-8';
-    case 'bottomRight': return `items-end justify-end text-right pr-8 pb-4`;
-    case 'bottomLeft': return `items-end justify-start text-left pl-8 pb-4`;
-    default: return `items-end justify-start text-left pl-8 pb-4`;
+    case 'topRight':
+    case 'topLeft':
+    case 'center':
+    case 'bottomRight':
+    case 'bottomLeft':
+    default:
+      return 'justify-end'; // Always bottom to preserve faces
   }
 };
 
 // Card component for masonry grid
-const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) => {
+const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
   const [revealed, setRevealed] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
 
   // Get animation variant
   const animation = cardAnimations[card.animationType || 'default'];
 
+  // Determine if card has CTA for split layout
+  const hasCTA = !!card.cta;
+  const isSpecialLayout = card.id === 32; // Special bottom-right layout
+
   return (
     <motion.div
-      className={`relative overflow-hidden rounded-2xl group ${sizeClasses[card.size]}`}
+      className={`relative overflow-hidden rounded-2xl group ${sizeClasses[card.size]} ${heightClasses[card.size]}`}
       {...animation}
       viewport={{ once: true, margin: "-50px" }}
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
     >
       {/* Background: Image, Video, or Gradient */}
       {card.videoUrl ? (
         <div className="absolute inset-0 bg-black flex items-center justify-center">
-          <video
+          <ScrollVideo
             src={card.videoUrl}
             className="w-full h-full object-contain"
-            style={{ aspectRatio: '4/5' }}
-            autoPlay={card.id !== 8.85 && card.id !== 36.5 && card.id !== 36.6}
-            loop
-            muted={card.id !== 8.85 && card.id !== 36.5 && card.id !== 36.6}
             controls={card.id === 8.85 || card.id === 36.5 || card.id === 36.6}
-            playsInline
-            preload="auto"
+            muted={card.id !== 8.85 && card.id !== 36.5 && card.id !== 36.6}
           />
         </div>
       ) : card.imageUrl ? (
@@ -147,13 +188,11 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
             alt=""
             className={`w-full h-full ${card.type === 'beauty' ? 'object-contain' : 'object-cover'} transition-transform duration-700 group-hover:scale-110`}
           />
-          {/* Purple overlay for brand cohesion */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-fuchsia-500/15 to-transparent mix-blend-overlay pointer-events-none" />
-          {/* Sexy purple glow */}
-          <div className="absolute inset-0 bg-purple-500/10 blur-xl pointer-events-none" />
-          {/* Text readability gradient - lighter for ALL cards with people to preserve face visibility */}
+          {/* Purple overlay for brand cohesion - subtle */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-fuchsia-500/5 to-transparent mix-blend-overlay pointer-events-none" />
+          {/* Text readability gradient - concentrated at bottom only to preserve faces */}
           {card.type !== 'beauty' && (
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 via-30% to-transparent" />
           )}
         </div>
       ) : (
@@ -161,20 +200,20 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
       )}
 
       {/* Content with dynamic positioning - split if CTA exists */}
-      <div className={`relative z-10 h-full flex ${card.id === 32 ? 'flex-col justify-between' : `flex-col ${getTextPosition(card.textPosition, !!card.cta)}`}`}>
-        {/* Top content area */}
-        <div className={`${card.id === 32 ? 'p-8' : card.cta ? (card.id === 17 ? 'pt-20 pb-8' : card.id === 26 ? 'pt-24 pb-4' : 'pt-8 pb-8') : 'py-8'} ${card.id === 32 ? '' : 'px-[12%]'}`}>
-        {/* Subtitle (small, uppercase, accent color) - Skip for card 32 (has special layout) */}
-        {card.content.subtitle && card.id !== 32 && (
-          <motion.p className="text-amber-400 text-sm md:text-base font-mono uppercase tracking-widest mb-2">
+      <div className={`relative z-10 h-full flex flex-col ${isSpecialLayout ? 'justify-between' : getTextPosition(card.textPosition, hasCTA)}`}>
+        {/* Content area - positioned to not cover faces (bottom 40% of card) */}
+        <div className={`${hasCTA ? 'flex-1 flex flex-col justify-end' : ''} p-6 md:p-8 mt-auto max-h-[60%]`}>
+        {/* Subtitle (small, uppercase, accent color) */}
+        {card.content.subtitle && !isSpecialLayout && (
+          <motion.p className="text-amber-400 text-xs md:text-sm font-mono uppercase tracking-widest mb-3">
             {card.content.subtitle}
           </motion.p>
         )}
 
-        {/* Title (primary heading - largest) - Yellow for cards 15 & 16 */}
+        {/* Title (primary heading - largest) */}
         {card.content.title && (
           <motion.h1
-            className={`text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tight leading-tight mb-3 ${(card.id === 15 || card.id === 16) ? 'text-amber-400' : 'text-white'}`}
+            className={`text-xl md:text-2xl lg:text-3xl font-black uppercase tracking-tight leading-tight mb-4 ${(card.id === 15 || card.id === 16) ? 'text-amber-400' : 'text-white'}`}
             style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
           >
             {card.content.title}
@@ -184,26 +223,26 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
         {/* Heading2 (secondary heading) */}
         {card.content.heading2 && (
           <motion.h2
-            className="text-xl md:text-2xl font-bold text-purple-100 uppercase tracking-tight leading-tight mb-3 whitespace-pre-line"
+            className="text-lg md:text-xl lg:text-2xl font-bold text-purple-100 uppercase tracking-tight leading-tight mb-4 whitespace-pre-line"
             style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
           >
             {card.content.heading2}
           </motion.h2>
         )}
 
-        {/* Body (use as secondary heading - short, bold) - Normal text for card 24 */}
+        {/* Body text - clear hierarchy */}
         {card.content.body && (
           <motion.p
-            className={`${card.id === 24 ? 'text-base md:text-lg text-white font-normal leading-relaxed' : 'text-lg md:text-xl lg:text-2xl font-bold text-white uppercase leading-tight'} whitespace-pre-line ${card.id === 11 ? 'mb-12' : 'mb-4'}`}
-            style={card.id === 24 ? {} : { fontFamily: "'Arial Black', 'Arial', sans-serif" }}
+            className={`text-base md:text-lg lg:text-xl font-bold text-white uppercase leading-snug whitespace-pre-line mb-4`}
+            style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
           >
             {card.content.body}
           </motion.p>
         )}
 
-        {/* Highlight (use for sentences - readable, not italic) - Yellow for cards 15 & 16 */}
-        {card.content.highlight && card.id !== 32 && (
-          <p className={`text-base md:text-lg lg:text-xl font-normal leading-relaxed ${(card.id === 15 || card.id === 16) ? 'text-amber-400' : 'text-purple-100'}`}>
+        {/* Highlight - supporting text */}
+        {card.content.highlight && !isSpecialLayout && (
+          <p className={`text-sm md:text-base lg:text-lg font-normal leading-relaxed ${(card.id === 15 || card.id === 16) ? 'text-amber-400' : 'text-purple-200'}`}>
             {card.content.highlight}
           </p>
         )}
@@ -237,12 +276,12 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
         )}
 
         {card.interactive?.type === 'wordcloud' && (
-          <div className={`${card.id === 22 ? 'mt-16' : 'mt-4'} flex flex-wrap gap-2`}>
+          <div className="mt-6 flex flex-wrap gap-2">
             {card.interactive.data.topics.map((topic: string) => (
               <button
                 key={topic}
                 onClick={(e) => { e.stopPropagation(); setSelected(topic); }}
-                className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
+                className={`px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-bold transition-all ${
                   selected === topic
                     ? 'bg-fuchsia-600 text-white'
                     : 'bg-purple-900/50 text-purple-100 hover:bg-purple-800/50'
@@ -257,11 +296,11 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
         </div>
 
         {/* Bottom-right content for Card 32 */}
-        {card.id === 32 && (
-          <div className="p-8 flex justify-end items-end">
+        {isSpecialLayout && (
+          <div className="p-6 md:p-8 flex justify-end items-end">
             <div className="text-right space-y-4">
               {card.content.highlight && (
-                <p className="text-base md:text-lg lg:text-xl text-purple-100 font-normal leading-relaxed">
+                <p className="text-sm md:text-base lg:text-lg text-purple-200 font-normal leading-relaxed">
                   {card.content.highlight}
                 </p>
               )}
@@ -269,7 +308,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
                 <a
                   href={card.cta.link}
                   onClick={(e) => e.stopPropagation()}
-                  className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all hover:scale-105 ${
+                  className={`inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 rounded-lg text-sm md:text-base font-bold transition-all hover:scale-105 ${
                     card.cta.color === 'fuchsia'
                       ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
                       : 'bg-gradient-to-r from-amber-600 to-amber-500 text-black'
@@ -282,13 +321,13 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
           </div>
         )}
 
-        {/* Bottom CTA area - separated for visual balance */}
-        {card.cta && card.id !== 32 && (
-          <div className={`${card.id === 17 ? 'pb-2' : 'pb-8'} px-[12%]`}>
+        {/* Bottom CTA area - consistent padding */}
+        {card.cta && !isSpecialLayout && (
+          <div className="p-6 md:p-8 pt-0">
             <a
               href={card.cta.link}
               onClick={(e) => e.stopPropagation()}
-              className={`inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all hover:scale-105 ${
+              className={`inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 rounded-lg text-sm md:text-base font-bold transition-all hover:scale-105 ${
                 card.cta.color === 'fuchsia'
                   ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
                   : 'bg-gradient-to-r from-amber-600 to-amber-500 text-black'
@@ -299,7 +338,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card, index }) =
 
             {/* HorizontalCTAScroll for cards 37-38 */}
             {(card.id === 37 || card.id === 38) && (
-              <div className="mt-8">
+              <div className="mt-6">
                 <HorizontalCTAScroll cardId={card.id} />
               </div>
             )}
@@ -315,7 +354,7 @@ const HeroVideoBreak: React.FC<{ title?: string; subtitle?: string; videoUrl?: s
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center bg-black my-16">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-950 via-indigo-950 to-black opacity-50" />
-      <div className="relative z-10 text-center px-4">
+      <div className="relative z-10 text-center px-4 w-full max-w-6xl">
         {title && (
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
@@ -341,12 +380,10 @@ const HeroVideoBreak: React.FC<{ title?: string; subtitle?: string; videoUrl?: s
         {/* Video player - full width with controls */}
         <div className="mt-12 w-full aspect-video bg-purple-950/30 rounded-2xl border border-purple-700/50 overflow-hidden">
           {videoUrl ? (
-            <video
+            <ScrollVideo
               src={videoUrl}
               className="w-full h-full object-cover"
-              controls
-              playsInline
-              preload="metadata"
+              controls={true}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
@@ -500,7 +537,7 @@ export default function TheoryOfChangeMasonry() {
       content: {
         title: 'We\'ve learned to survive alone together.'
       },
-      cta: { text: 'In The Picture: Loneliness Report', link: 'https://blkoutuk.com/in-the-picture', color: 'amber' },
+      cta: { text: 'In The Picture: Loneliness Report', link: '/stories', color: 'amber' },
       textPosition: 'bottomLeft'
     },
     {
@@ -657,7 +694,7 @@ export default function TheoryOfChangeMasonry() {
       bgGradient: 'from-amber-600 to-amber-500',
       content: {}
     },
-    { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/api/community/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft' },
+    { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft' },
     { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', body: 'The damage is structural. The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' }
   ];
 
@@ -681,18 +718,13 @@ export default function TheoryOfChangeMasonry() {
         </motion.div>
       </div>
 
-      {/* Hero Video: Full width (similar to Welcome video) */}
+      {/* Hero Video: Full width */}
       <section className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
-          <div className="col-span-2 md:col-span-3 lg:col-span-4 row-span-2 relative overflow-hidden rounded-2xl">
-            <video
+        <div className="w-full">
+          <div className="relative overflow-hidden rounded-2xl aspect-video">
+            <ScrollVideo
               src="/videos/Blkoutheronumber1.mp4"
               className="w-full h-full object-cover"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
             />
           </div>
         </div>
@@ -720,7 +752,7 @@ export default function TheoryOfChangeMasonry() {
       <main className="pt-0">
         {/* ACT 1: Recognition - Masonry Grid (Cards 1-6) */}
         <section className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {act1Cards.filter(c => c.id <= 6).map((card, i) => (
               <MasonryCard key={card.id} card={card} index={i} />
             ))}
@@ -731,13 +763,11 @@ export default function TheoryOfChangeMasonry() {
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-md">
             <div className="relative overflow-hidden rounded-2xl" style={{ height: '750px' }}>
-              <video
+              <ScrollVideo
                 src="/videos/Lordescroll.mp4"
                 className="w-full h-full object-cover"
-                loop
-                controls
-                playsInline
-                preload="auto"
+                controls={true}
+                muted={false}
               />
             </div>
           </div>
@@ -745,16 +775,11 @@ export default function TheoryOfChangeMasonry() {
 
         {/* ANCESTRAL WISDOM: Small insert after Lorde */}
         <section className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
-            <div className="col-span-1 row-span-1 relative overflow-hidden rounded-2xl">
-              <video
+          <div className="max-w-xs">
+            <div className="relative overflow-hidden rounded-2xl aspect-square">
+              <ScrollVideo
                 src="/videos/ancestral wisdom.mp4"
                 className="w-full h-full object-cover"
-                loop
-                muted
-                autoPlay
-                playsInline
-                preload="auto"
               />
             </div>
           </div>
@@ -762,7 +787,7 @@ export default function TheoryOfChangeMasonry() {
 
         {/* Continue Act 1 (Cards 7-10) */}
         <section className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {act1Cards.filter(c => c.id > 6).map((card, i) => (
               <MasonryCard key={card.id} card={card} index={i} />
             ))}
@@ -771,16 +796,11 @@ export default function TheoryOfChangeMasonry() {
 
         {/* WELCOME VIDEO: Full width across columns (decorative) */}
         <section className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
-            <div className="col-span-2 md:col-span-3 lg:col-span-4 row-span-2 relative overflow-hidden rounded-2xl">
-              <video
+          <div className="w-full">
+            <div className="relative overflow-hidden rounded-2xl aspect-video">
+              <ScrollVideo
                 src="/videos/Welcome BLKOUT TV.mp4"
                 className="w-full h-full object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
               />
             </div>
           </div>
@@ -803,7 +823,7 @@ export default function TheoryOfChangeMasonry() {
 
         {/* ACT 2: The Problem - Masonry Grid */}
         <section className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {act2Cards.map((card, i) => (
               <MasonryCard key={card.id} card={card} index={i} />
             ))}
@@ -832,7 +852,7 @@ export default function TheoryOfChangeMasonry() {
 
         {/* ACT 3: What We're Building - Masonry Grid */}
         <section className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {act3Cards.map((card, i) => (
               <MasonryCard key={card.id} card={card} index={i} />
             ))}
@@ -841,7 +861,7 @@ export default function TheoryOfChangeMasonry() {
 
         {/* ACT 4: The Core - Masonry Grid */}
         <section className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {act4Cards.map((card, i) => (
               <MasonryCard key={card.id} card={card} index={i} />
             ))}
@@ -850,7 +870,7 @@ export default function TheoryOfChangeMasonry() {
 
         {/* ACT 5: The Invitation - Masonry Grid */}
         <section className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[250px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {act5Cards.map((card, i) => (
               <MasonryCard key={card.id} card={card} index={i} />
             ))}
@@ -865,7 +885,7 @@ export default function TheoryOfChangeMasonry() {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <motion.a href="https://crm.blkoutuk.cloud/api/community/join" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.1 }} className="bg-gradient-to-br from-amber-600 to-amber-500 rounded-2xl p-8 hover:scale-105 transition-all">
+              <motion.a href="https://crm.blkoutuk.cloud/join" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.1 }} className="bg-gradient-to-br from-amber-600 to-amber-500 rounded-2xl p-8 hover:scale-105 transition-all">
                 <div className="text-black"><img src="/Branding and logos/blkout_logo_roundel_colour.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-black uppercase mb-3" style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}>Stay in Touch</h3><p className="text-lg font-semibold mb-4">Newsletter</p><p className="text-sm opacity-80">Weekly updates from the collective</p></div>
               </motion.a>
               <motion.a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.2 }} className="bg-gradient-to-br from-fuchsia-600 to-pink-600 rounded-2xl p-8 hover:scale-105 transition-all">
@@ -930,7 +950,7 @@ export default function TheoryOfChangeMasonry() {
               <div>
                 <h4 className="text-white font-bold mb-4 uppercase">BLKOUT UK</h4>
                 <p className="text-purple-400 text-sm">Community-owned liberation platform</p>
-                <p className="text-purple-600 text-xs mt-4">© 2025 BLKOUT UK Cooperative</p>
+                <p className="text-purple-600 text-xs mt-4">© 2026 BLKOUT UK Cooperative</p>
               </div>
             </div>
           </div>

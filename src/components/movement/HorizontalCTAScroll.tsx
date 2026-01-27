@@ -30,7 +30,7 @@ const HorizontalCTAScroll: React.FC<{ cardId: number }> = ({ cardId }) => {
       icon: <Mail className="w-8 h-8" />,
       title: 'Newsletter',
       description: 'Weekly updates from the community',
-      link: 'https://crm.blkoutuk.cloud/api/community/join',
+      link: 'https://crm.blkoutuk.cloud/join',
       isExternal: true
     },
     {
