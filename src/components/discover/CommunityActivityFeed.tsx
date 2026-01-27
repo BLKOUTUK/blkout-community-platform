@@ -51,87 +51,70 @@ const CommunityActivityFeed: React.FC<CommunityActivityFeedProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
 
-  // Fetch community activity from BLKOUTHUB
+  // Fetch community activity from BLKOUTHUB via Heartbeat.chat API
   const fetchActivity = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      // In production, this would call the BLKOUTHUB API via blkouthub-integration service
-      // For now, we'll use mock data that represents the expected structure
+      const HEARTBEAT_API = 'https://api.heartbeat.chat/v1';
+      const HEARTBEAT_TOKEN = import.meta.env.VITE_HEARTBEAT_API_TOKEN ||
+                              (typeof process !== 'undefined' && process.env?.HEARTBEAT_API_TOKEN);
 
-      // Simulated API call with realistic delay
-      await new Promise(resolve => setTimeout(resolve, 800));
+      if (!HEARTBEAT_TOKEN) {
+        throw new Error('Heartbeat API token not configured');
+      }
 
-      // Mock data representing real BLKOUTHUB activity structure
-      const mockActivities: CommunityActivity[] = [
-        {
-          id: '1',
-          type: 'discussion',
-          title: 'Black queer joy in 2026: What are you celebrating?',
-          excerpt: 'Let\'s share our wins, big and small. From personal milestones to community victories...',
-          author: 'Community Member',
-          timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
-          replies: 23,
-          reactions: 45,
-          url: 'https://blkouthub.com/discussions/joy-2026',
-          tags: ['joy', 'celebration', 'community']
-        },
-        {
-          id: '2',
-          type: 'event',
-          title: 'Community Organizing Workshop - Building Power Together',
-          excerpt: 'Join us for hands-on training in community organizing tactics and democratic decision-making...',
-          author: 'Liberation Organizer',
-          timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(), // 5 hours ago
-          replies: 12,
-          reactions: 67,
-          url: 'https://blkouthub.com/events/organizing-workshop',
-          tags: ['organizing', 'workshop', 'liberation']
-        },
-        {
-          id: '3',
-          type: 'resource',
-          title: 'New Mental Health Resources for Black Queer Men',
-          excerpt: 'Compiled list of affirming therapists, peer support groups, and wellness resources...',
-          author: 'Community Steward',
-          timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
-          replies: 8,
-          reactions: 89,
-          url: 'https://blkouthub.com/resources/mental-health',
-          tags: ['mental-health', 'wellness', 'resources']
-        },
-        {
-          id: '4',
-          type: 'announcement',
-          title: 'Governance Proposal: Expanding Community Moderation',
-          excerpt: 'Vote on proposal to expand our community moderation team with democratic selection process...',
-          author: 'Governance Team',
-          timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago
-          replies: 34,
-          reactions: 102,
-          url: 'https://blkouthub.com/governance/proposal-12',
-          tags: ['governance', 'voting', 'moderation']
-        },
-        {
-          id: '5',
-          type: 'discussion',
-          title: 'Navigating family during the holidays as queer Black men',
-          excerpt: 'Safe space to share strategies, boundaries, and support for holiday family dynamics...',
-          author: 'Community Member',
-          timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
-          replies: 56,
-          reactions: 134,
-          url: 'https://blkouthub.com/discussions/family-holidays',
-          tags: ['support', 'family', 'boundaries']
+      // Fetch recent posts from Heartbeat.chat
+      const postsResponse = await fetch(`${HEARTBEAT_API}/posts?limit=${limit}`, {
+        headers: {
+          'Authorization': `Bearer ${HEARTBEAT_TOKEN}`,
+          'Content-Type': 'application/json'
         }
-      ];
+      });
 
-      setActivities(mockActivities.slice(0, limit));
+      if (!postsResponse.ok) {
+        throw new Error(`Heartbeat API error: ${postsResponse.status}`);
+      }
+
+      const postsData = await postsResponse.json();
+
+      // Transform Heartbeat posts to our activity format
+      const transformedActivities: CommunityActivity[] = (postsData.posts || postsData || [])
+        .slice(0, limit)
+        .map((post: any, index: number) => ({
+          id: post.id || `post-${index}`,
+          type: post.type === 'event' ? 'event' :
+                post.type === 'announcement' ? 'announcement' :
+                post.type === 'resource' ? 'resource' : 'discussion',
+          title: post.title || post.content?.substring(0, 60) || 'Community Post',
+          excerpt: post.content?.substring(0, 150) || post.excerpt || '',
+          author: post.author?.name || post.userName || 'Community Member',
+          timestamp: post.createdAt || post.created_at || new Date().toISOString(),
+          replies: post.replyCount || post.commentsCount || 0,
+          reactions: post.reactionCount || post.likesCount || 0,
+          url: post.url || `https://blkouthub.com/posts/${post.id}`,
+          tags: post.tags || []
+        }));
+
+      setActivities(transformedActivities);
       setLastRefresh(new Date());
     } catch (err) {
-      setError('Unable to load community activity. Please check your connection.');
       console.error('BLKOUTHUB activity fetch error:', err);
+      // Fallback to showing invitation to join
+      setActivities([{
+        id: 'join-invite',
+        type: 'announcement',
+        title: 'Join BLKOUTHUB - Our Private Community Space',
+        excerpt: 'Connect with other Black queer men in our secure community platform. Share experiences, find support, and build together.',
+        author: 'BLKOUT Team',
+        timestamp: new Date().toISOString(),
+        replies: 0,
+        reactions: 0,
+        url: 'https://blkouthub.com/invitation?code=BE862C',
+        tags: ['community', 'join', 'welcome']
+      }]);
+      setLastRefresh(new Date());
     } finally {
       setLoading(false);
     }

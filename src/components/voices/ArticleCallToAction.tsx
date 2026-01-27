@@ -44,7 +44,7 @@ const ArticleCallToAction: React.FC<ArticleCallToActionProps> = ({ articleSlug }
     'default-3': {
       title: "GOVERNANCE: Real Power, Real People, Real Change",
       linkText: "Governance",
-      linkUrl: "https://blkoutuk.com/governance",
+      linkUrl: "/governance",
       icon: Users,
       bgColor: "bg-blue-500/10",
       borderColor: "border-blue-500/30",
@@ -66,7 +66,7 @@ const ArticleCallToAction: React.FC<ArticleCallToActionProps> = ({ articleSlug }
     'default-5': {
       title: "IVOR: Your Growing Digital Companion",
       linkText: "Meet IVOR",
-      linkUrl: "https://blkoutuk.com/intro",
+      linkUrl: "/intro",
       icon: Sparkles,
       bgColor: "bg-green-500/10",
       borderColor: "border-green-500/30",

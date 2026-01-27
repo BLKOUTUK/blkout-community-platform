@@ -4,6 +4,7 @@ import { Sparkles, Calendar, MessageCircle, Heart, Users, TrendingUp, ArrowRight
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { AdventCalendarWidget } from '../discover/AdventCalendarWidget';
+import CommunityActivityFeed from '../discover/CommunityActivityFeed';
 
 interface DiscoverPageProps {
   onNavigate?: (tab: string) => void;
@@ -288,7 +289,7 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
                 Get the latest updates, events, and community news delivered to your inbox.
               </p>
               <a
-                href="https://blkoutuk.com/newsletter"
+                href="https://crm.blkoutuk.cloud/join"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-all text-sm"
@@ -571,6 +572,11 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* Community Activity Feed - NEW */}
+          <div className="mb-8">
+            <CommunityActivityFeed limit={5} showHeader={true} />
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 text-center">

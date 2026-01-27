@@ -10,7 +10,7 @@ import {
   traumaInformedUtils,
   liberationColors
 } from '@/lib/liberation-utils';
-// import AdminAuth, { checkAdminAuth } from '@/components/admin/AdminAuth';  // REMOVED - NO AUTH
+import AdminAuth, { checkAdminAuth } from '@/components/admin/AdminAuth';  // RE-ENABLED for launch
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import AboutUs from '@/components/pages/AboutUs';
 import StoryArchive from '@/components/pages/StoryArchive';
@@ -34,6 +34,7 @@ import TheoryOfChangeMasonry from '@/components/movement/TheoryOfChangeMasonry';
 import ShopPage from '@/components/pages/ShopPage';
 import BoardNavigationHub from '@/components/governance/board/BoardNavigationHub';
 import AnimatedLiberationGrid from '@/components/home/AnimatedLiberationGrid';
+import { supabase } from '@/lib/supabase';
 
 // API Configuration - Working backend
 const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
@@ -132,15 +133,16 @@ export default function App() {
   // State for navigation and platform functionality
   const [activeTab, setActiveTab] = useState<NavigationTab>(getInitialTabFromURL());
   const [currentQuote, setCurrentQuote] = useState(0);
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(true); // Admin always accessible
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false); // Require authentication
   const [showIVOR, setShowIVOR] = useState(false);
   const [isFirstVisit, setIsFirstVisit] = useState(false);
   const [platformStats, setPlatformStats] = useState({
-    membersServed: 847,
-    storiesShared: 234,
-    eventsHosted: 89,
-    liberationActions: 156
+    membersServed: 0,
+    storiesShared: 0,
+    eventsHosted: 0,
+    liberationActions: 0
   });
+  const [statsLoaded, setStatsLoaded] = useState(false);
 
   // Custom function to change tab and update URL
   const changeActiveTab = (tab: NavigationTab) => {
@@ -166,9 +168,10 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  // NO AUTHENTICATION - Admin is always accessible
+  // Check admin authentication on mount
   useEffect(() => {
-    // Admin is open - no auth needed
+    const authResult = checkAdminAuth();
+    setIsAdminAuthenticated(authResult.isAuthenticated);
 
     // Check if this is user's first visit
     const hasVisited = localStorage.getItem('blkout-has-visited');
@@ -177,16 +180,56 @@ export default function App() {
     }
   }, []);
 
-  // Simulated platform stats update
+  // Load real platform stats from Supabase
   useEffect(() => {
-    const statsInterval = setInterval(() => {
-      setPlatformStats(prev => ({
-        ...prev,
-        liberationActions: prev.liberationActions + Math.floor(Math.random() * 3)
-      }));
-    }, 30000);
-    return () => clearInterval(statsInterval);
+    const loadPlatformStats = async () => {
+      try {
+        // Query real counts from database tables
+        const [membersResult, storiesResult, eventsResult, actionsResult] = await Promise.all([
+          supabase.from('governance_members').select('id', { count: 'exact', head: true }),
+          supabase.from('legacy_articles').select('id', { count: 'exact', head: true }).eq('status', 'published'),
+          supabase.from('events').select('id', { count: 'exact', head: true }),
+          supabase.from('governance_proposals').select('id', { count: 'exact', head: true })
+        ]);
+
+        setPlatformStats({
+          membersServed: membersResult.count || 0,
+          storiesShared: storiesResult.count || 0,
+          eventsHosted: eventsResult.count || 0,
+          liberationActions: actionsResult.count || 0
+        });
+        setStatsLoaded(true);
+      } catch (error) {
+        console.error('Error loading platform stats:', error);
+        // Keep zeros on error rather than showing fake numbers
+      }
+    };
+
+    loadPlatformStats();
   }, []);
+
+  // Refresh stats every 5 minutes (real data, not simulated)
+  useEffect(() => {
+    if (!statsLoaded) return;
+
+    const statsInterval = setInterval(async () => {
+      try {
+        const actionsResult = await supabase
+          .from('governance_proposals')
+          .select('id', { count: 'exact', head: true });
+
+        if (actionsResult.count !== null) {
+          setPlatformStats(prev => ({
+            ...prev,
+            liberationActions: actionsResult.count || prev.liberationActions
+          }));
+        }
+      } catch (error) {
+        console.error('Error refreshing stats:', error);
+      }
+    }, 300000); // 5 minutes
+    return () => clearInterval(statsInterval);
+  }, [statsLoaded]);
 
   // Render different content based on active tab
   const renderContent = () => {
@@ -216,6 +259,15 @@ export default function App() {
       case 'platform':
         return <DiscoverPage onNavigate={changeActiveTab} />;
       case 'admin':
+        if (!isAdminAuthenticated) {
+          return (
+            <AdminAuth
+              onAuthenticated={() => setIsAdminAuthenticated(true)}
+              onCancel={() => changeActiveTab('liberation')}
+              requiredAction="Access admin dashboard"
+            />
+          );
+        }
         return <AdminDashboard />;
       case 'health-dashboard':
         return <HealthDashboard />;

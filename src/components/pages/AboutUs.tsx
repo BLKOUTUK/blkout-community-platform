@@ -347,7 +347,7 @@ export default function AboutUs() {
                 <p className="text-sm text-gray-300">
                   Our platform architecture is open source to ensure transparency and community oversight.
                   Community members can review, audit, and contribute to the codebase.
-                  Repository: <a href="https://github.com/BLKOUTUK/blkout-liberation-frontend" target="_blank" rel="noopener noreferrer" className="text-liberation-sovereignty-gold hover:underline">github.com/BLKOUTUK</a>
+                  Repository: <a href="https://github.com/BLKOUTUK/blkout-community-platform" target="_blank" rel="noopener noreferrer" className="text-liberation-sovereignty-gold hover:underline">github.com/BLKOUTUK</a>
                 </p>
               </div>
             </div>
@@ -844,12 +844,12 @@ export default function AboutUs() {
             policies, or technical implementations, we're committed to providing clear answers.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-liberation-pride-purple px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors">
+            <a href="mailto:hello@blkoutuk.com?subject=Question about BLKOUT practices" className="bg-white text-liberation-pride-purple px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors">
               Contact Community Council
-            </button>
-            <button className="border-2 border-white text-white px-6 py-3 rounded-xl font-bold hover:bg-white/10 transition-colors">
+            </a>
+            <a href="/governance" className="border-2 border-white text-white px-6 py-3 rounded-xl font-bold hover:bg-white/10 transition-colors">
               Join Community Assembly
-            </button>
+            </a>
           </div>
         </div>
       </div>

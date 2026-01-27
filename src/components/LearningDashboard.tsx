@@ -23,6 +23,7 @@ import {
   Filter,
   Sparkles
 } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
 interface LearningModule {
   id: string;
@@ -96,18 +97,35 @@ export default function LearningDashboard() {
     try {
       setLoading(true);
 
-      // In production, replace with actual API calls
-      const userId = 'current-user-id'; // Get from auth context
+      // Load available modules from Supabase
+      const { data: modulesData, error: modulesError } = await supabase
+        .from('learning_modules')
+        .select('*')
+        .eq('status', 'published')
+        .order('created_at', { ascending: false });
 
-      // Load available modules
-      const modulesRes = await fetch('/api/learning/modules');
-      const modulesData = await modulesRes.json();
-      setModules(modulesData.modules || []);
+      if (modulesError) {
+        console.error('Error loading modules:', modulesError);
+      } else {
+        setModules(modulesData || []);
+      }
 
-      // Load user progress
-      const progressRes = await fetch(`/api/learning/progress/${userId}`);
-      const progressData = await progressRes.json();
-      setUserProgress(progressData.progress || []);
+      // Get current user for progress tracking
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (user) {
+        // Load user progress from Supabase
+        const { data: progressData, error: progressError } = await supabase
+          .from('learning_progress')
+          .select('*')
+          .eq('user_id', user.id);
+
+        if (progressError) {
+          console.error('Error loading progress:', progressError);
+        } else {
+          setUserProgress(progressData || []);
+        }
+      }
 
     } catch (error) {
       console.error('Error loading learning data:', error);
@@ -118,24 +136,42 @@ export default function LearningDashboard() {
 
   const handleEnrollModule = async (moduleId: string) => {
     try {
-      const userId = 'current-user-id'; // Get from auth context
+      // Get current user
+      const { data: { user } } = await supabase.auth.getUser();
 
-      const res = await fetch('/api/learning/enroll', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, moduleId })
-      });
+      if (!user) {
+        alert('Please sign in to enroll in courses');
+        return;
+      }
 
-      const data = await res.json();
+      // Create enrollment record in Supabase
+      const { data, error } = await supabase
+        .from('learning_progress')
+        .insert({
+          user_id: user.id,
+          module_id: moduleId,
+          status: 'in_progress',
+          progress_percentage: 0,
+          started_at: new Date().toISOString()
+        })
+        .select()
+        .single();
 
-      if (data.success) {
-        // Reload progress
+      if (error) {
+        if (error.code === '23505') {
+          alert('You are already enrolled in this course');
+        } else {
+          throw error;
+        }
+      } else {
+        // Update enrollment count on module
+        await supabase.rpc('increment_enrollment', { module_id: moduleId });
         loadLearningData();
         alert('Successfully enrolled!');
       }
     } catch (error) {
       console.error('Error enrolling:', error);
-      alert('Failed to enroll');
+      alert('Failed to enroll. Please try again.');
     }
   };
 
