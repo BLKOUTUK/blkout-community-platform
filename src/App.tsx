@@ -33,6 +33,7 @@ import VideoHero from '@/components/ui/VideoHero';
 import TheoryOfChangeMasonry from '@/components/movement/TheoryOfChangeMasonry';
 import ShopPage from '@/components/pages/ShopPage';
 import BoardNavigationHub from '@/components/governance/board/BoardNavigationHub';
+import CampaignDashboard from '@/components/pages/campaigns/CampaignDashboard';
 import AnimatedLiberationGrid from '@/components/home/AnimatedLiberationGrid';
 import { supabase } from '@/lib/supabase';
 
@@ -48,7 +49,7 @@ const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'board';
+type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'board' | 'campaigns';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -120,7 +121,7 @@ class ErrorBoundary extends React.Component<any, any> {
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'board'];
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'board', 'campaigns'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
@@ -277,6 +278,8 @@ export default function App() {
         return <ShopPage />;
       case 'board':
         return <BoardNavigationHub />;
+      case 'campaigns':
+        return <CampaignDashboard />;
       default:
         return renderLiberationDashboard();
     }
