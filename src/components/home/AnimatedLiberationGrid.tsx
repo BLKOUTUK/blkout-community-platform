@@ -17,7 +17,7 @@ import { cn } from '@/lib/liberation-utils';
 import { gridItems, collectiveVideoUrl, collectiveFallbackImage } from './gridContent';
 import { ExternalLink } from 'lucide-react';
 
-type SquareState = 'initial' | 'first-click' | 'second-click' | 'visited';
+type SquareState = 'initial' | 'revealed' | 'visited';
 
 const STORAGE_KEY = 'blkout-grid-visited';
 
@@ -100,28 +100,25 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
   const handleSquareClick = useCallback((id: number) => {
     setSquareStates(prev => {
       const current = prev[id];
-      if (current === 'initial') return { ...prev, [id]: 'first-click' };
-      if (current === 'first-click') return { ...prev, [id]: 'second-click' };
+      if (current === 'initial') return { ...prev, [id]: 'revealed' };
       return prev;
     });
   }, []);
 
-  const handleLinkClick = useCallback((id: number, item: typeof gridItems[0]) => {
+  const handleNavigate = useCallback((id: number, item: typeof gridItems[0]) => {
     // Mark as visited
     setVisitedLinks(prev => {
       const newVisited = { ...prev, [id]: true };
 
-      // Save to localStorage
       try {
         const visitedIds = Object.keys(newVisited)
           .filter(key => newVisited[Number(key)])
           .map(Number);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(visitedIds));
       } catch (e) {
-        // localStorage not available, continue without persistence
+        // localStorage not available
       }
 
-      // Check if all links have been visited to reveal collective image
       const allVisited = gridItems.every(gridItem => newVisited[gridItem.id]);
       if (allVisited) {
         setCollectiveImageRevealed(true);
@@ -142,13 +139,13 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       const state = squareStates[id];
-      if (state === 'initial' || state === 'first-click') {
+      if (state === 'initial') {
         handleSquareClick(id);
-      } else if (state === 'second-click') {
-        handleLinkClick(id, item);
+      } else {
+        handleNavigate(id, item);
       }
     }
-  }, [squareStates, handleSquareClick, handleLinkClick]);
+  }, [squareStates, handleSquareClick, handleNavigate]);
 
   // Calculate collective image reveal progress
   const visitedCount = Object.values(visitedLinks).filter(Boolean).length;
@@ -186,7 +183,7 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
         {gridItems.map((item) => {
           const isLoaded = loadedSquares.includes(item.id);
           const state = squareStates[item.id];
-          const isVisited = visitedLinks[item.id];
+          const isRevealed = state === 'revealed' || state === 'visited';
 
           return (
             <div
@@ -195,12 +192,8 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
               tabIndex={0}
               aria-label={
                 state === 'initial'
-                  ? `Square ${item.id} of 9. Click to reveal content.`
-                  : state === 'first-click'
-                  ? `${item.heading}. ${item.description} Click again to see link.`
-                  : state === 'second-click'
-                  ? `${item.heading}. Press Enter to ${item.linkLabel}.`
-                  : `${item.heading}. Already visited.`
+                  ? `Square ${item.id} of 9. Tap to reveal.`
+                  : `${item.heading}. ${item.linkLabel}.`
               }
               className={cn(
                 "relative aspect-square rounded-xl cursor-pointer overflow-hidden",
@@ -211,68 +204,60 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
                 isLoaded && !prefersReducedMotion && "opacity-100 scale-100 animate-grid-load",
                 isLoaded && prefersReducedMotion && "opacity-100 scale-100",
                 state === 'initial' && "border-liberation-gold-divine/30 bg-liberation-black-power hover:border-liberation-gold-divine hover:shadow-[0_0_20px_rgba(212,175,55,0.3)]",
-                state === 'first-click' && "border-liberation-pink-power bg-liberation-black-power/90 border-2",
-                state === 'second-click' && "border-liberation-gold-divine bg-liberation-black-power/80 border-2",
-                state === 'visited' && "border-liberation-gold-divine/20 bg-gradient-to-br from-liberation-black-power to-black"
+                state === 'revealed' && "border-liberation-gold-divine bg-liberation-black-power/80",
+                state === 'visited' && "border-liberation-gold-divine/40 bg-gradient-to-br from-liberation-black-power to-black hover:border-liberation-gold-divine/70"
               )}
               style={{
                 animationDelay: prefersReducedMotion ? '0s' : `${item.id * 0.1}s`,
               }}
-              onClick={() => !isVisited && handleSquareClick(item.id)}
+              onClick={() => {
+                if (state === 'initial') {
+                  handleSquareClick(item.id);
+                } else {
+                  handleNavigate(item.id, item);
+                }
+              }}
               onKeyDown={(e) => handleKeyDown(e, item.id, item)}
             >
-              {/* Square Content */}
               <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-between">
-                {/* Heading - visible after first click */}
-                {(state === 'first-click' || state === 'second-click' || state === 'visited') && (
-                  <h3 className={cn(
-                    "text-xl md:text-2xl font-bold mb-2",
-                    !prefersReducedMotion && "transition-all duration-500",
-                    state === 'visited' ? "text-liberation-silver/60" : "text-white",
-                    state === 'first-click' && !prefersReducedMotion && "animate-text-glow"
-                  )}>
-                    {item.heading}
-                  </h3>
-                )}
+                {/* Revealed content: heading + description + link */}
+                {isRevealed && (
+                  <>
+                    <div>
+                      <h3 className={cn(
+                        "text-xl md:text-2xl font-bold mb-2",
+                        !prefersReducedMotion && "transition-all duration-500",
+                        state === 'visited' ? "text-white/80" : "text-white"
+                      )}>
+                        {item.heading}
+                      </h3>
+                      <p className={cn(
+                        "text-sm md:text-base leading-relaxed",
+                        !prefersReducedMotion && "animate-slide-up",
+                        state === 'visited' ? "text-liberation-silver/60" : "text-liberation-silver"
+                      )}>
+                        {item.description}
+                      </p>
+                    </div>
 
-                {/* Description - visible only on first click */}
-                {state === 'first-click' && (
-                  <p className={cn(
-                    "text-sm md:text-base text-liberation-silver leading-relaxed",
-                    !prefersReducedMotion && "animate-slide-up"
-                  )}>
-                    {item.description}
-                  </p>
-                )}
-
-                {/* Link Button - visible on second click */}
-                {(state === 'second-click' || state === 'visited') && (
-                  <div className={cn(
-                    "mt-auto",
-                    !prefersReducedMotion && "animate-fade-in"
-                  )}>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (state === 'second-click') {
-                          handleLinkClick(item.id, item);
-                        }
-                      }}
-                      disabled={state === 'visited'}
-                      className={cn(
-                        "px-4 py-2 rounded-lg font-semibold flex items-center gap-2",
-                        !prefersReducedMotion && "transition-all duration-300",
-                        state === 'second-click'
-                          ? "bg-liberation-pink-power hover:bg-liberation-pink-power/80 text-white shadow-[0_0_15px_rgba(255,0,255,0.4)]"
-                          : "bg-liberation-black-power/50 text-liberation-silver/60 cursor-default"
+                    <div className={cn(
+                      "mt-auto flex items-center justify-between",
+                      !prefersReducedMotion && "animate-fade-in"
+                    )}>
+                      <span className={cn(
+                        "px-4 py-2 rounded-lg font-semibold text-sm flex items-center gap-2",
+                        state === 'visited'
+                          ? "bg-liberation-gold-divine/20 text-liberation-gold-divine"
+                          : "bg-liberation-pink-power text-white shadow-[0_0_15px_rgba(255,0,255,0.4)]"
+                      )}>
+                        {item.linkLabel}
+                        {item.isExternal && <ExternalLink className="h-4 w-4" />}
+                      </span>
+                      {state === 'visited' && (
+                        <span className="text-xs text-liberation-gold-divine/60">✓</span>
                       )}
-                    >
-                      {state === 'second-click' ? item.linkLabel : 'Visited'}
-                      {state === 'second-click' && item.isExternal && (
-                        <ExternalLink className="h-4 w-4" />
-                      )}
-                    </button>
-                  </div>
+                    </div>
+                  </>
                 )}
 
                 {/* Initial state hint */}
@@ -280,28 +265,11 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-liberation-silver/50 text-sm font-medium text-center px-4">
                       <div className="text-3xl mb-2 opacity-30">?</div>
-                      Click to reveal
-                    </div>
-                  </div>
-                )}
-
-                {/* Visited overlay with checkmark */}
-                {state === 'visited' && !collectiveImageRevealed && (
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <div className="text-center p-4">
-                      <div className="text-2xl mb-2 text-liberation-gold-divine">✓</div>
-                      <div className="text-sm text-liberation-silver/80">Explored</div>
+                      Tap to reveal
                     </div>
                   </div>
                 )}
               </div>
-
-              {/* Collective image reveal indicator */}
-              {collectiveImageRevealed && isVisited && (
-                <div className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-black/70 border border-liberation-gold-divine/50 flex items-center justify-center">
-                  <span className="text-xs text-liberation-gold-divine">✓</span>
-                </div>
-              )}
             </div>
           );
         })}
