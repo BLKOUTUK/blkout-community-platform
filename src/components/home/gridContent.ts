@@ -88,10 +88,9 @@ export const gridItems: GridItem[] = [
     id: 8,
     heading: "Discover",
     description: "Resources, guides, and pathways curated for your journey. Find what you need, when you need it.",
-    link: "/discover",
+    link: "https://comms.blkoutuk.cloud/discover",
     linkLabel: "Start Exploring",
-    isExternal: false,
-    tabName: "discover",
+    isExternal: true,
     imagePosition: { x: 50, y: 100 }
   },
   {

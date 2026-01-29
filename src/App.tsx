@@ -259,7 +259,8 @@ export default function App() {
         return <PrivacyPolicy />;
       case 'platform':
       case 'discover':
-        return <DiscoverPage onNavigate={changeActiveTab} />;
+        window.location.href = 'https://comms.blkoutuk.cloud/discover';
+        return null;
       case 'admin':
         if (!isAdminAuthenticated) {
           return (
@@ -410,16 +411,12 @@ export default function App() {
                     >
                       Home
                     </button>
-                    <button
-                      onClick={() => changeActiveTab('discover')}
-                      className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
-                        activeTab === 'discover' || activeTab === 'platform'
-                          ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
-                          : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
-                      }`}
+                    <a
+                      href="https://comms.blkoutuk.cloud/discover"
+                      className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5"
                     >
                       Discover
-                    </button>
+                    </a>
                     <a
                       href="https://blkouthub.com"
                       target="_blank"
