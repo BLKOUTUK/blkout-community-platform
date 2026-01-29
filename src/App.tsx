@@ -154,13 +154,18 @@ export default function App() {
     window.history.pushState({}, '', `/${tab === 'liberation' ? '' : tab}`);
   };
 
-  // Quote rotation effect
+  // Quote rotation effect - resets on tab change so returning to homepage restarts
   useEffect(() => {
+    if (activeTab !== 'liberation') return;
     const quoteInterval = setInterval(() => {
       setCurrentQuote(prev => (prev + 1) % LIBERATION_QUOTES.length);
     }, 8000);
     return () => clearInterval(quoteInterval);
-  }, []);
+  }, [activeTab]);
+
+  const advanceQuote = () => {
+    setCurrentQuote(prev => (prev + 1) % LIBERATION_QUOTES.length);
+  };
 
   // Handle browser back/forward navigation
   useEffect(() => {
@@ -311,18 +316,49 @@ export default function App() {
       />
 
       {/* Rotating Liberation Quotes */}
-      <section className="bg-liberation-black-power rounded-xl p-6 md:p-8 border border-liberation-sovereignty-gold/20 mb-8 shadow-xl">
+      <section
+        onClick={advanceQuote}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') advanceQuote(); }}
+        aria-label="Tap to see next quote"
+        className="bg-liberation-black-power rounded-xl p-6 md:p-8 border border-liberation-sovereignty-gold/20 mb-8 shadow-xl cursor-pointer select-none group"
+      >
         <div className="text-center">
-          <blockquote className="text-2xl md:text-3xl lg:text-4xl font-black text-liberation-sovereignty-gold mb-4 leading-tight" style={{
-            textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
-          }}>
-            "{LIBERATION_QUOTES[currentQuote].quote}"
+          <blockquote
+            key={currentQuote}
+            className="text-2xl md:text-3xl lg:text-4xl font-black text-liberation-sovereignty-gold mb-4 leading-tight animate-fade-in"
+            style={{
+              textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000'
+            }}
+          >
+            &ldquo;{LIBERATION_QUOTES[currentQuote].quote}&rdquo;
           </blockquote>
-          <cite className="text-lg md:text-xl font-bold text-liberation-silver uppercase" style={{
-            textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
-          }}>
-            — {LIBERATION_QUOTES[currentQuote].author}
+          <cite
+            key={`cite-${currentQuote}`}
+            className="text-lg md:text-xl font-bold text-gray-300 uppercase block mb-4 animate-fade-in"
+            style={{
+              textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
+            }}
+          >
+            &mdash; {LIBERATION_QUOTES[currentQuote].author}
           </cite>
+          {/* Dot indicators */}
+          <div className="flex justify-center gap-1.5 mt-2">
+            {LIBERATION_QUOTES.map((_, i) => (
+              <span
+                key={i}
+                className={`inline-block w-2 h-2 rounded-full transition-all duration-300 ${
+                  i === currentQuote
+                    ? 'bg-liberation-sovereignty-gold scale-125'
+                    : 'bg-gray-600 group-hover:bg-gray-500'
+                }`}
+              />
+            ))}
+          </div>
+          <p className="text-gray-500 text-xs mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+            Tap for next quote
+          </p>
         </div>
       </section>
 
