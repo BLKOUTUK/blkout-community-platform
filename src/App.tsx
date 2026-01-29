@@ -49,7 +49,7 @@ const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'board' | 'campaigns';
+type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'discover' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'board' | 'campaigns';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -121,7 +121,7 @@ class ErrorBoundary extends React.Component<any, any> {
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'board', 'campaigns'];
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'board', 'campaigns'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
@@ -258,6 +258,7 @@ export default function App() {
       case 'privacy':
         return <PrivacyPolicy />;
       case 'platform':
+      case 'discover':
         return <DiscoverPage onNavigate={changeActiveTab} />;
       case 'admin':
         if (!isAdminAuthenticated) {
@@ -409,15 +410,16 @@ export default function App() {
                     >
                       Home
                     </button>
-                    <a
-                      href="https://blkoutuk.com/discover"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
+                    <button
+                      onClick={() => changeActiveTab('discover')}
+                      className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
+                        activeTab === 'discover' || activeTab === 'platform'
+                          ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
+                          : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
+                      }`}
                     >
                       Discover
-                      <ExternalLink className="h-3 w-3 opacity-50" />
-                    </a>
+                    </button>
                     <a
                       href="https://blkouthub.com"
                       target="_blank"
