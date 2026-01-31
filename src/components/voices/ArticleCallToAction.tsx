@@ -64,8 +64,8 @@ const ArticleCallToAction: React.FC<ArticleCallToActionProps> = ({ articleSlug }
     },
     // Article 5: IVOR
     'default-5': {
-      title: "IVOR: Your Growing Digital Companion",
-      linkText: "Meet IVOR",
+      title: "AIvor: Your Growing Digital Companion",
+      linkText: "Meet AIvor",
       linkUrl: "/intro",
       icon: Sparkles,
       bgColor: "bg-green-500/10",

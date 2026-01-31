@@ -33,7 +33,7 @@ const tabs: TabDefinition[] = [
   { id: 'moderation', label: 'Story Moderation', icon: Eye },
   { id: 'submissions', label: 'Story Submissions', icon: Plus },
   { id: 'extension', label: 'Chrome Extension', icon: Globe },
-  { id: 'ivor', label: 'IVOR Training', icon: Settings },
+  { id: 'ivor', label: 'AIvor Training', icon: Settings },
 ];
 
 export const AdminDashboard: React.FC = () => {

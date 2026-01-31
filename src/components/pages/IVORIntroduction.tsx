@@ -82,7 +82,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
     },
     {
       title: "Multi-Platform",
-      description: "Access IVOR through web, mobile, SMS, and social media platforms"
+      description: "Access AIvor through web, mobile, SMS, and social media platforms"
     }
   ];
 
@@ -134,7 +134,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                 textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
                 WebkitTextStroke: '1px #000'
               }}>
-                <span className="text-liberation-sovereignty-gold">ASK IVOR</span>
+                <span className="text-liberation-sovereignty-gold">ASK AIvor</span>
               </h1>
               <p className="text-gray-400 uppercase font-semibold" style={{
                 textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
@@ -221,14 +221,14 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
               <div className="flex items-center space-x-4 mb-6">
                 <img
                   src="/Branding and logos/ivor.png"
-                  alt="IVOR Logo"
+                  alt="AIvor Logo"
                   className="h-16 w-16 rounded-full border-2 border-liberation-sovereignty-gold"
                 />
                 <div>
                   <h2 className="text-4xl font-black text-white uppercase" style={{
                     textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
                     WebkitTextStroke: '1px #000'
-                  }}>IVOR</h2>
+                  }}>AIvor</h2>
                   <p className="text-liberation-sovereignty-gold font-semibold uppercase" style={{
                     textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
                   }}>
@@ -239,8 +239,8 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
 
               <div className="space-y-6">
                 <p className="text-xl text-gray-300 leading-relaxed">
-                  IVOR is your AI-powered companion designed specifically for Black queer liberation.
-                  Built with trauma-informed principles and community wisdom, IVOR provides
+                  AIvor is your AI-powered companion designed specifically for Black queer liberation.
+                  Built with trauma-informed principles and community wisdom, AIvor provides
                   intelligent support for organizing, wellness, and collective action.
                 </p>
 
@@ -251,7 +251,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                     COMMUNITY-OWNED AI
                   </h3>
                   <p className="text-gray-300">
-                    Unlike corporate AI systems, IVOR is democratically governed by our community.
+                    Unlike corporate AI systems, AIvor is democratically governed by our community.
                     Your conversations are private, your data is sovereign, and our responses
                     are grounded in liberation principles.
                   </p>
@@ -262,7 +262,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                     onClick={onStartChat}
                     className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black py-3 px-6 rounded-2xl font-bold transition-colors"
                   >
-                    Start Chatting with IVOR
+                    Start Chatting with AIvor
                   </button>
                   <button
                     onClick={onLearnMore}
@@ -285,10 +285,10 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
               textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
               WebkitTextStroke: '1px #000'
             }}>
-              WHY IVOR IS <span className="text-liberation-sovereignty-gold">DIFFERENT</span>
+              WHY AIvor IS <span className="text-liberation-sovereignty-gold">DIFFERENT</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Built by the community, for the community. IVOR represents a new paradigm in AI assistance—
+              Built by the community, for the community. AIvor represents a new paradigm in AI assistance—
               one that centers liberation, justice, and collective healing.
             </p>
           </div>
@@ -320,14 +320,14 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
             READY TO EXPERIENCE <span className="text-liberation-sovereignty-gold">LIBERATION AI</span>?
           </h2>
           <p className="text-xl text-gray-400 mb-8">
-            Join thousands of community members already using IVOR for organizing, support, and collective liberation.
+            Join thousands of community members already using AIvor for organizing, support, and collective liberation.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={onStartChat}
               className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black py-4 px-8 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105"
             >
-              Chat with IVOR Now
+              Chat with AIvor Now
             </button>
             <button
               onClick={onJoinCommunity}

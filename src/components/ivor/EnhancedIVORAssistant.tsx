@@ -452,7 +452,7 @@ Remember: You are in control of this conversation and your healing journey. 💜
               <span className="text-liberation-gold font-bold text-lg md:text-xl">✊</span>
             </div>
             <div>
-              <h2 className="text-lg md:text-xl font-bold">IVOR Enhanced - Liberation AI</h2>
+              <h2 className="text-lg md:text-xl font-bold">AIvor Enhanced - Liberation AI</h2>
               <p className="text-xs md:text-sm opacity-80 hidden sm:block">Trauma-informed, culturally authentic community support</p>
             </div>
           </div>

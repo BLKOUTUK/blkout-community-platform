@@ -17,19 +17,26 @@ const MobileNav: React.FC<MobileNavProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const navigationItems = [
-    { id: 'liberation', label: 'Platform', icon: Heart, type: 'button' },
-    { id: 'movement', label: 'Theory of Change', icon: Play, type: 'button' },
-    { id: 'discover', label: 'Discover', icon: ExternalLink, type: 'link', href: 'https://blkoutuk.com/discover' },
-    { id: 'governance', label: 'Ownership', icon: Vote, type: 'button' },
-    { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' },
-    { id: 'events', label: "What's On", icon: ExternalLink, type: 'link', href: 'https://events.blkoutuk.cloud' },
-    { id: 'newsroom', label: 'Newsroom', icon: ExternalLink, type: 'link', href: 'https://news.blkoutuk.cloud' },
-    { id: 'voices', label: 'Voices', icon: ExternalLink, type: 'link', href: 'https://voices.blkoutuk.cloud' },
-    { id: 'intro', label: 'Ask Ivor', icon: Brain, type: 'button' },
-    { id: 'about', label: 'About', icon: Info, type: 'button' },
-    { id: 'admin', label: 'Admin', icon: Shield, type: 'button' }
+  // Top 5 — always shown
+  const primaryItems = [
+    { id: 'liberation', label: 'Home', icon: Heart, type: 'button' as const },
+    { id: 'events', label: 'Events', icon: ExternalLink, type: 'link' as const, href: 'https://events.blkoutuk.cloud' },
+    { id: 'newsroom', label: 'News', icon: ExternalLink, type: 'link' as const, href: 'https://news.blkoutuk.cloud' },
+    { id: 'intro', label: 'AIvor', icon: Brain, type: 'button' as const },
+    { id: 'about', label: 'About', icon: Info, type: 'button' as const },
   ];
+
+  // Secondary — shown below a divider
+  const secondaryItems = [
+    { id: 'discover', label: 'Discover', icon: ExternalLink, type: 'link' as const, href: 'https://comms.blkoutuk.cloud/discover' },
+    { id: 'voices', label: 'Voices', icon: ExternalLink, type: 'link' as const, href: 'https://voices.blkoutuk.cloud' },
+    { id: 'community', label: 'Community', icon: ExternalLink, type: 'link' as const, href: 'https://blkouthub.com' },
+    { id: 'governance', label: 'Governance', icon: Vote, type: 'button' as const },
+    { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' as const },
+    { id: 'admin', label: 'Admin', icon: Shield, type: 'button' as const },
+  ];
+
+  const navigationItems = [...primaryItems, ...secondaryItems];
 
   const handleTabChange = (tabId: string) => {
     onTabChange(tabId);
@@ -113,7 +120,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
                 )
               )}
 
-              {/* IVOR Assistant Button */}
+              {/* AIvor Assistant Button */}
               <div className="pt-4 border-t border-liberation-silver border-opacity-20">
                 <button
                   onClick={() => {
@@ -122,7 +129,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
                   }}
                   className="w-full bg-liberation-green-africa text-white p-4 rounded-lg hover:bg-opacity-80 transition-colors touch-friendly font-medium"
                 >
-                  Ask IVOR
+                  Ask AIvor
                 </button>
 
                 {/* Admin Status */}

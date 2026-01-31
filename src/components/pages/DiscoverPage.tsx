@@ -630,13 +630,13 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
             >
               <Heart className="w-8 h-8 text-red-500 mb-4" />
               <h3 className="text-lg font-bold mb-2 text-gray-900 dark:text-gray-100">
-                IVOR Support Sessions
+                AIvor Support Sessions
               </h3>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 Our AI companion is here for you 24/7. Start a confidential chat anytime.
               </p>
               <button className="text-red-600 hover:text-red-700 font-semibold text-sm">
-                Meet IVOR →
+                Meet AIvor →
               </button>
             </motion.div>
 

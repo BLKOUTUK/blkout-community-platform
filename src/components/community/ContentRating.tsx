@@ -353,7 +353,7 @@ export default function ContentRating({
         {renderTransparencyData()}
 
         <div className="text-xs text-gray-500 mt-4">
-          Your ratings help IVOR learn community preferences and improve recommendations.
+          Your ratings help AIvor learn community preferences and improve recommendations.
           All rating data is transparent and helps drive our weekly community highlights.
         </div>
       </div>

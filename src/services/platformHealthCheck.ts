@@ -65,7 +65,7 @@ export const PRODUCTION_SERVICES = [
     criticalRoutes: ['/'],
   },
   {
-    name: 'IVOR AI',
+    name: 'AIvor',
     url: 'https://ivor.blkoutuk.cloud',
     checkDatabase: false,
     criticalRoutes: ['/'],

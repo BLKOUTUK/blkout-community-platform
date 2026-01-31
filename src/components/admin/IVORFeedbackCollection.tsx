@@ -229,7 +229,7 @@ export const IVORFeedbackCollection: React.FC<IVORFeedbackCollectionProps> = ({
       </div>
 
       <div>
-        <div className="text-sm font-medium text-gray-900 mb-1">IVOR Response:</div>
+        <div className="text-sm font-medium text-gray-900 mb-1">AIvor Response:</div>
         <div className="text-sm text-gray-600 line-clamp-3">{interaction.ivorResponse}</div>
       </div>
     </div>
@@ -242,7 +242,7 @@ export const IVORFeedbackCollection: React.FC<IVORFeedbackCollectionProps> = ({
           <Brain className="h-12 w-12 text-gray-400 mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">Select an Interaction</h3>
           <p className="text-gray-500">
-            Choose a recent IVOR interaction to provide learning feedback.
+            Choose a recent AIvor interaction to provide learning feedback.
           </p>
         </div>
       );
@@ -392,7 +392,7 @@ export const IVORFeedbackCollection: React.FC<IVORFeedbackCollectionProps> = ({
           <textarea
             value={feedback.suggestions || ''}
             onChange={(e) => setFeedback(prev => ({ ...prev, suggestions: e.target.value }))}
-            placeholder="What could IVOR have done better? Be specific about improvements..."
+            placeholder="What could AIvor have done better? Be specific about improvements..."
             rows={4}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-liberation-pride-purple"
           />
@@ -401,7 +401,7 @@ export const IVORFeedbackCollection: React.FC<IVORFeedbackCollectionProps> = ({
         {/* Learning Priority */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Learning Priority for IVOR
+            Learning Priority for AIvor
           </label>
           <select
             value={feedback.learningPriority || 'medium'}
@@ -449,7 +449,7 @@ export const IVORFeedbackCollection: React.FC<IVORFeedbackCollectionProps> = ({
         <div className="text-center py-12">
           <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">Loading Metrics</h3>
-          <p className="text-gray-500">Analyzing IVOR's learning progress...</p>
+          <p className="text-gray-500">Analyzing AIvor's learning progress...</p>
         </div>
       );
     }
@@ -523,9 +523,9 @@ export const IVORFeedbackCollection: React.FC<IVORFeedbackCollectionProps> = ({
     <div className={cn('space-y-8', className)}>
       {/* Hero Section */}
       <VideoHero
-        title="IVOR LEARNING LAB"
+        title="AIvor LEARNING LAB"
         subtitle="Community feedback for AI improvement"
-        description="Help train IVOR to better serve our community. Your feedback teaches our AI assistant to provide more accurate, culturally-sensitive, and helpful responses to community needs."
+        description="Help train AIvor to better serve our community. Your feedback teaches our AI assistant to provide more accurate, culturally-sensitive, and helpful responses to community needs."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
@@ -574,7 +574,7 @@ export const IVORFeedbackCollection: React.FC<IVORFeedbackCollectionProps> = ({
               {/* Recent Interactions */}
               <div>
                 <h3 className="text-lg font-medium text-gray-900 mb-4">
-                  Recent IVOR Interactions
+                  Recent AIvor Interactions
                 </h3>
                 {loading ? (
                   <div className="space-y-4">

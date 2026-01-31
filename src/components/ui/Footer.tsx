@@ -8,15 +8,15 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
   const footerLinks = [
-    { id: 'liberation', label: 'Platform', icon: Home, type: 'button' },
-    { id: 'movement', label: 'Theory of Change', icon: Play, type: 'button' },
-    { id: 'intro', label: 'IVOR', icon: Brain, type: 'button' },
+    { id: 'liberation', label: 'Home', icon: Home, type: 'button' },
     { id: 'events', label: 'Events', icon: ExternalLink, type: 'link', href: 'https://events.blkoutuk.cloud' },
-    { id: 'newsroom', label: 'Newsroom', icon: ExternalLink, type: 'link', href: 'https://news.blkoutuk.cloud' },
-    { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' },
-    { id: 'community', label: 'Community', icon: Users, type: 'button' },
+    { id: 'newsroom', label: 'News', icon: ExternalLink, type: 'link', href: 'https://news.blkoutuk.cloud' },
+    { id: 'intro', label: 'AIvor', icon: Brain, type: 'button' },
+    { id: 'about', label: 'About', icon: Info, type: 'button' },
+    { id: 'discover', label: 'Discover', icon: ExternalLink, type: 'link', href: 'https://comms.blkoutuk.cloud/discover' },
+    { id: 'voices', label: 'Voices', icon: ExternalLink, type: 'link', href: 'https://voices.blkoutuk.cloud' },
     { id: 'governance', label: 'Governance', icon: Vote, type: 'button' },
-    { id: 'about', label: 'About', icon: Info, type: 'button' }
+    { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' }
   ];
 
   return (
@@ -60,7 +60,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
             className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black px-6 py-3 rounded-2xl font-bold transition-all duration-300 hover:scale-105 flex items-center gap-2"
           >
             <Home className="h-5 w-5" />
-            Back to Platform Home
+            Back to Home
           </button>
         </div>
 

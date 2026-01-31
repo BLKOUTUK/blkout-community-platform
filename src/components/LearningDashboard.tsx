@@ -297,7 +297,7 @@ export default function LearningDashboard() {
                               <div className="flex gap-2">
                                 <button className="flex-1 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors flex items-center justify-center gap-2">
                                   <MessageCircle className="h-4 w-4" />
-                                  Continue with IVOR
+                                  Continue with AIvor
                                 </button>
                               </div>
                             </div>
@@ -441,7 +441,7 @@ export default function LearningDashboard() {
                           ) : (
                             <>
                               <Sparkles className="h-4 w-4" />
-                              Start Learning with IVOR
+                              Start Learning with AIvor
                             </>
                           )}
                         </button>

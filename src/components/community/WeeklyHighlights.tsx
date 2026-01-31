@@ -425,7 +425,7 @@ export default function WeeklyHighlights({
 
       <div className="text-xs text-gray-500 text-center">
         Highlights are generated based on community ratings, recommendations, and engagement data.
-        This transparency helps IVOR learn what content serves our community best.
+        This transparency helps AIvor learn what content serves our community best.
       </div>
     </div>
   );

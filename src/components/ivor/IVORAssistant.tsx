@@ -297,14 +297,14 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
               <span className="text-liberation-gold font-bold text-sm md:text-base">I</span>
             </div>
             <div>
-              <h2 className="text-lg md:text-xl font-bold">IVOR - Community AI Assistant</h2>
+              <h2 className="text-lg md:text-xl font-bold">AIvor - Community AI Assistant</h2>
               <p className="text-xs md:text-sm opacity-80 hidden sm:block">Your learning companion and community support</p>
             </div>
           </div>
           <button
             onClick={onClose}
             className="text-liberation-black hover:text-liberation-black/70 text-xl md:text-2xl font-bold touch-friendly p-1"
-            aria-label="Close IVOR Assistant"
+            aria-label="Close AIvor Assistant"
           >
             ×
           </button>
@@ -461,7 +461,7 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
                   value={currentMessage}
                   onChange={(e) => setCurrentMessage(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-                  placeholder="Ask IVOR anything..."
+                  placeholder="Ask AIvor anything..."
                   className="flex-1 p-2 md:p-3 border border-liberation-gold/20 rounded-lg focus:outline-none focus:border-liberation-gold text-sm md:text-base"
                   disabled={isLoading}
                 />
@@ -494,7 +494,7 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
                   </button>
                 </div>
                 <p className="text-xs text-liberation-black/60 hidden sm:block">
-                  IVOR supports community learning and mutual aid
+                  AIvor supports community learning and mutual aid
                 </p>
               </div>
             </div>

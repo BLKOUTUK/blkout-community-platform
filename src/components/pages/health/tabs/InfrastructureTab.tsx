@@ -35,7 +35,7 @@ export const InfrastructureTab: React.FC<InfrastructureTabProps> = ({ containers
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         <CategoryCard
           icon={<Activity className="w-6 h-6 text-purple-600" />}
-          title="IVOR Services"
+          title="AIvor Services"
           running={categorySummary.ivor.running}
           total={categorySummary.ivor.total}
           critical={categorySummary.ivor.critical}
@@ -59,7 +59,7 @@ export const InfrastructureTab: React.FC<InfrastructureTabProps> = ({ containers
 
         {/* IVOR Microservices */}
         <ContainerSection
-          title="IVOR Microservices (Voice Chatbot Foundation)"
+          title="AIvor Microservices (Voice Chatbot Foundation)"
           icon={<Activity className="w-5 h-5" />}
           iconColor="text-purple-600 dark:text-purple-400"
           containers={containers.filter(c => c.category === 'ivor')}

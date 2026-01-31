@@ -436,127 +436,56 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Desktop Navigation - Organized Groups */}
+                {/* Desktop Navigation — Top 5 */}
                 <div className="hidden lg:flex items-center gap-1">
-                  {/* Platform Navigation */}
-                  <div className="flex items-center gap-1 px-2 border-r border-liberation-gold-divine/20">
-                    <button
-                      onClick={() => changeActiveTab('liberation')}
-                      className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
-                        activeTab === 'liberation'
-                          ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
-                          : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
-                      }`}
-                    >
-                      Home
-                    </button>
-                    <a
-                      href="https://comms.blkoutuk.cloud/discover"
-                      className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5"
-                    >
-                      Discover
-                    </a>
-                    <a
-                      href="https://blkouthub.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
-                      title="Join our community discussion platform"
-                    >
-                      Community
-                      <ExternalLink className="h-3 w-3 opacity-50" />
-                    </a>
-                    <button
-                      onClick={() => changeActiveTab('stories')}
-                      className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
-                        activeTab === 'stories'
-                          ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
-                          : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
-                      }`}
-                    >
-                      Archive
-                    </button>
-                  </div>
-
-                  {/* Content Hubs */}
-                  <div className="flex items-center gap-1 px-2 border-r border-liberation-gold-divine/20">
-                    <a
-                      href="https://events.blkoutuk.cloud"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
-                    >
-                      Events
-                      <ExternalLink className="h-3 w-3 opacity-50" />
-                    </a>
-                    <a
-                      href="https://news.blkoutuk.cloud"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
-                    >
-                      News
-                      <ExternalLink className="h-3 w-3 opacity-50" />
-                    </a>
-                    <a
-                      href="https://voices.blkoutuk.cloud"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-md text-sm font-bold transition-all duration-200 bg-liberation-gold-divine/10 text-liberation-gold-divine hover:bg-liberation-gold-divine/20 flex items-center gap-1.5 border border-liberation-gold-divine/30"
-                    >
-                      Voices
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
-                  </div>
-
-                  {/* Shop */}
-                  <div className="flex items-center gap-1 px-2 border-r border-liberation-gold-divine/20">
-                    <button
-                      onClick={() => changeActiveTab('shop')}
-                      className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 flex items-center gap-1.5 ${
-                        activeTab === 'shop'
-                          ? 'bg-yellow-500/20 text-yellow-500 border border-yellow-500/30'
-                          : 'text-liberation-silver/80 hover:text-yellow-500 hover:bg-white/5'
-                      }`}
-                    >
-                      <DollarSign className="h-4 w-4" />
-                      Shop
-                    </button>
-                  </div>
-
-                  {/* Info & Tools */}
-                  <div className="flex items-center gap-1 px-2">
-                    <button
-                      onClick={() => changeActiveTab('governance')}
-                      className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
-                        activeTab === 'governance'
-                          ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
-                          : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
-                      }`}
-                    >
-                      Ownership
-                    </button>
-                    <button
-                      onClick={() => changeActiveTab('board')}
-                      className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
-                        activeTab === 'board'
-                          ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine border border-liberation-gold-divine/30'
-                          : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
-                      }`}
-                    >
-                      Board
-                    </button>
-                    <button
-                      onClick={() => changeActiveTab('about')}
-                      className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
-                        activeTab === 'about'
-                          ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
-                          : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
-                      }`}
-                    >
-                      About
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => changeActiveTab('liberation')}
+                    className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
+                      activeTab === 'liberation'
+                        ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
+                        : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
+                    }`}
+                  >
+                    Home
+                  </button>
+                  <a
+                    href="https://events.blkoutuk.cloud"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
+                  >
+                    Events
+                    <ExternalLink className="h-3 w-3 opacity-50" />
+                  </a>
+                  <a
+                    href="https://news.blkoutuk.cloud"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
+                  >
+                    News
+                    <ExternalLink className="h-3 w-3 opacity-50" />
+                  </a>
+                  <button
+                    onClick={() => changeActiveTab('intro')}
+                    className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
+                      activeTab === 'intro'
+                        ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
+                        : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
+                    }`}
+                  >
+                    AIvor
+                  </button>
+                  <button
+                    onClick={() => changeActiveTab('about')}
+                    className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
+                      activeTab === 'about'
+                        ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
+                        : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
+                    }`}
+                  >
+                    About
+                  </button>
                 </div>
 
                 {/* IVOR and Mobile Menu */}
@@ -564,7 +493,7 @@ export default function App() {
                   <button
                     onClick={() => setShowIVOR(true)}
                     className="p-2 bg-liberation-gold-divine/10 text-liberation-gold-divine rounded-md hover:bg-liberation-gold-divine/20 transition-all duration-200 border border-liberation-gold-divine/30"
-                    title="Ask IVOR"
+                    title="Ask AIvor"
                   >
                     <Brain className="h-5 w-5" />
                   </button>
@@ -577,6 +506,19 @@ export default function App() {
                 </div>
               </div>
             </div>
+            {/* Second row — only on Home, AIvor, About */}
+            {['liberation', 'intro', 'about'].includes(activeTab) && (
+              <div className="hidden lg:block border-t border-liberation-gold-divine/10 bg-liberation-black-power/80">
+                <div className="container mx-auto px-4">
+                  <div className="flex items-center gap-1 justify-center py-1.5">
+                    <a href="https://comms.blkoutuk.cloud/discover" className="px-3 py-1 rounded-md text-xs font-medium text-liberation-silver/60 hover:text-liberation-gold-divine hover:bg-white/5 transition-all duration-200">Discover</a>
+                    <a href="https://voices.blkoutuk.cloud" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-md text-xs font-medium text-liberation-silver/60 hover:text-liberation-gold-divine hover:bg-white/5 transition-all duration-200">Voices</a>
+                    <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-md text-xs font-medium text-liberation-silver/60 hover:text-liberation-gold-divine hover:bg-white/5 transition-all duration-200">Community</a>
+                    <button onClick={() => changeActiveTab('governance')} className={`px-3 py-1 rounded-md text-xs font-medium transition-all duration-200 ${activeTab === 'governance' ? 'text-liberation-gold-divine' : 'text-liberation-silver/60 hover:text-liberation-gold-divine hover:bg-white/5'}`}>Governance</button>
+                  </div>
+                </div>
+              </div>
+            )}
           </nav>
 
           {/* Main Content Area */}

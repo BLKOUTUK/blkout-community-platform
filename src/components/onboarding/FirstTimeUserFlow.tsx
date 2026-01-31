@@ -228,7 +228,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                   <div className="flex items-center justify-center mb-4">
                     <img src="/blkout-logo.png" alt="BLKOUT Logo" className="h-8 w-8 rounded-full" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">Meet IVOR</h3>
+                  <h3 className="text-lg font-bold mb-2">Meet AIvor</h3>
                   <p className="text-liberation-black-power opacity-80 text-sm mb-4">
                     Chat with our trauma-informed AI assistant built for our community.
                   </p>

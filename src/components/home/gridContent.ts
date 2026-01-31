@@ -38,7 +38,7 @@ export const gridItems: GridItem[] = [
   },
   {
     id: 3,
-    heading: "Meet IVOR",
+    heading: "Meet AIvor",
     description: "Your AI companion for the journey. Wellness support, resources, and community connection designed for Black queer men.",
     link: "/intro",
     linkLabel: "Say Hello",

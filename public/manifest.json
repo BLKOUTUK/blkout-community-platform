@@ -56,8 +56,8 @@
       ]
     },
     {
-      "name": "Ask IVOR",
-      "short_name": "IVOR",
+      "name": "Ask AIvor",
+      "short_name": "AIvor",
       "description": "Community AI assistant for learning and support",
       "url": "/?ivor=open",
       "icons": [

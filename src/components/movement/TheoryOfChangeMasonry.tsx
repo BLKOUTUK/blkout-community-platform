@@ -669,7 +669,7 @@ export default function TheoryOfChangeMasonry() {
     { id: 24, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-24-articles.png', bgGradient: 'from-violet-950 to-purple-950', content: { subtitle: 'storytelling', body: '8 years building our archive.\nTelling our stories.\nOn our terms.' }, cta: { text: 'Read the archive', link: '/stories', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomRight' },
     { id: 26, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-26-map.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'From London to Bristol to Manchester', highlight: 'Finding each other' }, cta: { text: 'Connect locally', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'default', textPosition: 'topLeft' },
     { id: 27, type: 'beauty', size: 'small', imageUrl: '/images/theory-of-change/silhouette letters white rgb.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: {} },
-    { id: 28, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-28-digital-human.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'IVOR: Your AI companion', body: 'Each one, Teach one', highlight: 'Tech that serves, not surveils' }, cta: { text: 'Meet IVOR', link: 'https://ivor.blkoutuk.cloud', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' }
+    { id: 28, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-28-digital-human.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'AIvor: Your AI companion', body: 'Each one, Teach one', highlight: 'Tech that serves, not surveils' }, cta: { text: 'Meet AIvor', link: 'https://ivor.blkoutuk.cloud', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' }
   ];
 
   // ACT 4: The Core (Cards 30-33)
@@ -892,7 +892,7 @@ export default function TheoryOfChangeMasonry() {
                 <div className="text-white"><img src="/Branding and logos/blkouthub_logo.png" alt="BLKOUTHUB" className="w-auto h-16 mb-4 object-contain" /><h3 className="text-3xl font-black uppercase mb-3" style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}>Get Connected</h3><p className="text-lg font-semibold mb-4">Join the BLKOUTHUB</p><p className="text-sm opacity-90">Active membership. Real gatherings.</p></div>
               </motion.a>
               <motion.a href="/platform" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.3 }} className="bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl p-8 hover:scale-105 transition-all">
-                <div className="text-white"><img src="/Branding and logos/blkoutlogo_wht_transparent.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-black uppercase mb-3" style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}>Learn</h3><p className="text-lg font-semibold mb-4">Explore Resources</p><p className="text-sm opacity-90">280+ articles, Events, IVOR AI</p></div>
+                <div className="text-white"><img src="/Branding and logos/blkoutlogo_wht_transparent.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-black uppercase mb-3" style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}>Learn</h3><p className="text-lg font-semibold mb-4">Explore Resources</p><p className="text-sm opacity-90">280+ articles, Events, AIvor</p></div>
               </motion.a>
             </div>
           </div>
@@ -929,7 +929,7 @@ export default function TheoryOfChangeMasonry() {
                 <ul className="space-y-2 text-purple-300 text-sm">
                   <li><a href="https://events.blkoutuk.cloud" className="hover:text-white">Events</a></li>
                   <li><a href="/stories" className="hover:text-white">Archive</a></li>
-                  <li><a href="https://ivor.blkoutuk.cloud" className="hover:text-white">IVOR AI</a></li>
+                  <li><a href="https://ivor.blkoutuk.cloud" className="hover:text-white">AIvor</a></li>
                 </ul>
               </div>
               <div>

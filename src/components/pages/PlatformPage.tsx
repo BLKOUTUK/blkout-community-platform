@@ -18,7 +18,7 @@ const PlatformPage: React.FC<PlatformPageProps> = ({ onNavigate }) => {
     },
     {
       id: 'intro',
-      label: 'IVOR',
+      label: 'AIvor',
       icon: Brain,
       description: 'Meet your AI liberation assistant',
       color: 'bg-liberation-purple-spirit',
