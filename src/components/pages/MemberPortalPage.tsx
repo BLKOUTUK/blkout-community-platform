@@ -179,7 +179,7 @@ export default function MemberPortalPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 text-yellow-500">My BLKOUT Portal</h1>
+          <h1 className="text-4xl font-black mb-2 text-yellow-500 uppercase">MY BLKOUT PORTAL</h1>
           <p className="text-gray-400">Manage your profile and participate in community governance</p>
         </div>
 

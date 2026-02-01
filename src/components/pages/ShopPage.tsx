@@ -100,7 +100,7 @@ export default function ShopPage() {
       {/* Header */}
       <div className="bg-gradient-to-r from-purple-900 to-pink-900 p-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl font-bold mb-4">BLKOUT Shop</h1>
+          <h1 className="text-5xl font-black mb-4 uppercase">BLKOUT Shop</h1>
           <p className="text-xl text-white/80">Liberation-funded products for Black queer community empowerment</p>
         </div>
       </div>

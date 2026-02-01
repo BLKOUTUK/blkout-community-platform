@@ -147,7 +147,7 @@ export default function GovernanceProposalsPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 text-yellow-500">Democratic Governance</h1>
+          <h1 className="text-4xl font-black mb-2 text-yellow-500 uppercase">DEMOCRATIC GOVERNANCE</h1>
           <p className="text-gray-400">One member, one vote. Shape our platform together.</p>
         </div>
 

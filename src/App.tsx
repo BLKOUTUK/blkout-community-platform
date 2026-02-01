@@ -3,7 +3,7 @@
 // STRICT SEPARATION: Application shell only - NO business logic
 
 import React, { useState, useEffect } from 'react';
-import { DollarSign, Brain, ExternalLink } from 'lucide-react';
+import { DollarSign, Brain } from 'lucide-react';
 import {
   cn,
   culturalUtils,
@@ -427,7 +427,7 @@ export default function App() {
                     onClick={() => changeActiveTab('liberation')}
                   />
                   <div className="hidden md:block border-l border-liberation-gold-divine/30 pl-3">
-                    <div className="text-liberation-gold-divine font-bold text-sm tracking-wider">
+                    <div className="text-liberation-gold-divine font-black text-lg tracking-wider">
                       BLKOUT
                     </div>
                     <div className="text-liberation-silver/70 text-xs">
@@ -437,13 +437,13 @@ export default function App() {
                 </div>
 
                 {/* Desktop Navigation — Top 5 */}
-                <div className="hidden lg:flex items-center gap-1">
+                <div className="hidden lg:flex items-center gap-4">
                   <button
                     onClick={() => changeActiveTab('liberation')}
-                    className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
+                    className={`px-4 py-2 rounded-md text-base font-black uppercase tracking-widest transition-all duration-200 ${
                       activeTab === 'liberation'
                         ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
-                        : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
+                        : 'text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10'
                     }`}
                   >
                     Home
@@ -452,40 +452,36 @@ export default function App() {
                     href="https://events.blkoutuk.cloud"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-md text-base font-black uppercase tracking-widest transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
                   >
                     Events
-                    <ExternalLink className="h-3 w-3 opacity-50" />
                   </a>
                   <a
                     href="https://news.blkoutuk.cloud"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5 flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-md text-base font-black uppercase tracking-widest transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
                   >
                     News
-                    <ExternalLink className="h-3 w-3 opacity-50" />
                   </a>
                   <button
                     onClick={() => changeActiveTab('intro')}
-                    className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
+                    className={`px-4 py-2 rounded-md text-base font-black uppercase tracking-widest transition-all duration-200 ${
                       activeTab === 'intro'
                         ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
-                        : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
+                        : 'text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10'
                     }`}
                   >
                     AIvor
                   </button>
-                  <button
-                    onClick={() => changeActiveTab('about')}
-                    className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all duration-200 ${
-                      activeTab === 'about'
-                        ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
-                        : 'text-liberation-silver/80 hover:text-liberation-gold-divine hover:bg-white/5'
-                    }`}
+                  <a
+                    href="https://voices.blkoutuk.cloud"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-md text-base font-black uppercase tracking-widest transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
                   >
-                    About
-                  </button>
+                    Voices
+                  </a>
                 </div>
 
                 {/* IVOR and Mobile Menu */}
@@ -508,13 +504,14 @@ export default function App() {
             </div>
             {/* Second row — only on Home, AIvor, About */}
             {['liberation', 'intro', 'about'].includes(activeTab) && (
-              <div className="hidden lg:block border-t border-liberation-gold-divine/10 bg-liberation-black-power/80">
+              <div className="hidden lg:block border-t border-purple-500/30 bg-liberation-black-power/80">
                 <div className="container mx-auto px-4">
-                  <div className="flex items-center gap-1 justify-center py-1.5">
-                    <a href="https://comms.blkoutuk.cloud/discover" className="px-3 py-1 rounded-md text-xs font-medium text-liberation-silver/60 hover:text-liberation-gold-divine hover:bg-white/5 transition-all duration-200">Discover</a>
-                    <a href="https://voices.blkoutuk.cloud" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-md text-xs font-medium text-liberation-silver/60 hover:text-liberation-gold-divine hover:bg-white/5 transition-all duration-200">Voices</a>
-                    <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-md text-xs font-medium text-liberation-silver/60 hover:text-liberation-gold-divine hover:bg-white/5 transition-all duration-200">Community</a>
-                    <button onClick={() => changeActiveTab('governance')} className={`px-3 py-1 rounded-md text-xs font-medium transition-all duration-200 ${activeTab === 'governance' ? 'text-liberation-gold-divine' : 'text-liberation-silver/60 hover:text-liberation-gold-divine hover:bg-white/5'}`}>Governance</button>
+                  <div className="flex items-center gap-3 justify-end py-1.5">
+                    <a href="https://comms.blkoutuk.cloud/discover" className="px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider text-gray-400 hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-200">Discover</a>
+                    <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider text-gray-400 hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-200">Community</a>
+                    <button onClick={() => changeActiveTab('shop')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'shop' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>Shop</button>
+                    <button onClick={() => changeActiveTab('governance')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'governance' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>Membership</button>
+                    <button onClick={() => changeActiveTab('about')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'about' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>About</button>
                   </div>
                 </div>
               </div>

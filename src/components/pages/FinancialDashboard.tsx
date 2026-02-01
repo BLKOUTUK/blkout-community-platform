@@ -150,7 +150,7 @@ export default function FinancialDashboard() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2 text-yellow-500">Financial Management</h1>
+          <h1 className="text-4xl font-black mb-2 text-yellow-500 uppercase">FINANCIAL MANAGEMENT</h1>
           <p className="text-gray-400">Project-based budgeting, tracking, and funder reporting for BLKOUT UK</p>
         </div>
 
