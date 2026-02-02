@@ -1,13 +1,16 @@
 // BLKOUT Governance Page - Community-Centered Decision Making
-import React from 'react';
-import { Vote, Users, Shield, Heart, Info, ArrowRight, HandshakeIcon, Building, UserPlus } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { Vote, Users, Shield, Heart, Info, ArrowRight, HandshakeIcon, Building, UserPlus, ChevronDown, ChevronUp } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import BoardEOIForm from '../governance/board/BoardEOIForm';
 
 const GovernancePage: React.FC = () => {
+  const [showEOIForm, setShowEOIForm] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-black">
       {/* Hero Section - Human Centered */}
-      <section className="relative py-20 px-6">
+      <section className="relative py-20 px-6 bg-black">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -17,23 +20,18 @@ const GovernancePage: React.FC = () => {
             {/* BLKOUT Logo */}
             <div className="flex justify-center mb-8">
               <img
-                src="/Branding and logos/blkoutlogo_wht_transparent.png"
+                src="/Branding and logos/blkout_logo_roundel_colour.png"
                 alt="BLKOUT"
                 className="h-24 md:h-32 lg:h-40 w-auto mx-auto filter drop-shadow-2xl"
               />
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-black mb-6 text-gray-900 dark:text-gray-100 uppercase" style={{
-              textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
-              WebkitTextStroke: '1px #000'
-            }}>
+            <h1 className="text-4xl md:text-6xl font-black mb-6 text-white uppercase">
               OWNERS' MANUAL
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-8 font-semibold" style={{
-              textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
-            }}>
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8 font-semibold">
               <span className="uppercase">EVERY VOICE MATTERS. OUR MEMBERS SHAPE OUR FUTURE.</span><br/>
-              This is how we build liberation - stronger together.
+              This is how we build liberation — stronger together.
             </p>
           </motion.div>
         </div>
@@ -184,6 +182,147 @@ const GovernancePage: React.FC = () => {
               Profits are reinvested to benefit Black queer communities, not extracted for private gain.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Board Recruitment Section */}
+      <section id="board-eoi" className="py-16 px-6 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <span className="bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold mb-4 inline-block">
+                NOW RECRUITING
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+                Join Our Board of Directors
+              </h2>
+              <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+                We're building something extraordinary. Now we need leaders to guide us home.
+                <br />
+                <strong>5 positions. Your community. Our future.</strong>
+              </p>
+            </motion.div>
+          </div>
+
+          {/* Position Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {[
+              { title: 'Chair', icon: '🪑', desc: 'Lead our governance with vision' },
+              { title: 'Treasurer', icon: '💷', desc: 'Steward our community resources' },
+              { title: 'Secretary', icon: '📋', desc: 'Keep our house in order' },
+              { title: 'Technology Director', icon: '💻', desc: 'Guide our digital future' },
+              { title: 'Community Director', icon: '🤝', desc: 'Amplify grassroots voices' },
+            ].map((position, index) => (
+              <motion.div
+                key={position.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg"
+              >
+                <div className="text-4xl mb-3">{position.icon}</div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                  {position.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400">{position.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* What We're Looking For */}
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 mb-12 shadow-lg">
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
+              Who We're Looking For
+            </h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h4 className="font-bold text-purple-600 dark:text-purple-400 mb-3">You, Beloved</h4>
+                <ul className="text-gray-700 dark:text-gray-300 space-y-2">
+                  <li>• Black queer men who care deeply about our community</li>
+                  <li>• Bring lived experience (that's enough)</li>
+                  <li>• Can commit 4-6 hours monthly</li>
+                  <li>• Want to learn and grow with us</li>
+                </ul>
+                <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 italic">
+                  Formal qualifications? Optional. Heart for the work? Essential.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-bold text-purple-600 dark:text-purple-400 mb-3">What You'll Do</h4>
+                <ul className="text-gray-700 dark:text-gray-300 space-y-2">
+                  <li>• Monthly board meetings (2 hours)</li>
+                  <li>• Strategic planning sessions</li>
+                  <li>• Connect us with your networks</li>
+                  <li>• Hold us accountable to our values</li>
+                  <li>• Democratic decision-making</li>
+                </ul>
+                <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 italic">
+                  This is cooperative governance. Your voice genuinely matters here.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Timeline */}
+          <div className="bg-purple-600 text-white rounded-2xl p-8 mb-12">
+            <h3 className="text-2xl font-bold mb-6 text-center">Timeline</h3>
+            <div className="grid md:grid-cols-3 gap-6 text-center">
+              <div>
+                <div className="text-3xl font-bold">Feb 14</div>
+                <div className="text-purple-200">EOI Deadline</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold">Feb 15-16</div>
+                <div className="text-purple-200">Info Session on BLKOUTHUB</div>
+              </div>
+              <div>
+                <div className="text-3xl font-bold">TBA</div>
+                <div className="text-purple-200">Board Elections at AGM</div>
+              </div>
+            </div>
+          </div>
+
+          {/* EOI Form Toggle */}
+          <div className="text-center mb-8">
+            <button
+              onClick={() => setShowEOIForm(!showEOIForm)}
+              className="px-8 py-4 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors inline-flex items-center gap-2 text-lg"
+            >
+              {showEOIForm ? (
+                <>
+                  <ChevronUp className="w-5 h-5" />
+                  Hide Application Form
+                </>
+              ) : (
+                <>
+                  <ChevronDown className="w-5 h-5" />
+                  Apply Now - Submit Your EOI
+                </>
+              )}
+            </button>
+            <p className="text-gray-600 dark:text-gray-400 mt-3">
+              The revolution needs governance, beloved. And governance needs you.
+            </p>
+          </div>
+
+          {/* EOI Form */}
+          <AnimatePresence>
+            {showEOIForm && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <BoardEOIForm />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
 

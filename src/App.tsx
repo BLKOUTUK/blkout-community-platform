@@ -418,7 +418,7 @@ export default function App() {
           <nav className="sticky top-0 z-40 bg-liberation-black-power border-b border-liberation-gold-divine/30 shadow-lg backdrop-blur-sm">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between h-16 md:h-18">
-                {/* Logo and Brand */}
+                {/* Logo, Brain icon and Brand */}
                 <div className="flex items-center space-x-3">
                   <img
                     src="/blkout-logo.png"
@@ -426,17 +426,16 @@ export default function App() {
                     className="h-10 md:h-12 w-auto cursor-pointer hover:scale-105 transition-transform drop-shadow-lg"
                     onClick={() => changeActiveTab('liberation')}
                   />
-                  <div className="hidden md:block border-l border-liberation-gold-divine/30 pl-3">
-                    <div className="text-liberation-gold-divine font-black text-lg tracking-wider">
-                      BLKOUT
-                    </div>
-                    <div className="text-liberation-silver/70 text-xs">
-                      Liberation Platform
-                    </div>
-                  </div>
+                  <button
+                    onClick={() => setShowIVOR(true)}
+                    className="p-2 bg-liberation-gold-divine/10 text-liberation-gold-divine rounded-md hover:bg-liberation-gold-divine/20 transition-all duration-200 border border-liberation-gold-divine/30"
+                    title="Ask AIvor"
+                  >
+                    <Brain className="h-5 w-5" />
+                  </button>
                 </div>
 
-                {/* Desktop Navigation — Top 5 */}
+                {/* Desktop Navigation — Top 5, right-aligned */}
                 <div className="hidden lg:flex items-center gap-4">
                   <button
                     onClick={() => changeActiveTab('liberation')}
@@ -484,15 +483,8 @@ export default function App() {
                   </a>
                 </div>
 
-                {/* IVOR and Mobile Menu */}
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setShowIVOR(true)}
-                    className="p-2 bg-liberation-gold-divine/10 text-liberation-gold-divine rounded-md hover:bg-liberation-gold-divine/20 transition-all duration-200 border border-liberation-gold-divine/30"
-                    title="Ask AIvor"
-                  >
-                    <Brain className="h-5 w-5" />
-                  </button>
+                {/* Mobile Menu only */}
+                <div className="flex items-center gap-2 lg:hidden">
                   <MobileNav
                     activeTab={activeTab}
                     onTabChange={changeActiveTab}
