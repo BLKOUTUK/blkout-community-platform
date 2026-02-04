@@ -122,7 +122,7 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
     {
       id: '1',
       type: 'ivor',
-      content: 'Hello! I\'m IVOR, your community AI assistant. I\'m here to support you with learning tools, problem-solving, and community wisdom. How can I help you today?',
+      content: 'Right then. I\'m AIvor — named after Ivor Cummings, Black British civil rights pioneer. I\'m your guide to all things BLKOUT and Black queer life in the UK. Events, resources, history, or just a proper conversation. What\'s on your mind?',
       timestamp: new Date(),
       category: 'greeting'
     }

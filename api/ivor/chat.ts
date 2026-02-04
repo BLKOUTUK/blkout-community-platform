@@ -200,7 +200,7 @@ function getFallbackResponse(message: string): string {
   const msg = message.toLowerCase();
 
   if (msg.includes('hello') || msg.includes('hi') || msg.includes('hey')) {
-    return `Hello! I'm IVOR, your community AI assistant. I'm here to support you with learning, problem-solving, and community wisdom. How can I help you today? ✊🏾`;
+    return `Right then. I'm AIvor — named after Ivor Cummings, Black British civil rights pioneer. I'm your guide to all things BLKOUT and Black queer life in the UK. Events, resources, history, or just a proper conversation. What's on your mind?`;
   }
 
   if (msg.includes('help') || msg.includes('support')) {
