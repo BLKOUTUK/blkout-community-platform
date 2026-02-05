@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ResourceCard from './ResourceCard';
-import { VoicePlayer } from './VoicePlayer';
 import { API_ENDPOINTS } from '../../config/api';
 
 // IVOR Core API endpoint (from centralized config)
@@ -28,8 +27,6 @@ interface IVORMessage {
   resources?: Resource[];
   resourceCount?: number;
   enhancedWithRAG?: boolean;
-  audioUrl?: string;
-  audioLoading?: boolean;
 }
 
 interface LearningTool {
@@ -122,38 +119,7 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
   const [isLoading, setIsLoading] = useState(false);
   const [showLearningTools, setShowLearningTools] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [voiceEnabled, setVoiceEnabled] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  // Fetch voice audio for a message
-  const fetchVoiceAudio = async (messageId: string, text: string) => {
-    try {
-      // Update message to show loading
-      setMessages(prev => prev.map(msg =>
-        msg.id === messageId ? { ...msg, audioLoading: true } : msg
-      ));
-
-      const response = await fetch(API_ENDPOINTS.ivorVoice, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text, sessionId: `voice-${messageId}` })
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success && data.audioUrl) {
-          setMessages(prev => prev.map(msg =>
-            msg.id === messageId ? { ...msg, audioUrl: data.audioUrl, audioLoading: false } : msg
-          ));
-        }
-      }
-    } catch (error) {
-      console.error('[IVOR] Voice fetch error:', error);
-      setMessages(prev => prev.map(msg =>
-        msg.id === messageId ? { ...msg, audioLoading: false } : msg
-      ));
-    }
-  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -233,11 +199,6 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
       };
 
       setMessages(prev => [...prev, ivorMessage]);
-
-      // Fetch voice audio if enabled
-      if (voiceEnabled && ivorMessage.content) {
-        fetchVoiceAudio(ivorMessage.id, ivorMessage.content);
-      }
 
     } catch (error) {
       console.error('Error sending message:', error);
@@ -384,25 +345,6 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
                       </div>
                     )}
 
-                    {/* Voice Player for IVOR responses */}
-                    {message.type === 'ivor' && voiceEnabled && (
-                      <div className="mt-2">
-                        {message.audioLoading && (
-                          <div className="flex items-center gap-2 text-xs text-liberation-black/60">
-                            <span className="animate-pulse">🔊</span>
-                            <span>Loading voice...</span>
-                          </div>
-                        )}
-                        {message.audioUrl && (
-                          <VoicePlayer
-                            audioUrl={message.audioUrl}
-                            className="mt-2"
-                            onError={(err) => console.warn('[IVOR] Voice playback error:', err)}
-                          />
-                        )}
-                      </div>
-                    )}
-
                     <p className="text-xs opacity-60 mt-1 md:mt-2">
                       {message.timestamp.toLocaleTimeString()}
                     </p>
@@ -444,25 +386,12 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
                 </button>
               </div>
               <div className="flex justify-between items-center mt-2">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setShowLearningTools(!showLearningTools)}
-                    className="text-xs md:text-sm text-liberation-black/60 hover:text-liberation-black touch-friendly"
-                  >
-                    {showLearningTools ? 'Hide Tools' : 'Show Tools'}
-                  </button>
-                  <button
-                    onClick={() => setVoiceEnabled(!voiceEnabled)}
-                    className={`text-xs md:text-sm touch-friendly flex items-center gap-1 ${
-                      voiceEnabled ? 'text-liberation-gold' : 'text-liberation-black/40'
-                    }`}
-                    aria-label={voiceEnabled ? 'Disable voice' : 'Enable voice'}
-                    title={voiceEnabled ? 'Voice enabled - click to disable' : 'Voice disabled - click to enable'}
-                  >
-                    {voiceEnabled ? '🔊' : '🔇'}
-                    <span className="hidden sm:inline">{voiceEnabled ? 'Voice On' : 'Voice Off'}</span>
-                  </button>
-                </div>
+                <button
+                  onClick={() => setShowLearningTools(!showLearningTools)}
+                  className="text-xs md:text-sm text-liberation-black/60 hover:text-liberation-black touch-friendly"
+                >
+                  {showLearningTools ? 'Hide Tools' : 'Show Tools'}
+                </button>
                 <p className="text-xs text-liberation-black/60 hidden sm:block">
                   AIvor supports community learning and mutual aid
                 </p>
