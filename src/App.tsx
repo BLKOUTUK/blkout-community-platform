@@ -197,7 +197,7 @@ export default function App() {
         const [membersResult, storiesResult, eventsResult, actionsResult] = await Promise.all([
           supabase.from('governance_members').select('id', { count: 'exact', head: true }),
           supabase.from('legacy_articles').select('id', { count: 'exact', head: true }).eq('status', 'published'),
-          supabase.from('events').select('id', { count: 'exact', head: true }),
+          supabase.from('community_events').select('id', { count: 'exact', head: true }),
           supabase.from('governance_proposals').select('id', { count: 'exact', head: true })
         ]);
 

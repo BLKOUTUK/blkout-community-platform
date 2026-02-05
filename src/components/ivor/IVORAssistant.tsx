@@ -1,19 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import ResourceCard from './ResourceCard';
 import { VoicePlayer } from './VoicePlayer';
 import { API_ENDPOINTS } from '../../config/api';
 
-const supabaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL;
-const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseKey) {
-  console.warn('Missing Supabase environment variables for IVOR');
-}
-
-const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null;
-
 // IVOR Core API endpoint (from centralized config)
+// Conversation storage is handled server-side by ivor-core
 const IVOR_API_URL = API_ENDPOINTS.ivorChat;
 
 interface Resource {
@@ -194,18 +185,8 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
     setShowLearningTools(false);
 
     try {
-      // Store conversation in Supabase if available
-      if (supabase) {
-        await supabase.from('ivor_conversations').insert([
-          {
-            user_message: content,
-            timestamp: new Date().toISOString(),
-            session_id: 'webapp-session-' + Date.now()
-          }
-        ]);
-      }
-
       // Call real IVOR Core API with RAG enhancement
+      // (conversation storage handled server-side by ivor-core)
       const conversationHistory = messages.map(msg => ({
         role: msg.type === 'user' ? 'user' : 'assistant',
         content: msg.content
@@ -256,17 +237,6 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
       // Fetch voice audio if enabled
       if (voiceEnabled && ivorMessage.content) {
         fetchVoiceAudio(ivorMessage.id, ivorMessage.content);
-      }
-
-      // Store IVOR response
-      if (supabase) {
-        await supabase.from('ivor_conversations').insert([
-          {
-            ivor_response: ivorMessage.content,
-            timestamp: new Date().toISOString(),
-            session_id: 'webapp-session-' + Date.now()
-          }
-        ]);
       }
 
     } catch (error) {

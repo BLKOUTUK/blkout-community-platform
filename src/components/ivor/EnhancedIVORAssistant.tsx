@@ -1,19 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import { EnhancedIVORCore, AIResponseContext, TraumaInformedContext, CommunityKnowledge } from './enhanced-ivor-core';
 import { TraumaInformedConversationManager } from './trauma-informed-conversation';
 import { CommunityWisdomIntegration } from './community-wisdom-integration';
 import { CommunityLearningMLSystem } from './community-learning-ml';
 import { DataSovereigntyPrivacyManager } from './data-sovereignty-privacy';
-
-const supabaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL;
-const supabaseKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseKey) {
-  console.warn('Missing Supabase environment variables for Enhanced IVOR');
-}
-
-const supabase = supabaseUrl && supabaseKey ? createClient(supabaseUrl, supabaseKey) : null;
 
 interface EnhancedIVORMessage {
   id: string;
@@ -198,19 +188,8 @@ How can I support you today?`,
     setShowLiberationTools(false);
 
     try {
-      // Store conversation in Supabase if available
-      if (supabase) {
-        await supabase.from('ivor_conversations').insert([
-          {
-            user_message: content,
-            timestamp: new Date().toISOString(),
-            session_id: 'enhanced-webapp-session-' + Date.now(),
-            enhanced_features: true
-          }
-        ]);
-      }
-
       // Generate enhanced AI response
+      // (conversation storage handled server-side by ivor-core)
       const response = await generateEnhancedResponse(content);
 
       const ivorMessage: EnhancedIVORMessage = {
@@ -225,21 +204,6 @@ How can I support you today?`,
       };
 
       setMessages(prev => [...prev, ivorMessage]);
-
-      // Store enhanced IVOR response
-      if (supabase) {
-        await supabase.from('ivor_conversations').insert([
-          {
-            ivor_response: response.content,
-            timestamp: new Date().toISOString(),
-            session_id: 'enhanced-webapp-session-' + Date.now(),
-            enhanced_features: true,
-            safety_level: response.safetyLevel,
-            wisdom_used: response.wisdomUsed,
-            trauma_informed: response.traumaInformed
-          }
-        ]);
-      }
 
     } catch (error) {
       console.error('Error generating enhanced response:', error);
