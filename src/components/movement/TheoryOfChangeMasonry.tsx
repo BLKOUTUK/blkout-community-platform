@@ -669,7 +669,7 @@ export default function TheoryOfChangeMasonry() {
     { id: 24, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-24-articles.png', bgGradient: 'from-violet-950 to-purple-950', content: { subtitle: 'storytelling', body: '8 years building our archive.\nTelling our stories.\nOn our terms.' }, cta: { text: 'Read the archive', link: '/stories', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomRight' },
     { id: 26, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-26-map.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'From London to Bristol to Manchester', highlight: 'Finding each other' }, cta: { text: 'Connect locally', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'default', textPosition: 'topLeft' },
     { id: 27, type: 'beauty', size: 'small', imageUrl: '/images/theory-of-change/silhouette letters white rgb.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: {} },
-    { id: 28, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-28-digital-human.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'AIvor: Your AI companion', body: 'Each one, Teach one', highlight: 'Tech that serves, not surveils' }, cta: { text: 'Meet AIvor', link: 'https://ivor.blkoutuk.cloud', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' }
+    { id: 28, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-28-digital-human.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'AIvor: Your AI companion', body: 'Each one, Teach one', highlight: 'Tech that serves, not surveils' }, cta: { text: 'Meet AIvor', link: '/?chat=open', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' }
   ];
 
   // ACT 4: The Core (Cards 30-33)
@@ -929,7 +929,7 @@ export default function TheoryOfChangeMasonry() {
                 <ul className="space-y-2 text-purple-300 text-sm">
                   <li><a href="https://events.blkoutuk.cloud" className="hover:text-white">Events</a></li>
                   <li><a href="/stories" className="hover:text-white">Archive</a></li>
-                  <li><a href="https://ivor.blkoutuk.cloud" className="hover:text-white">AIvor</a></li>
+                  <li><a href="/?chat=open" className="hover:text-white">AIvor</a></li>
                 </ul>
               </div>
               <div>

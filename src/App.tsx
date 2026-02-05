@@ -138,7 +138,11 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<NavigationTab>(getInitialTabFromURL());
   const [currentQuote, setCurrentQuote] = useState(0);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false); // Require authentication
-  const [showIVOR, setShowIVOR] = useState(false);
+  const [showIVOR, setShowIVOR] = useState(() => {
+    // Open chat if ?chat=open is in URL (from external links)
+    const params = new URLSearchParams(window.location.search);
+    return params.get('chat') === 'open';
+  });
   const [isFirstVisit, setIsFirstVisit] = useState(false);
   const [platformStats, setPlatformStats] = useState({
     membersServed: 0,
