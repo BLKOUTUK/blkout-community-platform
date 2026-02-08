@@ -4,6 +4,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { DollarSign, Brain } from 'lucide-react';
+import { useConfetti } from '@/hooks/useConfetti';
 import {
   cn,
   culturalUtils,
@@ -151,6 +152,10 @@ export default function App() {
     liberationActions: 0
   });
   const [statsLoaded, setStatsLoaded] = useState(false);
+
+  // 10th Anniversary confetti — February 2026 only
+  const isAnniversaryMonth = new Date().getFullYear() === 2026 && new Date().getMonth() === 1;
+  useConfetti(isAnniversaryMonth && activeTab === 'liberation');
 
   // Custom function to change tab and update URL
   const changeActiveTab = (tab: NavigationTab) => {
@@ -369,31 +374,67 @@ export default function App() {
       {/* Animated Liberation Grid - Progressive reveal gateway */}
       <AnimatedLiberationGrid onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />
 
-      {/* Heroes Video - Theory of Change */}
-      <section
-        onClick={() => changeActiveTab('movement')}
-        className="bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 mb-8 cursor-pointer group"
-      >
-        <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 group-hover:text-liberation-gold-divine transition-colors">
+      {/* Heroes & 10th Anniversary Videos */}
+      <section className="mb-8">
+        <div className="text-center mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-liberation-gold-divine">
             Our Heroes, Our Story
           </h2>
-          <p className="text-xl mb-6 opacity-90">
+          <p className="text-xl mt-2 opacity-90">
             Discover how we're building liberation together
           </p>
-          <div className="relative rounded-xl overflow-hidden mb-6 max-w-5xl mx-auto shadow-2xl" style={{ aspectRatio: '16/9' }}>
-            <video
-              src="/videos/Heroes2.mp4"
-              className="w-full h-full object-cover"
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {/* Heroes2 — Theory of Change */}
+          <div
+            onClick={() => changeActiveTab('movement')}
+            className="relative rounded-xl overflow-hidden shadow-2xl cursor-pointer group"
+          >
+            <div style={{ aspectRatio: '16/9' }}>
+              <video
+                src="/videos/Heroes2.mp4"
+                className="w-full h-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+              <p className="text-white font-bold text-sm uppercase tracking-wide group-hover:text-liberation-gold-divine transition-colors">
+                Explore Our Theory of Change →
+              </p>
+            </div>
           </div>
-          <button className="bg-liberation-gold-divine text-liberation-black-power px-8 py-3 rounded-lg font-bold hover:bg-liberation-gold-divine/90 transition-all transform hover:scale-105">
-            Explore Our Theory of Change →
-          </button>
+
+          {/* Ten — 10th Anniversary (drop Ten.mp4 into public/videos/) */}
+          <a
+            href="https://comms.blkoutuk.cloud/10years"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative rounded-xl overflow-hidden shadow-2xl group block"
+          >
+            <div style={{ aspectRatio: '16/9' }}>
+              <video
+                src="/videos/Ten.mp4"
+                className="w-full h-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+              <p className="text-liberation-gold-divine text-xs uppercase tracking-widest font-semibold mb-1">
+                #BLKOUT10Years
+              </p>
+              <p className="text-white font-bold text-sm uppercase tracking-wide group-hover:text-liberation-gold-divine transition-colors">
+                10 Years of Liberation →
+              </p>
+            </div>
+            <div className="absolute inset-0 border-2 border-transparent group-hover:border-liberation-gold-divine/50 rounded-xl transition-colors duration-500 pointer-events-none" />
+          </a>
         </div>
       </section>
 
