@@ -9,8 +9,8 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci
+# Install dependencies (--legacy-peer-deps for eslint peer dep mismatch)
+RUN npm install --legacy-peer-deps
 
 # Copy source code
 COPY . .
@@ -49,7 +49,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install production dependencies + tsx for TypeScript
-RUN npm ci --production && npm install tsx
+RUN npm install --legacy-peer-deps --omit=dev && npm install tsx --legacy-peer-deps
 
 # Copy built frontend
 COPY --from=builder /app/dist ./dist
