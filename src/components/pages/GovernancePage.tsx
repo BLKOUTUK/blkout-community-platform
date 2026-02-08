@@ -1,6 +1,6 @@
-// BLKOUT Governance Page - Community-Centered Decision Making
+// BLKOUT Governance Page - Board Recruitment & Community Governance
 import React, { useState } from 'react';
-import { Vote, Users, Shield, Heart, Info, ArrowRight, HandshakeIcon, Building, UserPlus, ChevronDown, ChevronUp } from 'lucide-react';
+import { Vote, Users, Shield, Heart, HandshakeIcon, Building, UserPlus, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BoardEOIForm from '../governance/board/BoardEOIForm';
 
@@ -8,16 +8,15 @@ const GovernancePage: React.FC = () => {
   const [showEOIForm, setShowEOIForm] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-black">
-      {/* Hero Section - Human Centered */}
-      <section className="relative py-20 px-6 bg-black">
+    <div className="min-h-screen bg-black">
+      {/* Hero - Board Recruitment Welcome */}
+      <section className="relative py-24 px-6 bg-[#1a1a2e]">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
-            {/* BLKOUT Logo */}
             <div className="flex justify-center mb-8">
               <img
                 src="/Branding and logos/blkout_logo_roundel_colour.png"
@@ -26,167 +25,39 @@ const GovernancePage: React.FC = () => {
               />
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-black mb-6 text-white uppercase">
-              OWNERS' MANUAL
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8 font-semibold">
-              <span className="uppercase">EVERY VOICE MATTERS. OUR MEMBERS SHAPE OUR FUTURE.</span><br/>
-              This is how we build liberation — stronger together.
+            <p className="text-[#d4af37] text-sm md:text-base uppercase tracking-[0.3em] font-semibold mb-4">
+              10 Years of Liberation &mdash; Now We Need You
             </p>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 text-white uppercase tracking-tight">
+              LEAD THE NEXT DECADE
+            </h1>
+            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-4">
+              BLKOUT is a Community Benefit Society &mdash; democratically governed, member-owned,
+              built on 10 years of Black queer men loving and leading together.
+            </p>
+            <p className="text-xl md:text-2xl text-white max-w-2xl mx-auto mb-8 font-semibold">
+              We're recruiting <span className="text-[#d4af37]">5 board members</span> to guide our future.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href="#board-eoi"
+                className="px-8 py-4 bg-[#d4af37] text-[#1a1a2e] font-black uppercase tracking-wide hover:bg-[#e5c349] transition-colors"
+              >
+                Apply for the Board
+              </a>
+              <a
+                href="#about-blkout"
+                className="px-8 py-4 border-2 border-[#d4af37] text-[#d4af37] font-bold uppercase tracking-wide hover:bg-[#d4af37]/10 transition-colors"
+              >
+                Learn More First
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Core Values */}
-      <section className="py-16 px-6 bg-white dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-gray-100">
-            Our Shared Values Guide Us
-          </h2>
-
-          <div className="flex justify-center mb-8">
-            <img
-              src="/Branding and logos/blkoutvalues.png"
-              alt="BLKOUT Values"
-              className="max-w-full h-auto max-w-md rounded-lg shadow-lg"
-            />
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-8 rounded-2xl"
-            >
-              <Heart className="w-12 h-12 text-purple-600 mb-4" />
-              <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-gray-100">
-                Community First
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300">
-                We center the needs, dreams, and wellbeing of Black queer people in every decision.
-                Your experiences guide our path forward.
-              </p>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 p-8 rounded-2xl"
-            >
-              <Users className="w-12 h-12 text-yellow-600 mb-4" />
-              <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-gray-100">
-                Collective Wisdom
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300">
-                We believe in the power of many voices. Together, we hold knowledge
-                that no single person could possess alone.
-              </p>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 p-8 rounded-2xl"
-            >
-              <Shield className="w-12 h-12 text-blue-600 mb-4" />
-              <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-gray-100">
-                Protected Spaces
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300">
-                We create safe environments where everyone can speak their truth
-                without fear. Your voice is protected here.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Community Benefit Society Structure */}
-      <section className="py-16 px-6 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <Building className="w-16 h-16 text-green-600 mx-auto mb-6" />
-            <h2 className="text-3xl font-bold mb-6 text-gray-900 dark:text-gray-100">
-              Community Benefit Society
-            </h2>
-            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
-              BLKOUT is structured as a Community Benefit Society - a legal form that ensures
-              community ownership, democratic governance, and benefits for our members and society.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            {/* Membership */}
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
-            >
-              <div className="flex items-center mb-6">
-                <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded-lg mr-4">
-                  <UserPlus className="w-8 h-8 text-purple-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  Become a Member
-                </h3>
-              </div>
-              <p className="text-gray-700 dark:text-gray-300 mb-6">
-                As a Community Benefit Society member, you get a real say in how BLKOUT develops.
-                Members vote on key decisions, elect the board, and help shape our future together.
-              </p>
-              <ul className="text-gray-700 dark:text-gray-300 mb-6 space-y-2">
-                <li>• Voting rights on major decisions</li>
-                <li>• Elect board members</li>
-                <li>• Shape platform direction</li>
-                <li>• Priority access to events and resources</li>
-                <li>• Annual member meetings</li>
-              </ul>
-              <button className="w-full px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors">
-                Apply for Membership
-              </button>
-            </motion.div>
-
-            {/* Partnership */}
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
-            >
-              <div className="flex items-center mb-6">
-                <div className="bg-green-100 dark:bg-green-900 p-3 rounded-lg mr-4">
-                  <HandshakeIcon className="w-8 h-8 text-green-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                  Partner with Us
-                </h3>
-              </div>
-              <p className="text-gray-700 dark:text-gray-300 mb-6">
-                Organizations, businesses, and institutions can partner with BLKOUT to support
-                Black queer communities while aligning with our community benefit mission.
-              </p>
-              <ul className="text-gray-700 dark:text-gray-300 mb-6 space-y-2">
-                <li>• Support community initiatives</li>
-                <li>• Collaborative projects</li>
-                <li>• Ethical partnership framework</li>
-                <li>• Community-led priorities</li>
-                <li>• Transparent impact reporting</li>
-              </ul>
-              <button className="w-full px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition-colors">
-                Explore Partnership
-              </button>
-            </motion.div>
-          </div>
-
-          <div className="text-center bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
-            <Info className="w-6 h-6 text-blue-600 mx-auto mb-3" />
-            <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-2">
-              What makes us different?
-            </h4>
-            <p className="text-gray-700 dark:text-gray-300">
-              Unlike traditional companies, we're owned by our community, not shareholders.
-              Profits are reinvested to benefit Black queer communities, not extracted for private gain.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Board Recruitment Section */}
-      <section id="board-eoi" className="py-16 px-6 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30">
+      {/* Board Positions */}
+      <section id="board-eoi" className="py-16 px-6 bg-[#1a1a2e] border-t-4 border-[#d4af37]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <motion.div
@@ -194,16 +65,12 @@ const GovernancePage: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <span className="bg-purple-600 text-white px-4 py-1 rounded-full text-sm font-bold mb-4 inline-block">
-                NOW RECRUITING
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-gray-100">
-                Join Our Board of Directors
+              <h2 className="text-3xl md:text-4xl font-black mb-6 text-white uppercase tracking-tight">
+                5 Positions. 5 Ways to Lead.
               </h2>
-              <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-                We're building something extraordinary. Now we need leaders to guide us home.
-                <br />
-                <strong>5 positions. Your community. Our future.</strong>
+              <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+                Each role shapes how BLKOUT serves our community.
+                You don't need a fancy CV &mdash; you need heart for the work.
               </p>
             </motion.div>
           </div>
@@ -211,11 +78,11 @@ const GovernancePage: React.FC = () => {
           {/* Position Cards */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {[
-              { title: 'Chair', icon: '🪑', desc: 'Lead our governance with vision' },
-              { title: 'Treasurer', icon: '💷', desc: 'Steward our community resources' },
-              { title: 'Secretary', icon: '📋', desc: 'Keep our house in order' },
-              { title: 'Technology Director', icon: '💻', desc: 'Guide our digital future' },
-              { title: 'Community Director', icon: '🤝', desc: 'Amplify grassroots voices' },
+              { title: 'Chair', desc: 'Lead board meetings, represent BLKOUT publicly, ensure governance excellence. The voice of our collective vision.' },
+              { title: 'Treasurer', desc: 'Oversee financial health, budgeting, reporting. Ensure our 75% creator revenue share is honoured. Liberation economics.' },
+              { title: 'Secretary', desc: 'Maintain records, coordinate communications, ensure compliance. The organisational memory of our movement.' },
+              { title: 'Technology Director', desc: 'Guide platform development, data sovereignty, digital strategy. Technical background valued but not required.' },
+              { title: 'Community Director', desc: 'Champion member needs, partnerships, engagement. Stay rooted in the lived experiences of Black queer men across the UK.' },
             ].map((position, index) => (
               <motion.div
                 key={position.title}
@@ -223,66 +90,74 @@ const GovernancePage: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg"
+                className="bg-[#252547] p-6 border-l-4 border-[#d4af37]"
               >
-                <div className="text-4xl mb-3">{position.icon}</div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+                <h3 className="text-xl font-black text-[#d4af37] uppercase tracking-tight mb-3">
                   {position.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">{position.desc}</p>
+                <p className="text-gray-300 text-sm leading-relaxed">{position.desc}</p>
               </motion.div>
             ))}
           </div>
 
-          {/* What We're Looking For */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 mb-12 shadow-lg">
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6 text-center">
+          {/* Who We're Looking For */}
+          <div className="bg-[#252547] p-8 mb-12 border-t-4 border-[#d4af37]">
+            <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-6 text-center">
               Who We're Looking For
             </h3>
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <h4 className="font-bold text-purple-600 dark:text-purple-400 mb-3">You, Beloved</h4>
-                <ul className="text-gray-700 dark:text-gray-300 space-y-2">
-                  <li>• Black queer men who care deeply about our community</li>
-                  <li>• Bring lived experience (that's enough)</li>
-                  <li>• Can commit 4-6 hours monthly</li>
-                  <li>• Want to learn and grow with us</li>
+                <h4 className="font-bold text-[#d4af37] mb-3 italic">You, Beloved</h4>
+                <ul className="text-gray-300 space-y-3">
+                  <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Black queer men who care deeply about our community</li>
+                  <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Bring lived experience (that's enough)</li>
+                  <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Can commit 4-6 hours monthly</li>
+                  <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Want to learn and grow with us</li>
                 </ul>
-                <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 italic">
+                <p className="mt-4 text-sm text-gray-400 italic">
                   Formal qualifications? Optional. Heart for the work? Essential.
                 </p>
               </div>
               <div>
-                <h4 className="font-bold text-purple-600 dark:text-purple-400 mb-3">What You'll Do</h4>
-                <ul className="text-gray-700 dark:text-gray-300 space-y-2">
-                  <li>• Monthly board meetings (2 hours)</li>
-                  <li>• Strategic planning sessions</li>
-                  <li>• Connect us with your networks</li>
-                  <li>• Hold us accountable to our values</li>
-                  <li>• Democratic decision-making</li>
+                <h4 className="font-bold text-[#d4af37] mb-3 italic">What You'll Do</h4>
+                <ul className="text-gray-300 space-y-3">
+                  <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Monthly board meetings (2 hours)</li>
+                  <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Strategic planning sessions</li>
+                  <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Connect us with your networks</li>
+                  <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Hold us accountable to our values</li>
+                  <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Democratic decision-making</li>
                 </ul>
-                <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 italic">
+                <p className="mt-4 text-sm text-gray-400 italic">
                   This is cooperative governance. Your voice genuinely matters here.
                 </p>
               </div>
             </div>
           </div>
 
+          {/* Especially Welcome */}
+          <div className="bg-[#252547] border-l-4 border-[#d4af37] p-6 mb-12">
+            <p className="text-gray-300">
+              <strong className="text-[#d4af37]">Especially welcome:</strong> First-time board
+              members, people outside London, those with lived experience in health, housing,
+              immigration, or other community challenges. Governance training will be provided.
+            </p>
+          </div>
+
           {/* Timeline */}
-          <div className="bg-purple-600 text-white rounded-2xl p-8 mb-12">
-            <h3 className="text-2xl font-bold mb-6 text-center">Timeline</h3>
+          <div className="bg-[#4a1942] text-white p-8 mb-12 border-t-4 border-[#d4af37]">
+            <h3 className="text-2xl font-black mb-6 text-center uppercase tracking-tight">Timeline</h3>
             <div className="grid md:grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-3xl font-bold">Feb 14</div>
-                <div className="text-purple-200">EOI Deadline</div>
+                <div className="text-3xl font-black text-[#d4af37]">Feb 21</div>
+                <div className="text-purple-200 mt-1">EOI Deadline</div>
               </div>
               <div>
-                <div className="text-3xl font-bold">Feb 15-16</div>
-                <div className="text-purple-200">Info Session on BLKOUTHUB</div>
+                <div className="text-3xl font-black text-[#d4af37]">Feb 22-23</div>
+                <div className="text-purple-200 mt-1">Info Session on BLKOUTHUB</div>
               </div>
               <div>
-                <div className="text-3xl font-bold">TBA</div>
-                <div className="text-purple-200">Board Elections at AGM</div>
+                <div className="text-3xl font-black text-[#d4af37]">TBA</div>
+                <div className="text-purple-200 mt-1">Board Elections at AGM</div>
               </div>
             </div>
           </div>
@@ -291,7 +166,7 @@ const GovernancePage: React.FC = () => {
           <div className="text-center mb-8">
             <button
               onClick={() => setShowEOIForm(!showEOIForm)}
-              className="px-8 py-4 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition-colors inline-flex items-center gap-2 text-lg"
+              className="px-8 py-4 bg-[#d4af37] text-[#1a1a2e] font-black uppercase tracking-wide hover:bg-[#e5c349] transition-colors inline-flex items-center gap-2 text-lg"
             >
               {showEOIForm ? (
                 <>
@@ -301,11 +176,11 @@ const GovernancePage: React.FC = () => {
               ) : (
                 <>
                   <ChevronDown className="w-5 h-5" />
-                  Apply Now - Submit Your EOI
+                  Apply Now &mdash; Submit Your EOI
                 </>
               )}
             </button>
-            <p className="text-gray-600 dark:text-gray-400 mt-3">
+            <p className="text-gray-400 mt-3 italic">
               The revolution needs governance, beloved. And governance needs you.
             </p>
           </div>
@@ -326,121 +201,153 @@ const GovernancePage: React.FC = () => {
         </div>
       </section>
 
-      {/* How We Make Decisions */}
-      <section className="py-16 px-6">
+      {/* About BLKOUT - Context for Board Candidates */}
+      <section id="about-blkout" className="py-16 px-6 bg-black border-t border-[#d4af37]/30">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-gray-100">
-            How We Make Decisions Together
+          <h2 className="text-3xl font-black text-center mb-4 text-white uppercase tracking-tight">
+            About BLKOUT
           </h2>
+          <p className="text-center text-gray-400 mb-12 max-w-2xl mx-auto">
+            Understanding what you'd be leading
+          </p>
 
-          <div className="space-y-6">
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-              <div className="flex items-start space-x-4">
-                <div className="bg-purple-100 dark:bg-purple-900 p-3 rounded-lg">
-                  <HandshakeIcon className="w-6 h-6 text-purple-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100">
-                    Community Proposals
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">
-                    Any member can bring ideas to the table. We listen to each other's dreams
-                    and work together to make them real. Your ideas matter here.
-                  </p>
-                  <a
-                    href="/governance-proposals"
-                    className="flex items-center space-x-2 text-purple-600 hover:text-purple-700 font-semibold"
-                  >
-                    <span>Share Your Idea</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
+          {/* CBS Structure + History */}
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <div className="bg-[#252547] p-8 border-l-4 border-[#d4af37]">
+              <Building className="w-10 h-10 text-[#d4af37] mb-4" />
+              <h3 className="text-xl font-black text-white uppercase tracking-tight mb-3">
+                Community Benefit Society
+              </h3>
+              <p className="text-gray-300 mb-4">
+                BLKOUT is structured as a CBS &mdash; a legal form ensuring community ownership,
+                democratic governance, and benefits for our members and society. Unlike traditional
+                companies, we're owned by our community, not shareholders.
+              </p>
+              <p className="text-gray-300">
+                Profits are reinvested to benefit Black queer communities, not extracted for private gain.
+                75% of revenue goes directly to creators and community &mdash; hardcoded, not aspirational.
+              </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-              <div className="flex items-start space-x-4">
-                <div className="bg-yellow-100 dark:bg-yellow-900 p-3 rounded-lg">
-                  <Vote className="w-6 h-6 text-yellow-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100">
-                    Collective Voting
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">
-                    We vote on important decisions together. Each member has equal say,
-                    and we take time to understand all perspectives before choosing our path.
-                  </p>
-                  <a
-                    href="/governance-proposals"
-                    className="flex items-center space-x-2 text-yellow-600 hover:text-yellow-700 font-semibold"
-                  >
-                    <span>View Active Votes</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
+            <div className="bg-[#252547] p-8 border-l-4 border-[#d4af37]">
+              <Users className="w-10 h-10 text-[#d4af37] mb-4" />
+              <h3 className="text-xl font-black text-white uppercase tracking-tight mb-3">
+                10 Years. 10,000 Brothers.
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Founded in 2016 as gatherings in London &mdash; just brothers finding each other.
+                Grew to Manchester, Birmingham, Bristol. Survived a pandemic by becoming lifelines
+                for each other online.
+              </p>
+              <p className="text-gray-300">
+                In 2025 we launched a full liberation technology platform: AIvor voice assistant,
+                Events Calendar, News Platform, Communications Hub. Now we need governance to match
+                our ambition.
+              </p>
             </div>
+          </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-lg">
-              <div className="flex items-start space-x-4">
-                <div className="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg">
-                  <Users className="w-6 h-6 text-blue-600" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-gray-100">
-                    Working Groups
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">
-                    Small groups focus on specific areas, bringing their expertise and passion
-                    to serve the community. Join a group that speaks to your heart.
-                  </p>
-                  <button className="flex items-center space-x-2 text-blue-600 hover:text-blue-700 font-semibold">
-                    <span>Find Your Group</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
+          {/* Core Values */}
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <div className="bg-[#252547] p-6 border-t-2 border-[#d4af37]">
+              <Heart className="w-8 h-8 text-[#d4af37] mb-3" />
+              <h3 className="text-lg font-bold mb-2 text-white">Community First</h3>
+              <p className="text-gray-400 text-sm">
+                We centre the needs, dreams, and wellbeing of Black queer people in every decision.
+              </p>
             </div>
+            <div className="bg-[#252547] p-6 border-t-2 border-[#d4af37]">
+              <Users className="w-8 h-8 text-[#d4af37] mb-3" />
+              <h3 className="text-lg font-bold mb-2 text-white">Collective Wisdom</h3>
+              <p className="text-gray-400 text-sm">
+                We believe in the power of many voices. Together, we hold knowledge
+                no single person could possess alone.
+              </p>
+            </div>
+            <div className="bg-[#252547] p-6 border-t-2 border-[#d4af37]">
+              <Shield className="w-8 h-8 text-[#d4af37] mb-3" />
+              <h3 className="text-lg font-bold mb-2 text-white">Protected Spaces</h3>
+              <p className="text-gray-400 text-sm">
+                We create safe environments where everyone can speak their truth without fear.
+              </p>
+            </div>
+          </div>
+
+          {/* Values Image */}
+          <div className="flex justify-center mb-12">
+            <img
+              src="/Branding and logos/blkoutvalues.png"
+              alt="BLKOUT Values"
+              className="max-w-full h-auto max-w-md shadow-lg border-2 border-[#d4af37]/30"
+            />
           </div>
         </div>
       </section>
 
-      {/* Get Involved CTA */}
-      <section className="py-20 px-6 bg-gradient-to-r from-purple-600 to-pink-600">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Your Voice Shapes Our Future
+      {/* How We Make Decisions */}
+      <section className="py-16 px-6 bg-[#1a1a2e]">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-black text-center mb-12 text-white uppercase tracking-tight">
+            How We Make Decisions Together
           </h2>
-          <p className="text-xl text-white/90 mb-8">
-            Join us in building a platform that truly serves our community.
-            Every contribution, every vote, every conversation matters.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-4 bg-white text-purple-600 rounded-lg font-bold hover:bg-gray-100 transition-colors">
-              Join the Conversation
-            </button>
-            <button className="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold hover:bg-white/10 transition-colors">
-              Learn More About Our Process
-            </button>
+
+          <div className="space-y-6">
+            <div className="bg-[#252547] p-8 border-l-4 border-[#d4af37]">
+              <div className="flex items-start space-x-4">
+                <HandshakeIcon className="w-8 h-8 text-[#d4af37] flex-shrink-0" />
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold mb-2 text-white">Community Proposals</h3>
+                  <p className="text-gray-300">
+                    Any member can bring ideas to the table. We listen to each other's dreams
+                    and work together to make them real.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[#252547] p-8 border-l-4 border-[#d4af37]">
+              <div className="flex items-start space-x-4">
+                <Vote className="w-8 h-8 text-[#d4af37] flex-shrink-0" />
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold mb-2 text-white">Collective Voting</h3>
+                  <p className="text-gray-300">
+                    We vote on important decisions together. Each member has equal say,
+                    and we take time to understand all perspectives before choosing our path.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[#252547] p-8 border-l-4 border-[#d4af37]">
+              <div className="flex items-start space-x-4">
+                <Users className="w-8 h-8 text-[#d4af37] flex-shrink-0" />
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold mb-2 text-white">Working Groups</h3>
+                  <p className="text-gray-300">
+                    Small groups focus on specific areas, bringing their expertise and passion
+                    to serve the community.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Story-Powered Platform Video */}
-      <section className="py-16 px-6 bg-white dark:bg-gray-900">
+      <section className="py-16 px-6 bg-black border-t border-[#d4af37]/30">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-gray-100">
+          <h2 className="text-3xl font-black text-center mb-4 text-white uppercase tracking-tight">
             Our Story-Powered Platform
           </h2>
-          <p className="text-xl text-center text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-            BLKOUT is built on the power of our stories. Watch how we're creating a platform
-            that centers Black queer voices, experiences, and liberation.
+          <p className="text-lg text-center text-gray-400 mb-8 max-w-3xl mx-auto">
+            BLKOUT is built on the power of our stories. See how we're creating technology
+            that centres Black queer voices.
           </p>
           <div className="max-w-4xl mx-auto">
             <video
               controls
-              className="w-full rounded-lg shadow-2xl"
+              className="w-full shadow-2xl border-2 border-[#d4af37]/30"
               poster="/videos/onboarding/story-powered-poster.jpg"
             >
               <source src="/videos/onboarding/story powered full width (Video).mp4" type="video/mp4" />
@@ -450,165 +357,161 @@ const GovernancePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Development Roadmap - Realness Unleashed */}
-      <section className="py-16 px-6 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
+      {/* Development Roadmap */}
+      <section className="py-16 px-6 bg-[#1a1a2e]">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-gray-100">
-            Current Development Plans: Realness Unleashed
+          <h2 className="text-3xl font-black text-center mb-4 text-white uppercase tracking-tight">
+            Where We're Headed
           </h2>
-          <p className="text-xl text-center text-gray-700 dark:text-gray-300 mb-12 max-w-3xl mx-auto">
+          <p className="text-lg text-center text-gray-400 mb-12 max-w-3xl mx-auto">
             We're building BLKOUT in phases, guided by community needs and our commitment to
-            authentic, liberatory technology. Here's where we're headed:
+            liberatory technology.
           </p>
 
-          {/* Infographic */}
           <div className="flex justify-center mb-12">
             <img
               src="/Branding and logos/REALNESS UNLEASHED Infographic Graph.png"
               alt="BLKOUT Realness Unleashed Development Roadmap"
-              className="max-w-full h-auto rounded-lg shadow-2xl"
+              className="max-w-full h-auto shadow-2xl border-2 border-[#d4af37]/30"
             />
           </div>
 
-          {/* Development Phases Explained */}
-          <div className="grid md:grid-cols-2 gap-8">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
-            >
-              <div className="bg-purple-100 dark:bg-purple-900 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl font-bold text-purple-600">1</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-                Phase 1: Foundation (Current)
-              </h3>
-              <ul className="text-gray-700 dark:text-gray-300 space-y-2">
-                <li>✅ Community news curation platform</li>
-                <li>✅ Events calendar for Black queer spaces</li>
-                <li>✅ Chrome extensions for content submission</li>
-                <li>✅ Basic moderation workflows</li>
-                <li>🔄 Member profiles and authentication</li>
-                <li>🔄 Community voting on content</li>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-[#252547] p-8 border-l-4 border-[#d4af37]">
+              <span className="text-[#d4af37] font-black text-2xl">1</span>
+              <h3 className="text-xl font-bold mb-4 text-white mt-2">Foundation (Current)</h3>
+              <ul className="text-gray-300 space-y-2 text-sm">
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Community news curation platform</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Events calendar for Black queer spaces</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Chrome extensions for content submission</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Basic moderation workflows</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Member profiles and authentication</li>
               </ul>
-            </motion.div>
+            </div>
 
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
-            >
-              <div className="bg-pink-100 dark:bg-pink-900 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl font-bold text-pink-600">2</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-                Phase 2: Community Tools
-              </h3>
-              <ul className="text-gray-700 dark:text-gray-300 space-y-2">
-                <li>📋 Community proposal system</li>
-                <li>📋 Democratic voting on platform decisions</li>
-                <li>📋 Working group coordination</li>
-                <li>📋 Member directory and networking</li>
-                <li>📋 Community benefit society structure</li>
-                <li>📋 Transparent governance dashboard</li>
+            <div className="bg-[#252547] p-8 border-l-4 border-[#d4af37]">
+              <span className="text-[#d4af37] font-black text-2xl">2</span>
+              <h3 className="text-xl font-bold mb-4 text-white mt-2">Community Tools</h3>
+              <ul className="text-gray-300 space-y-2 text-sm">
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Community proposal system</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Democratic voting on decisions</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Working group coordination</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Member directory and networking</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Transparent governance dashboard</li>
               </ul>
-            </motion.div>
+            </div>
 
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
-            >
-              <div className="bg-yellow-100 dark:bg-yellow-900 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl font-bold text-yellow-600">3</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-                Phase 3: Liberation Features
-              </h3>
-              <ul className="text-gray-700 dark:text-gray-300 space-y-2">
-                <li>📋 Mutual aid coordination</li>
-                <li>📋 Resource sharing marketplace</li>
-                <li>📋 Community storytelling archive</li>
-                <li>📋 Skill sharing and mentorship</li>
-                <li>📋 Wellness and healing resources</li>
-                <li>📋 Collective memory preservation</li>
+            <div className="bg-[#252547] p-8 border-l-4 border-[#d4af37]">
+              <span className="text-[#d4af37] font-black text-2xl">3</span>
+              <h3 className="text-xl font-bold mb-4 text-white mt-2">Liberation Features</h3>
+              <ul className="text-gray-300 space-y-2 text-sm">
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Mutual aid coordination</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Resource sharing marketplace</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Community storytelling archive</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Skill sharing and mentorship</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Wellness and healing resources</li>
               </ul>
-            </motion.div>
+            </div>
 
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
-            >
-              <div className="bg-blue-100 dark:bg-blue-900 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-2xl font-bold text-blue-600">4</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-                Phase 4: Full Liberation Platform
-              </h3>
-              <ul className="text-gray-700 dark:text-gray-300 space-y-2">
-                <li>📋 Decentralized infrastructure</li>
-                <li>📋 Community-owned data sovereignty</li>
-                <li>📋 Economic cooperation tools</li>
-                <li>📋 International solidarity networks</li>
-                <li>📋 Liberation technology ecosystem</li>
-                <li>📋 Full community autonomy</li>
+            <div className="bg-[#252547] p-8 border-l-4 border-[#d4af37]">
+              <span className="text-[#d4af37] font-black text-2xl">4</span>
+              <h3 className="text-xl font-bold mb-4 text-white mt-2">Full Liberation Platform</h3>
+              <ul className="text-gray-300 space-y-2 text-sm">
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Decentralised infrastructure</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Community-owned data sovereignty</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Economic cooperation tools</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>International solidarity networks</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Full community autonomy</li>
               </ul>
-            </motion.div>
-          </div>
-
-          {/* Community Involvement CTA */}
-          <div className="mt-12 bg-gradient-to-r from-purple-600 to-pink-600 p-8 rounded-2xl text-center">
-            <h3 className="text-2xl font-bold text-white mb-4">
-              Shape the Roadmap With Us
-            </h3>
-            <p className="text-white/90 text-lg mb-6 max-w-2xl mx-auto">
-              These plans aren't set in stone - they evolve based on community needs and priorities.
-              Your voice matters in deciding what we build next.
-            </p>
-            <button className="px-8 py-4 bg-white text-purple-600 rounded-lg font-bold hover:bg-gray-100 transition-colors">
-              Join Community Planning Sessions
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Info Section */}
-      <section className="py-16 px-6 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-xl">
-            <div className="flex items-start space-x-3">
-              <Info className="w-6 h-6 text-blue-600 mt-1" />
-              <div>
-                <h3 className="font-bold mb-2 text-gray-900 dark:text-gray-100">
-                  Building Together Takes Time
-                </h3>
-                <p className="text-gray-700 dark:text-gray-300">
-                  We're currently in Phase 1, building the foundation of our platform. Each phase is developed
-                  collaboratively with community input. Join our community spaces to participate in shaping
-                  what we build next. Your ideas and feedback directly influence our development priorities.
-                </p>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Legal & Policies Section */}
-      <section className="py-12 px-6 bg-white dark:bg-gray-800">
+      {/* Membership & Partnership */}
+      <section className="py-16 px-6 bg-black border-t border-[#d4af37]/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-[#252547] p-8 border-t-4 border-[#d4af37]">
+              <UserPlus className="w-10 h-10 text-[#d4af37] mb-4" />
+              <h3 className="text-xl font-black text-white uppercase tracking-tight mb-3">
+                Become a Member
+              </h3>
+              <p className="text-gray-300 mb-6">
+                As a CBS member, you get a real say in how BLKOUT develops.
+                Members vote on key decisions, elect the board, and shape our future.
+              </p>
+              <ul className="text-gray-300 mb-6 space-y-2 text-sm">
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Voting rights on major decisions</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Elect board members</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Shape platform direction</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Priority access to events and resources</li>
+              </ul>
+              <button className="w-full px-6 py-3 bg-[#d4af37] text-[#1a1a2e] font-bold uppercase tracking-wide hover:bg-[#e5c349] transition-colors">
+                Apply for Membership
+              </button>
+            </div>
+
+            <div className="bg-[#252547] p-8 border-t-4 border-[#d4af37]">
+              <HandshakeIcon className="w-10 h-10 text-[#d4af37] mb-4" />
+              <h3 className="text-xl font-black text-white uppercase tracking-tight mb-3">
+                Partner with Us
+              </h3>
+              <p className="text-gray-300 mb-6">
+                Organisations can partner with BLKOUT to support Black queer communities
+                while aligning with our community benefit mission.
+              </p>
+              <ul className="text-gray-300 mb-6 space-y-2 text-sm">
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Support community initiatives</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Collaborative projects</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Ethical partnership framework</li>
+                <li className="flex items-start"><span className="text-[#d4af37] mr-3">&mdash;</span>Transparent impact reporting</li>
+              </ul>
+              <button className="w-full px-6 py-3 border-2 border-[#d4af37] text-[#d4af37] font-bold uppercase tracking-wide hover:bg-[#d4af37]/10 transition-colors">
+                Explore Partnership
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA */}
+      <section className="py-20 px-6 bg-gradient-to-r from-[#4a1942] to-[#1a1a2e] border-t-4 border-[#d4af37]">
         <div className="max-w-4xl mx-auto text-center">
-          <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-gray-100">
+          <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-6">
+            Your Voice Shapes Our Future
+          </h2>
+          <p className="text-xl text-gray-300 mb-8 italic">
+            The revolution needs governance, beloved. And governance needs you.
+          </p>
+          <a
+            href="#board-eoi"
+            className="inline-block px-10 py-5 bg-[#d4af37] text-[#1a1a2e] font-black uppercase tracking-wide text-lg hover:bg-[#e5c349] transition-colors"
+          >
+            Apply for the Board
+          </a>
+        </div>
+      </section>
+
+      {/* Legal & Policies */}
+      <section className="py-12 px-6 bg-[#0f0f1a] border-t border-[#d4af37]/20">
+        <div className="max-w-4xl mx-auto text-center">
+          <h3 className="text-lg font-bold mb-4 text-gray-400 uppercase tracking-wide">
             Legal & Policies
           </h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Transparency is core to our values. Read our community agreements and how we protect your data.
+          <p className="text-gray-500 mb-6 text-sm">
+            Transparency is core to our values.
           </p>
           <div className="flex justify-center gap-4 flex-wrap">
             <a
               href="/terms"
-              className="px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium"
+              className="px-6 py-3 bg-[#252547] text-gray-300 hover:text-[#d4af37] transition-colors font-medium text-sm"
             >
               Terms of Service
             </a>
             <a
               href="/privacy"
-              className="px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors font-medium"
+              className="px-6 py-3 bg-[#252547] text-gray-300 hover:text-[#d4af37] transition-colors font-medium text-sm"
             >
               Privacy Policy
             </a>

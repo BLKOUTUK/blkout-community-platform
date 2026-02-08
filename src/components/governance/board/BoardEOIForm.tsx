@@ -121,7 +121,7 @@ export default function BoardEOIForm() {
         <div className="bg-white dark:bg-gray-800 rounded-lg p-4 text-left">
           <h4 className="font-bold text-gray-900 dark:text-gray-100 mb-2">What happens next?</h4>
           <ul className="text-gray-700 dark:text-gray-300 space-y-2 text-sm">
-            <li>• Attend the info session on BLKOUTHUB (Feb 15-16, 2026)</li>
+            <li>• Attend the info session on BLKOUTHUB (Feb 22-23, 2026)</li>
             <li>• Our governance team will review all applications</li>
             <li>• Shortlisted candidates will be contacted for conversations</li>
             <li>• Board elections will take place at our AGM</li>
@@ -145,7 +145,7 @@ export default function BoardEOIForm() {
             Board Member Expression of Interest
           </h2>
           <p className="text-gray-600 dark:text-gray-400">
-            Deadline: February 14, 2026
+            Deadline: February 21, 2026
           </p>
         </div>
       </div>
@@ -323,7 +323,7 @@ export default function BoardEOIForm() {
             📅 Board Information Session
           </h4>
           <p className="text-blue-700 dark:text-blue-300 text-sm">
-            Join our information session on BLKOUTHUB (February 15-16, 2026) to learn more about board responsibilities and ask questions. All candidates are encouraged to attend.
+            Join our information session on BLKOUTHUB (February 22-23, 2026) to learn more about board responsibilities and ask questions. All candidates are encouraged to attend.
           </p>
         </div>
 
