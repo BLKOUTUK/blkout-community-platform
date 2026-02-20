@@ -1,10 +1,11 @@
 // BLKOUT Board Expression of Interest Form
 // Submit your interest in joining the BLKOUT board
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Users, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { motion } from 'framer-motion';
+import VoiceRecorder from './VoiceRecorder';
 
 interface BoardEOIFormData {
   full_name: string;
@@ -16,6 +17,7 @@ interface BoardEOIFormData {
   relevant_experience: string;
   can_commit_hours: boolean;
   how_heard_about: string;
+  voice_recording_url: string;
 }
 
 const BOARD_POSITIONS = [
@@ -43,10 +45,12 @@ export default function BoardEOIForm() {
     relevant_experience: '',
     can_commit_hours: false,
     how_heard_about: '',
+    voice_recording_url: '',
   });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const voiceBlobRef = useRef<Blob | null>(null);
 
   const togglePosition = (positionId: string) => {
     setFormData({
@@ -76,6 +80,28 @@ export default function BoardEOIForm() {
     }
 
     try {
+      // Upload voice recording if present
+      let voiceUrl = '';
+      if (voiceBlobRef.current) {
+        const filename = `eoi-${Date.now()}-${formData.email.replace(/[^a-z0-9]/gi, '_')}.webm`;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('board-eoi-voice')
+          .upload(filename, voiceBlobRef.current, {
+            contentType: 'audio/webm',
+            upsert: false,
+          });
+
+        if (uploadError) {
+          console.error('Voice upload failed:', uploadError);
+          // Continue without voice — don't block the submission
+        } else {
+          const { data: urlData } = supabase.storage
+            .from('board-eoi-voice')
+            .getPublicUrl(uploadData.path);
+          voiceUrl = urlData.publicUrl;
+        }
+      }
+
       // Submit to Supabase
       const { error: submitError } = await supabase
         .from('board_eoi_submissions')
@@ -89,6 +115,7 @@ export default function BoardEOIForm() {
           relevant_experience: formData.relevant_experience,
           can_commit_hours: formData.can_commit_hours,
           how_heard_about: formData.how_heard_about,
+          voice_recording_url: voiceUrl || null,
           submitted_at: new Date().toISOString(),
           status: 'pending'
         });
@@ -270,6 +297,13 @@ export default function BoardEOIForm() {
             placeholder="Tell us what draws you to this work and what you hope to contribute..."
           />
         </div>
+
+        {/* Voice Recording */}
+        <VoiceRecorder
+          onRecordingComplete={(blob) => { voiceBlobRef.current = blob; }}
+          onRecordingRemoved={() => { voiceBlobRef.current = null; }}
+          maxDurationSeconds={120}
+        />
 
         {/* Relevant Experience */}
         <div>
