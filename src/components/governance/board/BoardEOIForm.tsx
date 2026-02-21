@@ -172,7 +172,7 @@ export default function BoardEOIForm() {
             Board Member Expression of Interest
           </h2>
           <p className="text-gray-600 dark:text-gray-400">
-            Deadline: February 21, 2026
+            Deadline: February 23, 2026
           </p>
         </div>
       </div>

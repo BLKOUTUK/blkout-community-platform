@@ -148,7 +148,7 @@ const GovernancePage: React.FC = () => {
             <h3 className="text-2xl font-black mb-6 text-center uppercase tracking-tight">Timeline</h3>
             <div className="grid md:grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-3xl font-black text-[#d4af37]">Feb 21</div>
+                <div className="text-3xl font-black text-[#d4af37]">Feb 23</div>
                 <div className="text-purple-200 mt-1">EOI Deadline</div>
               </div>
               <div>
