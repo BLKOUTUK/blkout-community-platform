@@ -21,7 +21,7 @@ jobs:
         cache: 'npm'
 
     - name: Install dependencies
-      run: npm ci
+      run: npm install --legacy-peer-deps
 
     - name: Validate Liberation Values
       run: npm run test:liberation-values
@@ -47,7 +47,7 @@ jobs:
         cache: 'npm'
 
     - name: Install dependencies
-      run: npm ci
+      run: npm install --legacy-peer-deps
 
     - name: TypeScript Type Checking
       run: npm run typecheck || echo "TypeScript errors found - see issue #1"
