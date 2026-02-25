@@ -65,8 +65,12 @@ jobs:
         VITE_API_BASE_URL: https://blkout-simple-technical.vercel.app/api
         VITE_ENVIRONMENT: production
 
+    - name: Clean WSL artifacts
+      run: find dist/ -name '*Zone.Identifier*' -delete 2>/dev/null || true
+
     - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4
+      continue-on-error: true
       with:
         name: liberation-frontend-build
         path: dist/
