@@ -254,7 +254,7 @@ export default function App() {
   const renderContent = () => {
     switch (activeTab) {
       case 'about':
-        return <AboutUs />;
+        return <AboutUs onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />;
       case 'stories':
         return <StoryArchive />;
       case 'intro':
@@ -551,7 +551,6 @@ export default function App() {
                     <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider text-gray-400 hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-200">Community</a>
                     <button onClick={() => changeActiveTab('shop')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'shop' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>Shop</button>
                     <button onClick={() => changeActiveTab('governance')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'governance' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>Membership</button>
-                    <button onClick={() => changeActiveTab('compliance')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'compliance' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>Best Practice</button>
                     <button onClick={() => changeActiveTab('about')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'about' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>About</button>
                   </div>
                 </div>

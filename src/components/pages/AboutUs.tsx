@@ -36,7 +36,11 @@ const CollapsibleSection = ({ title, children, defaultOpen = false }: Collapsibl
   );
 };
 
-export default function AboutUs() {
+interface AboutUsProps {
+  onNavigate?: (tab: 'compliance' | string) => void;
+}
+
+export default function AboutUs({ onNavigate }: AboutUsProps) {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section with Video Background */}
@@ -534,6 +538,27 @@ export default function AboutUs() {
                   <li>• Annual third-party audits of community benefit compliance</li>
                 </ul>
               </div>
+
+              {/* Best Practice Hub link */}
+              <button
+                onClick={() => onNavigate?.('compliance')}
+                className="w-full bg-gradient-to-r from-[#1a1a2e] to-[#16213e] p-6 rounded-xl border border-[#d4af37]/30 hover:border-[#d4af37]/60 transition-all group text-left"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-xl bg-[#d4af37]/10">
+                      <Shield className="w-6 h-6 text-[#d4af37]" />
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-white text-lg group-hover:text-[#d4af37] transition-colors">Governance & Best Practice Hub</h5>
+                      <p className="text-sm text-gray-400 mt-1">
+                        See how we benchmark against ICA Cooperative Principles, Co-operatives UK Governance Code, WCAG, and more.
+                      </p>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-gray-500 group-hover:text-[#d4af37] transition-colors flex-shrink-0" />
+                </div>
+              </button>
             </div>
           </CollapsibleSection>
 
