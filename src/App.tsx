@@ -35,6 +35,7 @@ import TheoryOfChangeMasonry from '@/components/movement/TheoryOfChangeMasonry';
 import ShopPage from '@/components/pages/ShopPage';
 import BoardNavigationHub from '@/components/governance/board/BoardNavigationHub';
 import CampaignDashboard from '@/components/pages/campaigns/CampaignDashboard';
+import CompliancePage from '@/components/pages/CompliancePage';
 import AnimatedLiberationGrid from '@/components/home/AnimatedLiberationGrid';
 import { supabase } from '@/lib/supabase';
 
@@ -50,7 +51,7 @@ const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'discover' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'board' | 'campaigns';
+type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'discover' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'board' | 'campaigns' | 'compliance';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -125,7 +126,7 @@ class ErrorBoundary extends React.Component<any, any> {
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'board', 'campaigns'];
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'board', 'campaigns', 'compliance'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
@@ -299,6 +300,8 @@ export default function App() {
         return <BoardNavigationHub />;
       case 'campaigns':
         return <CampaignDashboard />;
+      case 'compliance':
+        return <CompliancePage />;
       default:
         return renderLiberationDashboard();
     }
@@ -548,6 +551,7 @@ export default function App() {
                     <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider text-gray-400 hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-200">Community</a>
                     <button onClick={() => changeActiveTab('shop')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'shop' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>Shop</button>
                     <button onClick={() => changeActiveTab('governance')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'governance' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>Membership</button>
+                    <button onClick={() => changeActiveTab('compliance')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'compliance' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>Best Practice</button>
                     <button onClick={() => changeActiveTab('about')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'about' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>About</button>
                   </div>
                 </div>
