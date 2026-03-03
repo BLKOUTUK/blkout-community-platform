@@ -145,6 +145,16 @@ export default function App() {
     const params = new URLSearchParams(window.location.search);
     return params.get('chat') === 'open';
   });
+  // Extract UTM parameters from URL for campaign tracking
+  const [utmParams] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      utmSource: params.get('utm_source') || undefined,
+      utmMedium: params.get('utm_medium') || undefined,
+      utmCampaign: params.get('utm_campaign') || undefined,
+      utmContent: params.get('utm_content') || undefined,
+    };
+  });
   const [isFirstVisit, setIsFirstVisit] = useState(false);
   const [platformStats, setPlatformStats] = useState({
     membersServed: 0,
@@ -568,7 +578,7 @@ export default function App() {
 
           {/* IVOR Assistant Overlay */}
           {showIVOR && (
-            <IVORAssistant onClose={() => setShowIVOR(false)} />
+            <IVORAssistant onClose={() => setShowIVOR(false)} utmParams={utmParams} />
           )}
 
       </div>

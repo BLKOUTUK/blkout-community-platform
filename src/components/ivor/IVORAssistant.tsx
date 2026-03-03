@@ -105,7 +105,17 @@ const LEARNING_TOOLS: LearningTool[] = [
   }
 ];
 
-export default function IVORAssistant({ onClose }: { onClose: () => void }) {
+interface IVORAssistantProps {
+  onClose: () => void;
+  utmParams?: {
+    utmSource?: string;
+    utmMedium?: string;
+    utmCampaign?: string;
+    utmContent?: string;
+  };
+}
+
+export default function IVORAssistant({ onClose, utmParams }: IVORAssistantProps) {
   const [messages, setMessages] = useState<IVORMessage[]>([
     {
       id: '1',
@@ -128,6 +138,21 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Track widget open for campaign metrics
+  useEffect(() => {
+    const baseUrl = API_ENDPOINTS.ivorChat.replace('/api/chat', '');
+    fetch(`${baseUrl}/api/campaign/track/widget-open`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId: `webapp-${Date.now()}`,
+        utmSource: utmParams?.utmSource,
+        utmCampaign: utmParams?.utmCampaign,
+        utmContent: utmParams?.utmContent,
+      }),
+    }).catch(() => {}); // Non-blocking, silent failure
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const categories = Array.from(new Set(LEARNING_TOOLS.map(tool => tool.category)));
 
@@ -169,7 +194,8 @@ export default function IVORAssistant({ onClose }: { onClose: () => void }) {
           conversationHistory: conversationHistory,
           userContext: {
             source: 'web-widget',
-            platform: 'community-platform'
+            platform: 'community-platform',
+            ...utmParams,
           },
           liberationContext: {
             liberationValues: {
