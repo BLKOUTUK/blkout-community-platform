@@ -4,7 +4,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { DollarSign, Brain } from 'lucide-react';
-import { useConfetti } from '@/hooks/useConfetti';
 import {
   cn,
   culturalUtils,
@@ -163,10 +162,6 @@ export default function App() {
     liberationActions: 0
   });
   const [statsLoaded, setStatsLoaded] = useState(false);
-
-  // 10th Anniversary confetti — February 2026 only
-  const isAnniversaryMonth = new Date().getFullYear() === 2026 && new Date().getMonth() === 1;
-  useConfetti(isAnniversaryMonth && activeTab === 'liberation');
 
   // Custom function to change tab and update URL
   const changeActiveTab = (tab: NavigationTab) => {
