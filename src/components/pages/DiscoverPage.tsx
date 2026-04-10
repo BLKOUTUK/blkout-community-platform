@@ -1,6 +1,6 @@
 // BLKOUT Discovery Page - What's New & How to Get Involved
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Calendar, MessageCircle, Heart, Users, TrendingUp, ArrowRight, Gift, BookOpen, Instagram, Clock } from 'lucide-react';
+import { Sparkles, Calendar, MessageCircle, Heart, Users, TrendingUp, ArrowRight, Gift, BookOpen, Instagram, Clock, Trophy, Compass, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '../../lib/supabase';
 import { AdventCalendarWidget } from '../discover/AdventCalendarWidget';
@@ -18,9 +18,21 @@ interface FeaturedStory {
   published_at: string;
 }
 
+interface VoicesArticle {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  author: string;
+  category: string;
+  published_at: string;
+  hero_image: string | null;
+}
+
 const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
   const [featuredStory, setFeaturedStory] = useState<FeaturedStory | null>(null);
   const [isLoadingStory, setIsLoadingStory] = useState(true);
+  const [voicesArticles, setVoicesArticles] = useState<VoicesArticle[]>([]);
 
   // Fetch featured story from legacy_articles archive - rotates weekly
   useEffect(() => {
@@ -53,24 +65,29 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
     fetchFeaturedStory();
   }, []);
 
-  // BLKOUT Community YouTube Playlist Videos - from PLQIvk5RMvEWxx_xt-vvwKS8k-D7eRRnDh
-  const playlistVideos = [
-    { id: "rxouLM4Xaeg", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
-    { id: "7PLD773p1Uw", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
-    { id: "7fUP1Zbjvxw", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
-    { id: "luAr9lZ09yM", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
-    { id: "P-UOd-pvE04", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
-    { id: "Xl9NCrOpBYI", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
-    { id: "8pC54GafaFU", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
-    { id: "IEnqgfICyEE", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
-    { id: "shuAroJcM3Y", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" },
-    { id: "UIxs6AbI44k", title: "Community Stories & Liberation", description: "Discover powerful stories, insights, and conversations from the BLKOUT community" }
-  ];
-
-  // Randomly select a video
-  const randomVideo = React.useMemo(() => {
-    return playlistVideos[Math.floor(Math.random() * playlistVideos.length)];
+  // Fetch 3 most recent Voices articles
+  useEffect(() => {
+    const fetchVoices = async () => {
+      try {
+        const res = await fetch('https://voices.blkoutuk.cloud/api/articles');
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data)) {
+          setVoicesArticles(json.data.slice(0, 3));
+        }
+      } catch (err) {
+        console.error('Error fetching Voices articles:', err);
+      }
+    };
+    fetchVoices();
   }, []);
+
+  // Featured video: Critical Frequency — the data silence piece
+  const featuredVideo = {
+    id: "BcBwsjtP86Q",
+    title: "Critical Frequency: The Data Silence",
+    description: "Data invisibility is a political problem, not a comms challenge. Content note: discusses suicide and systemic failure.",
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-black">
@@ -426,15 +443,15 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
       <section className="py-12 px-6 bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100 text-center">
-            Watch: Community Stories
+            Watch: Critical Frequency
           </h2>
 
           <div className="max-w-4xl mx-auto">
             <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-xl">
               <div className="aspect-video">
                 <iframe
-                  src={`https://www.youtube.com/embed/${randomVideo.id}?si=z3Z2ptVoZTdFNmS2`}
-                  title={randomVideo.title}
+                  src={`https://www.youtube.com/embed/${featuredVideo.id}`}
+                  title={featuredVideo.title}
                   className="w-full h-full"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -443,44 +460,146 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
               </div>
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                  {randomVideo.title}
+                  {featuredVideo.title}
                 </h3>
                 <p className="text-gray-700 dark:text-gray-300">
-                  {randomVideo.description}
+                  {featuredVideo.description}
                 </p>
-                <div className="mt-4 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <a
-                      href="https://www.youtube.com/@blkoutuk"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all duration-300 flex items-center gap-2"
-                    >
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-                      </svg>
-                      <span>Subscribe</span>
-                    </a>
-                    <button
-                      onClick={() => window.location.reload()}
-                      className="px-3 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-semibold text-sm transition-all"
-                    >
-                      🎲 Random Video
-                    </button>
-                  </div>
+                <div className="mt-4">
                   <a
-                    href="https://www.youtube.com/playlist?list=PLQIvk5RMvEWxx_xt-vvwKS8k-D7eRRnDh"
+                    href="https://youtu.be/BcBwsjtP86Q"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-red-600 hover:text-red-700 font-semibold text-sm flex items-center gap-2 justify-center"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-all duration-300"
                   >
-                    <span>📺 Watch Full Liberation Playlist</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    <span>Watch on YouTube</span>
                   </a>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Ivor's Compass */}
+      <section className="py-12 px-6 bg-black">
+        <div className="max-w-6xl mx-auto">
+          <a
+            href="https://compass.blkoutuk.cloud"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block group"
+          >
+            <div className="bg-gradient-to-br from-yellow-900/20 to-amber-900/10 border-2 border-yellow-500/40 rounded-2xl p-8 hover:border-yellow-500 transition-all duration-300">
+              <div className="flex flex-col md:flex-row items-start gap-6">
+                <div className="flex-shrink-0 w-20 h-20 rounded-full bg-yellow-500/10 border-2 border-yellow-500/40 flex items-center justify-center group-hover:bg-yellow-500/20 transition-colors">
+                  <Compass className="w-10 h-10 text-yellow-400" />
+                </div>
+                <div className="flex-1">
+                  <div className="text-xs uppercase tracking-wider text-yellow-400 font-bold mb-2">Heritage Project</div>
+                  <h2 className="text-3xl md:text-4xl font-black text-white mb-3">
+                    Ivor's Compass
+                  </h2>
+                  <p className="text-gray-300 text-lg mb-4 max-w-3xl">
+                    A life hidden for a generation. Ivor Cummings was the first Black official in the Colonial Office, welcomed the Windrush generation, and was gay. His story disappeared for thirty years. We brought it back. Explore the digital companion — meditations, a community graphic novel, and a wellness journal grounded in his life.
+                  </p>
+                  <div className="inline-flex items-center gap-2 text-yellow-400 font-bold uppercase text-sm group-hover:gap-3 transition-all">
+                    Open the Compass
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      {/* Recent Voices Articles */}
+      {voicesArticles.length > 0 && (
+        <section className="py-12 px-6 bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
+                <FileText className="w-8 h-8 text-purple-600 mr-3" />
+                From Voices
+              </h2>
+              <a
+                href="https://voices.blkoutuk.cloud"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-600 hover:text-purple-700 font-semibold text-sm inline-flex items-center gap-2"
+              >
+                All articles <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              {voicesArticles.map((article) => (
+                <a
+                  key={article.id}
+                  href={`https://voices.blkoutuk.cloud/articles/${article.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group"
+                >
+                  {article.hero_image && (
+                    <div className="aspect-video bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                      <img
+                        src={article.hero_image}
+                        alt={article.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <div className="text-xs uppercase tracking-wider text-purple-600 dark:text-purple-400 font-bold mb-2">
+                      {article.category}
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2 group-hover:text-purple-600 transition-colors">
+                      {article.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 line-clamp-3">
+                      {article.excerpt}
+                    </p>
+                    <div className="text-xs text-gray-500 dark:text-gray-500">
+                      By {article.author} · {new Date(article.published_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Meet the Board */}
+      <section className="py-12 px-6 bg-black border-y border-yellow-500/20">
+        <div className="max-w-6xl mx-auto">
+          <a
+            href="/our-board/"
+            className="block group"
+          >
+            <div className="flex flex-col md:flex-row items-center gap-6 bg-gradient-to-br from-gray-900 to-black border-2 border-yellow-500/30 rounded-2xl p-8 hover:border-yellow-500 transition-all duration-300">
+              <div className="flex-shrink-0 w-20 h-20 rounded-full bg-yellow-500/10 border-2 border-yellow-500/40 flex items-center justify-center group-hover:bg-yellow-500/20 transition-colors">
+                <Users className="w-10 h-10 text-yellow-400" />
+              </div>
+              <div className="flex-1">
+                <div className="text-xs uppercase tracking-wider text-yellow-400 font-bold mb-2">Community Benefit Society</div>
+                <h2 className="text-3xl md:text-4xl font-black text-white mb-3">
+                  Meet the Board
+                </h2>
+                <p className="text-gray-300 text-lg mb-4">
+                  BLKOUT is owned by its members and governed by Black queer men who volunteer their time to steer this cooperative. Paired leadership, community advisory groups, and full transparency.
+                </p>
+                <div className="inline-flex items-center gap-2 text-yellow-400 font-bold uppercase text-sm group-hover:gap-3 transition-all">
+                  See Who We Are
+                  <ArrowRight className="w-4 h-4" />
+                </div>
+              </div>
+            </div>
+          </a>
         </div>
       </section>
 

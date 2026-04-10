@@ -100,6 +100,32 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
         </a>
       </div>
 
+      {/* Board CTA */}
+      <div className="max-w-4xl mx-auto px-6 pb-8">
+        <a
+          href="/our-board/"
+          className="block bg-black border-2 border-liberation-gold-divine/40 rounded-2xl p-8 hover:border-liberation-gold-divine hover:scale-[1.01] transition-all duration-300 group"
+        >
+          <div className="flex items-center gap-6">
+            <div className="flex-shrink-0 w-16 h-16 rounded-full bg-liberation-gold-divine/10 border-2 border-liberation-gold-divine/40 flex items-center justify-center group-hover:bg-liberation-gold-divine/20 transition-colors">
+              <Users className="w-8 h-8 text-liberation-gold-divine" />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-2xl md:text-3xl font-black text-white mb-2">
+                Meet the Board
+              </h2>
+              <p className="text-gray-300 text-base mb-3">
+                BLKOUT is a Community Benefit Society. Our board is Black queer men who volunteer their time to govern this cooperative — in paired leadership, with community advisory groups.
+              </p>
+              <div className="inline-flex items-center gap-2 text-liberation-gold-divine font-bold uppercase text-sm group-hover:gap-3 transition-all">
+                See Who We Are
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-6 py-12">
         <div className="space-y-6">
