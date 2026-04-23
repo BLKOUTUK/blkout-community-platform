@@ -67,16 +67,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   };
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  const { data, error } = await supabase
-    .from('commons_interest')
-    .insert(record)
-    .select('id, created_at')
-    .single();
+  // No .select() — anon role has INSERT policy but no SELECT, so RETURNING would 401.
+  const { error } = await supabase.from('commons_interest').insert(record);
 
   if (error) {
     console.error('commons_interest insert error:', error);
     return res.status(500).json({ error: 'insert_failed' });
   }
 
-  return res.status(201).json({ ok: true, id: data?.id });
+  return res.status(201).json({ ok: true });
 }
