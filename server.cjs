@@ -78,6 +78,17 @@ app.all('/api/ivor/:path*', async (req, res) => {
 });
 */
 
+// Commons interest form
+app.post('/api/commons-interest', async (req, res) => {
+  try {
+    const { default: handler } = await import('./api/commons-interest.ts');
+    return handler(req, res);
+  } catch (error) {
+    console.error('Commons interest API error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Admin routes
 app.all('/api/admin/:endpoint', async (req, res) => {
   try {
