@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<title>BQT Talk · Teleprompter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;1,400&family=Inter:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --ink:#f2f2f2;
+    --muted:#888;
+    --pink:#FF007F;
+    --yellow:#E6FF00;
+    --klein:#6a8bff;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;height:100%;background:var(--bg);color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;overflow:hidden;overscroll-behavior:none;}
+  body{
+    display:flex;flex-direction:column;
+    padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  /* TOP BAR */
+  .bar{
+    flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;
+    padding:10px 16px;font-family:'Courier Prime',monospace;font-size:11px;
+    letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .bar .slide-tag{color:var(--yellow);}
+  .bar button{
+    background:none;border:1px solid rgba(255,255,255,0.25);color:var(--muted);
+    font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:0.14em;
+    padding:5px 10px;border-radius:3px;cursor:pointer;text-transform:uppercase;
+  }
+  .bar button:active{background:rgba(255,255,255,0.08);}
+
+  /* READING AREA */
+  .stage{
+    flex:1 1 auto;
+    padding:24px 22px 90px;font-size:22px;line-height:1.5;
+    position:relative;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .stage .beat{display:none;}
+  .stage .beat.active{display:block;animation:in 160ms ease-out;}
+  @keyframes in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  .stage p{margin:0 0 18px;font-weight:500;}
+  .stage p:last-child{margin-bottom:0;}
+  .stage em{font-family:'Fraunces',serif;font-style:italic;font-weight:400;color:var(--yellow);}
+  .stage strong{font-weight:700;color:#fff;}
+
+  .beat-head{
+    font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:14px;
+  }
+  .beat-head .accent{color:var(--pink);}
+
+  .pullquote{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;font-size:26px;
+    line-height:1.35;color:var(--yellow);padding:10px 0;
+  }
+
+  /* NAV */
+  .nav{
+    flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;
+    padding:12px 16px;font-family:'Courier Prime',monospace;font-size:12px;
+    letter-spacing:0.16em;color:var(--muted);text-transform:uppercase;
+    border-top:1px solid rgba(255,255,255,0.08);
+  }
+  .nav button{
+    background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.15);
+    color:var(--ink);padding:10px 18px;border-radius:4px;font-family:inherit;
+    font-size:12px;letter-spacing:0.14em;cursor:pointer;text-transform:uppercase;
+    min-width:84px;
+  }
+  .nav button:active{background:rgba(255,255,255,0.12);}
+  .nav button:disabled{opacity:0.3;}
+  .counter{font-variant-numeric:tabular-nums;}
+
+  /* TAP LAYER — narrow edge strips, middle 60% stays clear for scroll/select */
+  .taps{
+    position:fixed;left:0;right:0;top:38px;bottom:48px;display:flex;
+    pointer-events:none;z-index:2;
+  }
+  .taps .zone{
+    flex:0 0 20%;pointer-events:auto;
+    background:linear-gradient(to right, rgba(255,255,255,0.02), transparent);
+  }
+  .taps .zone.right{
+    background:linear-gradient(to left, rgba(255,255,255,0.02), transparent);
+  }
+  .taps .middle{flex:1;pointer-events:none;}
+
+  /* SIZE CONTROL */
+  body.xl .stage{font-size:26px;}
+  body.xl .pullquote{font-size:30px;}
+  body.sm .stage{font-size:19px;}
+  body.sm .pullquote{font-size:22px;}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="slide-tag" id="slideTag">Slide 1 · Opening</span>
+  <span id="intent">Users, not orgs</span>
+  <button id="sizeBtn" aria-label="Text size">A+</button>
+</div>
+
+<div class="stage" id="stage">
+  <div class="taps" aria-hidden="true">
+    <div class="zone" id="zoneLeft"></div>
+    <div class="middle"></div>
+    <div class="zone right" id="zoneRight"></div>
+  </div>
+
+  <!-- BEAT 1 -->
+  <div class="beat active" data-slide="1" data-intent="Opening · thanks + quiet problem">
+    <div class="beat-head">Beat 01 · <span class="accent">Open slowly</span></div>
+    <p>Thank you. It's good to be in a room where nobody needs me to explain who I'm talking about.</p>
+    <p>I want to start with a quiet problem. Most of our organisations — yours, mine — can tell you who we reach. We know our members. We know our subscribers. We know who shows up.</p>
+    <p>What's harder is the other question. <em>Who are we not reaching.</em></p>
+  </div>
+
+  <!-- BEAT 2 -->
+  <div class="beat" data-slide="1" data-intent="Un-counted · political not comms">
+    <div class="beat-head">Beat 02 · <span class="accent">Name the politics</span></div>
+    <p>At BLKOUT we noticed this properly last year. We were writing about Black queer mental health and we went looking for the numbers. There aren't any. Not really.</p>
+    <p>The census didn't publish the cross-tab. The NHS data doesn't hold the three things together. We're not under-counted — we're <em>un-counted.</em></p>
+    <p>That's not a communications problem. It's a political one. If we're invisible in the data, we're invisible in the commissioning. We get designed out of the systems that are meant to serve us.</p>
+  </div>
+
+  <!-- BEAT 3 -->
+  <div class="beat" data-slide="1" data-intent="Set up the three">
+    <div class="beat-head">Beat 03 · <span class="accent">Frame the talk</span></div>
+    <p>So this talk is about what we've been building with AI <em>inside that problem.</em> Not AI as a productivity story. AI as a way of reaching the people our own organisations keep missing.</p>
+    <p>Three examples. About seven minutes. And then an invitation.</p>
+    <div class="pullquote">BLKOUT UK is what Black queer men build when we stop waiting and start resisting.</div>
+    <p>We stopped waiting for the sector to catch up a long time ago. This is what we've been quietly making in the meantime.</p>
+  </div>
+
+  <!-- BEAT 4 -->
+  <div class="beat" data-slide="2" data-intent="Ivor's Compass · heritage for men not on the scene">
+    <div class="beat-head">Beat 04 · <strong style="color:#5cc78f;">Ivor's Compass</strong> · ~2 min</div>
+    <p>Ivor Cummings was a civil servant at the Colonial Office in the 1940s and 50s. Gay, Black, the first person to meet the Empire Windrush when it docked. He's not in our movement's memory because he wasn't meant to be — the archives weren't built for him.</p>
+    <p>Last month we put 100 men through a one-day workshop based on his life. Men in their 40s, 50s, 60s, 70s. Men who don't come to our events. Men who are not on the scene.</p>
+  </div>
+
+  <!-- BEAT 5 -->
+  <div class="beat" data-slide="2" data-intent="Compass · AI is the multiplier, Ivor is the reach">
+    <div class="beat-head">Beat 05 · <strong style="color:#5cc78f;">Compass</strong> · AI ≠ headline</div>
+    <p>The AI piece is not the headline. The headline is the seven directions of the compass — home, night, fire, threshold, shadow, silence, return — which came out of commissioned essays from four Black queer writers.</p>
+    <p>AI helped us turn those essays into a seven-table chatbot. Each table asks you a question about your own life. You answer. The responses get held in a journal you take home.</p>
+    <p>What this unlocked was heritage work for men who don't identify with the word "queer" and don't come to Pride. The AI didn't reach them. <em>Ivor did.</em> The AI just made a one-day workshop feel like six.</p>
+  </div>
+
+  <!-- BEAT 6 -->
+  <div class="beat" data-slide="2" data-intent="Critical Frequency · frame, not tool">
+    <div class="beat-head">Beat 06 · <strong style="color:var(--pink);">Critical Frequency</strong> · ~90 sec</div>
+    <p>This one I'll say carefully, because it's the newest of the three and the least finished.</p>
+    <p>Every Pride season, our community gets a very particular kind of visibility. Feather boas. Glittery cowboy hats. A photo opportunity for the mayor. It's wonderful in its place — and it's not the visibility that ends up in a commissioner's spreadsheet.</p>
+    <p>What we're missing is the other kind. Decision-maker visibility. The cross-tab that makes us countable. The line item in the funding stream. The named intersection in the policy document.</p>
+  </div>
+
+  <!-- BEAT 7 -->
+  <div class="beat" data-slide="2" data-intent="CF · frame + Pride in London two-track">
+    <div class="beat-head">Beat 07 · <strong style="color:var(--pink);">CF</strong> · Pride in London two-track</div>
+    <p>So Critical Frequency, at this stage, is <em>not a tool.</em> It's a frame. We're naming that gap publicly — it's where the last BMHWA webinar started — and we're sitting with the problem long enough to hypothesise some answers before we rush to build.</p>
+    <p>The next phase is a two-track campaign at Pride in London — feather boas at the front, numbers at the back. If we can get both showing up at the same time, that's how you move a commissioner.</p>
+    <p>Whatever AI ends up in the back end of that, it won't be the point. The point is the move from one visibility to the other.</p>
+  </div>
+
+  <!-- BEAT 8 -->
+  <div class="beat" data-slide="2" data-intent="AIvor · careful claim">
+    <div class="beat-head">Beat 08 · <strong style="color:#D4AF37;">AIvor</strong> · ~90 sec</div>
+    <p>AIvor — with a capital A-I — is our platform assistant. Named after Ivor Cummings. He/him. 1940s voice.</p>
+    <p>This is where I'm most careful. AIvor is <em>not</em> a crisis service. He's not therapy. He's not a replacement for a person.</p>
+    <p>What he is, is a presence at 2am. When you've just had the thing happen that you can't phone anyone about. AIvor can listen. He can hand you to a human service when you're ready. And where it's safe to, he can carry a conversation across sessions, so you don't have to start again.</p>
+    <p>For us the AI question isn't <em>can it do the work.</em> It's <em>can it hold the space until a human arrives.</em> That turns out to be a much smaller, much more careful question than the sector usually asks.</p>
+  </div>
+
+  <!-- BEAT 9 -->
+  <div class="beat" data-slide="3" data-intent="Three things · bridge to invitation">
+    <div class="beat-head">Beat 09 · <span class="accent">Bridge</span></div>
+    <p>Three things. Heritage. Policy. Platform. All three built around the same question — <em>who are we not reaching</em> — and all three costing less than one consultant's scoping document.</p>
+    <div class="pullquote">Here's what I'm here to say. We can't do this on our own. And nor should we.</div>
+  </div>
+
+  <!-- BEAT 10 -->
+  <div class="beat" data-slide="3" data-intent="Common problems → co-op">
+    <div class="beat-head">Beat 10 · <span class="accent">Name the co-op</span></div>
+    <p>Every organisation in this room is running into the same three problems. You want AI that's safe for your people. You can't afford to audit it properly. And you don't want to hand your community data to vendors who will sell it back to you next year.</p>
+    <p>So we're starting a <strong>Black Queer Liberation Tech Cooperative.</strong> Not a consortium. Not a think-tank. A co-op — member-owned, member-governed, with one goal: to put shared AI and data infrastructure under our collective control.</p>
+  </div>
+
+  <!-- BEAT 11 -->
+  <div class="beat" data-slide="3" data-intent="Three first steps">
+    <div class="beat-head">Beat 11 · <span class="accent">Three first steps</span></div>
+    <p><strong>One — an AI tool audit.</strong> We've built a tool called Dreamcatcher, with a judge inside it called Sylvia. Sylvia is our Reach Judge — she asks the questions about who a tool serves and who it misses. We'll run your stack through her, free, this summer. An honest answer, not a sales pitch.</p>
+    <p><strong>Two — a tool-sharing protocol.</strong> A small, boring, important piece of governance. How do we share access to tools, data, and training across our organisations without one of us carrying the risk? We've got a v0 draft. We want you to break it.</p>
+    <p><strong>Three — a hackathon for Black Pride.</strong> A working weekend before UK Black Pride in August. We ship one shared thing. Events registry. Safeguarding tool. Something we haven't thought of. You tell us.</p>
+  </div>
+
+  <!-- BEAT 12 -->
+  <div class="beat" data-slide="3" data-intent="The URL · low-commitment ask">
+    <div class="beat-head">Beat 12 · <span class="accent">The URL · Sylvia</span></div>
+    <p>None of this requires you to sign anything today. The URL is up there. <strong>blkoutuk.com/commons.</strong> Five quick questions, a short registration of interest. If the answer is <em>not yet,</em> that's a full answer.</p>
+    <p>The take-home from this talk is that tool — Dreamcatcher, with Sylvia. Her questions are the political edge of what we do. She's there if you want her.</p>
+  </div>
+
+  <!-- BEAT 13 -->
+  <div class="beat" data-slide="3" data-intent="Close · act large together">
+    <div class="beat-head">Beat 13 · <span class="accent">Land it</span></div>
+    <p>BLKOUT is small. You are small. Our organisations will always be small, because we're built for specific people and we refuse to water that down.</p>
+    <p><em>Small isn't the problem to fix.</em> The connections between us are the point.</p>
+    <p>That's the only reason I've kept going as long as I have. And it's the only reason I'm inviting you, today, to build this with us.</p>
+    <p><strong>Thank you.</strong></p>
+  </div>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Previous">‹ Prev</button>
+  <span class="counter"><span id="cur">01</span> / <span id="total">13</span></span>
+  <button id="next" aria-label="Next">Next ›</button>
+</div>
+
+<script>
+  const beats = document.querySelectorAll('.beat');
+  const total = beats.length;
+  let i = 0;
+
+  const tag = document.getElementById('slideTag');
+  const intent = document.getElementById('intent');
+  const cur = document.getElementById('cur');
+  const totalEl = document.getElementById('total');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const sizeBtn = document.getElementById('sizeBtn');
+  const zoneLeft = document.getElementById('zoneLeft');
+  const zoneRight = document.getElementById('zoneRight');
+
+  totalEl.textContent = String(total).padStart(2, '0');
+
+  const slideLabels = {
+    '1':'Slide 1 · Opening',
+    '2':'Slide 2 · Three innovations',
+    '3':'Slide 3 · Invitation'
+  };
+
+  const stage = document.getElementById('stage');
+  function show(n){
+    i = Math.max(0, Math.min(total-1, n));
+    beats.forEach((b, idx) => b.classList.toggle('active', idx === i));
+    const b = beats[i];
+    tag.textContent = slideLabels[b.dataset.slide];
+    intent.textContent = b.dataset.intent;
+    cur.textContent = String(i+1).padStart(2,'0');
+    prev.disabled = i === 0;
+    next.disabled = i === total-1;
+    if (stage) stage.scrollTop = 0;
+    try { localStorage.setItem('bqt_beat', String(i)); } catch(e){}
+  }
+
+  prev.addEventListener('click', () => show(i-1));
+  next.addEventListener('click', () => show(i+1));
+  zoneLeft.addEventListener('click', () => show(i-1));
+  zoneRight.addEventListener('click', () => show(i+1));
+
+  // Arrow keys / space for laptop/tablet BT keyboard
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); show(i+1); }
+    if (['ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); show(i-1); }
+    if (e.key === 'Home') { show(0); }
+    if (e.key === 'End') { show(total-1); }
+  });
+
+  // Swipe gestures
+  let touchX = 0;
+  document.addEventListener('touchstart', (e)=>{ touchX = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', (e)=>{
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 50) { show(i + (dx < 0 ? 1 : -1)); }
+  }, {passive:true});
+
+  // Text size toggle: M → L → XL → S → M
+  const sizes = ['', 'xl', 'sm'];
+  let sIdx = 0;
+  sizeBtn.addEventListener('click', () => {
+    sIdx = (sIdx + 1) % sizes.length;
+    document.body.classList.remove('xl','sm');
+    if (sizes[sIdx]) document.body.classList.add(sizes[sIdx]);
+    sizeBtn.textContent = sizes[sIdx] === 'xl' ? 'A-' : sizes[sIdx] === 'sm' ? 'A+' : 'A=';
+  });
+
+  // Resume
+  try {
+    const saved = Number(localStorage.getItem('bqt_beat'));
+    if (!Number.isNaN(saved) && saved > 0 && saved < total) show(saved);
+  } catch(e){}
+
+  // Keep screen awake where supported
+  async function keepAwake(){
+    try { if ('wakeLock' in navigator) await navigator.wakeLock.request('screen'); } catch(e){}
+  }
+  keepAwake();
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) keepAwake(); });
+</script>
+
+</body>
+</html>
