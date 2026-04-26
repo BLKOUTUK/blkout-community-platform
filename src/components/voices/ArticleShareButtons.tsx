@@ -1,13 +1,26 @@
-import React from 'react';
-import { Share2, Mail } from 'lucide-react';
+import React, { useState } from 'react';
+import { Share2, Mail, ImagePlus } from 'lucide-react';
+import ShareModal from '../shared/ShareModal';
 
 interface ArticleShareButtonsProps {
   title: string;
   excerpt: string;
   url: string;
+  quote?: string;
+  author?: string;
+  publication?: string;
 }
 
-const ArticleShareButtons: React.FC<ArticleShareButtonsProps> = ({ title, excerpt, url }) => {
+const ArticleShareButtons: React.FC<ArticleShareButtonsProps> = ({
+  title,
+  excerpt,
+  url,
+  quote,
+  author,
+  publication,
+}) => {
+  const [shareCardOpen, setShareCardOpen] = useState(false);
+
   const encodedTitle = encodeURIComponent(title);
   const encodedExcerpt = encodeURIComponent(excerpt);
   const encodedUrl = encodeURIComponent(url);
@@ -31,6 +44,18 @@ const ArticleShareButtons: React.FC<ArticleShareButtonsProps> = ({ title, excerp
       </div>
 
       <div className="flex items-center gap-3">
+        {/* Share as image card */}
+        <button
+          onClick={() => setShareCardOpen(true)}
+          className="group flex items-center gap-2 h-10 px-3 rounded-lg bg-liberation-black-power border border-liberation-gold-divine/40 hover:border-liberation-gold-divine hover:bg-liberation-gold-divine/10 transition-all"
+          aria-label="Share as image card"
+        >
+          <ImagePlus className="w-4 h-4 text-liberation-gold-divine" />
+          <span className="text-xs font-semibold text-liberation-silver group-hover:text-white">
+            Share card
+          </span>
+        </button>
+
         {/* Twitter/X */}
         <button
           onClick={() => handleShare('twitter')}
@@ -73,6 +98,17 @@ const ArticleShareButtons: React.FC<ArticleShareButtonsProps> = ({ title, excerp
           <Mail className="w-5 h-5 text-liberation-silver group-hover:text-liberation-gold-divine transition-colors" />
         </button>
       </div>
+
+      <ShareModal
+        isOpen={shareCardOpen}
+        onClose={() => setShareCardOpen(false)}
+        title={title}
+        excerpt={excerpt}
+        url={url}
+        quote={quote}
+        author={author}
+        publication={publication}
+      />
     </div>
   );
 };
