@@ -81,7 +81,11 @@ type ThemeBackground =
   | { type: 'solid'; color: string }
   | { type: 'gradient'; angle: number; stops: GradientStop[] };
 
-interface ShareTheme {
+interface ShareThemeBase {
+  watermarkOpacity?: number;
+}
+
+interface ShareTheme extends ShareThemeBase {
   id: string;
   label: string;
   background: ThemeBackground;
@@ -127,6 +131,7 @@ const THEMES: ShareTheme[] = [
     muted: 'rgba(0,0,0,0.7)',
     accent: '#000000',
     swatch: 'linear-gradient(135deg, #FFD700 0%, #D4AF37 100%)',
+    watermarkOpacity: 0.30,
   },
   {
     id: 'healing',
@@ -136,6 +141,7 @@ const THEMES: ShareTheme[] = [
     muted: 'rgba(26,26,26,0.7)',
     accent: '#9B4DCA',
     swatch: 'linear-gradient(135deg, #A8C69F 0%, #7DA579 100%)',
+    watermarkOpacity: 0.20,
   },
 ];
 
@@ -265,6 +271,24 @@ function drawAccentBar(
   ctx.fillRect(x, y, width, height);
 }
 
+function drawWatermarkLogo(
+  ctx: CanvasRenderingContext2D,
+  logo: HTMLImageElement | null,
+  width: number,
+  height: number,
+  opacity: number = 0.15,
+) {
+  if (!logo || !logo.complete || logo.naturalWidth === 0) return;
+  // 66% of the shorter canvas dimension, bottom-right, ~20% bleed off the corner.
+  const size = Math.round(Math.min(width, height) * 0.66);
+  const x = width - Math.round(size * 0.80);
+  const y = height - Math.round(size * 0.80);
+  ctx.save();
+  ctx.globalAlpha = opacity;
+  ctx.drawImage(logo, x, y, size, size);
+  ctx.restore();
+}
+
 function drawBrandMark(
   ctx: CanvasRenderingContext2D,
   publication: string,
@@ -273,17 +297,26 @@ function drawBrandMark(
   x: number,
   y: number,
   size: number,
+  logo: HTMLImageElement | null,
 ) {
   ctx.font = `800 ${size}px ${SANS_STACK}`;
-  ctx.fillStyle = accentColor;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'middle';
-  const dotSize = size * 0.35;
-  ctx.beginPath();
-  ctx.arc(x + dotSize / 2, y, dotSize / 2, 0, Math.PI * 2);
-  ctx.fill();
+  const markSize = size * 1.6;
+  const markGap = size * 0.5;
+  if (logo && logo.complete && logo.naturalWidth > 0) {
+    // Real BLKOUT logo (colour roundel)
+    ctx.drawImage(logo, x, y - markSize / 2, markSize, markSize);
+  } else {
+    // Fallback: accent dot
+    ctx.fillStyle = accentColor;
+    const dotSize = size * 0.35;
+    ctx.beginPath();
+    ctx.arc(x + dotSize / 2, y, dotSize / 2, 0, Math.PI * 2);
+    ctx.fill();
+  }
   ctx.fillStyle = textColor;
-  ctx.fillText(publication.toUpperCase(), x + dotSize + size * 0.4, y);
+  ctx.fillText(publication.toUpperCase(), x + markSize + markGap, y);
 }
 
 function getDomain(url: string): string {
@@ -299,6 +332,7 @@ function renderShareCard(
   format: ShareFormat,
   theme: ShareTheme,
   data: { title: string; quote?: string; excerpt?: string; author?: string; publication: string; url: string },
+  logo: HTMLImageElement | null = null,
 ) {
   const { width, height, layout } = format;
   canvas.width = width;
@@ -307,6 +341,11 @@ function renderShareCard(
   if (!ctx) return;
 
   applyBackground(ctx, theme.background, width, height);
+
+  // Oversized BLKOUT sigil watermark, bottom-right, semi-transparent.
+  // Drawn before content so titles + body sit on top.
+  // Per-theme opacity override (e.g. lower on light backgrounds).
+  drawWatermarkLogo(ctx, logo, width, height, theme.watermarkOpacity);
 
   const padding = Math.round(Math.min(width, height) * 0.08);
   const contentWidth = width - padding * 2;
@@ -322,6 +361,7 @@ function renderShareCard(
     padding,
     padding + 40,
     brandSize,
+    logo,
   );
 
   const domain = getDomain(data.url);
@@ -475,6 +515,8 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   publication = 'BLKOUT',
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const logoRef = useRef<HTMLImageElement | null>(null);
+  const [logoReady, setLogoReady] = useState(false);
   const [formatId, setFormatId] = useState<string>(FORMATS[0].id);
   const [themeId, setThemeId] = useState<string>(THEMES[0].id);
   const [previewUrl, setPreviewUrl] = useState<string>('');
@@ -482,6 +524,15 @@ export const ShareModal: React.FC<ShareModalProps> = ({
 
   const format = useMemo(() => FORMATS.find((f) => f.id === formatId)!, [formatId]);
   const theme = useMemo(() => THEMES.find((t) => t.id === themeId)!, [themeId]);
+
+  // Pre-load BLKOUT logo once. Same-origin asset → no canvas tainting.
+  useEffect(() => {
+    if (logoRef.current) return;
+    const img = new Image();
+    img.onload = () => { logoRef.current = img; setLogoReady(true); };
+    img.onerror = () => { setLogoReady(true); }; // proceed with fallback dot
+    img.src = '/Branding and logos/blkoutlogo_wht_transparent.png';
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -495,9 +546,9 @@ export const ShareModal: React.FC<ShareModalProps> = ({
       author,
       publication,
       url,
-    });
+    }, logoRef.current);
     setPreviewUrl(canvasRef.current.toDataURL('image/png'));
-  }, [isOpen, format, theme, title, quote, excerpt, author, publication, url]);
+  }, [isOpen, format, theme, title, quote, excerpt, author, publication, url, logoReady]);
 
   const handleDownload = useCallback(() => {
     if (!canvasRef.current) return;
