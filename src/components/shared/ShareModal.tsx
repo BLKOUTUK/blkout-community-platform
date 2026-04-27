@@ -131,19 +131,11 @@ const THEMES: ShareTheme[] = [
   {
     id: 'healing',
     label: 'Healing',
-    background: {
-      type: 'gradient',
-      angle: 135,
-      stops: [
-        { offset: 0, color: '#A8C69F' },
-        { offset: 0.5, color: '#B2F5EA' },
-        { offset: 1, color: '#E6D5FF' },
-      ],
-    },
+    background: { type: 'solid', color: '#A8C69F' },
     text: '#1A1A1A',
     muted: 'rgba(26,26,26,0.7)',
     accent: '#9B4DCA',
-    swatch: 'linear-gradient(135deg, #A8C69F 0%, #B2F5EA 50%, #E6D5FF 100%)',
+    swatch: 'linear-gradient(135deg, #A8C69F 0%, #7DA579 100%)',
   },
 ];
 
