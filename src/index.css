@@ -15,9 +15,9 @@
 
 /* Liberation Base Styles */
 @layer base {
-  /* Liberation Typography */
+  /* Liberation Typography — BLKOUT One Platform Design (locked 26 Apr 2026) */
   html {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Work Sans', 'Inter', system-ui, -apple-system, sans-serif;
     scroll-behavior: smooth; /* Gentle scrolling for trauma-informed UX */
   }
 
@@ -26,6 +26,12 @@
     /* Black liberation aesthetic - dark background with light text */
     background-color: #000000;
     color: #FFFFFF;
+  }
+
+  /* BLKOUT One Platform Design — gold selection */
+  ::selection {
+    background: #FFD700;
+    color: #000000;
   }
 
   /* Override any dark text classes - ensure light text on dark background */
@@ -64,11 +70,18 @@
     }
   }
 
-  /* Liberation heading hierarchy */
-  h1, h2, h3, h4, h5, h6 {
+  /* Liberation heading hierarchy — Dreamcatcher type stack */
+  h1, h2, h3 {
+    @apply font-display;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: #FFFFFF;
+  }
+  h4, h5, h6 {
     @apply font-sans font-semibold;
     line-height: 1.2;
-    color: #FFFFFF; /* White text for dark background */
+    color: #FFFFFF;
   }
 
   h1 { @apply text-3xl lg:text-4xl; }
@@ -258,6 +271,23 @@
 
 /* Liberation Utility Classes */
 @layer utilities {
+  /* BLKOUT One Platform Design — noise hero (radial purple-deep + gold).
+     Apply to a hero section as a backdrop overlay. */
+  .noise {
+    position: relative;
+    isolation: isolate;
+  }
+  .noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse at top left, rgba(155, 77, 202, 0.18), transparent 55%),
+      radial-gradient(ellipse at bottom right, rgba(255, 215, 0, 0.08), transparent 60%);
+    pointer-events: none;
+  }
+
   /* Cultural color utilities */
   .text-liberation-gradient {
     background: linear-gradient(135deg,
