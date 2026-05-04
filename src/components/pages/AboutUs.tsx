@@ -895,7 +895,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
             policies, or technical implementations, we're committed to providing clear answers.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="mailto:hello@blkoutuk.com?subject=Question about BLKOUT practices" className="bg-white text-liberation-pride-purple px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors">
+            <a href="mailto:hello@blkoutuk.com?subject=Question about BLKOUT practices" className="bg-liberation-gold-divine text-black px-6 py-3 rounded-xl font-bold uppercase tracking-wider hover:bg-amber-300 transition-colors">
               Contact Community Council
             </a>
             <a href="/governance" className="border-2 border-white text-white px-6 py-3 rounded-xl font-bold hover:bg-white/10 transition-colors">

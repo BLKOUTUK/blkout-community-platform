@@ -22,7 +22,7 @@ interface DiscoverPageProps {
 
 export default function DiscoverPage({ onNavigate }: DiscoverPageProps) {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-liberation-black-power">
       {/* Hero Section */}
       <div className="mb-16">
         <HeroSection />
@@ -91,7 +91,7 @@ export default function DiscoverPage({ onNavigate }: DiscoverPageProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.5 }}
-          className="mb-16 p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-lg"
+          className="mb-16 p-8 bg-white/5 backdrop-blur-sm border border-liberation-gold-divine/20 rounded-2xl shadow-lg"
         >
           <SocialMediaEmbeds />
         </motion.div>
@@ -102,7 +102,7 @@ export default function DiscoverPage({ onNavigate }: DiscoverPageProps) {
             href="https://blkoutuk.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
+            className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
           >
             Admin
           </a>

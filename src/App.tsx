@@ -468,7 +468,8 @@ export default function App() {
           )}
 
           {/* Main Navigation */}
-          <nav className="sticky top-0 z-40 bg-liberation-black-power border-b border-liberation-gold-divine/30 shadow-lg backdrop-blur-sm">
+          <div className="sticky top-0 z-40 h-1 bg-liberation-gold-divine" aria-hidden />
+          <nav className="sticky top-1 z-40 bg-liberation-black-power border-b border-liberation-gold-divine/30 shadow-lg backdrop-blur-sm">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between h-16 md:h-18">
                 {/* Logo, Brain icon and Brand */}
@@ -492,7 +493,7 @@ export default function App() {
                 <div className="hidden lg:flex items-center gap-4">
                   <button
                     onClick={() => changeActiveTab('liberation')}
-                    className={`px-4 py-2 rounded-md text-base font-black uppercase tracking-widest transition-all duration-200 ${
+                    className={`px-4 py-2 rounded-md text-base font-signature font-black uppercase tracking-tight transition-all duration-200 ${
                       activeTab === 'liberation'
                         ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
                         : 'text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10'
@@ -504,7 +505,7 @@ export default function App() {
                     href="https://events.blkoutuk.cloud"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-md text-base font-black uppercase tracking-widest transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
+                    className="px-4 py-2 rounded-md text-base font-signature font-black uppercase tracking-tight transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
                   >
                     Events
                   </a>
@@ -512,13 +513,13 @@ export default function App() {
                     href="https://news.blkoutuk.cloud"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-md text-base font-black uppercase tracking-widest transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
+                    className="px-4 py-2 rounded-md text-base font-signature font-black uppercase tracking-tight transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
                   >
                     News
                   </a>
                   <button
                     onClick={() => changeActiveTab('intro')}
-                    className={`px-4 py-2 rounded-md text-base font-black uppercase tracking-widest transition-all duration-200 ${
+                    className={`px-4 py-2 rounded-md text-base font-signature font-black uppercase tracking-tight transition-all duration-200 ${
                       activeTab === 'intro'
                         ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
                         : 'text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10'
@@ -530,7 +531,7 @@ export default function App() {
                     href="https://voices.blkoutuk.cloud"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-md text-base font-black uppercase tracking-widest transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
+                    className="px-4 py-2 rounded-md text-base font-signature font-black uppercase tracking-tight transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
                   >
                     Voices
                   </a>

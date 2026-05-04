@@ -124,28 +124,28 @@ export default function SkillExchangeMarketplace() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-liberation-black-power py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-4xl font-bold text-white mb-2">
             Community Skill Exchange
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-300">
             Share knowledge, build skills, grow together through mutual aid
           </p>
         </div>
 
         {/* View Toggle */}
         <div className="flex items-center justify-between mb-6">
-          <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1">
+          <div className="inline-flex rounded-lg border border-liberation-gold-divine/20 bg-white/5 backdrop-blur-sm p-1">
             <button
               onClick={() => setActiveView('offering')}
               className={`px-6 py-2 rounded-md transition-colors ${
                 activeView === 'offering'
                   ? 'bg-blue-600 text-white'
-                  : 'text-gray-700 hover:bg-gray-100'
+                  : 'text-gray-300 hover:bg-white/5'
               }`}
             >
               Skills Offered
@@ -155,7 +155,7 @@ export default function SkillExchangeMarketplace() {
               className={`px-6 py-2 rounded-md transition-colors ${
                 activeView === 'seeking'
                   ? 'bg-purple-600 text-white'
-                  : 'text-gray-700 hover:bg-gray-100'
+                  : 'text-gray-300 hover:bg-white/5'
               }`}
             >
               Skills Wanted
@@ -215,30 +215,30 @@ export default function SkillExchangeMarketplace() {
                     </span>
                   </div>
                   <CardTitle className="text-lg mb-2">{skill.skill_name}</CardTitle>
-                  <p className="text-sm text-gray-600">by {skill.user_name || 'Community Member'}</p>
+                  <p className="text-sm text-gray-400">by {skill.user_name || 'Community Member'}</p>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-700 mb-4 line-clamp-3">
+                  <p className="text-sm text-gray-300 mb-4 line-clamp-3">
                     {skill.description}
                   </p>
 
                   {/* Details */}
                   <div className="space-y-2 mb-4">
                     {skill.location && (
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="flex items-center gap-2 text-sm text-gray-400">
                         <MapPin className="h-4 w-4" />
                         {skill.location}
                       </div>
                     )}
 
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <div className="flex items-center gap-2 text-sm text-gray-400">
                       <Calendar className="h-4 w-4" />
                       {skill.preferred_format.join(', ')}
                     </div>
 
                     <div className="flex items-center gap-2 text-sm">
                       <span className="font-medium">{compensation?.icon}</span>
-                      <span className="text-gray-700">{compensation?.label}</span>
+                      <span className="text-gray-300">{compensation?.label}</span>
                     </div>
 
                     {skill.suggested_exchange && (
@@ -253,8 +253,8 @@ export default function SkillExchangeMarketplace() {
                       <MessageCircle className="h-4 w-4" />
                       Connect
                     </button>
-                    <button className="px-3 py-2 border border-gray-300 rounded hover:bg-gray-50 transition-colors">
-                      <Heart className="h-4 w-4 text-gray-600" />
+                    <button className="px-3 py-2 border border-liberation-gold-divine/20 rounded hover:bg-white/5 transition-colors">
+                      <Heart className="h-4 w-4 text-gray-400" />
                     </button>
                   </div>
                 </CardContent>
@@ -266,8 +266,8 @@ export default function SkillExchangeMarketplace() {
         {filteredSkills.length === 0 && (
           <div className="text-center py-16">
             <div className="text-6xl mb-4">🔍</div>
-            <p className="text-xl text-gray-600 mb-2">No skills found</p>
-            <p className="text-gray-500">Try adjusting your search or filters</p>
+            <p className="text-xl text-gray-300 mb-2">No skills found</p>
+            <p className="text-gray-400">Try adjusting your search or filters</p>
           </div>
         )}
 
@@ -345,7 +345,7 @@ export default function SkillExchangeMarketplace() {
                     <button
                       type="button"
                       onClick={() => setShowPostForm(false)}
-                      className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="px-6 py-2 border border-liberation-gold-divine/20 rounded-lg hover:bg-white/5 transition-colors"
                     >
                       Cancel
                     </button>

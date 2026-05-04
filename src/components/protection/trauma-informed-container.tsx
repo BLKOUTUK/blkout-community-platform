@@ -262,7 +262,7 @@ export const TraumaInformedContainer: React.FC<TraumaInformedContainerProps> = (
         gentleAnimations && traumaInformedUtils.getGentleAnimation('fade')
       )}>
         <div className={cn(
-          'bg-white rounded-lg p-6 max-w-md w-full max-h-[80vh] overflow-y-auto',
+          'bg-white/5 backdrop-blur-sm rounded-lg p-6 max-w-md w-full max-h-[80vh] overflow-y-auto',
           'border-2',
           liberationColors.healing.lavender,
           'border-liberation-healing-lavender'
@@ -340,7 +340,7 @@ export const TraumaInformedContainer: React.FC<TraumaInformedContainerProps> = (
         gentleAnimations && traumaInformedUtils.getGentleAnimation('fade')
       )}>
         <div className={cn(
-          'bg-white rounded-lg p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto',
+          'bg-white/5 backdrop-blur-sm rounded-lg p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto',
           'border-2',
           liberationColors.pride.purple,
           'border-liberation-pride-purple'
@@ -402,7 +402,7 @@ export const TraumaInformedContainer: React.FC<TraumaInformedContainerProps> = (
         gentleAnimations && traumaInformedUtils.getGentleAnimation('fade')
       )}>
         <div className={cn(
-          'bg-white rounded-lg p-6 max-w-sm w-full',
+          'bg-white/5 backdrop-blur-sm rounded-lg p-6 max-w-sm w-full',
           'border-2',
           liberationColors.healing.warm,
           'border-liberation-community-warm'
@@ -420,8 +420,8 @@ export const TraumaInformedContainer: React.FC<TraumaInformedContainerProps> = (
               <h3 className="text-lg font-semibold font-liberation mb-2">
                 Taking Care of Yourself
               </h3>
-              <p className="text-sm text-gray-600">
-                You're choosing to step away, and that's completely okay. 
+              <p className="text-sm text-gray-300">
+                You're choosing to step away, and that's completely okay.
                 Your wellbeing always comes first.
               </p>
             </div>
@@ -489,7 +489,7 @@ export const TraumaInformedContainer: React.FC<TraumaInformedContainerProps> = (
                 size="sm"
                 onClick={handleExitRequest}
                 ariaDescription="Exit content safely"
-                className="bg-white/80 backdrop-blur-sm hover:bg-white/90"
+                className="bg-liberation-gold-divine/80 backdrop-blur-sm hover:bg-liberation-gold-divine"
               >
                 <X className="h-4 w-4" aria-hidden="true" />
                 <span className="sr-only">Exit Safely</span>

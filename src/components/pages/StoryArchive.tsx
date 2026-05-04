@@ -286,7 +286,7 @@ const StoryArchive: React.FC = () => {
           </div>
         ) : stories.length === 0 ? (
           <div className="text-center py-20">
-            <BookOpen className="h-16 w-16 text-gray-600 mx-auto mb-4" />
+            <BookOpen className="h-16 w-16 text-gray-400 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-white mb-2">No stories found</h2>
             <p className="text-gray-400">Try adjusting your search or filters</p>
           </div>
