@@ -122,6 +122,24 @@ class ErrorBoundary extends React.Component<any, any> {
   }
 }
 
+// Section accent palette per BLKOUT One Platform Design (DESIGN_COLOUR_ARCHITECTURE.md §5).
+// The 4px bar above the nav (Option C hybrid chrome) reflects the active section.
+// Core (gold-divine) stays default for the front-door cluster; purple = News/Archive,
+// red = Members/About, orange = Shop. AIvor would be broadcast-blue once tokenised.
+const SECTION_ACCENT: Partial<Record<string, string>> = {
+  stories: 'bg-liberation-pride-purple-deep',
+  about: 'bg-liberation-pan-african-red',
+  governance: 'bg-liberation-pan-african-red',
+  'governance-proposals': 'bg-liberation-pan-african-red',
+  'my-account': 'bg-liberation-pan-african-red',
+  finances: 'bg-liberation-pan-african-red',
+  board: 'bg-liberation-pan-african-red',
+  shop: 'bg-liberation-pride-orange',
+};
+function getSectionAccent(tab: string): string {
+  return SECTION_ACCENT[tab] || 'bg-liberation-gold-divine';
+}
+
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
@@ -468,7 +486,7 @@ export default function App() {
           )}
 
           {/* Main Navigation */}
-          <div className="sticky top-0 z-40 h-1 bg-liberation-gold-divine" aria-hidden />
+          <div className={`sticky top-0 z-40 h-1 transition-colors duration-300 ${getSectionAccent(activeTab)}`} aria-hidden />
           <nav className="sticky top-1 z-40 bg-liberation-black-power border-b border-liberation-gold-divine/30 shadow-lg backdrop-blur-sm">
             <div className="container mx-auto px-4">
               <div className="flex items-center justify-between h-16 md:h-18">

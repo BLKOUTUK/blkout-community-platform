@@ -83,7 +83,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
       <div className="max-w-4xl mx-auto px-6 py-8">
         <a
           href="/movement"
-          className="block bg-gradient-to-br from-purple-600 to-fuchsia-600 rounded-2xl p-8 hover:scale-[1.02] transition-all duration-300 group"
+          className="block bg-liberation-black-power border-4 border-liberation-gold-divine rounded-sharp p-8 hover:bg-liberation-gold-divine/5 transition-all duration-300 group"
         >
           <div className="text-center">
             <h2 className="text-3xl md:text-4xl font-black text-white uppercase mb-4 group-hover:text-liberation-gold-divine transition-colors">
@@ -104,7 +104,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
       <div className="max-w-4xl mx-auto px-6 pb-8">
         <a
           href="/our-board/"
-          className="block bg-black border-2 border-liberation-gold-divine/40 rounded-2xl p-8 hover:border-liberation-gold-divine hover:scale-[1.01] transition-all duration-300 group"
+          className="block bg-liberation-black-power border-2 border-liberation-gold-divine/40 rounded-sharp p-8 hover:border-liberation-gold-divine transition-all duration-300 group"
         >
           <div className="flex items-center gap-6">
             <div className="flex-shrink-0 w-16 h-16 rounded-full bg-liberation-gold-divine/10 border-2 border-liberation-gold-divine/40 flex items-center justify-center group-hover:bg-liberation-gold-divine/20 transition-colors">
