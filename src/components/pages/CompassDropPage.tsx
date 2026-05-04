@@ -21,6 +21,14 @@ const GALLERY: string[] = [
   '/images/drops/compass-journal-spread-6.jpg',
 ];
 
+// Estimates — firm up before any card is touched. Edit these as numbers land.
+const SPECS = [
+  { label: 'Estimated price', value: '£15–25' },
+  { label: 'Format', value: 'Softbound · ~80 pp · A5' },
+  { label: 'Threshold', value: '~150 copies' },
+  { label: 'Aiming for', value: 'Pride 2026' },
+];
+
 export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -163,7 +171,7 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
               Inside the journal
             </span>
             <p className="font-disrupt italic text-xl text-liberation-neutral-300 max-w-[55ch] m-0">
-              A taste of the spreads — the panels, the workshop record, the way it carries through the seven directions.
+              Sample spreads from the seven-directions panels and the Croydon workshop record. Final design and pagination still in production.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
@@ -192,6 +200,34 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
           <p className="font-display text-xs tracking-[0.25em] uppercase text-liberation-neutral-500 mt-8 mb-0">
             Compass · workshop record · 2026
           </p>
+        </section>
+
+        {/* What we're aiming for — honest pre-launch specs.
+            Editorial framing (not SaaS pricing strip) so the placeholder
+            values read as transparency rather than missing data. */}
+        <section className="mb-20 border-t border-b border-liberation-neutral-800 py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-[14rem_1fr] gap-6 lg:gap-16">
+            <span className="font-display uppercase tracking-widest text-xs text-liberation-neutral-500">
+              What we're aiming for
+            </span>
+            <div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                {SPECS.map((s) => (
+                  <div key={s.label}>
+                    <p className="font-display uppercase tracking-widest text-[0.65rem] text-liberation-neutral-500 m-0 mb-1">
+                      {s.label}
+                    </p>
+                    <p className="font-mono text-base md:text-lg text-liberation-gold-divine font-medium m-0 leading-tight">
+                      {s.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p className="font-disrupt italic text-sm text-liberation-neutral-500 mt-6 m-0 max-w-[55ch]">
+                All four firm up before any card is touched. We'll write to confirm before charging.
+              </p>
+            </div>
+          </div>
         </section>
 
         {/* Reserve form */}
@@ -294,7 +330,11 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
                     disabled={submitting || !name.trim() || !email.trim()}
                     className="bg-liberation-gold-divine text-liberation-black-power border-0 rounded-none px-8 py-5 font-display font-black text-sm tracking-[0.15em] uppercase cursor-pointer transition-colors hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {submitting ? 'Reserving…' : 'Reserve my copy →'}
+                    {submitting
+                      ? 'Reserving…'
+                      : quantity === 1
+                        ? 'Reserve my copy →'
+                        : `Reserve ${quantity} copies →`}
                   </button>
                 </div>
               </form>
