@@ -116,6 +116,7 @@ export default function ApparelPage({ onNavigate }: ApparelPageProps) {
             brief="Pride pieces — joy as a political act."
             body="Pride isn't a season. It's the daily insistence that we love each other and we won't be made small. The Proud range carries that — for the parade and the days that need it more."
             href="/shop/apparel/blkout-proud"
+            poster="/images/apparel/blkout-proud-poster.jpg"
             onClick={go('shop/apparel/blkout-proud')}
           />
           <RangeCard
