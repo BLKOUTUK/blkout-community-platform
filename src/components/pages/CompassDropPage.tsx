@@ -7,10 +7,10 @@ interface CompassDropPageProps {
 
 const DROP_SLUG = 'compass-journal';
 // Asset convention (drop in when ready):
-//   public/videos/drops/compass-journal.mp4         — looping muted hero, 10–15s
-//   public/images/drops/compass-journal-poster.jpg  — poster + card image
+//   public/videos/drops/compass-journal.mp4 — looping muted hero, 10–15s
 const HERO_VIDEO: string | undefined = undefined;
-const HERO_POSTER: string | undefined = undefined;
+// Hero still — Nugent/Douglas art direction, 1200x630.
+const HERO_POSTER: string | undefined = '/images/drops/compass-journal-hero.png';
 
 export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
   const [name, setName] = useState('');

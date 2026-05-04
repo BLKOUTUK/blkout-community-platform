@@ -187,12 +187,11 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
               href="/shop/drops/compass-journal"
               className="border border-liberation-neutral-800 border-t-4 border-t-liberation-gold-divine p-8 flex flex-col min-h-[22rem] transition-colors hover:border-liberation-sovereignty-gold hover:border-t-liberation-gold-divine"
             >
-              <div
-                className="flex-1 border border-dashed border-liberation-neutral-800 mb-6 min-h-[10rem] grid place-items-center text-liberation-neutral-700 text-xs tracking-[0.2em] uppercase"
-                style={placeholderBoxStyle}
-              >
-                [hero · ivor-compass folder]
-              </div>
+              <img
+                src="/images/drops/compass-journal-card.png"
+                alt="Ivor's Compass print journal"
+                className="w-full h-auto block mb-6"
+              />
               <span className="font-mono text-xs text-liberation-sovereignty-gold tracking-[0.2em] uppercase">
                 drop 01 · printing soon
               </span>
