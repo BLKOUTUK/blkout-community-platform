@@ -138,17 +138,20 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
         {/* Editorial body */}
         <section className="mb-16 grid grid-cols-1 lg:grid-cols-[14rem_1fr] gap-6 lg:gap-16">
           <span className="font-display uppercase tracking-widest text-xs text-liberation-neutral-500">
-            What you'll hold
+            Who he was
           </span>
           <div className="space-y-6 max-w-[55ch] text-liberation-neutral-300 text-lg leading-relaxed">
             <p className="m-0">
-              <span className="font-disrupt italic text-white">Ivor's Compass</span> is the graphic novel BLKOUT made for the Croydon arts commission — telling Ivor Cummings's story (1940s-50s, civil servant, organiser, gay, Black, ours) through seven directions: <em className="font-disrupt">home, night, fire, threshold, shadow, silence, return.</em>
+              A Black queer man at the heart of the British civil service. The 1940s and 50s. He met the Empire Windrush at Tilbury — and the men who arrived with it. He ran West African student welfare. He hosted the parties where the first generations of Black queer London learned each other.
             </p>
             <p className="m-0">
-              The print journal binds the novel together with the workshop record — the panels, the prompts, the names that came up across the four sessions. It's the version you can put on a shelf and hand to someone.
+              His name was Ivor Cummings. <em className="font-disrupt italic">You weren't taught about him.</em> That was the point.
             </p>
             <p className="m-0">
-              Threshold-to-print: pre-order to commit. We trigger the run when there are enough of us to make it work. You're not charged until the run triggers.
+              <span className="font-disrupt italic text-white">Ivor's Compass</span> is the graphic novel we made to put him back. Seven directions through one man's life — <em className="font-disrupt italic">home, night, fire, threshold, shadow, silence, return.</em> Workshop panels, prompts, the names that came up across four sessions in Croydon.
+            </p>
+            <p className="m-0">
+              The journal binds it. The version you can hold. The version you can hand to someone.
             </p>
           </div>
         </section>
@@ -191,25 +194,6 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
           </p>
         </section>
 
-        {/* Specs strip */}
-        <section className="mb-16 border-t border-b border-liberation-neutral-800 py-8 grid grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            { label: 'Pages', value: '~80' },
-            { label: 'Format', value: 'Bound print' },
-            { label: 'Print run', value: 'TBC' },
-            { label: 'Ships', value: 'After threshold' },
-          ].map((s) => (
-            <div key={s.label}>
-              <p className="font-display uppercase tracking-widest text-xs text-liberation-neutral-500 m-0 mb-1">
-                {s.label}
-              </p>
-              <p className="font-mono text-xl text-liberation-gold-divine font-medium m-0">
-                {s.value}
-              </p>
-            </div>
-          ))}
-        </section>
-
         {/* Reserve form */}
         <section
           id="reserve"
@@ -234,7 +218,7 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
                 Tell us you're in.
               </h2>
               <p className="font-disrupt italic text-lg text-liberation-neutral-300 max-w-[55ch] mb-10">
-                No payment now. We'll write to you the day the print run triggers — that's when cards get touched and copies get printed. If we don't hit threshold, no card gets touched.
+                No payment yet. The card gets charged when the run triggers — and only then. Don't hit threshold? Nothing happens to your card.
               </p>
 
               <form onSubmit={handleSubmit} noValidate className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
@@ -318,39 +302,19 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
           )}
         </section>
 
-        {/* Related — link back to compass.blkoutuk.com */}
-        <section className="mb-20 border-t border-liberation-neutral-800 pt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <a
-            href="https://compass.blkoutuk.com/novel"
-            target="_blank"
-            rel="noopener"
-            className="border border-liberation-neutral-800 p-6 transition-colors hover:border-liberation-sovereignty-gold hover:bg-[rgba(212,175,55,0.04)]"
-          >
-            <span className="font-display uppercase tracking-widest text-xs text-liberation-neutral-500">
-              Read it now
-            </span>
-            <h3 className="font-display font-black uppercase tracking-tight text-2xl mt-2 mb-2 leading-none">
-              The novel online →
-            </h3>
-            <p className="font-disrupt italic text-liberation-neutral-500 text-base m-0">
-              Read all 19 panels at compass.blkoutuk.com — free, online, anytime.
-            </p>
-          </a>
-          <a
-            href="/shop"
-            onClick={go('shop')}
-            className="border border-liberation-neutral-800 p-6 transition-colors hover:border-liberation-sovereignty-gold hover:bg-[rgba(212,175,55,0.04)]"
-          >
-            <span className="font-display uppercase tracking-widest text-xs text-liberation-neutral-500">
-              Other ways
-            </span>
-            <h3 className="font-display font-black uppercase tracking-tight text-2xl mt-2 mb-2 leading-none">
-              All of /shop →
-            </h3>
-            <p className="font-disrupt italic text-liberation-neutral-500 text-base m-0">
-              Six paths into the cooperative. Drops, apparel, membership, and more.
-            </p>
-          </a>
+        {/* Related — single inline line, not over-built cards */}
+        <section className="mb-20 border-t border-liberation-neutral-800 pt-8">
+          <p className="font-disrupt italic text-base text-liberation-neutral-500 m-0">
+            Read all 19 panels online, free, at{' '}
+            <a
+              href="https://compass.blkoutuk.com/novel"
+              target="_blank"
+              rel="noopener"
+              className="not-italic font-display font-bold uppercase tracking-[0.15em] text-sm text-liberation-sovereignty-gold hover:text-liberation-gold-divine"
+            >
+              compass.blkoutuk.com →
+            </a>
+          </p>
         </section>
 
         {/* FOOT */}
