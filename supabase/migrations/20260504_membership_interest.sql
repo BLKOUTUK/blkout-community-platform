@@ -30,6 +30,11 @@ CREATE INDEX IF NOT EXISTS membership_interest_tier_idx
 CREATE INDEX IF NOT EXISTS membership_interest_signed_up_idx
     ON public.membership_interest (signed_up_at DESC);
 
+-- Table privileges. Supabase auto-grants on dashboard-created tables but not
+-- on tables created via the management API, so set them explicitly.
+GRANT INSERT ON public.membership_interest TO anon;
+GRANT SELECT, INSERT ON public.membership_interest TO authenticated;
+
 -- RLS: anon can register interest; only authenticated can read/update
 ALTER TABLE public.membership_interest ENABLE ROW LEVEL SECURITY;
 
