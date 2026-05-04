@@ -70,7 +70,7 @@ const StoryArchive: React.FC = () => {
   // Full story view
   if (selectedStory) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+      <div className="min-h-screen bg-liberation-black-power">
         {/* Story Header */}
         <header className="border-b border-liberation-sovereignty-gold/20 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
           <div className="max-w-4xl mx-auto px-4 md:px-8 py-4">
@@ -89,7 +89,7 @@ const StoryArchive: React.FC = () => {
           {/* Story Meta */}
           <div className="mb-8">
             {selectedStory.category && (
-              <span className="inline-block px-3 py-1 bg-liberation-sovereignty-gold/20 text-liberation-sovereignty-gold rounded-full text-sm font-semibold mb-4">
+              <span className="inline-block px-3 py-1 bg-liberation-pride-purple-deep/20 text-liberation-pride-purple-deep rounded-full text-sm font-semibold mb-4">
                 {selectedStory.category}
               </span>
             )}
@@ -203,7 +203,7 @@ const StoryArchive: React.FC = () => {
 
   // Archive listing view
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-liberation-black-power">
       {/* Video Hero */}
       <VideoHero
         title="ARCHIVE"
@@ -223,7 +223,7 @@ const StoryArchive: React.FC = () => {
 
       {/* Search and Filters */}
       <section className="max-w-6xl mx-auto px-4 md:px-8 py-8">
-        <div className="bg-black/50 backdrop-blur-sm rounded-2xl p-6 border border-liberation-sovereignty-gold/20">
+        <div className="bg-black/50 backdrop-blur-sm rounded-sharp p-6 border border-liberation-pride-purple-deep/30">
           {/* Search Bar */}
           <form onSubmit={handleSearch} className="mb-6">
             <div className="relative">
@@ -297,7 +297,7 @@ const StoryArchive: React.FC = () => {
               {stories.map((story) => (
                 <article
                   key={story.id}
-                  className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border border-liberation-sovereignty-gold/10 hover:border-liberation-sovereignty-gold/30 transition-all duration-300 cursor-pointer group"
+                  className="bg-white/5 backdrop-blur-sm rounded-sharp overflow-hidden border border-liberation-pride-purple-deep/30 hover:border-liberation-pride-purple-deep transition-all duration-300 cursor-pointer group"
                   onClick={() => loadFullStory(story.id)}
                 >
                   {story.imageUrl && (
@@ -312,12 +312,12 @@ const StoryArchive: React.FC = () => {
 
                   <div className="p-6">
                     {story.category && (
-                      <span className="inline-block px-2 py-1 bg-liberation-sovereignty-gold/20 text-liberation-sovereignty-gold rounded text-xs font-semibold mb-3">
+                      <span className="inline-block px-2 py-1 bg-liberation-pride-purple-deep/20 text-liberation-pride-purple-deep rounded text-xs font-semibold mb-3">
                         {story.category}
                       </span>
                     )}
 
-                    <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-liberation-sovereignty-gold transition-colors">
+                    <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-liberation-pride-purple-deep transition-colors">
                       {story.title}
                     </h3>
 

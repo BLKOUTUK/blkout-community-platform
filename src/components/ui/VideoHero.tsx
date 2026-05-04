@@ -213,6 +213,7 @@ const VideoHero: React.FC<VideoHeroProps> = ({
               className={cn(
                 'text-base sm:text-lg md:text-xl lg:text-2xl mb-6 md:mb-8',
                 'leading-relaxed max-w-3xl mx-auto',
+                'font-disrupt italic',
                 textColorClasses[textColor],
                 'drop-shadow-md'
               )}
