@@ -3,11 +3,18 @@ interface ApparelRangePageProps {
   onNavigate?: (tab: string) => void;
 }
 
+// Asset convention (drop in when ready, no code change required):
+//   public/videos/apparel/{slug}.mp4    — looping muted hero video, 10–15s
+//   public/images/apparel/{slug}-poster.jpg — poster frame + range card image
+// If heroVideo is set, the page renders a <video>. Else if heroPoster is set,
+// it renders a <img>. Else falls back to the hatched placeholder.
 interface RangeContent {
   num: string;
   name: string;
   subtitle: string;
   imageNote: string;
+  heroVideo?: string;
+  heroPoster?: string;
   paragraphs: string[];
   pull?: { quote: string; attr: string };
   teemillHref: string;
@@ -117,14 +124,35 @@ export default function ApparelRangePage({ range, onNavigate }: ApparelRangePage
           <hr className="h-1.5 bg-liberation-sovereignty-gold border-0 mt-10 w-24" />
         </header>
 
-        {/* Range hero image */}
+        {/* Range hero — video > poster image > hatched placeholder */}
         <section className="mb-16">
-          <div
-            className="border border-dashed border-liberation-neutral-800 min-h-[24rem] md:min-h-[32rem] grid place-items-center text-liberation-neutral-700 text-sm tracking-[0.2em] uppercase"
-            style={placeholderStyle}
-          >
-            {c.imageNote}
-          </div>
+          {c.heroVideo ? (
+            <video
+              className="w-full h-auto block"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster={c.heroPoster}
+              aria-label={`${c.name} promo`}
+            >
+              <source src={c.heroVideo} type="video/mp4" />
+            </video>
+          ) : c.heroPoster ? (
+            <img
+              src={c.heroPoster}
+              alt={`${c.name} range hero`}
+              className="w-full h-auto block"
+            />
+          ) : (
+            <div
+              className="border border-dashed border-liberation-neutral-800 min-h-[24rem] md:min-h-[32rem] grid place-items-center text-liberation-neutral-700 text-sm tracking-[0.2em] uppercase"
+              style={placeholderStyle}
+            >
+              {c.imageNote}
+            </div>
+          )}
           {c.imageNoteRight && (
             <p className="font-disrupt italic text-sm text-liberation-neutral-500 mt-3 m-0">
               {c.imageNoteRight}

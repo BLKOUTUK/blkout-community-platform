@@ -8,26 +8,35 @@ interface RangeCardProps {
   brief: string;
   body: string;
   href: string;
+  poster?: string;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
-function RangeCard({ num, name, brief, body, href, onClick }: RangeCardProps) {
+function RangeCard({ num, name, brief, body, href, poster, onClick }: RangeCardProps) {
   return (
     <a
       href={href}
       onClick={onClick}
       className="block border border-liberation-neutral-800 p-8 transition-colors hover:border-liberation-sovereignty-gold hover:bg-[rgba(212,175,55,0.04)]"
     >
-      <div
-        className="border border-dashed border-liberation-neutral-800 mb-6 min-h-[14rem] grid place-items-center text-liberation-neutral-700 text-xs tracking-[0.2em] uppercase"
-        style={{
-          backgroundImage:
-            'repeating-linear-gradient(45deg, rgba(212,175,55,0.04) 0, rgba(212,175,55,0.04) 8px, transparent 8px, transparent 16px)',
-          backgroundColor: '#0A0A0A',
-        }}
-      >
-        [range image]
-      </div>
+      {poster ? (
+        <img
+          src={poster}
+          alt={`${name} range`}
+          className="w-full h-auto block mb-6"
+        />
+      ) : (
+        <div
+          className="border border-dashed border-liberation-neutral-800 mb-6 min-h-[14rem] grid place-items-center text-liberation-neutral-700 text-xs tracking-[0.2em] uppercase"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(45deg, rgba(212,175,55,0.04) 0, rgba(212,175,55,0.04) 8px, transparent 8px, transparent 16px)',
+            backgroundColor: '#0A0A0A',
+          }}
+        >
+          [range image]
+        </div>
+      )}
       <span className="font-mono text-xs text-liberation-sovereignty-gold tracking-[0.2em] uppercase">
         {num}
       </span>
@@ -97,7 +106,9 @@ export default function ApparelPage({ onNavigate }: ApparelPageProps) {
           </p>
         </section>
 
-        {/* Three ranges — vertical stack, each gets full editorial weight */}
+        {/* Three ranges — vertical stack, each gets full editorial weight.
+            When promo posters are ready, drop into public/images/apparel/{slug}-poster.jpg
+            and pass via `poster="…"` below. Until then, hatched placeholder. */}
         <section className="space-y-12 mb-24">
           <RangeCard
             num="range 01"
