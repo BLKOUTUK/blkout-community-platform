@@ -182,57 +182,21 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
             name="Drops."
             pitch="Limited print runs, threshold-to-print. You commit at order; we charge once enough of us are in. No inventory, no waste."
           />
-          <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 lg:gap-8 mt-8">
+          <div className="mt-8">
             <a
-              href="/shop/drops/ukbp-tshirt-2026"
+              href="/shop/drops/compass-journal"
               className="border border-liberation-neutral-800 border-t-4 border-t-liberation-gold-divine p-8 flex flex-col min-h-[22rem] transition-colors hover:border-liberation-sovereignty-gold hover:border-t-liberation-gold-divine"
             >
               <div
-                className="flex-1 border border-dashed border-liberation-neutral-800 mb-6 min-h-[8rem] grid place-items-center text-liberation-neutral-700 text-xs tracking-[0.2em] uppercase"
-                style={placeholderBoxStyle}
-              >
-                [hero · UKBP 2025 archive]
-              </div>
-              <span className="font-mono text-xs text-liberation-sovereignty-gold tracking-[0.2em] uppercase">
-                drop 01 · launching Pride 2026
-              </span>
-              <h3 className="font-display font-black uppercase tracking-tight text-2xl md:text-3xl my-2 leading-none">
-                UK Black Pride T-shirt 2026
-              </h3>
-              <p className="font-disrupt italic text-liberation-neutral-300 text-base leading-snug mb-4">
-                A 750-unit run for UKBP. Designed for the day, made to last past it.
-              </p>
-              <div className="grid grid-cols-[auto_1fr] gap-4 items-center pt-4 border-t border-liberation-neutral-800">
-                <span className="font-mono text-2xl text-liberation-gold-divine font-medium">
-                  163 / 750
-                </span>
-                <div>
-                  <div className="h-1 bg-liberation-neutral-800 relative overflow-hidden">
-                    <div
-                      className="absolute inset-y-0 left-0 bg-liberation-sovereignty-gold"
-                      style={{ width: '22%' }}
-                    />
-                  </div>
-                  <p className="text-xs text-liberation-neutral-500 mt-2 tracking-[0.1em] uppercase font-bold">
-                    587 to trigger the print run
-                  </p>
-                </div>
-              </div>
-            </a>
-            <a
-              href="/shop/drops/compass-journal"
-              className="border border-liberation-neutral-800 p-8 flex flex-col transition-colors hover:border-liberation-sovereignty-gold"
-            >
-              <div
-                className="flex-1 border border-dashed border-liberation-neutral-800 mb-6 min-h-[8rem] grid place-items-center text-liberation-neutral-700 text-xs tracking-[0.2em] uppercase"
+                className="flex-1 border border-dashed border-liberation-neutral-800 mb-6 min-h-[10rem] grid place-items-center text-liberation-neutral-700 text-xs tracking-[0.2em] uppercase"
                 style={placeholderBoxStyle}
               >
                 [hero · ivor-compass folder]
               </div>
               <span className="font-mono text-xs text-liberation-sovereignty-gold tracking-[0.2em] uppercase">
-                drop 02 · printing soon
+                drop 01 · printing soon
               </span>
-              <h3 className="font-display font-black uppercase tracking-tight text-xl md:text-2xl my-2 leading-none">
+              <h3 className="font-display font-black uppercase tracking-tight text-2xl md:text-3xl my-2 leading-none">
                 Ivor's Compass — print journal
               </h3>
               <p className="font-disrupt italic text-liberation-neutral-300 text-base leading-snug m-0">
@@ -242,7 +206,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
           </div>
           <CTA href="/shop/drops" label="All current drops →" />
           <p className="font-disrupt italic text-sm text-liberation-neutral-500 mt-6 max-w-[60ch]">
-            You're not charged until the print run triggers. If a drop doesn't reach threshold, no card gets touched.
+            You're not charged until the print run triggers. If a drop doesn't reach threshold, no card gets touched. More drops as partnerships confirm.
           </p>
         </section>
 
