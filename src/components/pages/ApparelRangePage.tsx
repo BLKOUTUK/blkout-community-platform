@@ -28,6 +28,8 @@ const CONTENT: Record<ApparelRangePageProps['range'], RangeContent> = {
     name: 'BLKOUT Proud.',
     subtitle: 'Pride pieces — joy as a political act.',
     imageNote: '[range hero · 2018 BOPride archive — to be confirmed]',
+    heroVideo: '/videos/apparel/blkout-proud.mp4',
+    heroPoster: '/images/apparel/blkout-proud-poster.jpg',
     paragraphs: [
       "Pride isn't a season. It's the daily insistence that we're here, that we love each other, that we won't be made small. The Proud range carries that — for the parade and for the days that need it more.",
       'Each piece is for the moment of being seen as Black, queer, and unafraid in the same breath. Wear it where it matters. Wear it where it costs something.',
@@ -38,7 +40,6 @@ const CONTENT: Record<ApparelRangePageProps['range'], RangeContent> = {
     },
     teemillHref: 'https://blkoutuk.teemill.com',
     teemillLabel: 'Browse the Proud range on Teemill →',
-    imageNoteRight: 'Photography from BLKOUT @ Pride 2018 — usable as range mood.',
   },
   'brother-to-brother': {
     num: 'Range 02',
