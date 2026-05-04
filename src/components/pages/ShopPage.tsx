@@ -188,7 +188,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
               className="border border-liberation-neutral-800 border-t-4 border-t-liberation-gold-divine p-8 flex flex-col min-h-[22rem] transition-colors hover:border-liberation-sovereignty-gold hover:border-t-liberation-gold-divine"
             >
               <img
-                src="/images/drops/compass-journal-card.png"
+                src="/images/drops/compass-journal-card.jpg"
                 alt="Ivor's Compass print journal"
                 className="w-full h-auto block mb-6"
               />

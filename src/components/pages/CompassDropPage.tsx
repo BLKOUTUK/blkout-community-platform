@@ -9,8 +9,17 @@ const DROP_SLUG = 'compass-journal';
 // Asset convention (drop in when ready):
 //   public/videos/drops/compass-journal.mp4 — looping muted hero, 10–15s
 const HERO_VIDEO: string | undefined = undefined;
-// Hero still — Nugent/Douglas art direction, 1200x630.
-const HERO_POSTER: string | undefined = '/images/drops/compass-journal-hero.png';
+// Hero still — accio-specs internal, optimised.
+const HERO_POSTER: string | undefined = '/images/drops/compass-journal-hero.jpg';
+// Inside-the-journal gallery — accio-specs + journal-package spreads.
+const GALLERY: string[] = [
+  '/images/drops/compass-journal-spread-1.jpg',
+  '/images/drops/compass-journal-spread-2.jpg',
+  '/images/drops/compass-journal-spread-3.jpg',
+  '/images/drops/compass-journal-spread-4.jpg',
+  '/images/drops/compass-journal-spread-5.jpg',
+  '/images/drops/compass-journal-spread-6.jpg',
+];
 
 export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
   const [name, setName] = useState('');
@@ -141,6 +150,29 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
             <p className="m-0">
               Threshold-to-print: pre-order to commit. We trigger the run when there are enough of us to make it work. You're not charged until the run triggers.
             </p>
+          </div>
+        </section>
+
+        {/* Inside the journal — gallery */}
+        <section className="mb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-[14rem_1fr] gap-6 lg:gap-16 mb-8">
+            <span className="font-display uppercase tracking-widest text-xs text-liberation-neutral-500">
+              Inside the journal
+            </span>
+            <p className="font-disrupt italic text-xl text-liberation-neutral-300 max-w-[55ch] m-0">
+              A taste of the spreads — the panels, the workshop record, the way it carries through the seven directions.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
+            {GALLERY.map((src, i) => (
+              <img
+                key={src}
+                src={src}
+                alt={`Compass journal spread ${i + 1}`}
+                className="w-full h-auto block border border-liberation-neutral-800"
+                loading="lazy"
+              />
+            ))}
           </div>
         </section>
 
