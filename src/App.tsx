@@ -32,6 +32,7 @@ import FirstTimeUserFlow from '@/components/onboarding/FirstTimeUserFlow';
 import VideoHero from '@/components/ui/VideoHero';
 import TheoryOfChangeMasonry from '@/components/movement/TheoryOfChangeMasonry';
 import ShopPage from '@/components/pages/ShopPage';
+import MembershipPage from '@/components/pages/MembershipPage';
 import BoardNavigationHub from '@/components/governance/board/BoardNavigationHub';
 import CampaignDashboard from '@/components/pages/campaigns/CampaignDashboard';
 import CompliancePage from '@/components/pages/CompliancePage';
@@ -50,7 +51,7 @@ const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'discover' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'board' | 'campaigns' | 'compliance';
+type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'discover' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'shop/membership' | 'board' | 'campaigns' | 'compliance';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -143,7 +144,7 @@ function getSectionAccent(tab: string): string {
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'board', 'campaigns', 'compliance'];
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'shop/membership', 'board', 'campaigns', 'compliance'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
@@ -319,6 +320,8 @@ export default function App() {
         return <TheoryOfChangeMasonry />;
       case 'shop':
         return <ShopPage />;
+      case 'shop/membership':
+        return <MembershipPage />;
       case 'board':
         return <BoardNavigationHub />;
       case 'campaigns':
