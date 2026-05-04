@@ -319,7 +319,7 @@ export default function App() {
       case 'movement':
         return <TheoryOfChangeMasonry />;
       case 'shop':
-        return <ShopPage />;
+        return <ShopPage onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />;
       case 'shop/membership':
         return <MembershipPage />;
       case 'board':
