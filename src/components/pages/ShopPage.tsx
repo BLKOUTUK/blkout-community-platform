@@ -13,19 +13,19 @@ function RangeTile({ num, name, brief, href }: RangeTileProps) {
   return (
     <a
       href={href}
-      className="border border-liberation-neutral-800 p-6 aspect-[4/5] flex flex-col justify-between transition-colors hover:border-liberation-sovereignty-gold hover:bg-[rgba(212,175,55,0.04)]"
+      className="border border-liberation-neutral-800 p-6 aspect-[4/5] flex flex-col justify-between transition-colors hover:border-liberation-pride-orange hover:bg-[rgba(255,140,0,0.04)]"
     >
       <div
         className="flex-1 -mx-2 -mt-2 mb-4 border border-dashed border-liberation-neutral-800 grid place-items-center text-liberation-neutral-700 text-xs tracking-[0.2em] uppercase"
         style={{
           backgroundImage:
-            'repeating-linear-gradient(45deg, rgba(212,175,55,0.04) 0, rgba(212,175,55,0.04) 8px, transparent 8px, transparent 16px)',
+            'repeating-linear-gradient(45deg, rgba(255,140,0,0.04) 0, rgba(255,140,0,0.04) 8px, transparent 8px, transparent 16px)',
           backgroundColor: '#0A0A0A',
         }}
       >
         [range image]
       </div>
-      <span className="font-mono text-xs text-liberation-sovereignty-gold tracking-[0.2em] uppercase">
+      <span className="font-mono text-xs text-liberation-pride-orange tracking-[0.2em] uppercase">
         {num}
       </span>
       <h3 className="font-display font-black uppercase tracking-tight text-2xl mt-2 mb-1 m-0">
@@ -45,7 +45,7 @@ interface SectionHeaderProps {
 function SectionHeader({ roman, name, pitch }: SectionHeaderProps) {
   return (
     <header>
-      <span className="font-mono text-sm text-liberation-sovereignty-gold tracking-[0.2em] uppercase block mb-4">
+      <span className="font-mono text-sm text-liberation-pride-orange tracking-[0.2em] uppercase block mb-4">
         {roman}
       </span>
       <h2 className="font-display font-black uppercase tracking-tight text-4xl md:text-6xl leading-none m-0">
@@ -74,8 +74,8 @@ function CTA({
   const baseClasses =
     'inline-flex items-baseline gap-3 mt-8 px-6 py-4 border font-display font-black text-sm tracking-[0.15em] uppercase transition-colors';
   const styleClasses = primary
-    ? 'bg-liberation-gold-divine text-liberation-black-power border-liberation-gold-divine hover:bg-white hover:border-white'
-    : 'border-liberation-neutral-800 text-white hover:border-liberation-sovereignty-gold hover:text-liberation-gold-divine';
+    ? 'bg-liberation-pride-orange text-liberation-black-power border-liberation-pride-orange hover:bg-white hover:border-white'
+    : 'border-liberation-neutral-800 text-white hover:border-liberation-pride-orange hover:text-liberation-pride-orange';
   const props = external ? { target: '_blank', rel: 'noopener' } : {};
   return (
     <a href={href} className={`${baseClasses} ${styleClasses}`} onClick={onClick} {...props}>
@@ -94,7 +94,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
 
   const placeholderBoxStyle = {
     backgroundImage:
-      'repeating-linear-gradient(45deg, rgba(212,175,55,0.04) 0, rgba(212,175,55,0.04) 8px, transparent 8px, transparent 16px)',
+      'repeating-linear-gradient(45deg, rgba(255,140,0,0.04) 0, rgba(255,140,0,0.04) 8px, transparent 8px, transparent 16px)',
     backgroundColor: '#0A0A0A',
   };
 
@@ -106,7 +106,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
         <div className="pt-6 flex justify-between items-center text-liberation-neutral-500 text-xs tracking-[0.2em] uppercase font-bold">
           <a href="/" className="inline-flex items-center gap-3" aria-label="BLKOUT home">
             <img src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-10 w-auto block" />
-            <span className="text-liberation-sovereignty-gold text-[0.7rem] tracking-[0.25em]">
+            <span className="text-liberation-pride-orange text-[0.7rem] tracking-[0.25em]">
               ← back to blkoutuk.com
             </span>
           </a>
@@ -115,17 +115,17 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
 
         {/* HERO */}
         <header className="pt-16 pb-12 md:pt-24 md:pb-20">
-          <span className="font-display uppercase tracking-widest text-xs text-liberation-sovereignty-gold">
+          <span className="font-display uppercase tracking-widest text-xs text-liberation-pride-orange">
             BLKOUT Shop
           </span>
           <h1 className="font-display font-black uppercase tracking-tight leading-[0.95] text-6xl sm:text-7xl md:text-8xl lg:text-9xl mt-6 mb-0">
             What we make.<br />
-            <span className="text-liberation-gold-divine">What we ask.</span>
+            <span className="text-liberation-pride-orange">What we ask.</span>
           </h1>
           <p className="font-disrupt italic text-xl md:text-2xl lg:text-[1.75rem] leading-snug text-liberation-neutral-300 max-w-[42ch] mt-8 mb-0">
             Six paths into a Black queer cooperative — buy what we made, sustain what we're making, give what you can.
           </p>
-          <hr className="h-1.5 bg-liberation-sovereignty-gold border-0 mt-12 w-24" />
+          <hr className="h-1.5 bg-liberation-pride-orange border-0 mt-12 w-24" />
         </header>
 
         {/* PREFACE */}
@@ -135,7 +135,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
           </span>
           <p className="font-disrupt italic text-xl md:text-2xl leading-snug text-white max-w-[50ch] m-0">
             BLKOUT is a{' '}
-            <span className="not-italic font-display font-black uppercase tracking-tight text-liberation-sovereignty-gold">
+            <span className="not-italic font-display font-black uppercase tracking-tight text-liberation-pride-orange">
               Community Benefit Society
             </span>
             . The shop is how the cooperative pays for itself — and how you find what we make. Wear it, support a print run, become a member, learn with us, gather with us, or just back the work.
@@ -143,7 +143,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
         </section>
 
         {/* I · APPAREL */}
-        <section className="border-t-8 border-liberation-sovereignty-gold pt-12 pb-16">
+        <section className="border-t-8 border-liberation-pride-orange pt-12 pb-16">
           <SectionHeader
             roman="I · Wear it"
             name="Apparel."
@@ -176,7 +176,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
         </section>
 
         {/* II · DROPS */}
-        <section className="border-t-8 border-liberation-sovereignty-gold pt-12 pb-16">
+        <section className="border-t-8 border-liberation-pride-orange pt-12 pb-16">
           <SectionHeader
             roman="II · Pre-orders"
             name="Drops."
@@ -185,14 +185,14 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
           <div className="mt-8">
             <a
               href="/shop/drops/compass-journal"
-              className="border border-liberation-neutral-800 border-t-4 border-t-liberation-gold-divine p-8 flex flex-col min-h-[22rem] transition-colors hover:border-liberation-sovereignty-gold hover:border-t-liberation-gold-divine"
+              className="border border-liberation-neutral-800 border-t-4 border-t-liberation-pride-orange p-8 flex flex-col min-h-[22rem] transition-colors hover:border-liberation-pride-orange hover:border-t-liberation-pride-orange"
             >
               <img
                 src="/images/drops/compass-journal-card.jpg"
                 alt="Ivor's Compass print journal"
                 className="w-full h-auto block mb-6"
               />
-              <span className="font-mono text-xs text-liberation-sovereignty-gold tracking-[0.2em] uppercase">
+              <span className="font-mono text-xs text-liberation-pride-orange tracking-[0.2em] uppercase">
                 drop 01 · printing soon
               </span>
               <h3 className="font-display font-black uppercase tracking-tight text-2xl md:text-3xl my-2 leading-none">
@@ -210,7 +210,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
         </section>
 
         {/* III · MEMBERSHIP */}
-        <section className="border-t-8 border-liberation-sovereignty-gold pt-12 pb-16">
+        <section className="border-t-8 border-liberation-pride-orange pt-12 pb-16">
           <SectionHeader
             roman="III · Become"
             name="Membership."
@@ -226,12 +226,12 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
                 key={t.roman}
                 href="/shop/membership"
                 onClick={goMembership}
-                className="border border-liberation-neutral-800 p-6 transition-colors hover:border-liberation-sovereignty-gold hover:bg-[rgba(212,175,55,0.04)]"
+                className="border border-liberation-neutral-800 p-6 transition-colors hover:border-liberation-pride-orange hover:bg-[rgba(255,140,0,0.04)]"
               >
-                <span className="font-mono text-xs text-liberation-sovereignty-gold tracking-[0.2em] uppercase">
+                <span className="font-mono text-xs text-liberation-pride-orange tracking-[0.2em] uppercase">
                   {t.roman}
                 </span>
-                <p className="font-mono text-2xl text-liberation-gold-divine font-medium my-1">{t.price}</p>
+                <p className="font-mono text-2xl text-liberation-pride-orange font-medium my-1">{t.price}</p>
                 <p className="font-display font-black uppercase tracking-tight text-base my-1">{t.name}</p>
                 <p className="font-disrupt italic text-sm text-liberation-neutral-500 m-0">{t.brief}</p>
               </a>
@@ -241,7 +241,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
         </section>
 
         {/* IV · EVENTS */}
-        <section className="border-t-8 border-liberation-sovereignty-gold pt-12 pb-16">
+        <section className="border-t-8 border-liberation-pride-orange pt-12 pb-16">
           <SectionHeader
             roman="IV · What's on"
             name="Events."
@@ -251,10 +251,10 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
             href="https://events.blkoutuk.com"
             target="_blank"
             rel="noopener"
-            className="grid grid-cols-1 md:grid-cols-[7rem_1fr_auto] items-center gap-4 md:gap-8 border border-liberation-neutral-800 p-8 mt-8 transition-colors hover:border-liberation-sovereignty-gold"
+            className="grid grid-cols-1 md:grid-cols-[7rem_1fr_auto] items-center gap-4 md:gap-8 border border-liberation-neutral-800 p-8 mt-8 transition-colors hover:border-liberation-pride-orange"
           >
-            <div className="font-mono text-sm text-liberation-sovereignty-gold tracking-[0.1em] uppercase leading-tight">
-              <strong className="block text-liberation-gold-divine text-3xl font-medium leading-none mb-1">—</strong>
+            <div className="font-mono text-sm text-liberation-pride-orange tracking-[0.1em] uppercase leading-tight">
+              <strong className="block text-liberation-pride-orange text-3xl font-medium leading-none mb-1">—</strong>
               <span>next event<br />tba</span>
             </div>
             <div>
@@ -265,7 +265,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
                 Single most-imminent event surfaces here once API is wired. Static placeholder for now.
               </p>
             </div>
-            <span className="font-display font-black tracking-[0.15em] uppercase text-sm text-liberation-sovereignty-gold">
+            <span className="font-display font-black tracking-[0.15em] uppercase text-sm text-liberation-pride-orange">
               RSVP →
             </span>
           </a>
@@ -273,7 +273,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
         </section>
 
         {/* V · COURSES */}
-        <section className="border-t-8 border-liberation-sovereignty-gold pt-12 pb-16">
+        <section className="border-t-8 border-liberation-pride-orange pt-12 pb-16">
           <SectionHeader
             roman="V · Learn"
             name="Courses."
@@ -285,7 +285,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
         </section>
 
         {/* VI · DONATE */}
-        <section className="border-t-8 border-liberation-sovereignty-gold pt-12 pb-16 border-b border-b-liberation-neutral-800">
+        <section className="border-t-8 border-liberation-pride-orange pt-12 pb-16 border-b border-b-liberation-neutral-800">
           <SectionHeader
             roman="VI · Support"
             name="Donate."

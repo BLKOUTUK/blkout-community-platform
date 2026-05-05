@@ -134,7 +134,7 @@ export default function MemberPortalPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white flex items-center justify-center">
+      <div className="min-h-screen bg-liberation-black-power noise text-white flex items-center justify-center">
         <div className="text-gray-400">Loading your member portal...</div>
       </div>
     );
@@ -142,14 +142,14 @@ export default function MemberPortalPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white flex items-center justify-center p-8">
+      <div className="min-h-screen bg-liberation-black-power noise text-white flex items-center justify-center p-8">
         <div className="max-w-md text-center">
-          <User className="w-16 h-16 mx-auto mb-4 text-yellow-500" />
+          <User className="w-16 h-16 mx-auto mb-4 text-liberation-pan-african-red" />
           <h2 className="text-2xl font-bold mb-4">Member Sign In Required</h2>
           <p className="text-gray-400 mb-6">
             Sign in to access your member portal and manage your profile.
           </p>
-          <button className="bg-yellow-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400">
+          <button className="bg-liberation-pan-african-red text-black px-6 py-3 rounded-lg font-semibold hover:bg-liberation-pan-african-red/90">
             Sign In
           </button>
         </div>
@@ -159,9 +159,9 @@ export default function MemberPortalPage() {
 
   if (!member) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white flex items-center justify-center p-8">
+      <div className="min-h-screen bg-liberation-black-power noise text-white flex items-center justify-center p-8">
         <div className="max-w-md text-center">
-          <User className="w-16 h-16 mx-auto mb-4 text-yellow-500" />
+          <User className="w-16 h-16 mx-auto mb-4 text-liberation-pan-african-red" />
           <h2 className="text-2xl font-bold mb-4">Membership Pending</h2>
           <p className="text-gray-400 mb-6">
             Your membership application is being reviewed. You'll receive an email once approved.
@@ -175,11 +175,11 @@ export default function MemberPortalPage() {
   const participationRate = calculateParticipationRate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black text-white p-4 md:p-8">
+    <div className="min-h-screen bg-liberation-black-power noise text-white p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-black mb-2 text-yellow-500 uppercase">MY BLKOUT PORTAL</h1>
+          <h1 className="text-4xl font-black mb-2 text-liberation-pan-african-red uppercase">MY BLKOUT PORTAL</h1>
           <p className="text-gray-400">Manage your profile and participate in community governance</p>
         </div>
 
@@ -190,13 +190,13 @@ export default function MemberPortalPage() {
             <div className="bg-gray-900 rounded-lg border border-gray-800 p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                  <User className="w-6 h-6 text-yellow-500" />
+                  <User className="w-6 h-6 text-liberation-pan-african-red" />
                   Member Profile
                 </h2>
                 {!editing && (
                   <button
                     onClick={() => setEditing(true)}
-                    className="flex items-center gap-2 bg-yellow-500/20 border border-yellow-500 text-yellow-400 px-4 py-2 rounded-lg hover:bg-yellow-500/30"
+                    className="flex items-center gap-2 bg-liberation-pan-african-red/20 border border-liberation-pan-african-red text-liberation-pan-african-red px-4 py-2 rounded-lg hover:bg-liberation-pan-african-red/30"
                   >
                     <Edit2 className="w-4 h-4" />
                     Edit Profile
@@ -224,7 +224,7 @@ export default function MemberPortalPage() {
 
               {/* Avatar */}
               <div className="flex items-center gap-6 mb-6">
-                <div className="w-24 h-24 bg-gradient-to-br from-yellow-500 to-purple-600 rounded-full flex items-center justify-center text-4xl font-bold">
+                <div className="w-24 h-24 bg-liberation-pan-african-red rounded-full flex items-center justify-center text-4xl font-bold">
                   {member.full_name?.charAt(0) || 'M'}
                 </div>
                 <div>
@@ -265,14 +265,14 @@ export default function MemberPortalPage() {
               {/* Interests */}
               <div>
                 <label className="block text-sm font-semibold mb-3 text-gray-300 flex items-center gap-2">
-                  <Tag className="w-4 h-4 text-yellow-500" />
+                  <Tag className="w-4 h-4 text-liberation-pan-african-red" />
                   Interests & Focus Areas
                 </label>
                 {!editing && (
                   <div className="flex flex-wrap gap-2">
                     {member.interests && member.interests.length > 0 ? (
                       member.interests.map(interest => (
-                        <span key={interest} className="bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 px-3 py-1 rounded-full text-sm">
+                        <span key={interest} className="bg-liberation-pan-african-red/20 border border-liberation-pan-african-red/30 text-liberation-pan-african-red px-3 py-1 rounded-full text-sm">
                           {interest}
                         </span>
                       ))
@@ -289,8 +289,8 @@ export default function MemberPortalPage() {
                         onClick={() => toggleInterest(interest)}
                         className={`px-3 py-1 rounded-full text-sm transition-colors ${
                           editForm.interests.includes(interest)
-                            ? 'bg-yellow-500 text-black border border-yellow-500'
-                            : 'bg-gray-800 text-gray-400 border border-gray-700 hover:border-yellow-500/50'
+                            ? 'bg-liberation-pan-african-red text-black border border-liberation-pan-african-red'
+                            : 'bg-gray-800 text-gray-400 border border-gray-700 hover:border-liberation-pan-african-red/50'
                         }`}
                       >
                         {interest}
@@ -304,7 +304,7 @@ export default function MemberPortalPage() {
             {/* Governance Participation */}
             <div className="bg-gray-900 rounded-lg border border-gray-800 p-6">
               <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                <Vote className="w-6 h-6 text-yellow-500" />
+                <Vote className="w-6 h-6 text-liberation-pan-african-red" />
                 Governance Participation
               </h2>
 
@@ -326,7 +326,7 @@ export default function MemberPortalPage() {
               <div className="bg-gray-800/50 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-gray-300 font-semibold">Your Voting Power</span>
-                  <span className="text-yellow-500 font-bold">1 Vote</span>
+                  <span className="text-liberation-pan-african-red font-bold">1 Vote</span>
                 </div>
                 <p className="text-sm text-gray-400">
                   Democratic governance: One member, one vote. Your voice matters equally.
@@ -362,7 +362,7 @@ export default function MemberPortalPage() {
 
                 <div className="pt-4 border-t border-gray-800">
                   <div className="flex items-center gap-2 mb-2">
-                    <Calendar className="w-4 h-4 text-yellow-500" />
+                    <Calendar className="w-4 h-4 text-liberation-pan-african-red" />
                     <span className="text-sm text-gray-400">Joined</span>
                   </div>
                   <span className="text-white">
@@ -373,7 +373,7 @@ export default function MemberPortalPage() {
                 {member.renewal_date && (
                   <div className="pt-4 border-t border-gray-800">
                     <div className="flex items-center gap-2 mb-2">
-                      <Clock className="w-4 h-4 text-yellow-500" />
+                      <Clock className="w-4 h-4 text-liberation-pan-african-red" />
                       <span className="text-sm text-gray-400">Renewal Due</span>
                     </div>
                     <span className="text-white">
@@ -399,7 +399,7 @@ export default function MemberPortalPage() {
                 {member.last_active_at && (
                   <div className="pt-4 border-t border-gray-800">
                     <div className="flex items-center gap-2 mb-2">
-                      <Activity className="w-4 h-4 text-yellow-500" />
+                      <Activity className="w-4 h-4 text-liberation-pan-african-red" />
                       <span className="text-sm text-gray-400">Last Active</span>
                     </div>
                     <span className="text-white text-sm">
@@ -423,7 +423,7 @@ export default function MemberPortalPage() {
                 {['proposer', 'facilitator', 'admin'].includes(member.participation_level) && (
                   <a
                     href="/governance-proposals"
-                    className="block w-full bg-yellow-500/20 border border-yellow-500 text-yellow-400 py-2 px-4 rounded-lg font-semibold hover:bg-yellow-500/30 text-center transition-colors"
+                    className="block w-full bg-liberation-pan-african-red/20 border border-liberation-pan-african-red text-liberation-pan-african-red py-2 px-4 rounded-lg font-semibold hover:bg-liberation-pan-african-red/30 text-center transition-colors"
                   >
                     Create Proposal
                   </a>
@@ -444,7 +444,7 @@ export default function MemberPortalPage() {
           <div className="lg:col-span-1">
             <div className="bg-gray-900 rounded-lg border border-gray-800 p-6">
               <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                <FileText className="w-5 h-5 text-yellow-500" />
+                <FileText className="w-5 h-5 text-liberation-pan-african-red" />
                 Recent Activity
               </h3>
               <div className="text-gray-400 text-sm">

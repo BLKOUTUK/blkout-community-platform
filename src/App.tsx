@@ -139,6 +139,7 @@ const SECTION_ACCENT: Partial<Record<string, string>> = {
   finances: 'bg-liberation-pan-african-red',
   board: 'bg-liberation-pan-african-red',
   shop: 'bg-liberation-pride-orange',
+  intro: 'bg-liberation-aivor', // AIvor channel — broadcast blue
 };
 function getSectionAccent(tab: string): string {
   return SECTION_ACCENT[tab] || 'bg-liberation-gold-divine';
@@ -373,7 +374,7 @@ export default function App() {
         tabIndex={0}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') advanceQuote(); }}
         aria-label="Tap to see next quote"
-        className="bg-liberation-black-power rounded-xl p-6 md:p-8 border border-liberation-sovereignty-gold/20 mb-8 shadow-xl cursor-pointer select-none group"
+        className="bg-liberation-black-power p-6 md:p-8 border-4 border-liberation-gold-divine mb-8 shadow-xl cursor-pointer select-none group"
       >
         <div className="text-center">
           <blockquote
@@ -492,7 +493,7 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      <div className="min-h-screen bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white">
+      <div className="min-h-screen bg-liberation-black-power noise text-white">
           {/* Install Prompt Banner */}
           <InstallPrompt />
 
@@ -523,40 +524,42 @@ export default function App() {
                   </button>
                 </div>
 
-                {/* Desktop Navigation — Top 5, right-aligned */}
+                {/* Desktop Navigation — Top 5, right-aligned.
+                    Option C hybrid (DESIGN_COLOUR_ARCHITECTURE.md §7): each button carries its own section accent
+                    via a 2px underline that activates on hover and persists when the section is current. */}
                 <div className="hidden lg:flex items-center gap-4">
                   <button
                     onClick={() => changeActiveTab('liberation')}
-                    className={`px-4 py-2 rounded-md text-base font-signature font-black uppercase tracking-tight transition-all duration-200 ${
+                    className={`px-4 py-2 text-base font-signature font-black uppercase tracking-tight transition-colors duration-200 border-b-2 ${
                       activeTab === 'liberation'
-                        ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
-                        : 'text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10'
+                        ? 'text-liberation-gold-divine border-liberation-gold-divine'
+                        : 'text-gray-200 border-transparent hover:text-liberation-gold-divine hover:border-liberation-gold-divine/60'
                     }`}
                   >
                     Home
                   </button>
                   <a
-                    href="https://events.blkoutuk.cloud"
+                    href="https://events.blkoutuk.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-md text-base font-signature font-black uppercase tracking-tight transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
+                    className="px-4 py-2 text-base font-signature font-black uppercase tracking-tight transition-colors duration-200 border-b-2 border-transparent text-gray-200 hover:text-liberation-events hover:border-liberation-events/60 flex items-center gap-2"
                   >
                     Events
                   </a>
                   <a
-                    href="https://news.blkoutuk.cloud"
+                    href="https://news.blkoutuk.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-md text-base font-signature font-black uppercase tracking-tight transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
+                    className="px-4 py-2 text-base font-signature font-black uppercase tracking-tight transition-colors duration-200 border-b-2 border-transparent text-gray-200 hover:text-liberation-pride-purple-deep hover:border-liberation-pride-purple-deep/60 flex items-center gap-2"
                   >
                     News
                   </a>
                   <button
                     onClick={() => changeActiveTab('intro')}
-                    className={`px-4 py-2 rounded-md text-base font-signature font-black uppercase tracking-tight transition-all duration-200 ${
+                    className={`px-4 py-2 text-base font-signature font-black uppercase tracking-tight transition-colors duration-200 border-b-2 ${
                       activeTab === 'intro'
-                        ? 'bg-liberation-gold-divine/20 text-liberation-gold-divine'
-                        : 'text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10'
+                        ? 'text-liberation-aivor border-liberation-aivor'
+                        : 'text-gray-200 border-transparent hover:text-liberation-aivor hover:border-liberation-aivor/60'
                     }`}
                   >
                     AIvor
@@ -565,7 +568,7 @@ export default function App() {
                     href="https://voices.blkoutuk.cloud"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-md text-base font-signature font-black uppercase tracking-tight transition-all duration-200 text-gray-200 hover:text-yellow-400 hover:bg-yellow-500/10 flex items-center gap-2"
+                    className="px-4 py-2 text-base font-signature font-black uppercase tracking-tight transition-colors duration-200 border-b-2 border-transparent text-gray-200 hover:text-liberation-pan-african-green hover:border-liberation-pan-african-green/60 flex items-center gap-2"
                   >
                     Voices
                   </a>
@@ -582,16 +585,17 @@ export default function App() {
                 </div>
               </div>
             </div>
-            {/* Second row — only on Home, AIvor, About */}
+            {/* Second row — only on Home, AIvor, About.
+                Section accents per tab: Shop=orange, Membership/About=red, Discover/Community=core gold. */}
             {['liberation', 'intro', 'about'].includes(activeTab) && (
-              <div className="hidden lg:block border-t border-purple-500/30 bg-liberation-black-power/80">
+              <div className="hidden lg:block border-t border-liberation-gold-divine/20 bg-liberation-black-power/80">
                 <div className="container mx-auto px-4">
                   <div className="flex items-center gap-3 justify-end py-1.5">
-                    <a href="https://comms.blkoutuk.cloud/discover" className="px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider text-gray-400 hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-200">Discover</a>
-                    <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className="px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider text-gray-400 hover:text-purple-400 hover:bg-purple-500/10 transition-all duration-200">Community</a>
-                    <button onClick={() => changeActiveTab('shop')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'shop' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>Shop</button>
-                    <button onClick={() => changeActiveTab('governance')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'governance' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>Membership</button>
-                    <button onClick={() => changeActiveTab('about')} className={`px-3 py-1 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 ${activeTab === 'about' ? 'bg-purple-500/15 text-purple-400' : 'text-gray-400 hover:text-purple-400 hover:bg-purple-500/10'}`}>About</button>
+                    <a href="https://comms.blkoutuk.cloud/discover" className="px-3 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-200 border-b-2 border-transparent text-gray-400 hover:text-liberation-gold-divine hover:border-liberation-gold-divine/60">Discover</a>
+                    <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className="px-3 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-200 border-b-2 border-transparent text-gray-400 hover:text-liberation-gold-divine hover:border-liberation-gold-divine/60">Community</a>
+                    <button onClick={() => changeActiveTab('shop')} className={`px-3 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-200 border-b-2 ${activeTab === 'shop' ? 'text-liberation-pride-orange border-liberation-pride-orange' : 'text-gray-400 border-transparent hover:text-liberation-pride-orange hover:border-liberation-pride-orange/60'}`}>Shop</button>
+                    <button onClick={() => changeActiveTab('governance')} className={`px-3 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-200 border-b-2 ${activeTab === 'governance' ? 'text-liberation-pan-african-red border-liberation-pan-african-red' : 'text-gray-400 border-transparent hover:text-liberation-pan-african-red hover:border-liberation-pan-african-red/60'}`}>Membership</button>
+                    <button onClick={() => changeActiveTab('about')} className={`px-3 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-200 border-b-2 ${activeTab === 'about' ? 'text-liberation-pan-african-red border-liberation-pan-african-red' : 'text-gray-400 border-transparent hover:text-liberation-pan-african-red hover:border-liberation-pan-african-red/60'}`}>About</button>
                   </div>
                 </div>
               </div>
