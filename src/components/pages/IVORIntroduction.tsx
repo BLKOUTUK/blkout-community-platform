@@ -87,33 +87,33 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
+    <div className="min-h-screen bg-liberation-black-power noise">
       {/* Header */}
-      <header className="border-b border-liberation-sovereignty-gold/20 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-liberation-aivor/20 bg-black/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-8 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => window.history.back()}
-                className="flex items-center text-gray-400 hover:text-liberation-sovereignty-gold transition-colors"
+                className="flex items-center text-gray-400 hover:text-liberation-aivor transition-colors"
               >
                 <ArrowLeft className="h-5 w-5 mr-2" />
                 Back to Platform
               </button>
               <a
-                href="https://events.blkoutuk.cloud"
+                href="https://events.blkoutuk.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-400 hover:text-liberation-sovereignty-gold transition-colors"
+                className="flex items-center gap-2 text-gray-400 hover:text-liberation-aivor transition-colors"
               >
                 <ExternalLink className="h-4 w-4" />
                 <span>Events</span>
               </a>
               <a
-                href="https://news.blkoutuk.cloud"
+                href="https://news.blkoutuk.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-gray-400 hover:text-liberation-sovereignty-gold transition-colors"
+                className="flex items-center gap-2 text-gray-400 hover:text-liberation-aivor transition-colors"
               >
                 <ExternalLink className="h-4 w-4" />
                 <span>Newsroom</span>
@@ -134,7 +134,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                 textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
                 WebkitTextStroke: '1px #000'
               }}>
-                <span className="text-liberation-sovereignty-gold">ASK AIvor</span>
+                <span className="text-liberation-aivor">ASK AIvor</span>
               </h1>
               <p className="text-gray-400 uppercase font-semibold" style={{
                 textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
@@ -152,7 +152,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Video Player */}
             <div className="order-2 lg:order-1">
-              <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-6 border border-liberation-sovereignty-gold/20">
+              <div className="relative bg-liberation-black-power rounded-sharp p-6 border-4 border-liberation-aivor">
                 <h2 className="text-2xl font-bold text-white mb-6 text-center uppercase" style={{
                   textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
                   WebkitTextStroke: '1px #000'
@@ -161,7 +161,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                 </h2>
 
                 {/* Video Container */}
-                <div className="relative bg-black rounded-2xl overflow-hidden">
+                <div className="relative bg-black rounded-sharp overflow-hidden">
                   <video
                     ref={videoRef}
                     className="w-full h-auto"
@@ -184,7 +184,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                       onClick={handleSeek}
                     >
                       <div
-                        className="h-full bg-liberation-sovereignty-gold rounded-full"
+                        className="h-full bg-liberation-aivor rounded-full"
                         style={{ width: `${duration ? (currentTime / duration) * 100 : 0}%` }}
                       />
                     </div>
@@ -194,14 +194,14 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                       <div className="flex items-center space-x-4">
                         <button
                           onClick={handlePlayPause}
-                          className="flex items-center justify-center w-12 h-12 bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black rounded-full transition-colors"
+                          className="flex items-center justify-center w-12 h-12 bg-liberation-aivor hover:bg-liberation-aivor/90 text-black rounded-full transition-colors"
                         >
                           {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6 ml-1" />}
                         </button>
 
                         <button
                           onClick={handleMuteToggle}
-                          className="text-white hover:text-liberation-sovereignty-gold transition-colors"
+                          className="text-white hover:text-liberation-aivor transition-colors"
                         >
                           {isMuted ? <VolumeX className="h-6 w-6" /> : <Volume2 className="h-6 w-6" />}
                         </button>
@@ -222,14 +222,14 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                 <img
                   src="/Branding and logos/ivor.png"
                   alt="AIvor Logo"
-                  className="h-16 w-16 rounded-full border-2 border-liberation-sovereignty-gold"
+                  className="h-16 w-16 rounded-full border-2 border-liberation-aivor"
                 />
                 <div>
                   <h2 className="text-4xl font-black text-white uppercase" style={{
                     textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
                     WebkitTextStroke: '1px #000'
                   }}>AIvor</h2>
-                  <p className="text-liberation-sovereignty-gold font-semibold uppercase" style={{
+                  <p className="text-liberation-aivor font-semibold uppercase" style={{
                     textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
                   }}>
                     INTELLIGENT VIRTUAL ORGANIZING RESOURCE
@@ -244,8 +244,8 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                   intelligent support for organizing, wellness, and collective action.
                 </p>
 
-                <div className="bg-liberation-sovereignty-gold/10 border border-liberation-sovereignty-gold/20 rounded-2xl p-6">
-                  <h3 className="text-liberation-sovereignty-gold font-bold text-lg mb-4 uppercase" style={{
+                <div className="bg-liberation-aivor/10 border border-liberation-aivor/20 rounded-sharp p-6">
+                  <h3 className="text-liberation-aivor font-bold text-lg mb-4 uppercase" style={{
                     textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
                   }}>
                     COMMUNITY-OWNED AI
@@ -260,13 +260,13 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={onStartChat}
-                    className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black py-3 px-6 rounded-2xl font-bold transition-colors"
+                    className="bg-liberation-aivor hover:bg-liberation-aivor/90 text-black py-3 px-6 rounded-sharp font-bold transition-colors"
                   >
                     Start Chatting with AIvor
                   </button>
                   <button
                     onClick={onLearnMore}
-                    className="bg-transparent border-2 border-liberation-sovereignty-gold text-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold hover:text-black py-3 px-6 rounded-2xl font-bold transition-colors"
+                    className="bg-transparent border-2 border-liberation-aivor text-liberation-aivor hover:bg-liberation-aivor hover:text-black py-3 px-6 rounded-sharp font-bold transition-colors"
                   >
                     Learn More
                   </button>
@@ -285,7 +285,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
               textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
               WebkitTextStroke: '1px #000'
             }}>
-              WHY AIvor IS <span className="text-liberation-sovereignty-gold">DIFFERENT</span>
+              WHY AIvor IS <span className="text-liberation-aivor">DIFFERENT</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
               Built by the community, for the community. AIvor represents a new paradigm in AI assistance—
@@ -297,9 +297,9 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-gray-800 to-gray-900 border border-liberation-sovereignty-gold/10 rounded-2xl p-6 hover:border-liberation-sovereignty-gold/30 transition-all duration-300"
+                className="bg-liberation-black-power border border-liberation-aivor/30 rounded-sharp p-6 hover:border-liberation-aivor transition-all duration-300"
               >
-                <div className="w-12 h-12 bg-liberation-sovereignty-gold/20 rounded-2xl flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-liberation-aivor/20 rounded-sharp flex items-center justify-center mb-4">
                   <img src="/blkout-logo.png" alt="BLKOUT Logo" className="h-6 w-6 rounded-full" />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-3">{feature.title}</h3>
@@ -317,7 +317,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
             textShadow: '2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000',
             WebkitTextStroke: '1px #000'
           }}>
-            READY TO EXPERIENCE <span className="text-liberation-sovereignty-gold">LIBERATION AI</span>?
+            READY TO EXPERIENCE <span className="text-liberation-aivor">LIBERATION AI</span>?
           </h2>
           <p className="text-xl text-gray-400 mb-8">
             Join thousands of community members already using AIvor for organizing, support, and collective liberation.
@@ -325,13 +325,13 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={onStartChat}
-              className="bg-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold/90 text-black py-4 px-8 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105"
+              className="bg-liberation-aivor hover:bg-liberation-aivor/90 text-black py-4 px-8 rounded-sharp font-bold text-lg transition-all duration-300 hover:scale-105"
             >
               Chat with AIvor Now
             </button>
             <button
               onClick={onJoinCommunity}
-              className="bg-transparent border-2 border-liberation-sovereignty-gold text-liberation-sovereignty-gold hover:bg-liberation-sovereignty-gold hover:text-black py-4 px-8 rounded-2xl font-bold text-lg transition-all duration-300"
+              className="bg-transparent border-2 border-liberation-aivor text-liberation-aivor hover:bg-liberation-aivor hover:text-black py-4 px-8 rounded-sharp font-bold text-lg transition-all duration-300"
             >
               Join Our Community
             </button>
