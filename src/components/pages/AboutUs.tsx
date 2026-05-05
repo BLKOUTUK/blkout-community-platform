@@ -568,7 +568,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
               {/* Best Practice Hub link */}
               <button
                 onClick={() => onNavigate?.('compliance')}
-                className="w-full bg-gradient-to-r from-[#1a1a2e] to-[#16213e] p-6 rounded-xl border border-[#d4af37]/30 hover:border-[#d4af37]/60 transition-all group text-left"
+                className="w-full bg-liberation-black-power p-6 rounded-xl border border-[#d4af37]/30 hover:border-[#d4af37]/60 transition-all group text-left"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
@@ -600,7 +600,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
               </div>
 
               {/* About the Editor */}
-              <div className="bg-gradient-to-br from-purple-900/30 to-fuchsia-900/30 p-6 rounded-xl border-2 border-liberation-sovereignty-gold">
+              <div className="bg-liberation-black-power p-6 rounded-xl border-2 border-liberation-sovereignty-gold">
                 <h5 className="font-bold text-liberation-sovereignty-gold mb-4 text-xl">About the Editor</h5>
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="flex-shrink-0">
@@ -658,7 +658,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
               </div>
 
               {/* 3 Required Elements */}
-              <div className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 p-6 rounded-xl border-2 border-liberation-pride-pink">
+              <div className="bg-liberation-black-power p-6 rounded-xl border-2 border-liberation-pride-pink">
                 <h5 className="font-bold text-white mb-4 text-xl">🎯 3 Required Elements on EVERY Asset</h5>
                 <p className="text-gray-300 mb-4">Every BLKOUT-branded design must include:</p>
 
@@ -768,7 +768,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
 
               {/* DO's and DON'Ts */}
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="bg-gradient-to-br from-green-900/30 to-emerald-900/30 p-6 rounded-xl border-2 border-liberation-success">
+                <div className="bg-liberation-black-power p-6 rounded-xl border-2 border-liberation-success">
                   <h5 className="font-bold text-liberation-success mb-3">✅ DO (Maintains Brand Integrity)</h5>
                   <ul className="text-sm text-gray-300 space-y-2">
                     <li>✅ Black backgrounds (#000000)</li>
@@ -783,7 +783,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                   </ul>
                 </div>
 
-                <div className="bg-gradient-to-br from-red-900/30 to-rose-900/30 p-6 rounded-xl border-2 border-liberation-error">
+                <div className="bg-liberation-black-power p-6 rounded-xl border-2 border-liberation-error">
                   <h5 className="font-bold text-liberation-error mb-3">❌ DON'T (Breaks Brand)</h5>
                   <ul className="text-sm text-gray-300 space-y-2">
                     <li>❌ White/light backgrounds</li>
