@@ -66,6 +66,20 @@ module.exports = {
           'green-bright': '#00D68F',
         },
 
+        // Section-channel accents — BLKOUT One Platform Design (DESIGN_COLOUR_ARCHITECTURE.md §5).
+        // Events = lemon yellow (cool, distinct from gold-rich). AIvor = broadcast blue (1940s/50s heritage).
+        // `-dark` variants are for type-on-cream where the bright accent loses contrast (§7).
+        'liberation-events': {
+          DEFAULT: '#FFE600',
+          lemon: '#FFE600',
+          'lemon-dark': '#7A6D00',
+        },
+        'liberation-aivor': {
+          DEFAULT: '#5B9BD5',
+          blue: '#5B9BD5',
+          'blue-dark': '#2E6A9C',
+        },
+
         // Healing Colors (Trauma-Informed)
         'liberation-healing': {
           sage: '#A8C69F',
@@ -218,6 +232,9 @@ module.exports = {
       // BORDER RADIUS - Soft Corners
       // ================================================================
       borderRadius: {
+        // BLKOUT One Platform Design — sharp edges by default (DESIGN_COLOUR_ARCHITECTURE.md §10).
+        // Bare `rounded` resolves to 0; explicit `rounded-md/lg/xl/2xl/full` still soften where intentional.
+        DEFAULT: '0',
         'liberation-sm': '0.375rem',  // 6px
         'liberation-md': '0.5rem',    // 8px
         'liberation-lg': '0.75rem',   // 12px
