@@ -166,7 +166,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
 
   return (
     <motion.div
-      className={`relative overflow-hidden rounded-2xl group ${sizeClasses[card.size]} ${heightClasses[card.size]}`}
+      className={`relative overflow-hidden group ${sizeClasses[card.size]} ${heightClasses[card.size]}`}
       {...animation}
       viewport={{ once: true, margin: "-50px" }}
       whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
@@ -188,8 +188,6 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
             alt=""
             className={`w-full h-full ${card.type === 'beauty' ? 'object-contain' : 'object-cover'} transition-transform duration-700 group-hover:scale-110`}
           />
-          {/* Purple overlay for brand cohesion - subtle */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 via-fuchsia-500/5 to-transparent mix-blend-overlay pointer-events-none" />
           {/* Text readability gradient - concentrated at bottom only to preserve faces */}
           {card.type !== 'beauty' && (
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 via-30% to-transparent" />
@@ -222,7 +220,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
         {/* Heading2 (secondary heading) */}
         {card.content.heading2 && (
           <motion.h2
-            className="text-lg md:text-xl lg:text-2xl font-signature font-bold text-purple-100 uppercase tracking-tight leading-tight mb-4 whitespace-pre-line"
+            className="text-lg md:text-xl lg:text-2xl font-signature font-bold text-gray-300 uppercase tracking-tight leading-tight mb-4 whitespace-pre-line"
           >
             {card.content.heading2}
           </motion.h2>
@@ -239,7 +237,8 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
 
         {/* Highlight - supporting text */}
         {card.content.highlight && !isSpecialLayout && (
-          <p className={`text-sm md:text-base lg:text-lg font-normal leading-relaxed ${(card.id === 15 || card.id === 16) ? 'text-liberation-gold-divine' : 'text-purple-200'}`}>
+          <p className={`text-sm md:text-base lg:text-lg font-normal leading-relaxed ${(card.id === 15 || card.id === 16) ? 'text-liberation-gold-divine' : 'text-gray-300'}`}>
+
             {card.content.highlight}
           </p>
         )}
@@ -251,10 +250,10 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
               <button
                 key={option}
                 onClick={(e) => { e.stopPropagation(); setSelected(option); }}
-                className={`w-full px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+                className={`w-full px-4 py-2 text-sm font-bold transition-all ${
                   selected === option
                     ? 'bg-liberation-pride-pink-vivid text-white'
-                    : 'bg-purple-900/50 text-purple-100 hover:bg-purple-800/50'
+                    : 'bg-purple-900/50 text-gray-300 hover:bg-purple-800/50'
                 }`}
               >
                 {option}
@@ -266,7 +265,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
         {card.interactive?.type === 'reveal' && (
           <button
             onClick={(e) => { e.stopPropagation(); setRevealed(!revealed); }}
-            className="mt-4 px-6 py-3 bg-liberation-pride-purple-deep hover:bg-liberation-pride-purple rounded-lg text-white font-bold transition-all"
+            className="mt-4 px-6 py-3 bg-liberation-pride-purple-deep hover:bg-liberation-pride-purple text-white font-bold transition-all"
           >
             {revealed ? card.interactive.data.revealed : 'Click to reveal →'}
           </button>
@@ -281,7 +280,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
                 className={`px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-bold transition-all ${
                   selected === topic
                     ? 'bg-liberation-pride-pink-vivid text-white'
-                    : 'bg-purple-900/50 text-purple-100 hover:bg-purple-800/50'
+                    : 'bg-purple-900/50 text-gray-300 hover:bg-purple-800/50'
                 }`}
               >
                 {topic}
@@ -297,7 +296,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
           <div className="p-6 md:p-8 flex justify-end items-end">
             <div className="text-right space-y-4">
               {card.content.highlight && (
-                <p className="text-sm md:text-base lg:text-lg text-purple-200 font-normal leading-relaxed">
+                <p className="text-sm md:text-base lg:text-lg text-gray-300 font-normal leading-relaxed">
                   {card.content.highlight}
                 </p>
               )}
@@ -305,7 +304,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
                 <a
                   href={card.cta.link}
                   onClick={(e) => e.stopPropagation()}
-                  className={`inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 rounded-lg text-sm md:text-base font-bold transition-all hover:scale-105 ${
+                  className={`inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 text-sm md:text-base font-bold transition-all hover:scale-105 ${
                     card.cta.color === 'fuchsia'
                       ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
                       : 'bg-gradient-to-r from-amber-600 to-amber-500 text-black'
@@ -324,7 +323,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
             <a
               href={card.cta.link}
               onClick={(e) => e.stopPropagation()}
-              className={`inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 rounded-lg text-sm md:text-base font-bold transition-all hover:scale-105 ${
+              className={`inline-flex items-center gap-2 px-5 py-2.5 md:px-6 md:py-3 text-sm md:text-base font-bold transition-all hover:scale-105 ${
                 card.cta.color === 'fuchsia'
                   ? 'bg-gradient-to-r from-fuchsia-600 to-pink-600 text-white'
                   : 'bg-gradient-to-r from-amber-600 to-amber-500 text-black'
@@ -374,7 +373,7 @@ const HeroVideoBreak: React.FC<{ title?: string; subtitle?: string; videoUrl?: s
           </motion.p>
         )}
         {/* Video player - full width with controls */}
-        <div className="mt-12 w-full aspect-video bg-purple-950/30 rounded-2xl border border-purple-700/50 overflow-hidden">
+        <div className="mt-12 w-full aspect-video bg-liberation-black-power/60 border border-liberation-gold-divine/30 overflow-hidden">
           {videoUrl ? (
             <ScrollVideo
               src={videoUrl}
@@ -401,7 +400,7 @@ export default function TheoryOfChangeMasonry() {
       transition={{ delay: 1 }}
       className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 max-w-2xl"
     >
-      <div className="bg-purple-950/90 backdrop-blur-sm border border-purple-700/50 rounded-full px-6 py-3 shadow-lg">
+      <div className="bg-liberation-black-power/90 backdrop-blur-sm border border-liberation-gold-divine/40 rounded-full px-6 py-3 shadow-lg">
         <p className="text-xs text-purple-300 text-center">
           <span className="font-semibold">Imagery:</span> AI-generated (Wan 2.6, Gemini 3) •
           <span className="text-purple-400"> Real photos in select cards</span>
@@ -717,7 +716,7 @@ export default function TheoryOfChangeMasonry() {
       {/* Hero Video: Full width */}
       <section className="container mx-auto px-4 py-8">
         <div className="w-full">
-          <div className="relative overflow-hidden rounded-2xl aspect-video">
+          <div className="relative overflow-hidden aspect-video">
             <ScrollVideo
               src="/videos/Blkoutheronumber1.mp4"
               className="w-full h-full object-cover"
@@ -758,7 +757,7 @@ export default function TheoryOfChangeMasonry() {
         {/* LORDE VIDEO: Single column width with sound option */}
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-md">
-            <div className="relative overflow-hidden rounded-2xl" style={{ height: '750px' }}>
+            <div className="relative overflow-hidden " style={{ height: '750px' }}>
               <ScrollVideo
                 src="/videos/Lordescroll.mp4"
                 className="w-full h-full object-cover"
@@ -772,7 +771,7 @@ export default function TheoryOfChangeMasonry() {
         {/* ANCESTRAL WISDOM: Small insert after Lorde */}
         <section className="container mx-auto px-4 py-8">
           <div className="max-w-xs">
-            <div className="relative overflow-hidden rounded-2xl aspect-square">
+            <div className="relative overflow-hidden aspect-square">
               <ScrollVideo
                 src="/videos/ancestral wisdom.mp4"
                 className="w-full h-full object-cover"
@@ -793,7 +792,7 @@ export default function TheoryOfChangeMasonry() {
         {/* WELCOME VIDEO: Full width across columns (decorative) */}
         <section className="container mx-auto px-4 py-8">
           <div className="w-full">
-            <div className="relative overflow-hidden rounded-2xl aspect-video">
+            <div className="relative overflow-hidden aspect-video">
               <ScrollVideo
                 src="/videos/Welcome BLKOUT TV.mp4"
                 className="w-full h-full object-cover"
@@ -881,13 +880,13 @@ export default function TheoryOfChangeMasonry() {
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-              <motion.a href="https://crm.blkoutuk.cloud/join" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.1 }} className="bg-gradient-to-br from-amber-600 to-amber-500 rounded-2xl p-8 hover:scale-105 transition-all">
+              <motion.a href="https://crm.blkoutuk.cloud/join" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.1 }} className="bg-gradient-to-br from-amber-600 to-amber-500 p-8 hover:scale-105 transition-all">
                 <div className="text-black"><img src="/Branding and logos/blkout_logo_roundel_colour.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Stay in Touch</h3><p className="text-lg font-semibold mb-4">Newsletter</p><p className="text-sm opacity-80">Weekly updates from the collective</p></div>
               </motion.a>
-              <motion.a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.2 }} className="bg-gradient-to-br from-fuchsia-600 to-pink-600 rounded-2xl p-8 hover:scale-105 transition-all">
+              <motion.a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.2 }} className="bg-gradient-to-br from-fuchsia-600 to-pink-600 p-8 hover:scale-105 transition-all">
                 <div className="text-white"><img src="/Branding and logos/blkouthub_logo.png" alt="BLKOUTHUB" className="w-auto h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Get Connected</h3><p className="text-lg font-semibold mb-4">Join the BLKOUTHUB</p><p className="text-sm opacity-90">Active membership. Real gatherings.</p></div>
               </motion.a>
-              <motion.a href="/platform" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.3 }} className="bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl p-8 hover:scale-105 transition-all">
+              <motion.a href="/platform" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.3 }} className="bg-gradient-to-br from-purple-600 to-indigo-600 p-8 hover:scale-105 transition-all">
                 <div className="text-white"><img src="/Branding and logos/blkoutlogo_wht_transparent.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Learn</h3><p className="text-lg font-semibold mb-4">Explore Resources</p><p className="text-sm opacity-90">280+ articles, Events, AIvor</p></div>
               </motion.a>
             </div>
@@ -901,14 +900,14 @@ export default function TheoryOfChangeMasonry() {
 
             {/* OOMF Crew Image */}
             <div className="mb-12">
-              <img src="/images/theory-of-change/the oomf crew.jpg" alt="The OOMF Crew" className="max-w-2xl mx-auto rounded-2xl" />
+              <img src="/images/theory-of-change/the oomf crew.jpg" alt="The OOMF Crew" className="max-w-2xl mx-auto " />
             </div>
 
             <h2 className="text-4xl md:text-6xl font-signature font-black text-white uppercase mb-4">We're the heroes we've been waiting for</h2>
             <p className="text-xl md:text-2xl text-liberation-gold-divine font-bold mb-12">Now put yourself in the story</p>
 
             <div className="w-full max-w-3xl mx-auto mb-8">
-              <div className="relative rounded-2xl overflow-hidden border-2 border-purple-700/50" style={{ paddingBottom: '125%' }}>
+              <div className="relative overflow-hidden border-2 border-liberation-gold-divine/30" style={{ paddingBottom: '125%' }}>
                 <iframe src="https://blkoutuk.github.io/OOMF_Interactive/" className="absolute inset-0 w-full h-full" title="Create Your Hero Panel" allow="camera; microphone" sandbox="allow-same-origin allow-scripts allow-forms allow-popups" />
               </div>
             </div>
