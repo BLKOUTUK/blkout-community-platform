@@ -1,6 +1,6 @@
 // BLKOUT Governance Page - Community Governance & CBS Information
 import React from 'react';
-import { Vote, Users, Shield, Heart, HandshakeIcon, Building, UserPlus, Clock, Mail } from 'lucide-react';
+import { Vote, Users, Shield, Heart, HandshakeIcon, Building, UserPlus, Mail, ArrowRight, UsersRound } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const GovernancePage: React.FC = () => {
@@ -39,69 +39,59 @@ const GovernancePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Board Recruitment - Now Closed */}
-      <section id="board-eoi" className="py-16 px-6 bg-[#1a1a2e] border-t-4 border-[#d4af37]">
+      {/* Meet the Board — prominent CTA above the structure */}
+      <section className="py-12 px-6 bg-black border-t-4 border-[#d4af37]">
         <div className="max-w-4xl mx-auto">
+          <motion.a
+            href="/our-board/"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="block bg-[#1a1a2e] border-4 border-[#d4af37] p-8 md:p-10 hover:bg-[#d4af37]/5 transition-all duration-300 group"
+          >
+            <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+              <UsersRound className="w-16 h-16 text-[#d4af37] flex-shrink-0" />
+              <div className="flex-1">
+                <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-2 group-hover:text-[#d4af37] transition-colors">
+                  Meet the Board
+                </h2>
+                <p className="text-gray-300 text-lg">
+                  Six directors, paired for accountability. See who's leading BLKOUT into year eleven.
+                </p>
+              </div>
+              <div className="inline-flex items-center gap-2 bg-[#d4af37] text-black px-6 py-3 font-black uppercase tracking-wide group-hover:bg-[#e5c349] transition-colors">
+                Meet the Board
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </motion.a>
+        </div>
+      </section>
+
+      {/* Board Structure — Leadership Pairs */}
+      <section id="board-structure" className="py-16 px-6 bg-[#1a1a2e]">
+        <div className="max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            {/* Closed Notice */}
-            <div className="bg-[#252547] border-2 border-[#d4af37]/50 p-8 md:p-10 text-center mb-12">
-              <Clock className="w-12 h-12 text-[#d4af37] mx-auto mb-4" />
-              <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-4">
-                Board Applications Now Closed
-              </h2>
-              <p className="text-gray-300 text-lg mb-6 max-w-2xl mx-auto">
-                Thank you to everyone who submitted an expression of interest to join the BLKOUT board.
-                Applications closed on 23 February 2026.
-              </p>
-              <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-                We are now reviewing all submissions. If you applied and have not heard from us,
-                or if you have any questions about the process, please get in touch:
-              </p>
-              <a
-                href="mailto:governance@blkoutuk.com"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[#d4af37] text-[#1a1a2e] font-black uppercase tracking-wide hover:bg-[#e5c349] transition-colors"
-              >
-                <Mail className="w-5 h-5" />
-                governance@blkoutuk.com
-              </a>
-            </div>
+            <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-3 text-center">
+              How the Board Works
+            </h2>
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto text-center mb-10">
+              Cooperative governance through <span className="text-[#d4af37] font-bold">leadership pairs</span> &mdash;
+              one role, two people, mutual accountability. Each pair builds a working group to widen
+              member engagement beyond the board itself.
+            </p>
 
-            {/* What Happens Next */}
-            <div className="bg-[#252547] p-8 border-l-4 border-[#d4af37] mb-12">
-              <h3 className="text-xl font-black text-white uppercase tracking-tight mb-4">
-                What Happens Next
-              </h3>
-              <div className="space-y-4 text-gray-300">
-                <div className="flex items-start">
-                  <span className="text-[#d4af37] font-black text-lg mr-4 mt-0.5">1</span>
-                  <p>Our governance team reviews all expressions of interest</p>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-[#d4af37] font-black text-lg mr-4 mt-0.5">2</span>
-                  <p>Shortlisted candidates will be contacted for conversations</p>
-                </div>
-                <div className="flex items-start">
-                  <span className="text-[#d4af37] font-black text-lg mr-4 mt-0.5">3</span>
-                  <p>Board elections will take place at the AGM</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Board Positions - for reference */}
-            <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-6 text-center">
-              The 5 Board Positions
-            </h3>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {/* Leadership row */}
+            <h3 className="text-xs font-black text-[#d4af37] uppercase tracking-[0.3em] mb-4 text-center">Leadership</h3>
+            <div className="grid md:grid-cols-3 gap-4 mb-10">
               {[
-                { title: 'Chair', desc: 'Lead board meetings, represent BLKOUT publicly, ensure governance excellence. The voice of our collective vision.' },
-                { title: 'Treasurer', desc: 'Oversee financial health, budgeting, reporting. Ensure our 75% creator revenue share is honoured. Liberation economics.' },
-                { title: 'Secretary', desc: 'Maintain records, coordinate communications, ensure compliance. The organisational memory of our movement.' },
-                { title: 'Technology Director', desc: 'Guide platform development, data sovereignty, digital strategy. Technical background valued but not required.' },
-                { title: 'Community Director', desc: 'Champion member needs, partnerships, engagement. Stay rooted in the lived experiences of Black queer men across the UK.' },
+                { title: 'Chair', desc: 'Leads board meetings, represents BLKOUT publicly, holds the strategic line.' },
+                { title: 'Vice-Chair / Secretary', desc: 'Records, communications, compliance. The organisational memory.' },
+                { title: 'Managing Editor', desc: 'Editorial direction across news, comms, and platform voice.' },
               ].map((position, index) => (
                 <motion.div
                   key={position.title}
@@ -111,12 +101,108 @@ const GovernancePage: React.FC = () => {
                   transition={{ delay: index * 0.1 }}
                   className="bg-[#252547] p-6 border-l-4 border-[#d4af37]"
                 >
-                  <h3 className="text-xl font-black text-[#d4af37] uppercase tracking-tight mb-3">
+                  <h4 className="text-lg font-black text-[#d4af37] uppercase tracking-tight mb-2">
                     {position.title}
-                  </h3>
+                  </h4>
                   <p className="text-gray-300 text-sm leading-relaxed">{position.desc}</p>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Functional pairs row */}
+            <h3 className="text-xs font-black text-[#d4af37] uppercase tracking-[0.3em] mb-4 text-center">Functional Pairs</h3>
+            <div className="grid md:grid-cols-3 gap-4">
+              {[
+                {
+                  title: 'Community',
+                  desc: 'Champions member needs, partnerships, engagement. Rooted in the lived experiences of Black queer men across the UK.',
+                  vacant: false,
+                },
+                {
+                  title: 'Digital',
+                  desc: 'Guides platform development, data sovereignty, technology strategy. Technical background valued, not required.',
+                  vacant: false,
+                },
+                {
+                  title: 'Finance / Fundraising',
+                  desc: 'Stewards financial health, budgeting, reporting. Ensures our 75% creator revenue share is honoured.',
+                  vacant: true,
+                },
+              ].map((pair, index) => (
+                <motion.div
+                  key={pair.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`p-6 border-l-4 ${
+                    pair.vacant
+                      ? 'bg-[#3a2a1a] border-[#e5c349]'
+                      : 'bg-[#252547] border-[#d4af37]'
+                  }`}
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <h4 className="text-lg font-black text-[#d4af37] uppercase tracking-tight">
+                      {pair.title}
+                    </h4>
+                    {pair.vacant && (
+                      <span className="text-[10px] font-black text-[#1a1a2e] bg-[#e5c349] px-2 py-0.5 uppercase tracking-wider">
+                        Recruiting
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-gray-300 text-sm leading-relaxed">{pair.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Still Recruiting */}
+      <section id="board-eoi" className="py-16 px-6 bg-black border-t border-[#d4af37]/30">
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="bg-[#1a1a2e] border-2 border-[#d4af37] p-8 md:p-10">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <UserPlus className="w-10 h-10 text-[#d4af37]" />
+                <span className="text-[10px] font-black text-[#1a1a2e] bg-[#e5c349] px-3 py-1 uppercase tracking-[0.2em]">
+                  Open Now
+                </span>
+              </div>
+              <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight mb-4 text-center">
+                We're Still Recruiting
+              </h2>
+              <p className="text-gray-300 text-lg max-w-2xl mx-auto text-center mb-4">
+                The Finance / Fundraising pair has an open seat &mdash; we're actively looking for a
+                <span className="text-[#d4af37] font-bold"> co-treasurer</span> to steward BLKOUT's
+                liberation economics alongside their pair-partner.
+              </p>
+              <p className="text-gray-300 max-w-2xl mx-auto text-center mb-6">
+                Other pairs welcome conversations from members ready to step up &mdash; the board
+                is meant to grow with us. If you've thought about contributing, this is the
+                invitation.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+                <a
+                  href="mailto:governance@blkoutuk.com?subject=Board%20interest"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#d4af37] text-[#1a1a2e] font-black uppercase tracking-wide hover:bg-[#e5c349] transition-colors"
+                >
+                  <Mail className="w-5 h-5" />
+                  Express Interest
+                </a>
+                <a
+                  href="/our-board/"
+                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-[#d4af37] text-[#d4af37] font-bold uppercase tracking-wide hover:bg-[#d4af37]/10 transition-colors"
+                >
+                  Meet the Board
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </div>
             </div>
           </motion.div>
         </div>
