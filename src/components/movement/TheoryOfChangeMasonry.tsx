@@ -70,6 +70,10 @@ interface Card {
   interactive?: {
     type: 'poll' | 'reveal' | 'wordcloud';
     data?: any;
+    // 'stack' (default) is a vertical button column. 'scattered' positions
+    // small buttons absolutely around the image so the question lives across
+    // the canvas rather than reading like a survey form (card 33).
+    layout?: 'stack' | 'scattered';
   };
   cta?: {
     text: string;
@@ -81,17 +85,22 @@ interface Card {
   aspectRatio?: 'tall' | 'standard' | 'squat';
   textPosition?: 'bottomLeft' | 'topRight' | 'center' | 'topLeft' | 'bottomRight';
   purpleIntensity?: number; // 0-100, for overlay strength
-  // CSS object-position when object-cover crops the image. Default 'center'
-  // (browser default) — most BLKOUT portraits centre the figure in the source
-  // frame with environmental space above and below, so vertical centring keeps
-  // the body visible without losing the face. Override only when the source
-  // composition demands it:
+  // CSS object-position when object-cover crops the image. Default 'center'.
+  // Override per-source where composition demands it:
   //   '50% 25%' — two-figure shots with both faces in the upper-third
   //   '50% 40%' — face plus another element below that both matter (card 19)
-  //   'center top' — figures with arms/action above the head (card 37)
-  //   'center bottom' — crowd shots with foreground faces at source bottom (card 38)
-  // Accepts any valid CSS object-position value.
+  //   'center top' — figures with arms/action above the head; or to keep a
+  //     paired face from being lost (card 36's embrace)
+  //   'center bottom' — crowd shots where source faces sit at the bottom
   imageAnchor?: string;
+  // 'cover' (default) crops to fill cell. 'contain' shows whole image,
+  // letterboxed if cell aspect doesn't match — use when the figure must
+  // stay whole (card 37: arms-out + body must remain visible).
+  imageFit?: 'cover' | 'contain';
+  // Heavy gold border around the card itself (not the image overlay) — used
+  // to mark the cards that are load-bearing for the manifesto's argument
+  // (e.g. Tenderness-is-a-political-act + the video that follows).
+  frame?: boolean;
 }
 
 // Animation variants for dynamism
@@ -177,7 +186,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
 
   return (
     <motion.div
-      className={`relative overflow-hidden group ${sizeClasses[card.size]} ${heightClasses[card.size]}`}
+      className={`relative overflow-hidden group ${sizeClasses[card.size]} ${heightClasses[card.size]} ${card.frame ? 'border-4 border-liberation-gold-divine' : ''}`}
       {...animation}
       viewport={{ once: true, margin: "-50px" }}
       whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
@@ -197,8 +206,10 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
           <img
             src={card.imageUrl}
             alt=""
-            className={`w-full h-full ${card.type === 'beauty' ? 'object-contain' : 'object-cover'} transition-transform duration-700 group-hover:scale-110`}
-            style={card.type !== 'beauty' ? { objectPosition: card.imageAnchor || 'center' } : undefined}
+            className={`w-full h-full ${
+              card.imageFit === 'contain' || card.type === 'beauty' ? 'object-contain' : 'object-cover'
+            } transition-transform duration-700 group-hover:scale-110`}
+            style={card.imageFit === 'contain' || card.type === 'beauty' ? undefined : { objectPosition: card.imageAnchor || 'center' }}
           />
           {/* Text readability gradient — strengthened so highlight/body are readable on busy photos. */}
           {card.type !== 'beauty' && (
@@ -208,6 +219,35 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
       ) : (
         <div className={`absolute inset-0 bg-gradient-to-br ${card.bgGradient}`} />
       )}
+
+      {/* Scattered interactive layout — small buttons positioned around the image */}
+      {card.interactive?.type === 'poll' && card.interactive.layout === 'scattered' && (() => {
+        const positions = [
+          'top-[8%] left-[5%]',
+          'top-[12%] right-[6%]',
+          'top-[40%] left-[3%]',
+          'top-[44%] right-[4%]',
+          'top-[72%] left-[8%] -rotate-2',
+          'top-[68%] right-[10%] rotate-2',
+        ];
+        return (
+          <div className="absolute inset-0 z-20 pointer-events-none">
+            {card.interactive.data.options.slice(0, positions.length).map((option: string, i: number) => (
+              <button
+                key={option}
+                onClick={(e) => { e.stopPropagation(); setSelected(option); }}
+                className={`absolute pointer-events-auto px-3 py-1.5 text-xs md:text-sm font-bold uppercase tracking-wider transition-all border-2 [text-shadow:_0_1px_4px_rgba(0,0,0,0.7)] ${positions[i]} ${
+                  selected === option
+                    ? 'bg-liberation-pride-pink-vivid text-white border-liberation-pride-pink-vivid'
+                    : 'bg-liberation-black-power/70 text-white border-liberation-gold-divine/60 hover:border-liberation-gold-divine hover:bg-liberation-black-power/90'
+                }`}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        );
+      })()}
 
       {/* Content with dynamic positioning - split if CTA exists */}
       <div className={`relative z-10 h-full flex flex-col ${isSpecialLayout ? 'justify-between' : getTextPosition(card.textPosition, hasCTA)}`}>
@@ -255,7 +295,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
         )}
 
         {/* Interactive elements */}
-        {card.interactive?.type === 'poll' && (
+        {card.interactive?.type === 'poll' && card.interactive.layout !== 'scattered' && (
           <div className="mt-4 space-y-2">
             {card.interactive.data.options.map((option: string) => (
               <button
@@ -546,18 +586,8 @@ export default function TheoryOfChangeMasonry() {
       cta: { text: 'In The Picture: Loneliness Report', link: '/stories', color: 'amber' },
       textPosition: 'bottomLeft'
     },
-    {
-      id: 7.5,
-      type: 'statement',
-      size: 'large',
-      imageUrl: '/images/theory-of-change/survival is a good start.png',
-      bgGradient: 'from-violet-950 to-purple-950',
-      content: {
-        highlight: 'Survival is a good start. If we want to thrive',
-        body: '"alone together" is not enough.'
-      },
-      textPosition: 'bottomLeft'
-    },
+    // Card 7.5 removed — duplicated card 10's "alone together is not enough" message
+    // and used the same source image. Card 10 carries the thesis with a CTA.
     {
       id: 8,
       type: 'interactive',
@@ -683,15 +713,21 @@ export default function TheoryOfChangeMasonry() {
   const act4Cards: Card[] = [
     { id: 30, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-30-isolation.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'Activism has won us the freedom to love', highlight: 'Today, we battle to turn love into liberation.' }, animationType: 'default', textPosition: 'bottomRight' },
     { id: 31, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-31-problem-is-us.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { body: 'Sexual identity is not a choice', highlight: 'But choosing love is' }, animationType: 'default', textPosition: 'bottomRight' },
-    { id: 32, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-32-never-us.png', bgGradient: 'from-violet-600 to-purple-600', content: { title: 'Tenderness is a political act.', highlight: 'Black queer joy is revolutionary' }, cta: { text: 'BLKOUT is different, it\'s ours', link: '/governance', color: 'amber' }, animationType: 'reveal', textPosition: 'topLeft' },
-    { id: 32.5, type: 'beauty', size: 'large', videoUrl: '/videos/Making Space For What.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
-    { id: 33, type: 'interactive', size: 'hero', imageUrl: '/images/theory-of-change/card-33-show-up.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'How do you show up?', highlight: 'Community is not a tick box, it\'s what you do' }, interactive: { type: 'poll', data: { options: ['I bring food', 'I show up', 'I listen', 'I fight', 'I laugh', 'I remember'] }}, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'topLeft' }
+    // Card 32 — Tenderness is a political act. Promoted from beauty→statement so the
+    // text-readability gradient applies + writing isn't fighting the image. Heavy gold
+    // frame marks it (and the video that follows) as load-bearing for the manifesto.
+    { id: 32, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-32-never-us.png', bgGradient: 'from-violet-600 to-purple-600', content: { title: 'Tenderness is a political act.', highlight: 'Black queer joy is revolutionary' }, cta: { text: 'BLKOUT is different, it\'s ours', link: '/governance', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft', frame: true },
+    // Card 32.5 — the "Making Space For What" video, framed in gold to pair with card 32.
+    { id: 32.5, type: 'beauty', size: 'large', videoUrl: '/videos/Making Space For What.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {}, frame: true },
+    // Card 33 — buttons scatter around the image so the question reads as embodied,
+    // not as a survey form. Smaller padding, absolute positioning.
+    { id: 33, type: 'interactive', size: 'hero', imageUrl: '/images/theory-of-change/card-33-show-up.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'How do you show up?', highlight: 'Community is not a tick box, it\'s what you do' }, interactive: { type: 'poll', layout: 'scattered', data: { options: ['I bring food', 'I show up', 'I listen', 'I fight', 'I laugh', 'I remember'] }}, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' }
   ];
 
   // ACT 5: The Invitation (Cards 35-38)
   const act5Cards: Card[] = [
     { id: 35, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-35-structural-damage.png', bgGradient: 'from-indigo-950 to-purple-950', content: { subtitle: 'Liberation Is', body: 'Freedom from harm', highlight: 'using our power to resist and dismantle injustice' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' },
-    { id: 36, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-36-relational-repair.png', bgGradient: 'from-purple-950 to-violet-950', content: { subtitle: 'Liberation Is', body: 'Freedom to imagine better', highlight: 'using our power to create the new' }, animationType: 'default', textPosition: 'bottomLeft' },
+    { id: 36, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-36-relational-repair.png', bgGradient: 'from-purple-950 to-violet-950', content: { subtitle: 'Liberation Is', body: 'Freedom to imagine better', highlight: 'using our power to create the new' }, animationType: 'default', textPosition: 'bottomLeft', imageAnchor: 'center top' },
     { id: 36.5, type: 'beauty', size: 'large', videoUrl: '/videos/baldwinscroll.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
     {
       id: 36.6,
@@ -701,8 +737,15 @@ export default function TheoryOfChangeMasonry() {
       bgGradient: 'from-amber-600 to-amber-500',
       content: {}
     },
-    { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft', imageAnchor: 'center top' },
-    { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', body: 'The damage is structural. The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft', imageAnchor: 'center bottom' }
+    // Card 37 — Rob's directive: figure should be centred, ideally whole body.
+    // Source crops at thigh so 'whole body' isn't possible, but `imageFit: 'contain'`
+    // keeps the figure visually whole within the cell rather than letting object-cover
+    // crop further.
+    { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft', imageFit: 'contain' },
+    // Card 38 — Rob's directive: should show people in conversation, not knees.
+    // Reverting from 'center bottom' (which showed knees) to default 'center'
+    // (which surfaces the conversation row in the middle of the source).
+    { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', body: 'The damage is structural. The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' }
   ];
 
   return (
@@ -766,28 +809,28 @@ export default function TheoryOfChangeMasonry() {
           </div>
         </section>
 
-        {/* LORDE VIDEO: Single column width with sound option */}
+        {/* LORDE VIDEO + ANCESTRAL WISDOM — side-by-side pairing, mirroring the
+            Baldwin/Ancestral pattern in act 5. Lorde is the headline (tall,
+            sound-enabled); ancestral wisdom is the small companion. */}
         <section className="container mx-auto px-4 py-8">
-          <div className="max-w-md">
-            <div className="relative overflow-hidden " style={{ height: '750px' }}>
-              <ScrollVideo
-                src="/videos/Lordescroll.mp4"
-                className="w-full h-full object-cover"
-                controls={true}
-                muted={false}
-              />
+          <div className="grid grid-cols-3 gap-4 md:gap-6 items-start">
+            <div className="col-span-2">
+              <div className="relative overflow-hidden" style={{ height: '750px' }}>
+                <ScrollVideo
+                  src="/videos/Lordescroll.mp4"
+                  className="w-full h-full object-cover"
+                  controls={true}
+                  muted={false}
+                />
+              </div>
             </div>
-          </div>
-        </section>
-
-        {/* ANCESTRAL WISDOM: Small insert after Lorde */}
-        <section className="container mx-auto px-4 py-8">
-          <div className="max-w-xs">
-            <div className="relative overflow-hidden aspect-square">
-              <ScrollVideo
-                src="/videos/ancestral wisdom.mp4"
-                className="w-full h-full object-cover"
-              />
+            <div className="col-span-1">
+              <div className="relative overflow-hidden aspect-square">
+                <ScrollVideo
+                  src="/videos/ancestral wisdom.mp4"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
           </div>
         </section>
