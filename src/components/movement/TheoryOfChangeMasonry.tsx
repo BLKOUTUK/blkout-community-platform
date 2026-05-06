@@ -81,6 +81,13 @@ interface Card {
   aspectRatio?: 'tall' | 'standard' | 'squat';
   textPosition?: 'bottomLeft' | 'topRight' | 'center' | 'topLeft' | 'bottomRight';
   purpleIntensity?: number; // 0-100, for overlay strength
+  // CSS object-position when object-cover crops the image. Default 'center top'
+  // (head-preserving) works for most portrait subjects with subject in upper half.
+  // For cards where face AND another element below both matter (e.g. card 19's
+  // figure + building site), use a percentage like '50% 35%' to anchor higher
+  // than dead-center but lower than top. Crowd shots with foreground faces use
+  // 'center bottom'. Accepts any valid CSS object-position value.
+  imageAnchor?: string;
 }
 
 // Animation variants for dynamism
@@ -187,10 +194,11 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
             src={card.imageUrl}
             alt=""
             className={`w-full h-full ${card.type === 'beauty' ? 'object-contain' : 'object-cover'} transition-transform duration-700 group-hover:scale-110`}
+            style={card.type !== 'beauty' ? { objectPosition: card.imageAnchor || 'center top' } : undefined}
           />
-          {/* Text readability gradient - concentrated at bottom only to preserve faces */}
+          {/* Text readability gradient — strengthened so highlight/body are readable on busy photos. */}
           {card.type !== 'beauty' && (
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 via-30% to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/55 via-40% to-transparent" />
           )}
         </div>
       ) : (
@@ -211,16 +219,16 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
         {/* Title (primary heading - largest) */}
         {card.content.title && (
           <motion.h1
-            className={`text-xl md:text-2xl lg:text-3xl font-signature font-black uppercase tracking-tight leading-tight mb-4 ${(card.id === 15 || card.id === 16) ? 'text-liberation-gold-divine' : 'text-white'}`}
+            className={`text-xl md:text-2xl lg:text-3xl font-signature font-black uppercase tracking-tight leading-tight mb-4 [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)] ${card.content.heading2 ? 'text-liberation-gold-divine' : 'text-white'}`}
           >
             {card.content.title}
           </motion.h1>
         )}
 
-        {/* Heading2 (secondary heading) */}
+        {/* Heading2 (secondary heading). Light gray with text-shadow stays legible on busy photos. */}
         {card.content.heading2 && (
           <motion.h2
-            className="text-lg md:text-xl lg:text-2xl font-signature font-bold text-gray-300 uppercase tracking-tight leading-tight mb-4 whitespace-pre-line"
+            className="text-lg md:text-xl lg:text-2xl font-signature font-bold text-gray-100 uppercase tracking-tight leading-tight mb-4 whitespace-pre-line [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]"
           >
             {card.content.heading2}
           </motion.h2>
@@ -229,16 +237,15 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
         {/* Body text - clear hierarchy */}
         {card.content.body && (
           <motion.p
-            className={`text-base md:text-lg lg:text-xl font-signature font-bold text-white uppercase leading-snug whitespace-pre-line mb-4`}
+            className={`text-base md:text-lg lg:text-xl font-signature font-bold text-white uppercase leading-snug whitespace-pre-line mb-4 [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]`}
           >
             {card.content.body}
           </motion.p>
         )}
 
-        {/* Highlight - supporting text */}
+        {/* Highlight - supporting text. Bumped from gray-300 → gray-100 + text-shadow for legibility on photos. */}
         {card.content.highlight && !isSpecialLayout && (
-          <p className={`text-sm md:text-base lg:text-lg font-normal leading-relaxed ${(card.id === 15 || card.id === 16) ? 'text-liberation-gold-divine' : 'text-gray-300'}`}>
-
+          <p className={`text-sm md:text-base lg:text-lg font-normal leading-relaxed [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)] ${card.content.heading2 ? 'text-liberation-gold-divine' : 'text-gray-100'}`}>
             {card.content.highlight}
           </p>
         )}
@@ -657,7 +664,7 @@ export default function TheoryOfChangeMasonry() {
 
   // ACT 3: What We're Building (Cards 19-26, 28)
   const act3Cards: Card[] = [
-    { id: 19, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-25-infrastructure.png', bgGradient: 'from-purple-950 to-indigo-950', content: { title: 'So we\'re building:', heading2: 'Space to be we', body: 'Space to be free' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomRight' },
+    { id: 19, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-25-infrastructure.png', bgGradient: 'from-purple-950 to-indigo-950', content: { title: 'So we\'re building:', heading2: 'Space to be we', body: 'Space to be free' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomRight', imageAnchor: '50% 40%' },
     { id: 21, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-21-gatherings.png', bgGradient: 'from-fuchsia-600 to-purple-600', content: { body: 'we\'re getting social', highlight: 'Real conversations. Shared experiences.' }, cta: { text: 'See what\'s happening', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' },
     { id: 22, type: 'interactive', size: 'large', imageUrl: '/images/theory-of-change/card-22-wordcloud.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'talking de tings:' }, interactive: { type: 'wordcloud', data: { topics: ['Family', 'Sex', 'Money', 'Health', 'Faith', 'Fear', 'Joy', 'Aging', 'Love', 'Loneliness', 'Dreams', 'Rage', 'Healing'] }}, animationType: 'default', textPosition: 'bottomLeft' },
     { id: 23, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-23-connection.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'Connecting, not networking', highlight: 'No transaction required.' }, cta: { text: 'Join the conversation', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'bounce', textPosition: 'bottomLeft' },
@@ -673,7 +680,7 @@ export default function TheoryOfChangeMasonry() {
     { id: 31, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-31-problem-is-us.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { body: 'Sexual identity is not a choice', highlight: 'But choosing love is' }, animationType: 'default', textPosition: 'bottomRight' },
     { id: 32, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-32-never-us.png', bgGradient: 'from-violet-600 to-purple-600', content: { title: 'Tenderness is a political act.', highlight: 'Black queer joy is revolutionary' }, cta: { text: 'BLKOUT is different, it\'s ours', link: '/governance', color: 'amber' }, animationType: 'reveal', textPosition: 'topLeft' },
     { id: 32.5, type: 'beauty', size: 'large', videoUrl: '/videos/Making Space For What.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
-    { id: 33, type: 'interactive', size: 'hero', imageUrl: '/images/theory-of-change/card-33-show-up.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'How do you show up?', highlight: 'Community is not a tick box, it\'s what you do' }, interactive: { type: 'poll', data: { options: ['I bring food', 'I show up', 'I listen', 'I fight', 'I laugh', 'I remember'] }}, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'topLeft'}
+    { id: 33, type: 'interactive', size: 'hero', imageUrl: '/images/theory-of-change/card-33-show-up.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'How do you show up?', highlight: 'Community is not a tick box, it\'s what you do' }, interactive: { type: 'poll', data: { options: ['I bring food', 'I show up', 'I listen', 'I fight', 'I laugh', 'I remember'] }}, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'topLeft', imageAnchor: 'center' }
   ];
 
   // ACT 5: The Invitation (Cards 35-38)
@@ -690,7 +697,7 @@ export default function TheoryOfChangeMasonry() {
       content: {}
     },
     { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft' },
-    { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', body: 'The damage is structural. The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft' }
+    { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', body: 'The damage is structural. The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft', imageAnchor: 'center bottom' }
   ];
 
   return (
