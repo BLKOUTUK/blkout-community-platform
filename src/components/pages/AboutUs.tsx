@@ -775,7 +775,8 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                     <li>✅ Logo in top-left/center (small)</li>
                     <li>✅ Footer with byline + website</li>
                     <li>✅ Website in gold (#FFD700)</li>
-                    <li>✅ Rounded corners (12px+)</li>
+                    <li>✅ Sharp edges by default (One Platform Design, locked 26 Apr 2026)</li>
+                    <li>✅ Heavy gold borders (4-8px) on hero CTAs</li>
                     <li>✅ High contrast white/black</li>
                     <li>✅ Joyful, celebratory mood</li>
                     <li>✅ Pride color accents</li>
@@ -790,7 +791,8 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                     <li>❌ Centered/huge logo</li>
                     <li>❌ Missing footer elements</li>
                     <li>❌ White website URL (must be gold!)</li>
-                    <li>❌ Sharp/angular edges</li>
+                    <li>❌ Soft/rounded body cards (legacy pre-26 Apr pattern)</li>
+                    <li>❌ Decorative gradient washes</li>
                     <li>❌ Low contrast text</li>
                     <li>❌ Stretch/distort logo</li>
                     <li>❌ Change logo colors</li>
