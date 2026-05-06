@@ -205,7 +205,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
         <div className={`${hasCTA ? 'flex-1 flex flex-col justify-end' : ''} p-6 md:p-8 mt-auto max-h-[60%]`}>
         {/* Subtitle (small, uppercase, accent color) */}
         {card.content.subtitle && !isSpecialLayout && (
-          <motion.p className="text-amber-400 text-xs md:text-sm font-mono uppercase tracking-widest mb-3">
+          <motion.p className="text-liberation-gold-divine text-xs md:text-sm font-mono uppercase tracking-widest mb-3">
             {card.content.subtitle}
           </motion.p>
         )}
@@ -213,8 +213,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
         {/* Title (primary heading - largest) */}
         {card.content.title && (
           <motion.h1
-            className={`text-xl md:text-2xl lg:text-3xl font-black uppercase tracking-tight leading-tight mb-4 ${(card.id === 15 || card.id === 16) ? 'text-amber-400' : 'text-white'}`}
-            style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
+            className={`text-xl md:text-2xl lg:text-3xl font-signature font-black uppercase tracking-tight leading-tight mb-4 ${(card.id === 15 || card.id === 16) ? 'text-liberation-gold-divine' : 'text-white'}`}
           >
             {card.content.title}
           </motion.h1>
@@ -223,8 +222,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
         {/* Heading2 (secondary heading) */}
         {card.content.heading2 && (
           <motion.h2
-            className="text-lg md:text-xl lg:text-2xl font-bold text-purple-100 uppercase tracking-tight leading-tight mb-4 whitespace-pre-line"
-            style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
+            className="text-lg md:text-xl lg:text-2xl font-signature font-bold text-purple-100 uppercase tracking-tight leading-tight mb-4 whitespace-pre-line"
           >
             {card.content.heading2}
           </motion.h2>
@@ -233,8 +231,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
         {/* Body text - clear hierarchy */}
         {card.content.body && (
           <motion.p
-            className={`text-base md:text-lg lg:text-xl font-bold text-white uppercase leading-snug whitespace-pre-line mb-4`}
-            style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
+            className={`text-base md:text-lg lg:text-xl font-signature font-bold text-white uppercase leading-snug whitespace-pre-line mb-4`}
           >
             {card.content.body}
           </motion.p>
@@ -242,7 +239,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
 
         {/* Highlight - supporting text */}
         {card.content.highlight && !isSpecialLayout && (
-          <p className={`text-sm md:text-base lg:text-lg font-normal leading-relaxed ${(card.id === 15 || card.id === 16) ? 'text-amber-400' : 'text-purple-200'}`}>
+          <p className={`text-sm md:text-base lg:text-lg font-normal leading-relaxed ${(card.id === 15 || card.id === 16) ? 'text-liberation-gold-divine' : 'text-purple-200'}`}>
             {card.content.highlight}
           </p>
         )}
@@ -256,7 +253,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
                 onClick={(e) => { e.stopPropagation(); setSelected(option); }}
                 className={`w-full px-4 py-2 rounded-lg text-sm font-bold transition-all ${
                   selected === option
-                    ? 'bg-fuchsia-600 text-white'
+                    ? 'bg-liberation-pride-pink-vivid text-white'
                     : 'bg-purple-900/50 text-purple-100 hover:bg-purple-800/50'
                 }`}
               >
@@ -269,7 +266,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
         {card.interactive?.type === 'reveal' && (
           <button
             onClick={(e) => { e.stopPropagation(); setRevealed(!revealed); }}
-            className="mt-4 px-6 py-3 bg-purple-600 hover:bg-purple-500 rounded-lg text-white font-bold transition-all"
+            className="mt-4 px-6 py-3 bg-liberation-pride-purple-deep hover:bg-liberation-pride-purple rounded-lg text-white font-bold transition-all"
           >
             {revealed ? card.interactive.data.revealed : 'Click to reveal →'}
           </button>
@@ -283,7 +280,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
                 onClick={(e) => { e.stopPropagation(); setSelected(topic); }}
                 className={`px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-bold transition-all ${
                   selected === topic
-                    ? 'bg-fuchsia-600 text-white'
+                    ? 'bg-liberation-pride-pink-vivid text-white'
                     : 'bg-purple-900/50 text-purple-100 hover:bg-purple-800/50'
                 }`}
               >
@@ -360,8 +357,7 @@ const HeroVideoBreak: React.FC<{ title?: string; subtitle?: string; videoUrl?: s
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-6xl md:text-8xl font-black text-white uppercase mb-6"
-            style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}
+            className="text-6xl md:text-8xl font-signature font-black text-white uppercase mb-6"
           >
             {title}
           </motion.h2>
@@ -372,7 +368,7 @@ const HeroVideoBreak: React.FC<{ title?: string; subtitle?: string; videoUrl?: s
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
-            className="text-xl md:text-2xl text-amber-400 font-bold"
+            className="text-xl md:text-2xl text-liberation-gold-divine font-bold"
           >
             {subtitle}
           </motion.p>
@@ -700,8 +696,8 @@ export default function TheoryOfChangeMasonry() {
 
   return (
     <div className="min-h-screen bg-black">
-      {/* Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-amber-500 z-50" />
+      {/* Progress Bar — Round 2: solid gold-divine, matches the section-accent chrome on every other page */}
+      <div className="fixed top-0 left-0 right-0 h-1 bg-liberation-gold-divine z-50" />
 
       {/* Ticker Header - below nav menu */}
       <div className="fixed top-1 left-0 right-0 z-10 overflow-hidden bg-black/80 backdrop-blur-sm">
@@ -886,13 +882,13 @@ export default function TheoryOfChangeMasonry() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               <motion.a href="https://crm.blkoutuk.cloud/join" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.1 }} className="bg-gradient-to-br from-amber-600 to-amber-500 rounded-2xl p-8 hover:scale-105 transition-all">
-                <div className="text-black"><img src="/Branding and logos/blkout_logo_roundel_colour.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-black uppercase mb-3" style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}>Stay in Touch</h3><p className="text-lg font-semibold mb-4">Newsletter</p><p className="text-sm opacity-80">Weekly updates from the collective</p></div>
+                <div className="text-black"><img src="/Branding and logos/blkout_logo_roundel_colour.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Stay in Touch</h3><p className="text-lg font-semibold mb-4">Newsletter</p><p className="text-sm opacity-80">Weekly updates from the collective</p></div>
               </motion.a>
               <motion.a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.2 }} className="bg-gradient-to-br from-fuchsia-600 to-pink-600 rounded-2xl p-8 hover:scale-105 transition-all">
-                <div className="text-white"><img src="/Branding and logos/blkouthub_logo.png" alt="BLKOUTHUB" className="w-auto h-16 mb-4 object-contain" /><h3 className="text-3xl font-black uppercase mb-3" style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}>Get Connected</h3><p className="text-lg font-semibold mb-4">Join the BLKOUTHUB</p><p className="text-sm opacity-90">Active membership. Real gatherings.</p></div>
+                <div className="text-white"><img src="/Branding and logos/blkouthub_logo.png" alt="BLKOUTHUB" className="w-auto h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Get Connected</h3><p className="text-lg font-semibold mb-4">Join the BLKOUTHUB</p><p className="text-sm opacity-90">Active membership. Real gatherings.</p></div>
               </motion.a>
               <motion.a href="/platform" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.3 }} className="bg-gradient-to-br from-purple-600 to-indigo-600 rounded-2xl p-8 hover:scale-105 transition-all">
-                <div className="text-white"><img src="/Branding and logos/blkoutlogo_wht_transparent.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-black uppercase mb-3" style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}>Learn</h3><p className="text-lg font-semibold mb-4">Explore Resources</p><p className="text-sm opacity-90">280+ articles, Events, AIvor</p></div>
+                <div className="text-white"><img src="/Branding and logos/blkoutlogo_wht_transparent.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Learn</h3><p className="text-lg font-semibold mb-4">Explore Resources</p><p className="text-sm opacity-90">280+ articles, Events, AIvor</p></div>
               </motion.a>
             </div>
           </div>
@@ -908,8 +904,8 @@ export default function TheoryOfChangeMasonry() {
               <img src="/images/theory-of-change/the oomf crew.jpg" alt="The OOMF Crew" className="max-w-2xl mx-auto rounded-2xl" />
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-black text-white uppercase mb-4" style={{ fontFamily: "'Arial Black', 'Arial', sans-serif" }}>We're the heroes we've been waiting for</h2>
-            <p className="text-xl md:text-2xl text-amber-400 font-bold mb-12">Now put yourself in the story</p>
+            <h2 className="text-4xl md:text-6xl font-signature font-black text-white uppercase mb-4">We're the heroes we've been waiting for</h2>
+            <p className="text-xl md:text-2xl text-liberation-gold-divine font-bold mb-12">Now put yourself in the story</p>
 
             <div className="w-full max-w-3xl mx-auto mb-8">
               <div className="relative rounded-2xl overflow-hidden border-2 border-purple-700/50" style={{ paddingBottom: '125%' }}>
