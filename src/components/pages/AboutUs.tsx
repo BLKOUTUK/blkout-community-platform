@@ -4,6 +4,7 @@
 import React, { useState } from 'react';
 import { Shield, Heart, Users, MapPin, Mail, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react';
 import VideoHero from '@/components/ui/VideoHero';
+import FoundationLayer from '@/components/foundation/FoundationLayer';
 
 interface CollapsibleSectionProps {
   title: string;
@@ -79,17 +80,18 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
         </div>
       </div>
 
-      {/* Theory of Change CTA - Featured Introduction */}
+      {/* Theory of Change CTA - Featured Introduction (foundation: joy — welcome / invitation) */}
       <div className="max-w-4xl mx-auto px-6 py-8">
         <a
           href="/movement"
-          className="block bg-liberation-black-power border-4 border-liberation-gold-divine rounded-sharp p-8 hover:bg-liberation-gold-divine/5 transition-all duration-300 group"
+          className="relative block overflow-hidden bg-liberation-black-power border-4 border-liberation-gold-divine rounded-sharp p-8 hover:bg-liberation-gold-divine/5 transition-all duration-300 group"
         >
-          <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-black text-white uppercase mb-4 group-hover:text-liberation-gold-divine transition-colors">
+          <FoundationLayer category="joy" seed="aboutus-toc" opacity={0.18} />
+          <div className="relative z-10 text-center">
+            <h2 className="font-signature text-3xl md:text-4xl font-black text-white uppercase mb-4 group-hover:text-liberation-gold-divine transition-colors [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]">
               Our Theory of Change
             </h2>
-            <p className="text-white text-lg mb-6">
+            <p className="text-white text-lg mb-6 [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]">
               New to BLKOUT? Start with our story - an immersive journey through isolation to liberation.
             </p>
             <div className="inline-flex items-center gap-2 bg-liberation-gold-divine text-black px-6 py-3 rounded-lg font-bold uppercase">
