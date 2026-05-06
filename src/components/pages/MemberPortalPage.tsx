@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { User, Edit2, Save, X, Calendar, Activity, Vote, FileText, Tag, Clock } from 'lucide-react';
 import { createClient } from '@supabase/supabase-js';
+import FoundationLayer from '@/components/foundation/FoundationLayer';
 
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL || '',
@@ -177,10 +178,13 @@ export default function MemberPortalPage() {
   return (
     <div className="min-h-screen bg-liberation-black-power noise text-white p-4 md:p-8">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-black mb-2 text-liberation-pan-african-red uppercase">MY BLKOUT PORTAL</h1>
-          <p className="text-gray-400">Manage your profile and participate in community governance</p>
+        {/* Header — with foundation imagery (power category — section is red/membership) */}
+        <div className="relative mb-8 -mx-4 md:-mx-8 px-4 md:px-8 py-12 overflow-hidden border-b-2 border-liberation-pan-african-red/40">
+          <FoundationLayer category="power" seed="member-portal-header" />
+          <div className="relative z-10">
+            <h1 className="font-signature text-4xl md:text-5xl font-black mb-2 text-liberation-pan-african-red uppercase tracking-tight [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]">MY BLKOUT PORTAL</h1>
+            <p className="text-gray-200 font-disrupt italic [text-shadow:_0_2px_8px_rgba(0,0,0,0.7)]">Manage your profile and participate in community governance</p>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
