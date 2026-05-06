@@ -81,12 +81,16 @@ interface Card {
   aspectRatio?: 'tall' | 'standard' | 'squat';
   textPosition?: 'bottomLeft' | 'topRight' | 'center' | 'topLeft' | 'bottomRight';
   purpleIntensity?: number; // 0-100, for overlay strength
-  // CSS object-position when object-cover crops the image. Default 'center top'
-  // (head-preserving) works for most portrait subjects with subject in upper half.
-  // For cards where face AND another element below both matter (e.g. card 19's
-  // figure + building site), use a percentage like '50% 35%' to anchor higher
-  // than dead-center but lower than top. Crowd shots with foreground faces use
-  // 'center bottom'. Accepts any valid CSS object-position value.
+  // CSS object-position when object-cover crops the image. Default 'center'
+  // (browser default) — most BLKOUT portraits centre the figure in the source
+  // frame with environmental space above and below, so vertical centring keeps
+  // the body visible without losing the face. Override only when the source
+  // composition demands it:
+  //   '50% 25%' — two-figure shots with both faces in the upper-third
+  //   '50% 40%' — face plus another element below that both matter (card 19)
+  //   'center top' — figures with arms/action above the head (card 37)
+  //   'center bottom' — crowd shots with foreground faces at source bottom (card 38)
+  // Accepts any valid CSS object-position value.
   imageAnchor?: string;
 }
 
@@ -194,7 +198,7 @@ const MasonryCard: React.FC<{ card: Card; index: number }> = ({ card }) => {
             src={card.imageUrl}
             alt=""
             className={`w-full h-full ${card.type === 'beauty' ? 'object-contain' : 'object-cover'} transition-transform duration-700 group-hover:scale-110`}
-            style={card.type !== 'beauty' ? { objectPosition: card.imageAnchor || 'center top' } : undefined}
+            style={card.type !== 'beauty' ? { objectPosition: card.imageAnchor || 'center' } : undefined}
           />
           {/* Text readability gradient — strengthened so highlight/body are readable on busy photos. */}
           {card.type !== 'beauty' && (
@@ -616,7 +620,8 @@ export default function TheoryOfChangeMasonry() {
       },
       animationType: 'stagger',
       aspectRatio: 'tall',
-      textPosition: 'bottomRight'
+      textPosition: 'bottomRight',
+      imageAnchor: '50% 25%' // both faces sit in the upper-third — anchor higher to keep them above text
     },
     {
       id: 9.5,
@@ -680,7 +685,7 @@ export default function TheoryOfChangeMasonry() {
     { id: 31, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-31-problem-is-us.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { body: 'Sexual identity is not a choice', highlight: 'But choosing love is' }, animationType: 'default', textPosition: 'bottomRight' },
     { id: 32, type: 'beauty', size: 'large', imageUrl: '/images/theory-of-change/card-32-never-us.png', bgGradient: 'from-violet-600 to-purple-600', content: { title: 'Tenderness is a political act.', highlight: 'Black queer joy is revolutionary' }, cta: { text: 'BLKOUT is different, it\'s ours', link: '/governance', color: 'amber' }, animationType: 'reveal', textPosition: 'topLeft' },
     { id: 32.5, type: 'beauty', size: 'large', videoUrl: '/videos/Making Space For What.mp4', bgGradient: 'from-purple-950 to-indigo-950', content: {} },
-    { id: 33, type: 'interactive', size: 'hero', imageUrl: '/images/theory-of-change/card-33-show-up.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'How do you show up?', highlight: 'Community is not a tick box, it\'s what you do' }, interactive: { type: 'poll', data: { options: ['I bring food', 'I show up', 'I listen', 'I fight', 'I laugh', 'I remember'] }}, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'topLeft', imageAnchor: 'center' }
+    { id: 33, type: 'interactive', size: 'hero', imageUrl: '/images/theory-of-change/card-33-show-up.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'How do you show up?', highlight: 'Community is not a tick box, it\'s what you do' }, interactive: { type: 'poll', data: { options: ['I bring food', 'I show up', 'I listen', 'I fight', 'I laugh', 'I remember'] }}, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'topLeft' }
   ];
 
   // ACT 5: The Invitation (Cards 35-38)
@@ -696,7 +701,7 @@ export default function TheoryOfChangeMasonry() {
       bgGradient: 'from-amber-600 to-amber-500',
       content: {}
     },
-    { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft' },
+    { id: 37, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-37-liberation.png', bgGradient: 'from-violet-950 to-purple-950', content: { body: 'What does liberation look like?', highlight: 'You.' }, cta: { text: 'Get the newsletter', link: 'https://crm.blkoutuk.cloud/join', color: 'amber' }, animationType: 'reveal', aspectRatio: 'tall', textPosition: 'bottomLeft', imageAnchor: 'center top' },
     { id: 38, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-38-damage-repair.png', bgGradient: 'from-purple-950 to-indigo-950', content: { subtitle: 'THE THESIS', body: 'The damage is structural. The repair is relational.', highlight: 'This is the work. This is the joy.' }, cta: { text: 'Explore the platform', link: '/platform', color: 'amber' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomLeft', imageAnchor: 'center bottom' }
   ];
 
