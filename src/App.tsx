@@ -36,6 +36,7 @@ import MembershipPage from '@/components/pages/MembershipPage';
 import ApparelPage from '@/components/pages/ApparelPage';
 import ApparelRangePage from '@/components/pages/ApparelRangePage';
 import CompassDropPage from '@/components/pages/CompassDropPage';
+import GbpParisInterestPage from '@/components/pages/GbpParisInterestPage';
 import BoardNavigationHub from '@/components/governance/board/BoardNavigationHub';
 import CampaignDashboard from '@/components/pages/campaigns/CampaignDashboard';
 import CompliancePage from '@/components/pages/CompliancePage';
@@ -54,7 +55,7 @@ const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'discover' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'shop/membership' | 'shop/apparel' | 'shop/apparel/blkout-proud' | 'shop/apparel/brother-to-brother' | 'shop/apparel/icons' | 'shop/drops/compass-journal' | 'board' | 'campaigns' | 'compliance';
+type NavigationTab = 'liberation' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'discover' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'shop/membership' | 'shop/apparel' | 'shop/apparel/blkout-proud' | 'shop/apparel/brother-to-brother' | 'shop/apparel/icons' | 'shop/drops/compass-journal' | 'board' | 'campaigns' | 'compliance' | 'gbp-paris';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -148,7 +149,7 @@ function getSectionAccent(tab: string): string {
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'shop/membership', 'shop/apparel', 'shop/apparel/blkout-proud', 'shop/apparel/brother-to-brother', 'shop/apparel/icons', 'shop/drops/compass-journal', 'board', 'campaigns', 'compliance'];
+  const validTabs: NavigationTab[] = ['liberation', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'shop/membership', 'shop/apparel', 'shop/apparel/blkout-proud', 'shop/apparel/brother-to-brother', 'shop/apparel/icons', 'shop/drops/compass-journal', 'board', 'campaigns', 'compliance', 'gbp-paris'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
@@ -336,6 +337,8 @@ export default function App() {
         return <ApparelRangePage range="icons" onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />;
       case 'shop/drops/compass-journal':
         return <CompassDropPage onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />;
+      case 'gbp-paris':
+        return <GbpParisInterestPage onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />;
       case 'board':
         return <BoardNavigationHub />;
       case 'campaigns':
