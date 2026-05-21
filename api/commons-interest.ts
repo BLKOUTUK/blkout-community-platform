@@ -24,6 +24,39 @@ function arr(v: unknown, max = MAX_ARR): string[] {
           .slice(0, max);
 }
 
+function num(v: unknown): number | null {
+  if (typeof v === 'number' && Number.isFinite(v)) return Math.max(0, Math.floor(v));
+  if (typeof v === 'string') {
+    const t = v.trim();
+    if (!t.length) return null;
+    const n = parseInt(t, 10);
+    return Number.isFinite(n) ? Math.max(0, n) : null;
+  }
+  return null;
+}
+
+function buildQ6(body: Record<string, unknown>): Record<string, unknown> | null {
+  const platforms = arr(body.q6a_platforms);
+  const mix = s(body.q6b_mix, 500);
+  const events_by_size = {
+    under_20:  num(body.q6c_under20),
+    '20_50':   num(body.q6c_20to50),
+    '50_100':  num(body.q6c_50to100),
+    '100_150': num(body.q6c_100to150),
+    '150_plus': num(body.q6c_150plus),
+  };
+  const ranked_reasons = [body.q6d_rank1, body.q6d_rank2, body.q6d_rank3]
+    .map(v => s(v, 200))
+    .filter((v): v is string => v !== null);
+  const ranked_other = s(body.q6d_other, 500);
+
+  const hasSize = Object.values(events_by_size).some(v => v !== null && v > 0);
+  const hasData = platforms.length > 0 || mix !== null || hasSize || ranked_reasons.length > 0 || ranked_other !== null;
+  if (!hasData) return null;
+
+  return { platforms, mix, events_by_size, ranked_reasons, ranked_other };
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -59,6 +92,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     q3_other: s(body.q3_other),
     q4_invisibility: s(body.q4_invisibility),
     q5_shared_tool: s(body.q5_shared_tool),
+    q6_ticketing: buildQ6(body),
     reg_interests: arr(body.reg_interests),
     notes: s(body.notes),
     source: s(body.source) || 'commons-landing',

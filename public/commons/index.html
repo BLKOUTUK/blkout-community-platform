@@ -652,9 +652,20 @@
       q3_other: fd.get('q3_other') || '',
       q4_invisibility: fd.get('q4_invisibility') || '',
       q5_shared_tool: fd.get('q5_shared_tool') || '',
+      q6a_platforms: fd.getAll('q6a_platforms'),
+      q6b_mix: fd.get('q6b_mix') || '',
+      q6c_under20: fd.get('q6c_under20') || '',
+      q6c_20to50: fd.get('q6c_20to50') || '',
+      q6c_50to100: fd.get('q6c_50to100') || '',
+      q6c_100to150: fd.get('q6c_100to150') || '',
+      q6c_150plus: fd.get('q6c_150plus') || '',
+      q6d_rank1: fd.get('q6d_rank1') || '',
+      q6d_rank2: fd.get('q6d_rank2') || '',
+      q6d_rank3: fd.get('q6d_rank3') || '',
+      q6d_other: fd.get('q6d_other') || '',
       reg_interests: fd.getAll('reg'),
       notes: fd.get('notes') || '',
-      source: 'commons-landing-v0.2'
+      source: 'commons-landing-v0.3'
     };
 
     fetch('/api/commons-interest', {
