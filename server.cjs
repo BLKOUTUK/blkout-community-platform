@@ -113,6 +113,26 @@ app.all('/api/webhooks/:webhook', async (req, res) => {
   }
 });
 
+// Commons moved to its own subdomain (BLKOUTUK/commons, commons.blkoutuk.com).
+// Map the old report filenames (without 01-/02- prefix) to the new ones,
+// then send everything else under /commons/* to the subdomain root.
+// Must precede express.static so static /commons assets don't shadow the redirect.
+app.use((req, res, next) => {
+  if (req.path === '/commons/reports/data-capitalism-algorithmic-racism.pdf') {
+    return res.redirect(301, 'https://commons.blkoutuk.com/reports/01-data-capitalism-algorithmic-racism.pdf');
+  }
+  if (req.path === '/commons/reports/strategic-roadmap.pdf') {
+    return res.redirect(301, 'https://commons.blkoutuk.com/reports/02-strategic-roadmap.pdf');
+  }
+  if (req.path === '/commons' || req.path === '/commons/') {
+    return res.redirect(301, 'https://commons.blkoutuk.com/');
+  }
+  if (req.path.startsWith('/commons/')) {
+    return res.redirect(301, `https://commons.blkoutuk.com/${req.path.replace(/^\/commons\//, '')}`);
+  }
+  next();
+});
+
 // Serve static files from Vite build
 app.use(express.static(path.join(__dirname, 'dist')));
 
