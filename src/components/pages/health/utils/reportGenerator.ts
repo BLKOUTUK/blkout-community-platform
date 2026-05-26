@@ -248,10 +248,10 @@ export function generateTroubleshootingReport(
     lines.push('');
   }
 
-  if (database && database.legacyArticlesCount !== 281) {
+  if (database && database.legacyArticlesCount !== 278) {
     lines.push('**Fix Database Article Count**:');
     lines.push('1. Verify Supabase connection credentials');
-    lines.push('2. Check legacy_articles table in Supabase dashboard');
+    lines.push('2. Check archived_articles table in Supabase dashboard');
     lines.push('3. Verify migrations were applied');
     lines.push('4. Check RLS policies are not blocking reads');
     lines.push('');
