@@ -34,7 +34,7 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
   const [isLoadingStory, setIsLoadingStory] = useState(true);
   const [voicesArticles, setVoicesArticles] = useState<VoicesArticle[]>([]);
 
-  // Fetch featured story from legacy_articles archive - rotates weekly
+  // Fetch featured story from archived_articles - rotates weekly
   useEffect(() => {
     const fetchFeaturedStory = async () => {
       try {
@@ -42,7 +42,7 @@ const DiscoverPage: React.FC<DiscoverPageProps> = ({ onNavigate }) => {
         const weekNumber = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000));
 
         const { data, error } = await supabase
-          .from('legacy_articles')
+          .from('archived_articles')
           .select('id, title, excerpt, content, published_at')
           .eq('status', 'published')
           .order('published_at', { ascending: false })

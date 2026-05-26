@@ -199,7 +199,7 @@ function diagnoseDatabaseFailure(error: string, context: { expectedCount?: numbe
       ],
       remediationSteps: [
         'Verify Supabase URL in environment variables',
-        'Check legacy_articles table in Supabase dashboard',
+        'Check archived_articles table in Supabase dashboard',
         'Review migration history',
         'Test query with service role key (bypasses RLS)',
         `Expected count: ${context.expectedCount}, Actual: ${context.actualCount}`,

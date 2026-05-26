@@ -19,7 +19,7 @@ export interface DatabaseHealth {
  * Expected counts for validation
  */
 const EXPECTED_COUNTS = {
-  legacyArticles: 281, // Critical: Joseph Beam archive
+  legacyArticles: 278, // Critical: Joseph Beam archive (public.archived_articles)
   minNewsArticles: 100, // Should have at least 100 news articles
   minEvents: 10, // Should have some events
 };
@@ -53,7 +53,7 @@ export async function checkDatabaseHealth(): Promise<DatabaseHealth> {
     // Test 1: Connection test with simple query
     try {
       const { error } = await supabase
-        .from('legacy_articles')
+        .from('archived_articles')
         .select('id', { count: 'exact', head: true });
 
       if (error) throw error;
@@ -66,7 +66,7 @@ export async function checkDatabaseHealth(): Promise<DatabaseHealth> {
     // Test 2: Legacy articles count (CRITICAL - must be exactly 281)
     try {
       const { count, error } = await supabase
-        .from('legacy_articles')
+        .from('archived_articles')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'published');
 
@@ -149,7 +149,7 @@ export async function checkDatabaseHealth(): Promise<DatabaseHealth> {
     // Only flags obvious test data, not legitimate articles with words like "test" in title
     try {
       const { data, error } = await supabase
-        .from('legacy_articles')
+        .from('archived_articles')
         .select('title, status')
         .or(
           'title.ilike.test article%,' +
