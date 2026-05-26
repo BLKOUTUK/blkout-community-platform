@@ -155,7 +155,19 @@ function getInitialTabFromURL(): NavigationTab {
     return path as NavigationTab;
   }
 
+  // /stories/<slug> deep links — keep the 'stories' tab active.
+  if (path.startsWith('stories/')) {
+    return 'stories';
+  }
+
   return 'liberation'; // Default fallback
+}
+
+// Extract the article slug from /stories/<slug> URLs. Returns undefined for
+// the bare /stories listing path.
+function getStorySlugFromURL(): string | undefined {
+  const m = window.location.pathname.match(/^\/stories\/(.+?)\/?$/);
+  return m ? m[1] : undefined;
 }
 
 export default function App() {
@@ -285,7 +297,7 @@ export default function App() {
       case 'about':
         return <AboutUs onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />;
       case 'stories':
-        return <StoryArchive />;
+        return <StoryArchive initialSlug={getStorySlugFromURL()} />;
       case 'intro':
         return <IVORIntroduction
           onStartChat={() => setShowIVOR(true)}
