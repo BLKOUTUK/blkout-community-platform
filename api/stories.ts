@@ -49,6 +49,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       limit = '20',
       offset = '0',
       search,
+      slug,
       sortBy = 'recent'
     } = req.query;
 
@@ -73,6 +74,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       limit: limitNum,
       offset: offsetNum,
       search: search as string,
+      slug: slug as string,
       sortBy: sortBy as string
     });
 
@@ -101,6 +103,11 @@ async function fetchFromSupabase(_req: VercelRequest, res: VercelResponse, supab
 
     // archived_articles uses category_id (FK to categories). Joining is a
     // follow-up; category strings remain default for now.
+
+    // Slug filter — used to resolve a /stories/<slug> deep link to a single row.
+    if (params.slug) {
+      query = query.eq('slug', params.slug);
+    }
 
     if (params.search) {
       const searchTerm = `%${params.search}%`;
@@ -131,6 +138,7 @@ async function fetchFromSupabase(_req: VercelRequest, res: VercelResponse, supab
     // Transform data to match expected interface
     const transformedStories = (stories || []).map((story: any) => ({
       id: story.id,
+      slug: story.slug,
       title: story.title,
       excerpt: story.excerpt || '',
       content: story.content || '',

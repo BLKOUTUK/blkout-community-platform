@@ -3,9 +3,13 @@ import { Search, ArrowLeft, BookOpen, Clock, User, Calendar } from 'lucide-react
 import VideoHero from '@/components/ui/VideoHero';
 import { storyArchiveAPI, Story } from '@/services/story-archive-api';
 
-const StoryArchive: React.FC = () => {
+interface StoryArchiveProps {
+  initialSlug?: string;
+}
+
+const StoryArchive: React.FC<StoryArchiveProps> = ({ initialSlug }) => {
   const [stories, setStories] = useState<Story[]>([]);
-  const [selectedStory, setSelectedStory] = useState<Story | null>(null);
+  const [selectedStory, setSelectedStoryState] = useState<Story | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,9 +18,44 @@ const StoryArchive: React.FC = () => {
 
   const storiesPerPage = 12;
 
+  // Single setter that keeps the URL in sync. /stories/<slug> when a story
+  // is open, /stories when back at the listing.
+  const setSelectedStory = (story: Story | null) => {
+    setSelectedStoryState(story);
+    const nextPath = story?.slug ? `/stories/${story.slug}` : '/stories';
+    if (window.location.pathname !== nextPath) {
+      window.history.pushState({}, '', nextPath);
+    }
+  };
+
   useEffect(() => {
     loadStories();
   }, [searchQuery, currentPage]);
+
+  // Deep-link load: /stories/<slug> opens that article directly on mount.
+  useEffect(() => {
+    if (!initialSlug) return;
+    let cancelled = false;
+    (async () => {
+      const story = await storyArchiveAPI.getStoryBySlug(initialSlug);
+      if (!cancelled && story) setSelectedStoryState(story);
+    })();
+    return () => { cancelled = true; };
+  }, [initialSlug]);
+
+  // Back/forward: if URL no longer carries a slug, close the open story.
+  useEffect(() => {
+    const handlePopState = () => {
+      const m = window.location.pathname.match(/^\/stories\/(.+)$/);
+      if (m) {
+        storyArchiveAPI.getStoryBySlug(m[1]).then(s => s && setSelectedStoryState(s));
+      } else {
+        setSelectedStoryState(null);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const loadStories = async () => {
     setLoading(true);

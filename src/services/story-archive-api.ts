@@ -3,6 +3,7 @@
 
 export interface Story {
   id: string;
+  slug?: string;
   title: string;
   excerpt: string;
   content: string;
@@ -157,6 +158,19 @@ class StoryArchiveAPI {
     const wordCount = content.split(/\s+/).length;
     const minutes = Math.ceil(wordCount / wordsPerMinute);
     return `${minutes} min read`;
+  }
+
+  async getStoryBySlug(slug: string): Promise<Story | null> {
+    try {
+      const response = await fetch(`${this.baseUrl}/stories?slug=${encodeURIComponent(slug)}&limit=1`);
+      if (!response.ok) return null;
+      const result = await response.json();
+      const stories = result?.data?.stories || [];
+      return stories[0] || null;
+    } catch (error) {
+      console.error('Error fetching story by slug:', error);
+      return null;
+    }
   }
 
   async getStory(id: string): Promise<Story | null> {
