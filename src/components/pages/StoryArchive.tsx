@@ -141,61 +141,95 @@ const StoryArchive: React.FC = () => {
             />
           )}
 
-          {/* Story Content */}
+          {/* Story Content — long-form typography, WordPress Gutenberg blocks */}
           <div
-            className="prose prose-invert prose-lg max-w-none story-content"
+            className="story-content"
             dangerouslySetInnerHTML={{ __html: selectedStory.content }}
           />
 
           <style>{`
-            /* Override ALL WordPress inline styles */
-            .story-content,
-            .story-content *,
-            .story-content p,
-            .story-content div,
-            .story-content span,
-            .story-content strong,
-            .story-content em,
-            .story-content li,
-            .story-content td,
-            .story-content th {
-              color: #e5e7eb !important; /* Light gray */
+            /* Long-form reading typography. The archive body is migrated
+               WordPress Gutenberg HTML, so styles need to cover the wp-block-*
+               classes as well as plain <p>/<h2>/<blockquote>/<figure>. */
+            .story-content {
+              color: #e5e7eb;
+              font-size: 1.125rem;       /* 18px */
+              line-height: 1.7;
+              font-family: ui-serif, Georgia, 'Iowan Old Style', serif;
             }
-
+            .story-content p,
+            .story-content ul,
+            .story-content ol,
+            .story-content figure,
+            .story-content pre {
+              margin: 0 0 1.4em;
+            }
             .story-content h1,
             .story-content h2,
             .story-content h3,
-            .story-content h4,
-            .story-content h5,
-            .story-content h6 {
-              color: #ffffff !important; /* White */
+            .story-content h4 {
+              color: #ffffff;
+              font-family: 'Inter', system-ui, -apple-system, sans-serif;
+              font-weight: 800;
+              line-height: 1.25;
+              margin: 2em 0 0.6em;
             }
-
+            .story-content h2 { font-size: 1.6rem; }
+            .story-content h3 { font-size: 1.3rem; }
+            .story-content h4 { font-size: 1.1rem; }
             .story-content a {
-              color: #fbbf24 !important; /* Amber */
+              color: #fbbf24;
+              text-decoration: underline;
+              text-underline-offset: 3px;
             }
-
-            .story-content blockquote,
-            .story-content blockquote * {
-              color: #d1d5db !important; /* Gray-300 */
-              border-left-color: #fbbf24 !important;
+            .story-content a:hover { color: #fde68a; }
+            .story-content strong { color: #ffffff; font-weight: 700; }
+            .story-content em { font-style: italic; }
+            .story-content ul,
+            .story-content ol {
+              padding-left: 1.5em;
+            }
+            .story-content li { margin: 0.3em 0; }
+            .story-content blockquote {
+              margin: 1.6em 0;
+              padding: 0.3em 1.2em;
+              border-left: 3px solid #D4AF37;
+              color: #d1d5db;
+              font-style: italic;
+            }
+            .story-content blockquote p:last-child { margin-bottom: 0; }
+            .story-content img,
+            .story-content figure img {
+              max-width: 100%;
+              height: auto;
+              border-radius: 0.5rem;
+              display: block;
+              margin: 1.2em auto;
+            }
+            .story-content figcaption {
+              font-size: 0.875rem;
+              color: #9ca3af;
+              text-align: center;
+              margin-top: 0.5em;
+            }
+            .story-content hr {
+              border: 0;
+              border-top: 1px solid rgba(212, 175, 55, 0.3);
+              margin: 2em 0;
+            }
+            .story-content pre,
+            .story-content code {
+              font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+              font-size: 0.95em;
+              background: rgba(255,255,255,0.05);
+              padding: 0.1em 0.35em;
+              border-radius: 4px;
+            }
+            .story-content pre {
+              padding: 1em;
+              overflow-x: auto;
             }
           `}</style>
-
-          {/* Original Source Link */}
-          {selectedStory.originalUrl && (
-            <div className="mt-12 p-6 bg-liberation-sovereignty-gold/10 border border-liberation-sovereignty-gold/20 rounded-xl">
-              <p className="text-sm text-gray-400 mb-2">Originally published on blkoutuk.com</p>
-              <a
-                href={selectedStory.originalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-liberation-sovereignty-gold hover:underline"
-              >
-                View original article →
-              </a>
-            </div>
-          )}
         </article>
       </div>
     );
