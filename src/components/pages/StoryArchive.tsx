@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, ArrowLeft, BookOpen, Tag, Clock, User, Calendar } from 'lucide-react';
+import { Search, ArrowLeft, BookOpen, Clock, User, Calendar } from 'lucide-react';
 import VideoHero from '@/components/ui/VideoHero';
 import { storyArchiveAPI, Story } from '@/services/story-archive-api';
 
@@ -8,8 +8,6 @@ const StoryArchive: React.FC = () => {
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [categories, setCategories] = useState<string[]>(['all']);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalStories, setTotalStories] = useState(0);
@@ -17,21 +15,15 @@ const StoryArchive: React.FC = () => {
   const storiesPerPage = 12;
 
   useEffect(() => {
-    loadCategories();
     loadStories();
-  }, [searchQuery, selectedCategory, currentPage]);
-
-  const loadCategories = async () => {
-    const cats = await storyArchiveAPI.getCategories();
-    setCategories(['all', ...cats]);
-  };
+  }, [searchQuery, currentPage]);
 
   const loadStories = async () => {
     setLoading(true);
     try {
       const result = await storyArchiveAPI.searchStories(
         searchQuery,
-        selectedCategory,
+        'all',
         currentPage,
         storiesPerPage
       );
@@ -278,32 +270,11 @@ const StoryArchive: React.FC = () => {
             </div>
           </form>
 
-          {/* Category Filters */}
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => {
-                  setSelectedCategory(category);
-                  setCurrentPage(1);
-                }}
-                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
-                  selectedCategory === category
-                    ? 'bg-liberation-sovereignty-gold text-black'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-              >
-                {category === 'all' ? 'All Stories' : category}
-              </button>
-            ))}
-          </div>
-
           {/* Results Count */}
           {!loading && (
             <div className="mt-4 text-sm text-gray-400">
               Found {totalStories} {totalStories === 1 ? 'story' : 'stories'}
               {searchQuery && ` for "${searchQuery}"`}
-              {selectedCategory !== 'all' && ` in ${selectedCategory}`}
             </div>
           )}
         </div>
