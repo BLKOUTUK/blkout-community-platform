@@ -15,20 +15,14 @@ RUN npm install --legacy-peer-deps
 # Copy source code
 COPY . .
 
-# Set build-time env vars
-ARG VITE_SUPABASE_URL
-ARG VITE_SUPABASE_ANON_KEY
-ARG VITE_SUPABASE_SERVICE_ROLE_KEY
-ARG NEXT_PUBLIC_SUPABASE_URL
-ARG SUPABASE_SERVICE_ROLE_KEY
-ARG VITE_API_URL
-
-# Hardcode env vars temporarily (remove after Coolify fix)
+# Build-time env for the Vite bundle. Only PUBLIC values belong here: the
+# project URL and the publishable key (safe to expose by design). The
+# service_role / secret key is NEVER baked in — it would inline into the
+# public JS bundle. Server routes read it from the runtime environment
+# (Coolify) in stage 2 instead.
 ENV VITE_SUPABASE_URL=https://bgjengudzfickgomjqmz.supabase.co
-ENV VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnamVuZ3VkemZpY2tnb21qcW16Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU2MTI3NjcsImV4cCI6MjA3MTE4ODc2N30.kYQ2oFuQBGmu4V_dnj_1zDMDVsd-qpDZJwNvswzO6M0
-ENV VITE_SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnamVuZ3VkemZpY2tnb21qcW16Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTYxMjc2NywiZXhwIjoyMDcxMTg4NzY3fQ.gfPHG-fLZA7Sc9vRG86cR9JgbXjDmdV9_pA_oSHIFMM
+ENV VITE_SUPABASE_ANON_KEY=sb_publishable_cpUwnfcJuvnjrJjmLdZpXw_jJIOa8aB
 ENV NEXT_PUBLIC_SUPABASE_URL=https://bgjengudzfickgomjqmz.supabase.co
-ENV SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJnamVuZ3VkemZpY2tnb21qcW16Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTYxMjc2NywiZXhwIjoyMDcxMTg4NzY3fQ.gfPHG-fLZA7Sc9vRG86cR9JgbXjDmdV9_pA_oSHIFMM
 ENV VITE_API_URL=/api
 ENV VITE_EVENTS_API_URL=https://events.blkoutuk.cloud
 ENV VITE_NEWS_API_URL=https://news.blkoutuk.cloud
