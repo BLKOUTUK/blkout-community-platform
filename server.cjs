@@ -133,6 +133,19 @@ app.use((req, res, next) => {
   next();
 });
 
+// Vanity redirects → canonical pages on their own subdomains.
+// 302 (not 301) so these marketing URLs stay repointable year to year.
+// Must precede express.static / SPA fallback so they aren't shadowed.
+app.use((req, res, next) => {
+  if (req.path === '/ivorstable' || req.path === '/ivorstable/') {
+    return res.redirect(302, 'https://comms.blkoutuk.com/ivors-table.html');
+  }
+  if (req.path === '/picnic' || req.path === '/picnic/') {
+    return res.redirect(302, 'https://commons.blkoutuk.com/picnic.html');
+  }
+  next();
+});
+
 // Serve static files from Vite build
 app.use(express.static(path.join(__dirname, 'dist')));
 
