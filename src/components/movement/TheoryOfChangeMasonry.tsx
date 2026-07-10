@@ -955,18 +955,16 @@ export default function TheoryOfChangeMasonry() {
 
             {/* OOMF Crew Image */}
             <div className="mb-12">
-              <img src="/images/theory-of-change/the oomf crew.jpg" alt="The OOMF Crew" className="max-w-2xl mx-auto " />
+              <img src="/images/theory-of-change/oomf-heroes-promo.jpg" alt="We’re the heroes we’ve been waiting for — now put yourself in the story. BLKOUT board members reimagined as OOMF comic heroes." className="max-w-3xl w-full mx-auto rounded-2xl" />
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-signature font-black text-white uppercase mb-4">We're the heroes we've been waiting for</h2>
-            <p className="text-xl md:text-2xl text-liberation-gold-divine font-bold mb-12">Now put yourself in the story</p>
 
             <div className="w-full max-w-3xl mx-auto mb-8">
               <div className="relative overflow-hidden border-2 border-liberation-gold-divine/30" style={{ paddingBottom: '125%' }}>
-                <iframe src="https://blkoutuk.github.io/OOMF_Interactive/" className="absolute inset-0 w-full h-full" title="Create Your Hero Panel" allow="camera; microphone" sandbox="allow-same-origin allow-scripts allow-forms allow-popups" />
+                <iframe src="https://oomf.blkoutuk.cloud/" className="absolute inset-0 w-full h-full" title="Create Your Hero Panel" allow="camera; microphone" sandbox="allow-same-origin allow-scripts allow-forms allow-popups" />
               </div>
             </div>
-            <a href="https://blkoutuk.github.io/OOMF_Interactive/" target="_blank" rel="noopener noreferrer" className="text-sm text-purple-400 hover:text-purple-300">Having trouble? Open in new tab →</a>
+            <a href="https://oomf.blkoutuk.cloud/" target="_blank" rel="noopener noreferrer" className="text-sm text-purple-400 hover:text-purple-300">Having trouble? Open in new tab →</a>
           </motion.div>
         </section>
 
