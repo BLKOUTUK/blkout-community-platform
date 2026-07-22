@@ -600,7 +600,7 @@ export const DemocraticGovernanceInterface: React.FC<DemocraticGovernanceInterfa
                       <div className="text-sm text-gray-600">Platform Operations</div>
                     </div>
                     <div className="bg-white p-4 rounded">
-                      <div className="text-2xl font-bold text-liberation-red-liberation">£2,150</div>
+                      <div className="text-2xl font-bold text-liberation-pan-african-red">£2,150</div>
                       <div className="text-sm text-gray-600">Community Programs</div>
                     </div>
                   </div>
@@ -739,10 +739,10 @@ export const DemocraticGovernanceInterface: React.FC<DemocraticGovernanceInterfa
               </h3>
               <div className="space-y-6">
                 {/* Partnership Principles */}
-                <div className="bg-liberation-red-liberation/10 border border-liberation-red-liberation/20 rounded-lg p-6">
+                <div className="bg-liberation-pan-african-red/10 border border-liberation-pan-african-red/20 rounded-lg p-6">
                   <div className="flex items-center space-x-3 mb-4">
-                    <Handshake className="h-6 w-6 text-liberation-red-liberation" />
-                    <h4 className="text-lg font-semibold text-liberation-red-liberation">Partnership Values</h4>
+                    <Handshake className="h-6 w-6 text-liberation-pan-african-red" />
+                    <h4 className="text-lg font-semibold text-liberation-pan-african-red">Partnership Values</h4>
                   </div>
                   <p className="text-sm mb-4">
                     We seek partnerships that align with our liberation values and community benefit mission.
@@ -782,7 +782,7 @@ export const DemocraticGovernanceInterface: React.FC<DemocraticGovernanceInterfa
                         <input
                           id="partner-name"
                           type="text"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-liberation-red-liberation focus:border-liberation-red-liberation"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-liberation-pan-african-red focus:border-liberation-pan-african-red"
                           placeholder="Name of potential partner"
                         />
                       </div>
@@ -792,7 +792,7 @@ export const DemocraticGovernanceInterface: React.FC<DemocraticGovernanceInterfa
                         </label>
                         <select
                           id="partnership-type"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-liberation-red-liberation focus:border-liberation-red-liberation"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-liberation-pan-african-red focus:border-liberation-pan-african-red"
                         >
                           <option value="">Select type</option>
                           <option value="technology">Technology</option>
@@ -811,7 +811,7 @@ export const DemocraticGovernanceInterface: React.FC<DemocraticGovernanceInterfa
                       <textarea
                         id="partnership-description"
                         rows={4}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-liberation-red-liberation focus:border-liberation-red-liberation"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-liberation-pan-african-red focus:border-liberation-pan-african-red"
                         placeholder="Describe the potential partnership and how it aligns with our community benefit mission..."
                       />
                     </div>
@@ -822,7 +822,7 @@ export const DemocraticGovernanceInterface: React.FC<DemocraticGovernanceInterfa
                       <input
                         id="contact-info"
                         type="email"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-liberation-red-liberation focus:border-liberation-red-liberation"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-liberation-pan-african-red focus:border-liberation-pan-african-red"
                         placeholder="your.email@example.com"
                       />
                     </div>

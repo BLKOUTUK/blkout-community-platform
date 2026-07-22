@@ -139,7 +139,7 @@ export default function DecisionRegister() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      <div className="bg-gradient-to-r from-liberation-black-power to-liberation-purple-spirit rounded-xl p-8 border border-liberation-gold-divine/30">
+      <div className="bg-gradient-to-r from-liberation-black-power to-liberation-pride-purple-deep rounded-xl p-8 border border-liberation-gold-divine/30">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-liberation-gold-divine mb-2 flex items-center gap-2">
@@ -277,7 +277,7 @@ export default function DecisionRegister() {
                   {decision.impact_areas.map((area, index) => (
                     <span
                       key={index}
-                      className="text-xs px-3 py-1 bg-liberation-purple-spirit/20 text-liberation-purple-spirit rounded-full border border-liberation-purple-spirit/30"
+                      className="text-xs px-3 py-1 bg-liberation-pride-purple-deep/20 text-liberation-pride-purple-deep rounded-full border border-liberation-pride-purple-deep/30"
                     >
                       {area}
                     </span>

@@ -328,7 +328,7 @@ export const LiberationStoriesList: React.FC<{
           {story.category && (
             <>
               <span>•</span>
-              <span className="px-2 py-1 bg-liberation-purple-spirit bg-opacity-30 rounded text-liberation-gold-divine">
+              <span className="px-2 py-1 bg-liberation-pride-purple-deep bg-opacity-30 rounded text-liberation-gold-divine">
                 {story.category}
               </span>
             </>
@@ -420,7 +420,7 @@ export const CommunityEventsList: React.FC<{
               <span className={cn(
                 'px-2 py-1 rounded',
                 isUpcoming
-                  ? 'bg-liberation-green-africa bg-opacity-30 text-liberation-green-africa'
+                  ? 'bg-liberation-pan-african-green-bright bg-opacity-30 text-liberation-pan-african-green-bright'
                   : 'bg-liberation-silver bg-opacity-30 text-liberation-silver'
               )}>
                 {isUpcoming ? 'Upcoming' : 'Past'}

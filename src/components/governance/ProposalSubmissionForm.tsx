@@ -579,7 +579,7 @@ export const ProposalSubmissionForm: React.FC<ProposalSubmissionFormProps> = ({
         {/* Community Safety */}
         <div className="space-y-3">
           <div className="flex items-center space-x-2">
-            <Shield className="h-5 w-5 text-liberation-green-africa" aria-hidden="true" />
+            <Shield className="h-5 w-5 text-liberation-pan-african-green-bright" aria-hidden="true" />
             <label className="font-medium text-liberation-black-power">
               Community Safety Impact
             </label>
@@ -616,7 +616,7 @@ export const ProposalSubmissionForm: React.FC<ProposalSubmissionFormProps> = ({
         {/* Cultural Authenticity */}
         <div className="space-y-3">
           <div className="flex items-center space-x-2">
-            <Heart className="h-5 w-5 text-liberation-red-liberation" aria-hidden="true" />
+            <Heart className="h-5 w-5 text-liberation-pan-african-red" aria-hidden="true" />
             <label className="font-medium text-liberation-black-power">
               Cultural Authenticity Impact
             </label>
@@ -653,7 +653,7 @@ export const ProposalSubmissionForm: React.FC<ProposalSubmissionFormProps> = ({
         {/* Democratic Governance */}
         <div className="space-y-3">
           <div className="flex items-center space-x-2">
-            <Vote className="h-5 w-5 text-liberation-purple-spirit" aria-hidden="true" />
+            <Vote className="h-5 w-5 text-liberation-pride-purple-deep" aria-hidden="true" />
             <label className="font-medium text-liberation-black-power">
               Democratic Governance Impact
             </label>

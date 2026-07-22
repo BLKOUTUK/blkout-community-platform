@@ -186,7 +186,7 @@ ${index + 1}. **${item.title}**
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      <div className="bg-gradient-to-r from-liberation-black-power to-liberation-purple-spirit rounded-xl p-8 border border-liberation-gold-divine/30">
+      <div className="bg-gradient-to-r from-liberation-black-power to-liberation-pride-purple-deep rounded-xl p-8 border border-liberation-gold-divine/30">
         <h1 className="text-3xl font-bold text-liberation-gold-divine mb-2 flex items-center gap-2">
           <FileText className="h-8 w-8" />
           Meeting Minutes Editor
@@ -279,7 +279,7 @@ ${index + 1}. **${item.title}**
                   <button
                     onClick={saveDraft}
                     disabled={saving}
-                    className="flex-1 bg-liberation-purple-spirit/20 border border-liberation-purple-spirit/30 hover:bg-liberation-purple-spirit/30 text-liberation-purple-spirit font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="flex-1 bg-liberation-pride-purple-deep/20 border border-liberation-pride-purple-deep/30 hover:bg-liberation-pride-purple-deep/30 text-liberation-pride-purple-deep font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     <Save className="h-5 w-5" />
                     {saving ? 'Saving...' : 'Save Draft'}

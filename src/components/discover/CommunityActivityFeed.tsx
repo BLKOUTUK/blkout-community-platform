@@ -142,13 +142,13 @@ const CommunityActivityFeed: React.FC<CommunityActivityFeedProps> = ({
   const getActivityColor = (type: CommunityActivity['type']) => {
     switch (type) {
       case 'discussion':
-        return 'text-liberation-purple-spirit bg-liberation-purple-spirit';
+        return 'text-liberation-pride-purple-deep bg-liberation-pride-purple-deep';
       case 'event':
         return 'text-liberation-gold-divine bg-liberation-gold-divine';
       case 'resource':
-        return 'text-liberation-green-africa bg-liberation-green-africa';
+        return 'text-liberation-pan-african-green-bright bg-liberation-pan-african-green-bright';
       case 'announcement':
-        return 'text-liberation-red-liberation bg-liberation-red-liberation';
+        return 'text-liberation-pan-african-red bg-liberation-pan-african-red';
       default:
         return 'text-liberation-silver bg-liberation-silver';
     }

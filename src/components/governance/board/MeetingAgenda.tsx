@@ -169,7 +169,7 @@ export default function MeetingAgenda() {
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      <div className="bg-gradient-to-r from-liberation-black-power to-liberation-purple-spirit rounded-xl p-8 border border-liberation-gold-divine/30">
+      <div className="bg-gradient-to-r from-liberation-black-power to-liberation-pride-purple-deep rounded-xl p-8 border border-liberation-gold-divine/30">
         <h1 className="text-3xl font-bold text-liberation-gold-divine mb-2 flex items-center gap-2">
           <Calendar className="h-8 w-8" />
           Meeting Agenda Builder
@@ -241,7 +241,7 @@ export default function MeetingAgenda() {
                 <div className="flex gap-2">
                   <button
                     onClick={exportAgenda}
-                    className="bg-liberation-purple-spirit/20 border border-liberation-purple-spirit/30 hover:bg-liberation-purple-spirit/30 text-liberation-purple-spirit px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+                    className="bg-liberation-pride-purple-deep/20 border border-liberation-pride-purple-deep/30 hover:bg-liberation-pride-purple-deep/30 text-liberation-pride-purple-deep px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
                   >
                     <FileDown className="h-4 w-4" />
                     Export

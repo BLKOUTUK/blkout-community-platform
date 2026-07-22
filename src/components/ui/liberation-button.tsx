@@ -69,8 +69,8 @@ const liberationButtonVariants = cva(
         // Anti-oppression - resistance and solidarity
         'anti-oppression': cn(
           liberationColors.panAfrican.red,
-          'hover:bg-liberation-red-liberation/90 text-white',
-          'border-2 border-liberation-red-liberation',
+          'hover:bg-liberation-pan-african-red/90 text-white',
+          'border-2 border-liberation-pan-african-red',
           traumaInformedUtils.getGentleHover()
         ),
         
@@ -85,8 +85,8 @@ const liberationButtonVariants = cva(
         // Organizing action - mobilization and advocacy
         'organizing-action': cn(
           liberationColors.panAfrican.green,
-          'hover:bg-liberation-green-africa/90 text-white',
-          'border-2 border-liberation-green-africa',
+          'hover:bg-liberation-pan-african-green-bright/90 text-white',
+          'border-2 border-liberation-pan-african-green-bright',
           traumaInformedUtils.getGentleHover()
         ),
         
@@ -229,9 +229,9 @@ const LiberationButton = React.forwardRef<HTMLButtonElement, LiberationButtonPro
     // Cultural color enhancement based on props
     const getCulturalEnhancement = () => {
       if (panAfricanColors && prideColors) {
-        return 'bg-gradient-to-r from-liberation-red-liberation via-liberation-pride-purple to-liberation-green-africa';
+        return 'bg-gradient-to-r from-liberation-pan-african-red via-liberation-pride-purple to-liberation-pan-african-green-bright';
       } else if (panAfricanColors) {
-        return 'border-l-4 border-liberation-red-liberation border-r-4 border-r-liberation-green-africa';
+        return 'border-l-4 border-liberation-pan-african-red border-r-4 border-r-liberation-pan-african-green-bright';
       } else if (prideColors) {
         return 'border-l-4 border-liberation-pride-pink border-r-4 border-r-liberation-pride-blue';
       }

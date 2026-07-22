@@ -106,7 +106,7 @@ const BLKOUTHUBBenefitsDisplay: React.FC<BLKOUTHUBBenefitsDisplayProps> = ({
 
   const renderCompactView = () => (
     <div className={cn(
-      'bg-gradient-to-r from-liberation-gold-divine to-liberation-red-liberation',
+      'bg-gradient-to-r from-liberation-gold-divine to-liberation-pan-african-red',
       'text-liberation-black-power rounded-lg p-4 flex items-center justify-between',
       className
     )}>
@@ -132,7 +132,7 @@ const BLKOUTHUBBenefitsDisplay: React.FC<BLKOUTHUBBenefitsDisplayProps> = ({
   const renderCardView = () => (
     <motion.div
       className={cn(
-        'bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power',
+        'bg-gradient-to-br from-liberation-pride-purple-deep to-liberation-black-power',
         'border border-liberation-gold-divine border-opacity-30 rounded-xl p-6',
         'text-liberation-silver max-w-md',
         className
@@ -180,7 +180,7 @@ const BLKOUTHUBBenefitsDisplay: React.FC<BLKOUTHUBBenefitsDisplayProps> = ({
 
   const renderFullView = () => (
     <div className={cn(
-      'bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power',
+      'bg-gradient-to-br from-liberation-pride-purple-deep to-liberation-black-power',
       'border border-liberation-gold-divine border-opacity-30 rounded-xl p-6 md:p-8',
       'text-liberation-silver',
       className
@@ -215,7 +215,7 @@ const BLKOUTHUBBenefitsDisplay: React.FC<BLKOUTHUBBenefitsDisplayProps> = ({
             className={cn(
               'p-4 rounded-lg border',
               benefit.available
-                ? 'bg-liberation-green-africa bg-opacity-20 border-liberation-green-africa text-liberation-green-africa'
+                ? 'bg-liberation-pan-african-green-bright bg-opacity-20 border-liberation-pan-african-green-bright text-liberation-pan-african-green-bright'
                 : 'bg-liberation-black-power bg-opacity-30 border-liberation-silver border-opacity-20 text-liberation-silver opacity-60'
             )}
             initial={{ opacity: 0, y: 20 }}
@@ -225,7 +225,7 @@ const BLKOUTHUBBenefitsDisplay: React.FC<BLKOUTHUBBenefitsDisplayProps> = ({
             <div className="flex items-start space-x-3">
               <div className={cn(
                 'mt-1',
-                benefit.available ? 'text-liberation-green-africa' : 'text-liberation-silver opacity-60'
+                benefit.available ? 'text-liberation-pan-african-green-bright' : 'text-liberation-silver opacity-60'
               )}>
                 {benefit.icon}
               </div>
@@ -270,7 +270,7 @@ const BLKOUTHUBBenefitsDisplay: React.FC<BLKOUTHUBBenefitsDisplayProps> = ({
       {/* Community Stats */}
       <div className="grid grid-cols-3 gap-4 text-center">
         <div className="bg-liberation-black-power bg-opacity-30 rounded p-3">
-          <Heart className="h-5 w-5 text-liberation-red-liberation mx-auto mb-1" />
+          <Heart className="h-5 w-5 text-liberation-pan-african-red mx-auto mb-1" />
           <div className="text-liberation-gold-divine font-semibold text-sm">Member Since</div>
           <div className="text-xs text-liberation-silver">
             {new Date(member.memberSince).toLocaleDateString()}
@@ -284,7 +284,7 @@ const BLKOUTHUBBenefitsDisplay: React.FC<BLKOUTHUBBenefitsDisplayProps> = ({
           </div>
         </div>
         <div className="bg-liberation-black-power bg-opacity-30 rounded p-3">
-          <Award className="h-5 w-5 text-liberation-purple-spirit mx-auto mb-1" />
+          <Award className="h-5 w-5 text-liberation-pride-purple-deep mx-auto mb-1" />
           <div className="text-liberation-gold-divine font-semibold text-sm">Badges</div>
           <div className="text-xs text-liberation-silver">
             {member.badges.length}
@@ -318,7 +318,7 @@ const BLKOUTHUBBenefitsDisplay: React.FC<BLKOUTHUBBenefitsDisplayProps> = ({
   if (!member && showJoinButton) {
     return (
       <div className={cn(
-        'bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power',
+        'bg-gradient-to-br from-liberation-pride-purple-deep to-liberation-black-power',
         'border border-liberation-gold-divine border-opacity-30 rounded-xl p-6',
         'text-liberation-silver text-center',
         className

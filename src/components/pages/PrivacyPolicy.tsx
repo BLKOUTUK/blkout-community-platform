@@ -15,7 +15,7 @@ const PrivacyPolicy: React.FC = () => {
             className="text-center"
           >
             <div className="flex justify-center mb-6">
-              <Shield className="w-16 h-16 text-liberation-red-liberation" />
+              <Shield className="w-16 h-16 text-liberation-pan-african-red" />
             </div>
             <h1 className="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-gray-100 uppercase">
               Privacy Policy
@@ -42,7 +42,7 @@ const PrivacyPolicy: React.FC = () => {
             className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg"
           >
             <div className="flex items-center gap-3 mb-4">
-              <Eye className="w-8 h-8 text-liberation-red-liberation" />
+              <Eye className="w-8 h-8 text-liberation-pan-african-red" />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Introduction</h2>
             </div>
             <p className="text-gray-700 dark:text-gray-300 mb-4">
@@ -293,10 +293,10 @@ const PrivacyPolicy: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.3 }}
-            className="bg-gradient-to-br from-liberation-red-liberation/10 to-purple-100 dark:from-liberation-red-liberation/20 dark:to-purple-900/20 p-8 rounded-2xl"
+            className="bg-gradient-to-br from-liberation-pan-african-red/10 to-purple-100 dark:from-liberation-pan-african-red/20 dark:to-purple-900/20 p-8 rounded-2xl"
           >
             <div className="flex items-center gap-3 mb-4">
-              <Mail className="w-8 h-8 text-liberation-red-liberation" />
+              <Mail className="w-8 h-8 text-liberation-pan-african-red" />
               <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">12. Contact Us</h2>
             </div>
             <p className="text-gray-700 dark:text-gray-300 mb-4">

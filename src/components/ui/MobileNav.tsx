@@ -127,7 +127,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
                     onIVOROpen();
                     setIsOpen(false);
                   }}
-                  className="w-full bg-liberation-green-africa text-white p-4 rounded-lg hover:bg-opacity-80 transition-colors touch-friendly font-medium"
+                  className="w-full bg-liberation-pan-african-green-bright text-white p-4 rounded-lg hover:bg-opacity-80 transition-colors touch-friendly font-medium"
                 >
                   Ask AIvor
                 </button>

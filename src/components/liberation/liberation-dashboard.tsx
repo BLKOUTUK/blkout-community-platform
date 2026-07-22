@@ -182,7 +182,7 @@ export const LiberationDashboard: React.FC<LiberationDashboardProps> = ({
           description: 'Leading liberation efforts and mobilizing community power',
           color: liberationColors.panAfrican.green,
           icon: Users,
-          gradient: 'from-liberation-green-africa to-liberation-red-liberation',
+          gradient: 'from-liberation-pan-african-green-bright to-liberation-pan-african-red',
         };
       default:
         return {

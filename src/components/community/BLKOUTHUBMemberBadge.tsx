@@ -28,9 +28,9 @@ const BLKOUTHUBMemberBadge: React.FC<BLKOUTHUBMemberBadgeProps> = ({
       case 'steward':
         return <Crown className="h-4 w-4 text-liberation-gold-divine" />;
       case 'organizer':
-        return <Shield className="h-4 w-4 text-liberation-red-liberation" />;
+        return <Shield className="h-4 w-4 text-liberation-pan-african-red" />;
       case 'participant':
-        return <Users className="h-4 w-4 text-liberation-green-africa" />;
+        return <Users className="h-4 w-4 text-liberation-pan-african-green-bright" />;
       case 'observer':
         return <Eye className="h-4 w-4 text-liberation-silver" />;
       default:
@@ -41,13 +41,13 @@ const BLKOUTHUBMemberBadge: React.FC<BLKOUTHUBMemberBadgeProps> = ({
   const getGovernanceLevelColor = () => {
     switch (member.governanceLevel) {
       case 'steward':
-        return 'from-liberation-gold-divine to-liberation-red-liberation';
+        return 'from-liberation-gold-divine to-liberation-pan-african-red';
       case 'organizer':
-        return 'from-liberation-red-liberation to-liberation-purple-spirit';
+        return 'from-liberation-pan-african-red to-liberation-pride-purple-deep';
       case 'participant':
-        return 'from-liberation-green-africa to-liberation-gold-divine';
+        return 'from-liberation-pan-african-green-bright to-liberation-gold-divine';
       case 'observer':
-        return 'from-liberation-silver to-liberation-purple-spirit';
+        return 'from-liberation-silver to-liberation-pride-purple-deep';
       default:
         return 'from-liberation-black-power to-liberation-silver';
     }
