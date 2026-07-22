@@ -114,7 +114,7 @@ class ErrorBoundary extends React.Component<any, any> {
             <p className="text-liberation-silver mb-4">Loading error occurred. Check console for details.</p>
             <p className="text-xs text-gray-500 mb-4">Error: {this.state.error?.message || this.state.error?.toString() || 'Unknown error'}</p>
             <button
-              className="px-6 py-3 bg-liberation-red-liberation text-white rounded-lg hover:bg-opacity-80 transition-colors"
+              className="px-6 py-3 bg-liberation-pan-african-red text-white rounded-lg hover:bg-opacity-80 transition-colors"
               onClick={() => window.location.reload()}
             >
               Return to Liberation

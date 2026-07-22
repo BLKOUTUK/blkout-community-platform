@@ -67,7 +67,7 @@ const BLKOUTHUBInvitation: React.FC<BLKOUTHUBInvitationProps> = ({
     >
       <motion.div
         className={cn(
-          "bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power",
+          "bg-gradient-to-br from-liberation-pride-purple-deep to-liberation-black-power",
           "border border-liberation-gold-divine border-opacity-30",
           "rounded-xl p-6 md:p-8 max-w-2xl w-full mx-auto",
           "text-liberation-silver",
@@ -141,11 +141,11 @@ const BLKOUTHUBInvitation: React.FC<BLKOUTHUBInvitationProps> = ({
               <span className="text-liberation-silver"><strong>Observer:</strong> Community access</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-liberation-green-africa rounded-full"></div>
+              <div className="w-2 h-2 bg-liberation-pan-african-green-bright rounded-full"></div>
               <span className="text-liberation-silver"><strong>Participant:</strong> Full voting rights</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-liberation-red-liberation rounded-full"></div>
+              <div className="w-2 h-2 bg-liberation-pan-african-red rounded-full"></div>
               <span className="text-liberation-silver"><strong>Organizer:</strong> Enhanced voting + proposals</span>
             </div>
             <div className="flex items-center space-x-2">

@@ -50,7 +50,7 @@ export default function DiscoverPage({ onNavigate }: DiscoverPageProps) {
         >
           <div
             onClick={() => onNavigate?.('movement')}
-            className="bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 cursor-pointer group"
+            className="bg-gradient-to-br from-liberation-pride-purple-deep to-liberation-black-power text-white p-8 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 cursor-pointer group"
           >
             <div className="text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 group-hover:text-liberation-gold-divine transition-colors">

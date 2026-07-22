@@ -220,7 +220,7 @@ export default function BoardPortalDashboard() {
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-liberation-black-power to-liberation-purple-spirit rounded-xl p-8 border border-liberation-gold-divine/30">
+      <div className="bg-gradient-to-r from-liberation-black-power to-liberation-pride-purple-deep rounded-xl p-8 border border-liberation-gold-divine/30">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-liberation-gold-divine mb-2">
@@ -404,20 +404,20 @@ export default function BoardPortalDashboard() {
 
       {/* Quick Links */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <button className="bg-liberation-purple-spirit/20 border border-liberation-purple-spirit/30 rounded-xl p-4 hover:bg-liberation-purple-spirit/30 transition-colors">
-          <Calendar className="h-8 w-8 text-liberation-purple-spirit mx-auto mb-2" />
+        <button className="bg-liberation-pride-purple-deep/20 border border-liberation-pride-purple-deep/30 rounded-xl p-4 hover:bg-liberation-pride-purple-deep/30 transition-colors">
+          <Calendar className="h-8 w-8 text-liberation-pride-purple-deep mx-auto mb-2" />
           <span className="text-white text-sm font-medium block">Schedule Meeting</span>
         </button>
         <button className="bg-liberation-gold-divine/20 border border-liberation-gold-divine/30 rounded-xl p-4 hover:bg-liberation-gold-divine/30 transition-colors">
           <Vote className="h-8 w-8 text-liberation-gold-divine mx-auto mb-2" />
           <span className="text-white text-sm font-medium block">New Proposal</span>
         </button>
-        <button className="bg-liberation-red-liberation/20 border border-liberation-red-liberation/30 rounded-xl p-4 hover:bg-liberation-red-liberation/30 transition-colors">
-          <FileText className="h-8 w-8 text-liberation-red-liberation mx-auto mb-2" />
+        <button className="bg-liberation-pan-african-red/20 border border-liberation-pan-african-red/30 rounded-xl p-4 hover:bg-liberation-pan-african-red/30 transition-colors">
+          <FileText className="h-8 w-8 text-liberation-pan-african-red mx-auto mb-2" />
           <span className="text-white text-sm font-medium block">View Documents</span>
         </button>
-        <button className="bg-liberation-green-africa/20 border border-liberation-green-africa/30 rounded-xl p-4 hover:bg-liberation-green-africa/30 transition-colors">
-          <Users className="h-8 w-8 text-liberation-green-africa mx-auto mb-2" />
+        <button className="bg-liberation-pan-african-green-bright/20 border border-liberation-pan-african-green-bright/30 rounded-xl p-4 hover:bg-liberation-pan-african-green-bright/30 transition-colors">
+          <Users className="h-8 w-8 text-liberation-pan-african-green-bright mx-auto mb-2" />
           <span className="text-white text-sm font-medium block">Board Directory</span>
         </button>
       </div>

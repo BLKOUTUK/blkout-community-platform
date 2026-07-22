@@ -107,7 +107,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
     <AnimatePresence mode="wait">
       <motion.div
         className={cn(
-          "fixed inset-0 z-50 bg-gradient-to-br from-liberation-black-power via-liberation-purple-spirit to-liberation-black-power",
+          "fixed inset-0 z-50 bg-gradient-to-br from-liberation-black-power via-liberation-pride-purple-deep to-liberation-black-power",
           "flex items-center justify-center p-4",
           className
         )}
@@ -201,7 +201,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                 {/* Theory of Change - FEATURED */}
                 <motion.button
                   onClick={() => handleEcosystemChoice('scrollytelling')}
-                  className="group bg-gradient-to-br from-liberation-red-liberation to-liberation-purple-spirit text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 ring-2 ring-liberation-gold-divine"
+                  className="group bg-gradient-to-br from-liberation-pan-african-red to-liberation-pride-purple-deep text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 ring-2 ring-liberation-gold-divine"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -221,7 +221,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                 {/* IVOR Assistant */}
                 <motion.button
                   onClick={() => handleEcosystemChoice('ivor')}
-                  className="group bg-gradient-to-br from-liberation-green-africa to-liberation-gold-divine text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300"
+                  className="group bg-gradient-to-br from-liberation-pan-african-green-bright to-liberation-gold-divine text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -241,7 +241,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                 {/* Community Platform */}
                 <motion.button
                   onClick={() => handleEcosystemChoice('platform')}
-                  className="group bg-gradient-to-br from-liberation-purple-spirit to-liberation-black-power text-white p-6 rounded-xl hover:scale-105 transition-all duration-300"
+                  className="group bg-gradient-to-br from-liberation-pride-purple-deep to-liberation-black-power text-white p-6 rounded-xl hover:scale-105 transition-all duration-300"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -261,7 +261,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                 {/* BLKOUTHUB */}
                 <motion.button
                   onClick={() => handleEcosystemChoice('blkouthub')}
-                  className="group bg-gradient-to-br from-liberation-gold-divine to-liberation-red-liberation text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300"
+                  className="group bg-gradient-to-br from-liberation-gold-divine to-liberation-pan-african-red text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -281,7 +281,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                 {/* Newsletter */}
                 <motion.button
                   onClick={() => handleEcosystemChoice('newsletter')}
-                  className="group bg-gradient-to-br from-liberation-silver to-liberation-purple-spirit text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300"
+                  className="group bg-gradient-to-br from-liberation-silver to-liberation-pride-purple-deep text-liberation-black-power p-6 rounded-xl hover:scale-105 transition-all duration-300"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -301,7 +301,7 @@ const FirstTimeUserFlow: React.FC<FirstTimeUserFlowProps> = ({
                 {/* All Platforms */}
                 <motion.button
                   onClick={() => handleEcosystemChoice('platform')}
-                  className="group bg-gradient-to-br from-liberation-black-power to-liberation-red-liberation text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 border-2 border-liberation-gold-divine"
+                  className="group bg-gradient-to-br from-liberation-black-power to-liberation-pan-african-red text-white p-6 rounded-xl hover:scale-105 transition-all duration-300 border-2 border-liberation-gold-divine"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >

@@ -13,7 +13,7 @@ const PlatformPage: React.FC<PlatformPageProps> = ({ onNavigate }) => {
       label: 'LIBERATION',
       icon: Heart,
       description: 'Community-owned platform for Black queer liberation',
-      color: 'bg-liberation-red-liberation',
+      color: 'bg-liberation-pan-african-red',
       type: 'button'
     },
     {
@@ -21,7 +21,7 @@ const PlatformPage: React.FC<PlatformPageProps> = ({ onNavigate }) => {
       label: 'AIvor',
       icon: Brain,
       description: 'Meet your AI liberation assistant',
-      color: 'bg-liberation-purple-spirit',
+      color: 'bg-liberation-pride-purple-deep',
       type: 'button'
     },
     {
@@ -29,7 +29,7 @@ const PlatformPage: React.FC<PlatformPageProps> = ({ onNavigate }) => {
       label: 'GOVERNANCE',
       icon: Vote,
       description: 'Democratic community decision-making',
-      color: 'bg-liberation-green-africa',
+      color: 'bg-liberation-pan-african-green-bright',
       type: 'button'
     },
     {
@@ -63,7 +63,7 @@ const PlatformPage: React.FC<PlatformPageProps> = ({ onNavigate }) => {
       label: 'ABOUT',
       icon: Info,
       description: 'Our mission, values, and vision',
-      color: 'bg-liberation-purple-spirit',
+      color: 'bg-liberation-pride-purple-deep',
       type: 'button'
     }
   ];

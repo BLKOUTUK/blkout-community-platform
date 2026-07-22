@@ -104,6 +104,19 @@ module.exports = {
           solidarity: '#9B4DCA',
         },
 
+        // Standalone role tokens
+        // Both were called throughout the app but defined nowhere, so 216
+        // utility classes emitted no CSS at all. Added here rather than
+        // rewriting every call site — see PR #38 for the audit.
+
+        // Secondary text on dark grounds — 156 of its uses are text-*.
+        // Same value as liberation-neutral-400, named separately because the
+        // code treats it as a role, not a step on a scale. ~7.6:1 on black.
+        'liberation-silver': '#A3A3A3',
+
+        // Warm off-white card surface, used with black text and gold borders.
+        'liberation-cream': '#F7F2E7',
+
         // Neutral Grays
         'liberation-neutral': {
           50: '#FAFAFA',

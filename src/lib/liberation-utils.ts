@@ -19,9 +19,9 @@ export function cn(...inputs: ClassValue[]) {
 export const liberationColors = {
   // Pan-African liberation colors
   panAfrican: {
-    red: 'text-liberation-red-liberation bg-liberation-red-liberation',
+    red: 'text-liberation-pan-african-red bg-liberation-pan-african-red',
     black: 'text-liberation-black-power bg-liberation-black-power',
-    green: 'text-liberation-green-africa bg-liberation-green-africa',
+    green: 'text-liberation-pan-african-green-bright bg-liberation-pan-african-green-bright',
   },
   
   // Pride celebration colors
@@ -41,8 +41,8 @@ export const liberationColors = {
   // Economic justice colors
   economic: {
     sovereignty: 'text-liberation-sovereignty-gold bg-liberation-sovereignty-gold',
-    transparency: 'text-liberation-transparency-blue bg-liberation-transparency-blue',
-    empowerment: 'text-liberation-empowerment-orange bg-liberation-empowerment-orange',
+    transparency: 'text-liberation-economic-transparency bg-liberation-economic-transparency',
+    empowerment: 'text-liberation-economic-empowerment bg-liberation-economic-empowerment',
   },
 } as const;
 
@@ -51,10 +51,10 @@ export const governanceUtils = {
   // Voting status utilities
   getVotingStatusColor: (status: string) => {
     switch (status) {
-      case 'active': return 'text-liberation-green-africa bg-liberation-green-africa';
+      case 'active': return 'text-liberation-pan-african-green-bright bg-liberation-pan-african-green-bright';
       case 'pending': return 'text-liberation-pride-yellow bg-liberation-pride-yellow';
       case 'completed': return 'text-liberation-pride-blue bg-liberation-pride-blue';
-      case 'rejected': return 'text-liberation-red-liberation bg-liberation-red-liberation';
+      case 'rejected': return 'text-liberation-pan-african-red bg-liberation-pan-african-red';
       default: return 'text-liberation-silver bg-liberation-silver';
     }
   },
@@ -62,7 +62,7 @@ export const governanceUtils = {
   // Proposal type utilities
   getProposalTypeColor: (type: string) => {
     switch (type) {
-      case 'platform-change': return 'text-liberation-purple-spirit bg-liberation-purple-spirit';
+      case 'platform-change': return 'text-liberation-pride-purple-deep bg-liberation-pride-purple-deep';
       case 'resource-allocation': return 'text-liberation-sovereignty-gold bg-liberation-sovereignty-gold';
       case 'community-guideline': return 'text-liberation-healing-sage bg-liberation-healing-sage';
       case 'technical-improvement': return 'text-liberation-pride-blue bg-liberation-pride-blue';
@@ -194,7 +194,7 @@ export const traumaInformedUtils = {
 export const culturalUtils = {
   // Pan-African color combinations
   getPanAfricanGradient: () => {
-    return 'bg-gradient-to-r from-liberation-red-liberation via-liberation-black-power to-liberation-green-africa';
+    return 'bg-gradient-to-r from-liberation-pan-african-red via-liberation-black-power to-liberation-pan-african-green-bright';
   },
   
   // Pride flag color combinations

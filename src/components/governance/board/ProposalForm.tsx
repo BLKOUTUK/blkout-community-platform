@@ -117,7 +117,7 @@ export default function ProposalForm() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      <div className="bg-gradient-to-r from-liberation-black-power to-liberation-purple-spirit rounded-xl p-8 border border-liberation-gold-divine/30">
+      <div className="bg-gradient-to-r from-liberation-black-power to-liberation-pride-purple-deep rounded-xl p-8 border border-liberation-gold-divine/30">
         <h1 className="text-3xl font-bold text-liberation-gold-divine mb-2 flex items-center gap-2">
           <Vote className="h-8 w-8" />
           Submit Proposal
