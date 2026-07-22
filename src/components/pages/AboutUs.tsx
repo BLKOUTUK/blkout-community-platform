@@ -192,9 +192,12 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                     <p className="text-gray-300 leading-relaxed mb-4">
                       Award-winning busybody and recovering academic, Dr Rob Berkeley leads the development of BLKOUT Media.
                       He was director of the racial justice think-tank, Runnymede Trust (2009-14) — the youngest director
-                      in its fifty-year history — before a stint advising the BBC on audience accountability. He serves as
-                      Chair of the Doc Society Charitable Trust, and on the boards of Stanley Arts (SE25), Riverside
-                      Studios, and the Black Boy Joy Club CIC. Rob was awarded an MBE in 2015 for services to equality.
+                      in its fifty-year history — before a stint at the BBC advising on media strategy and audience
+                      accountability. He chairs the Doc Society Charitable Trust and serves on the boards of Stanley Arts
+                      (SE25) and the Black Boy Joy Club CIC; formerly he served on the boards of Stonewall, the Baring
+                      Foundation (as Vice-Chair), and Riverside Studios. A writer and researcher, his work appears in The
+                      Guardian, The Independent, and short-form documentary. Rob was awarded an MBE in 2015 for services
+                      to equality and human rights.
                     </p>
                     <div className="text-sm text-gray-400">
                       <p className="mb-2"><strong>Why we share this:</strong> Transparency builds trust. You have a right to know who makes decisions
@@ -620,9 +623,12 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                     <p className="text-gray-300 leading-relaxed mb-3 text-sm">
                       Award-winning busybody and recovering academic, Dr Rob Berkeley leads the development of BLKOUT Media.
                       He was director of the racial justice think-tank, Runnymede Trust (2009-14) — the youngest director
-                      in its fifty-year history — before a stint advising the BBC on audience accountability. He serves as
-                      Chair of the Doc Society Charitable Trust, and on the boards of Stanley Arts (SE25), Riverside
-                      Studios, and the Black Boy Joy Club CIC. Rob was awarded an MBE in 2015 for services to equality.
+                      in its fifty-year history — before a stint at the BBC advising on media strategy and audience
+                      accountability. He chairs the Doc Society Charitable Trust and serves on the boards of Stanley Arts
+                      (SE25) and the Black Boy Joy Club CIC; formerly he served on the boards of Stonewall, the Baring
+                      Foundation (as Vice-Chair), and Riverside Studios. A writer and researcher, his work appears in The
+                      Guardian, The Independent, and short-form documentary. Rob was awarded an MBE in 2015 for services
+                      to equality and human rights.
                     </p>
                     <p className="text-xs text-gray-400 italic">
                       <strong className="text-white">Transparency commitment:</strong> You have a right to know who makes decisions
