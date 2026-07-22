@@ -191,9 +191,10 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                     </div>
                     <p className="text-gray-300 leading-relaxed mb-4">
                       Award-winning busybody and recovering academic, Dr Rob Berkeley leads the development of BLKOUT Media.
-                      He was director of the racial justice think-tank, Runnymede Trust (2009-14), before a stint advising
-                      the BBC on audience accountability. He serves on the boards of Stanley Arts (SE25), the Black Boy Joy
-                      Club CIC, and is a Chair of Doc Society, and the Black Researcher Consortium. Rob was awarded an MBE
+                      He was director of the racial justice think-tank, Runnymede Trust (2009-14) — the youngest director
+                      in its fifty-year history — before a stint advising the BBC on audience accountability. He serves as
+                      Vice Chair of the Baring Foundation, Chair of the Doc Society Charitable Trust, and on the boards of
+                      Stanley Arts (SE25), Riverside Studios, and the Black Boy Joy Club CIC. Rob was awarded an MBE
                       in 2015 for services to equality.
                     </p>
                     <div className="text-sm text-gray-400">
@@ -619,9 +620,10 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                     </div>
                     <p className="text-gray-300 leading-relaxed mb-3 text-sm">
                       Award-winning busybody and recovering academic, Dr Rob Berkeley leads the development of BLKOUT Media.
-                      He was director of the racial justice think-tank, Runnymede Trust (2009-14), before a stint advising
-                      the BBC on audience accountability. He serves on the boards of Stanley Arts (SE25), the Black Boy Joy
-                      Club CIC, and is a Chair of Doc Society, and the Black Researcher Consortium. Rob was awarded an MBE
+                      He was director of the racial justice think-tank, Runnymede Trust (2009-14) — the youngest director
+                      in its fifty-year history — before a stint advising the BBC on audience accountability. He serves as
+                      Vice Chair of the Baring Foundation, Chair of the Doc Society Charitable Trust, and on the boards of
+                      Stanley Arts (SE25), Riverside Studios, and the Black Boy Joy Club CIC. Rob was awarded an MBE
                       in 2015 for services to equality.
                     </p>
                     <p className="text-xs text-gray-400 italic">
