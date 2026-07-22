@@ -105,6 +105,17 @@ module.exports = {
         },
 
         // Neutral Grays
+        // Two tokens the codebase has always called for but the palette never
+        // defined, so 216 utility classes emitted no CSS at all. Adding them
+        // rather than rewriting every call site — see PR for the audit.
+        // Secondary text on dark grounds — 156 of its uses are text-*.
+        // Same value as liberation-neutral-400; named separately because the
+        // code treats it as a role, not a step on a scale. ~7.6:1 on black.
+        'liberation-silver': '#A3A3A3',
+
+        // Warm off-white card surface, used with black text and gold borders.
+        'liberation-cream': '#F7F2E7',
+
         'liberation-neutral': {
           50: '#FAFAFA',
           100: '#F5F5F5',
