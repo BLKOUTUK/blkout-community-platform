@@ -193,9 +193,8 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                       Award-winning busybody and recovering academic, Dr Rob Berkeley leads the development of BLKOUT Media.
                       He was director of the racial justice think-tank, Runnymede Trust (2009-14) — the youngest director
                       in its fifty-year history — before a stint advising the BBC on audience accountability. He serves as
-                      Vice Chair of the Baring Foundation, Chair of the Doc Society Charitable Trust, and on the boards of
-                      Stanley Arts (SE25), Riverside Studios, and the Black Boy Joy Club CIC. Rob was awarded an MBE
-                      in 2015 for services to equality.
+                      Chair of the Doc Society Charitable Trust, and on the boards of Stanley Arts (SE25), Riverside
+                      Studios, and the Black Boy Joy Club CIC. Rob was awarded an MBE in 2015 for services to equality.
                     </p>
                     <div className="text-sm text-gray-400">
                       <p className="mb-2"><strong>Why we share this:</strong> Transparency builds trust. You have a right to know who makes decisions
@@ -622,9 +621,8 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                       Award-winning busybody and recovering academic, Dr Rob Berkeley leads the development of BLKOUT Media.
                       He was director of the racial justice think-tank, Runnymede Trust (2009-14) — the youngest director
                       in its fifty-year history — before a stint advising the BBC on audience accountability. He serves as
-                      Vice Chair of the Baring Foundation, Chair of the Doc Society Charitable Trust, and on the boards of
-                      Stanley Arts (SE25), Riverside Studios, and the Black Boy Joy Club CIC. Rob was awarded an MBE
-                      in 2015 for services to equality.
+                      Chair of the Doc Society Charitable Trust, and on the boards of Stanley Arts (SE25), Riverside
+                      Studios, and the Black Boy Joy Club CIC. Rob was awarded an MBE in 2015 for services to equality.
                     </p>
                     <p className="text-xs text-gray-400 italic">
                       <strong className="text-white">Transparency commitment:</strong> You have a right to know who makes decisions
