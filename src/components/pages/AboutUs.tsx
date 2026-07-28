@@ -2,7 +2,7 @@
 // Comprehensive transparency, policies, and technical information
 
 import React, { useState } from 'react';
-import { Shield, Heart, Users, MapPin, Mail, ChevronDown, ChevronUp, ArrowRight } from 'lucide-react';
+import { Shield, Heart, Users, MapPin, Mail, ChevronDown, ChevronUp, ArrowRight, Clock } from 'lucide-react';
 import VideoHero from '@/components/ui/VideoHero';
 import FoundationLayer from '@/components/foundation/FoundationLayer';
 
@@ -566,6 +566,25 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                   <li>• Annual third-party audits of community benefit compliance</li>
                 </ul>
               </div>
+
+              {/* Ten Years — the history behind the structure */}
+              <button
+                onClick={() => onNavigate?.('ten-years')}
+                className="w-full bg-liberation-black-power p-6 rounded-xl border border-[#FFD700]/30 hover:border-[#FFD700]/60 transition-all group text-left mb-6"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-xl bg-[#FFD700]/10">
+                      <Clock className="w-6 h-6 text-[#FFD700]" />
+                    </div>
+                    <div>
+                      <h4 className="text-white font-bold text-lg">Ten Years</h4>
+                      <p className="text-gray-400 text-sm">Four shapes, one commitment — including the sixteen months we spent listening.</p>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-5 h-5 text-[#FFD700] group-hover:translate-x-1 transition-transform" />
+                </div>
+              </button>
 
               {/* Best Practice Hub link */}
               <button
