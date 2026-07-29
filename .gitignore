@@ -11,3 +11,6 @@ dist/
 # WSL2 metadata
 *Zone.Identifier
 graphify-out/
+
+# generated design preview (rebuild: python3 scripts/build-ten-years-preview.py)
+TEN-YEARS-PREVIEW.html
