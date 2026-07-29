@@ -20,16 +20,17 @@ const MobileNav: React.FC<MobileNavProps> = ({
   // Top 5 — always shown
   const primaryItems = [
     { id: 'liberation', label: 'Home', icon: Heart, type: 'button' as const },
-    { id: 'events', label: 'Events', icon: ExternalLink, type: 'link' as const, href: 'https://events.blkoutuk.cloud' },
-    { id: 'newsroom', label: 'News', icon: ExternalLink, type: 'link' as const, href: 'https://news.blkoutuk.cloud' },
+    { id: 'events', label: 'Events', icon: ExternalLink, type: 'link' as const, href: 'https://events.blkoutuk.com' },
+    { id: 'newsroom', label: 'News', icon: ExternalLink, type: 'link' as const, href: 'https://news.blkoutuk.com' },
     { id: 'intro', label: 'AIvor', icon: Brain, type: 'button' as const },
     { id: 'about', label: 'About', icon: Info, type: 'button' as const },
+    { id: 'ten-years', label: 'Ten Years', icon: Calendar, type: 'button' as const },
   ];
 
   // Secondary — shown below a divider
   const secondaryItems = [
-    { id: 'discover', label: 'Discover', icon: ExternalLink, type: 'link' as const, href: 'https://comms.blkoutuk.cloud/discover' },
-    { id: 'voices', label: 'Voices', icon: ExternalLink, type: 'link' as const, href: 'https://voices.blkoutuk.cloud' },
+    { id: 'discover', label: 'Discover', icon: ExternalLink, type: 'link' as const, href: 'https://comms.blkoutuk.com/discover' },
+    { id: 'voices', label: 'Voices', icon: ExternalLink, type: 'link' as const, href: 'https://voices.blkoutuk.com' },
     { id: 'community', label: 'Community', icon: ExternalLink, type: 'link' as const, href: 'https://blkouthub.com' },
     { id: 'governance', label: 'Governance', icon: Vote, type: 'button' as const },
     { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' as const },

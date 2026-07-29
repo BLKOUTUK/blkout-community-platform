@@ -330,12 +330,16 @@ export default function TenYears({ onNavigate }: TenYearsProps) {
               </blockquote>
             )}
 
+            {/* The archive has no date filter — StoryArchive takes only `initialSlug` —
+                so this must not promise period-specific results. Relabelled after a
+                review flagged four CTAs all landing on the same unfiltered listing.
+                Wiring a real period filter is the improvement, not a better label. */}
             <button
               onClick={() => onNavigate?.('stories')}
               className="mt-10 inline-flex items-center gap-2 px-5 py-3 text-xs uppercase tracking-[0.18em] transition-colors hover:bg-white/5"
               style={{ border: `1px solid ${GOLD_DEEP}66`, color: GOLD, fontFamily: MONO }}
             >
-              Read from this period →
+              Open the story archive →
             </button>
           </section>
         ))}
