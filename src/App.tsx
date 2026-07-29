@@ -3,7 +3,7 @@
 // STRICT SEPARATION: Application shell only - NO business logic
 
 import React, { useState, useEffect } from 'react';
-import { DollarSign, Brain } from 'lucide-react';
+import { DollarSign, Brain, Play, Sparkles } from 'lucide-react';
 import {
   cn,
   culturalUtils,
@@ -29,7 +29,6 @@ import PrivacyPolicy from '@/components/pages/PrivacyPolicy';
 import HealthDashboard from '@/components/pages/HealthDashboard';
 import MobileNav from '@/components/ui/MobileNav';
 import InstallPrompt from '@/components/ui/InstallPrompt';
-import FirstTimeUserFlow from '@/components/onboarding/FirstTimeUserFlow';
 import VideoHero from '@/components/ui/VideoHero';
 import TheoryOfChangeMasonry from '@/components/movement/TheoryOfChangeMasonry';
 import ShopPage from '@/components/pages/ShopPage';
@@ -192,7 +191,6 @@ export default function App() {
       utmContent: params.get('utm_content') || undefined,
     };
   });
-  const [isFirstVisit, setIsFirstVisit] = useState(false);
   const [platformStats, setPlatformStats] = useState({
     membersServed: 0,
     storiesShared: 0,
@@ -234,12 +232,6 @@ export default function App() {
   useEffect(() => {
     const authResult = checkAdminAuth();
     setIsAdminAuthenticated(authResult.isAuthenticated);
-
-    // Check if this is user's first visit
-    const hasVisited = localStorage.getItem('blkout-has-visited');
-    if (!hasVisited) {
-      setIsFirstVisit(true);
-    }
   }, []);
 
   // Load real platform stats from Supabase
@@ -371,9 +363,9 @@ export default function App() {
     <div className="space-y-8">
       {/* Hero Section */}
       <VideoHero
-        title="BLKOUTUK.COM"
-        subtitle="The digital home for Black Queer Men, by Black Queer Men."
-        description="Where Realness Lives"
+        title="BLKOUT_UK"
+        subtitle="What Black queer men build when we stop waiting."
+        description="When we decide, unapologetically, that our wellness is not a private project, our networks are not optional, and our joy is nobody else's job to protect."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
@@ -386,7 +378,100 @@ export default function App() {
         logoSrc="/Branding and logos/blkoutlogo_wht_transparent.png"
       />
 
-      {/* Rotating Liberation Quotes */}
+      {/* What this is — Beat 2. Canonical ABOUT.md text, verbatim.
+          Beat 1 (the register) is carried in the hero above; this is the concrete
+          answer that stops a visitor leaving none the wiser. specs/introduction-spec-01.md §4A. */}
+      <section className="max-w-3xl mx-auto text-center mb-8 px-2">
+        <p className="text-lg md:text-xl leading-relaxed text-gray-200 font-signature">
+          A London-based, national collective of bi, gay, and trans* men of African descent, we use
+          digital media, creative arts, participatory research, and immersive events to activate the
+          networks and resources that grow{' '}
+          <span className="text-liberation-gold-divine font-bold">health, wealth, and happiness</span>{' '}
+          among us — and across every community we're part of.
+        </p>
+      </section>
+
+      {/* This week, from AIvor — the amuse-bouche (§4C). Links out rather than embedding a
+          specific video: the weekly render succeeded once in its last five runs, so we cannot
+          honestly claim a specific video is "this week's" without risking a stale one presented
+          as current. The channel itself is always truthful about what's newest. */}
+      <section className="max-w-3xl mx-auto mb-8 px-2">
+        <div className="bg-liberation-black-power border border-liberation-gold-divine/30 rounded-xl p-6 md:p-8 text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-liberation-gold-divine font-bold mb-3">
+            This week, from AIvor
+          </p>
+          <p className="text-gray-300 mb-5 leading-relaxed">
+            Every Sunday, AIvor reads out the stories the community's been talking about — a few
+            minutes, no account needed.
+          </p>
+          <a
+            href="https://www.youtube.com/channel/UC7g_Es50958bYJauxym0n1A"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-liberation-gold-divine/10 border border-liberation-gold-divine/40 text-liberation-gold-divine font-bold text-sm uppercase tracking-wide hover:bg-liberation-gold-divine/20 transition-colors"
+          >
+            <Play className="h-4 w-4" />
+            Watch the weekly digest
+          </a>
+        </div>
+      </section>
+
+      {/* One first gesture (§4D) — the OOMF comic generator. DNS for oomf.blkoutuk.com went
+          live 29 Jul 2026 (verified: 200, Let's Encrypt cert), so this links the app directly
+          rather than routing through /movement. Gives before it asks — no account required. */}
+      <section className="max-w-3xl mx-auto mb-8 px-2">
+        <div className="bg-liberation-black-power border border-liberation-gold-divine/30 rounded-xl p-6 md:p-8 text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-liberation-gold-divine font-bold mb-3">
+            Try it — no account needed
+          </p>
+          <h3 className="text-2xl md:text-3xl font-black text-white mb-3 font-signature">
+            Make yourself a hero panel.
+          </h3>
+          <p className="text-gray-300 mb-5 leading-relaxed">
+            Put yourself in the story. Pick a scene, drop in your photo, walk out with a comic panel
+            that's yours.
+          </p>
+          <a
+            href="https://oomf.blkoutuk.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-liberation-gold-divine/10 border border-liberation-gold-divine/40 text-liberation-gold-divine font-bold text-sm uppercase tracking-wide hover:bg-liberation-gold-divine/20 transition-colors"
+          >
+            <Sparkles className="h-4 w-4" />
+            Make your hero panel
+          </a>
+        </div>
+      </section>
+
+      {/* Where to go next, quietly (§4E) — a list, not six competing gradient cards. */}
+      <section className="max-w-3xl mx-auto mb-6 px-2 text-center">
+        <p className="text-xs uppercase tracking-[0.2em] text-gray-500 font-bold mb-3">
+          Where to go next
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          <button onClick={() => changeActiveTab('ten-years')} className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">Ten Years</button>
+          <button onClick={() => changeActiveTab('movement')} className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">Movement</button>
+          <a href="https://news.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">News</a>
+          <a href="https://events.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">Events</a>
+          <a href="https://commons.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">Commons</a>
+          <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">The Hub</a>
+        </div>
+      </section>
+
+      {/* What holds it (§4F) — the CBS + asset lock, linking to the full account. */}
+      <section className="max-w-3xl mx-auto mb-8 px-2 text-center">
+        <p className="text-sm text-gray-400 leading-relaxed">
+          BLKOUT is a Community Benefit Society — member-owned, asset-locked, built to outlast us.{' '}
+          <button onClick={() => changeActiveTab('ten-years')} className="text-liberation-gold-divine hover:underline font-bold">
+            The full ten years →
+          </button>
+        </p>
+      </section>
+
+      {/* Animated Liberation Grid - Progressive reveal gateway */}
+      <AnimatedLiberationGrid onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />
+
+      {/* Rotating Liberation Quotes — below the grid; less important than the gateway. */}
       <section
         onClick={advanceQuote}
         role="button"
@@ -432,9 +517,6 @@ export default function App() {
           </p>
         </div>
       </section>
-
-      {/* Animated Liberation Grid - Progressive reveal gateway */}
-      <AnimatedLiberationGrid onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />
 
       {/* Heroes & 10th Anniversary Videos */}
       <section className="mb-8">
@@ -509,22 +591,11 @@ export default function App() {
   );
 
 
-  // Complete first visit flow
-  const handleFirstVisitComplete = () => {
-    localStorage.setItem('blkout-has-visited', 'true');
-    setIsFirstVisit(false);
-  };
-
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-liberation-black-power noise text-white">
           {/* Install Prompt Banner */}
           <InstallPrompt />
-
-          {/* First Time User Flow */}
-          {isFirstVisit && (
-            <FirstTimeUserFlow onComplete={handleFirstVisitComplete} />
-          )}
 
           {/* Main Navigation */}
           <div className={`sticky top-0 z-40 h-1 transition-colors duration-300 ${getSectionAccent(activeTab)}`} aria-hidden />

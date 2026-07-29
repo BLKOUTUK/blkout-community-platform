@@ -31,7 +31,7 @@ export const gridItems: GridItem[] = [
     id: 2,
     heading: "What's On",
     description: "Parties, workshops, culture nights. Find where the Black queer magic happens near you.",
-    link: "https://events.blkoutuk.cloud",
+    link: "https://events.blkoutuk.com",
     linkLabel: "View Events",
     isExternal: true,
     imagePosition: { x: 50, y: 0 }
@@ -50,7 +50,7 @@ export const gridItems: GridItem[] = [
     id: 4,
     heading: "News & Culture",
     description: "Community-owned journalism centering Black queer perspectives. Stories that matter, told by us.",
-    link: "https://news.blkoutuk.cloud",
+    link: "https://news.blkoutuk.com",
     linkLabel: "Read News",
     isExternal: true,
     imagePosition: { x: 0, y: 50 }
@@ -59,7 +59,7 @@ export const gridItems: GridItem[] = [
     id: 5,
     heading: "Our Voices",
     description: "Fresh stories and perspectives from the community. Real experiences, authentic narratives, powerful truths.",
-    link: "https://voices.blkoutuk.cloud",
+    link: "https://voices.blkoutuk.com",
     linkLabel: "Hear Voices",
     isExternal: true,
     imagePosition: { x: 50, y: 50 }
@@ -88,7 +88,7 @@ export const gridItems: GridItem[] = [
     id: 8,
     heading: "Discover",
     description: "Resources, guides, and pathways curated for your journey. Find what you need, when you need it.",
-    link: "https://comms.blkoutuk.cloud/discover",
+    link: "https://comms.blkoutuk.com/discover",
     linkLabel: "Start Exploring",
     isExternal: true,
     imagePosition: { x: 50, y: 100 }
