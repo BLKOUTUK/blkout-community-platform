@@ -31,14 +31,14 @@ const CONTENT: Record<ApparelRangePageProps['range'], RangeContent> = {
     heroVideo: '/videos/apparel/blkout-proud.mp4',
     heroPoster: '/images/apparel/blkout-proud-poster.jpg',
     paragraphs: [
-      "Pride isn't a season. It's the daily insistence that we're here, that we love each other, that we won't be made small. The Proud range carries that — for the parade and for the days that need it more.",
-      'Each piece is for the moment of being seen as Black, queer, and unafraid in the same breath. Wear it where it matters. Wear it where it costs something.',
+      "We first printed these designs in 2018 — Black Queer Lives Matter, said plainly, worn plainly. We've brought them back because the demand hasn't gone anywhere: against white supremacy, against patriarchal manhood, for natural justice.",
+      'The range is called what the designs still are: STILL TRUE. Wear it where it matters. Wear it where it costs something.',
     ],
     pull: {
       quote: 'You are your best thing.',
       attr: 'Toni Morrison',
     },
-    teemillHref: 'https://blkoutuk.teemill.com',
+    teemillHref: 'https://blkoutuk.teemill.com/collection/blkout-proud/',
     teemillLabel: 'Browse the Proud range on Teemill →',
   },
   'brother-to-brother': {
@@ -46,15 +46,16 @@ const CONTENT: Record<ApparelRangePageProps['range'], RangeContent> = {
     name: 'Brother to Brother.',
     subtitle: "Joseph Beam's revolutionary act, worn out loud.",
     imageNote: '[range hero · Joseph Beam tribute, archive imagery]',
+    heroPoster: '/images/apparel/brother-to-brother-poster.jpg',
     paragraphs: [
       "In 1986 Joseph Beam wrote: Black men loving Black men is the revolutionary act. He was right then. He's right now. The Brother-to-Brother range carries that line forward — onto backs, onto chests, into the daily.",
-      "These pieces aren't subtle. They're not meant to be. They're for the brothers who already know — and for the ones still working out that knowing each other is the work.",
+      'The design is the cover of the book that carried the words — Brother to Brother, the anthology Beam conceived and Essex Hemphill finished after his death. Two faces, drawn together. Tees and hoods, in colourways.',
     ],
     pull: {
       quote: 'Black men loving Black men is the revolutionary act.',
       attr: 'Joseph Beam, In the Life (1986)',
     },
-    teemillHref: 'https://blkoutuk.teemill.com',
+    teemillHref: 'https://blkoutuk.teemill.com/collection/brother-to-brother-22/',
     teemillLabel: 'Browse Brother-to-Brother on Teemill →',
   },
   icons: {
@@ -62,15 +63,16 @@ const CONTENT: Record<ApparelRangePageProps['range'], RangeContent> = {
     name: 'Black Queer Icons UK.',
     subtitle: 'Our forebears — worn into the present.',
     imageNote: '[range hero · forebear portraits, archive sourcing]',
+    heroPoster: '/images/apparel/icons-poster.jpg',
     paragraphs: [
-      'The names we weren\'t taught. The chain of Black queer UK lives that made our presence possible — gathered, named, and worn.',
-      "Each piece in the Icons range carries a face from the lineage. Worn so it stays visible — to ourselves, and to whoever needs to see us. The archive isn't behind us. It's what we wear.",
+      'The names we weren\'t taught. Ivor Cummings, 1919–1992. Berto Pasuka, 1911–1963. Pearl Alcock, 1934–2006. Justin Fashanu, 1961–1998. The queer contribution to Black British history — gathered, named, and worn.',
+      "Each piece carries their names — ivor, berto, pearl & justin — so the lineage stays visible: to ourselves, and to whoever needs to see us. The archive isn't behind us. It's what we wear.",
     ],
     pull: {
       quote: 'There is power in naming yourself, in proclaiming to the world that you exist on your own terms.',
       attr: 'Diriye Osman',
     },
-    teemillHref: 'https://blkoutuk.teemill.com',
+    teemillHref: 'https://blkoutuk.teemill.com/collection/new/',
     teemillLabel: 'Browse the Icons range on Teemill →',
   },
 };
