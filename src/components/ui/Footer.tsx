@@ -9,12 +9,12 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
   const footerLinks = [
     { id: 'liberation', label: 'Home', icon: Home, type: 'button' },
-    { id: 'events', label: 'Events', icon: ExternalLink, type: 'link', href: 'https://events.blkoutuk.cloud' },
-    { id: 'newsroom', label: 'News', icon: ExternalLink, type: 'link', href: 'https://news.blkoutuk.cloud' },
+    { id: 'events', label: 'Events', icon: ExternalLink, type: 'link', href: 'https://events.blkoutuk.com' },
+    { id: 'newsroom', label: 'News', icon: ExternalLink, type: 'link', href: 'https://news.blkoutuk.com' },
     { id: 'intro', label: 'AIvor', icon: Brain, type: 'button' },
     { id: 'about', label: 'About', icon: Info, type: 'button' },
-    { id: 'discover', label: 'Discover', icon: ExternalLink, type: 'link', href: 'https://comms.blkoutuk.cloud/discover' },
-    { id: 'voices', label: 'Voices', icon: ExternalLink, type: 'link', href: 'https://voices.blkoutuk.cloud' },
+    { id: 'discover', label: 'Discover', icon: ExternalLink, type: 'link', href: 'https://comms.blkoutuk.com/discover' },
+    { id: 'voices', label: 'Voices', icon: ExternalLink, type: 'link', href: 'https://voices.blkoutuk.com' },
     { id: 'governance', label: 'Governance', icon: Vote, type: 'button' },
     { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' }
   ];
