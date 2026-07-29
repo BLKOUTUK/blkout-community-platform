@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
+
 interface ShopPageProps {
   onNavigate?: (tab: string) => void;
 }
@@ -7,24 +10,38 @@ interface RangeTileProps {
   name: string;
   brief: string;
   href: string;
+  img?: string;
 }
 
-function RangeTile({ num, name, brief, href }: RangeTileProps) {
+function RangeTile({ num, name, brief, href, img }: RangeTileProps) {
   return (
     <a
       href={href}
       className="border border-liberation-neutral-800 p-6 aspect-[4/5] flex flex-col justify-between transition-colors hover:border-liberation-pride-orange hover:bg-[rgba(255,140,0,0.04)]"
     >
-      <div
-        className="flex-1 -mx-2 -mt-2 mb-4 border border-dashed border-liberation-neutral-800 grid place-items-center text-liberation-neutral-700 text-xs tracking-[0.2em] uppercase"
-        style={{
-          backgroundImage:
-            'repeating-linear-gradient(45deg, rgba(255,140,0,0.04) 0, rgba(255,140,0,0.04) 8px, transparent 8px, transparent 16px)',
-          backgroundColor: '#0A0A0A',
-        }}
-      >
-        [range image]
-      </div>
+      {img ? (
+        <div
+          className="flex-1 -mx-2 -mt-2 mb-4"
+          style={{
+            backgroundImage: `url(${img})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center top',
+          }}
+          role="img"
+          aria-label={`${name} range`}
+        />
+      ) : (
+        <div
+          className="flex-1 -mx-2 -mt-2 mb-4 border border-dashed border-liberation-neutral-800 grid place-items-center text-liberation-neutral-700 text-xs tracking-[0.2em] uppercase"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(45deg, rgba(255,140,0,0.04) 0, rgba(255,140,0,0.04) 8px, transparent 8px, transparent 16px)',
+            backgroundColor: '#0A0A0A',
+          }}
+        >
+          [range image]
+        </div>
+      )}
       <span className="font-mono text-xs text-liberation-pride-orange tracking-[0.2em] uppercase">
         {num}
       </span>
@@ -84,18 +101,36 @@ function CTA({
   );
 }
 
+interface NextEvent {
+  title: string;
+  date: string;
+  start_time: string | null;
+  location: string | null;
+}
+
 export default function ShopPage({ onNavigate }: ShopPageProps) {
+  const [nextEvent, setNextEvent] = useState<NextEvent | null>(null);
+
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    supabase
+      .from('events')
+      .select('title,date,start_time,location')
+      .eq('status', 'approved')
+      .ilike('organizer', '%blkout%')
+      .gte('date', today)
+      .order('date', { ascending: true })
+      .limit(1)
+      .then(({ data }) => {
+        if (data && data.length > 0) setNextEvent(data[0] as NextEvent);
+      });
+  }, []);
+
   const goMembership = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (onNavigate) {
       e.preventDefault();
       onNavigate('shop/membership');
     }
-  };
-
-  const placeholderBoxStyle = {
-    backgroundImage:
-      'repeating-linear-gradient(45deg, rgba(255,140,0,0.04) 0, rgba(255,140,0,0.04) 8px, transparent 8px, transparent 16px)',
-    backgroundColor: '#0A0A0A',
   };
 
   return (
@@ -155,18 +190,21 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
               name="BLKOUT Proud"
               brief="Pride pieces — joy as a political act."
               href="/shop/apparel/blkout-proud"
+              img="/images/apparel/blkout-proud-poster.jpg"
             />
             <RangeTile
               num="range 02"
               name="Brother to Brother"
               brief="Joseph Beam's revolutionary act, worn out loud."
               href="/shop/apparel/brother-to-brother"
+              img="/images/apparel/brother-to-brother-poster.jpg"
             />
             <RangeTile
               num="range 03"
               name="Black Queer Icons UK"
               brief="Our forebears — worn into the present."
               href="/shop/apparel/icons"
+              img="/images/apparel/icons-poster.jpg"
             />
           </div>
           <CTA href="/shop/apparel" label="See the ranges →" />
@@ -203,7 +241,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
               </p>
             </a>
           </div>
-          <CTA href="/shop/drops" label="All current drops →" />
+          <CTA href="/shop/drops/compass-journal" label="See drop 01 →" />
           <p className="font-disrupt italic text-sm text-liberation-neutral-500 mt-6 max-w-[60ch]">
             You're not charged until the print run triggers. If a drop doesn't reach threshold, no card gets touched. More drops as partnerships confirm.
           </p>
@@ -253,18 +291,44 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
             rel="noopener"
             className="grid grid-cols-1 md:grid-cols-[7rem_1fr_auto] items-center gap-4 md:gap-8 border border-liberation-neutral-800 p-8 mt-8 transition-colors hover:border-liberation-pride-orange"
           >
-            <div className="font-mono text-sm text-liberation-pride-orange tracking-[0.1em] uppercase leading-tight">
-              <strong className="block text-liberation-pride-orange text-3xl font-medium leading-none mb-1">—</strong>
-              <span>next event<br />tba</span>
-            </div>
-            <div>
-              <h3 className="font-display font-black uppercase tracking-tight text-xl m-0">
-                Pulled from events.blkoutuk.com
-              </h3>
-              <p className="font-disrupt italic text-liberation-neutral-500 text-base mt-1 m-0">
-                Single most-imminent event surfaces here once API is wired. Static placeholder for now.
-              </p>
-            </div>
+            {nextEvent ? (
+              <>
+                <div className="font-mono text-sm text-liberation-pride-orange tracking-[0.1em] uppercase leading-tight">
+                  <strong className="block text-liberation-pride-orange text-3xl font-medium leading-none mb-1">
+                    {new Date(`${nextEvent.date}T12:00:00`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                  </strong>
+                  <span>
+                    {new Date(`${nextEvent.date}T12:00:00`).toLocaleDateString('en-GB', { weekday: 'long' })}
+                    {nextEvent.start_time ? <><br />{nextEvent.start_time.slice(0, 5)}</> : null}
+                  </span>
+                </div>
+                <div>
+                  <h3 className="font-display font-black uppercase tracking-tight text-xl m-0">
+                    {nextEvent.title}
+                  </h3>
+                  {nextEvent.location && (
+                    <p className="font-disrupt italic text-liberation-neutral-500 text-base mt-1 m-0">
+                      {nextEvent.location}
+                    </p>
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="font-mono text-sm text-liberation-pride-orange tracking-[0.1em] uppercase leading-tight">
+                  <strong className="block text-liberation-pride-orange text-3xl font-medium leading-none mb-1">—</strong>
+                  <span>next event<br />tba</span>
+                </div>
+                <div>
+                  <h3 className="font-display font-black uppercase tracking-tight text-xl m-0">
+                    What we're gathering next
+                  </h3>
+                  <p className="font-disrupt italic text-liberation-neutral-500 text-base mt-1 m-0">
+                    The full calendar lives at events.blkoutuk.com.
+                  </p>
+                </div>
+              </>
+            )}
             <span className="font-display font-black tracking-[0.15em] uppercase text-sm text-liberation-pride-orange">
               RSVP →
             </span>
@@ -291,9 +355,11 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
             name="Donate."
             pitch="Any amount. No strings. Zeffy charges no platform fees, so 100% reaches BLKOUT."
           />
-          <CTA href="#" label="Make a donation →" primary />
+          <div className="inline-flex items-baseline gap-3 mt-8 px-6 py-4 border border-dashed border-liberation-neutral-800 font-display font-black text-sm tracking-[0.15em] uppercase text-liberation-neutral-500">
+            Opening soon — we're setting up Zeffy
+          </div>
           <p className="font-disrupt italic text-sm text-liberation-neutral-500 mt-6 max-w-[60ch]">
-            Donations don't get you a vote — that's what membership is for. They just back the work.
+            Donations don't get you a vote — that's what membership is for. They just back the work. Until the button goes live, <a href="/shop/membership" onClick={goMembership} className="text-liberation-pride-orange not-italic">membership</a> is the way in.
           </p>
         </section>
 
@@ -324,7 +390,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
             Where this is right now
           </p>
           <p className="text-liberation-neutral-300 m-0 text-base leading-relaxed max-w-[60ch]">
-            Some of these surfaces are still being built. Apparel and the membership page are live; the drops and courses sections will fill in as each thing opens. We mark each surface honestly so you know what's ready and what's promised.
+            Apparel, the Compass journal pre-order, and membership are live now. Courses open with the first cohort; the donation button lands when our Zeffy setup completes. We mark each surface honestly so you know what's ready and what's promised.
           </p>
         </section>
 

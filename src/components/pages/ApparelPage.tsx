@@ -125,6 +125,7 @@ export default function ApparelPage({ onNavigate }: ApparelPageProps) {
             brief="Joseph Beam's revolutionary act, worn out loud."
             body="Beam wrote it in 1986: Black men loving Black men is the revolutionary act. We're still writing it now — on backs, on chests, on days when the world tells us to make ourselves smaller."
             href="/shop/apparel/brother-to-brother"
+            poster="/images/apparel/brother-to-brother-poster.jpg"
             onClick={go('shop/apparel/brother-to-brother')}
           />
           <RangeCard
@@ -133,6 +134,7 @@ export default function ApparelPage({ onNavigate }: ApparelPageProps) {
             brief="Our forebears — worn into the present."
             body="The chain of Black queer UK lives that made our presence possible. Each piece carries a name. Worn so the lineage is visible — to ourselves, and to whoever needs to see us."
             href="/shop/apparel/icons"
+            poster="/images/apparel/icons-poster.jpg"
             onClick={go('shop/apparel/icons')}
           />
         </section>
