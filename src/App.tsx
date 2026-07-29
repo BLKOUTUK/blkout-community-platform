@@ -364,8 +364,8 @@ export default function App() {
       {/* Hero Section */}
       <VideoHero
         title="BLKOUT_UK"
-        subtitle="pronounced 'black-out, u-k'"
-        description="What Black queer men build when we stop waiting. When we decide, unapologetically, that our wellness is not a private project, our networks are not optional, and our joy is nobody else's job to protect."
+        subtitle="What Black queer men build when we stop waiting."
+        description="When we decide, unapologetically, that our wellness is not a private project, our networks are not optional, and our joy is nobody else's job to protect."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
@@ -468,7 +468,10 @@ export default function App() {
         </p>
       </section>
 
-      {/* Rotating Liberation Quotes */}
+      {/* Animated Liberation Grid - Progressive reveal gateway */}
+      <AnimatedLiberationGrid onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />
+
+      {/* Rotating Liberation Quotes — below the grid; less important than the gateway. */}
       <section
         onClick={advanceQuote}
         role="button"
@@ -514,9 +517,6 @@ export default function App() {
           </p>
         </div>
       </section>
-
-      {/* Animated Liberation Grid - Progressive reveal gateway */}
-      <AnimatedLiberationGrid onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />
 
       {/* Heroes & 10th Anniversary Videos */}
       <section className="mb-8">
