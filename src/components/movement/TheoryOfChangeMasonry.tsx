@@ -961,10 +961,10 @@ export default function TheoryOfChangeMasonry() {
 
             <div className="w-full max-w-3xl mx-auto mb-8">
               <div className="relative overflow-hidden border-2 border-liberation-gold-divine/30" style={{ paddingBottom: '125%' }}>
-                <iframe src="https://oomf.blkoutuk.cloud/" className="absolute inset-0 w-full h-full" title="Create Your Hero Panel" allow="camera; microphone" sandbox="allow-same-origin allow-scripts allow-forms allow-popups" />
+                <iframe src="https://oomf.blkoutuk.com/" className="absolute inset-0 w-full h-full" title="Create Your Hero Panel" allow="camera; microphone" sandbox="allow-same-origin allow-scripts allow-forms allow-popups" />
               </div>
             </div>
-            <a href="https://oomf.blkoutuk.cloud/" target="_blank" rel="noopener noreferrer" className="text-sm text-purple-400 hover:text-purple-300">Having trouble? Open in new tab →</a>
+            <a href="https://oomf.blkoutuk.com/" target="_blank" rel="noopener noreferrer" className="text-sm text-purple-400 hover:text-purple-300">Having trouble? Open in new tab →</a>
           </motion.div>
         </section>
 

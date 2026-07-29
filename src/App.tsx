@@ -416,10 +416,9 @@ export default function App() {
         </div>
       </section>
 
-      {/* One first gesture (§4D) — the OOMF comic generator, reached via the Movement tab.
-          oomf.blkoutuk.com has no DNS record yet, so this deliberately routes internally to
-          /movement (where OOMF Interactive already lives) rather than linking the subdomain
-          directly. Gives before it asks — no account required. */}
+      {/* One first gesture (§4D) — the OOMF comic generator. DNS for oomf.blkoutuk.com went
+          live 29 Jul 2026 (verified: 200, Let's Encrypt cert), so this links the app directly
+          rather than routing through /movement. Gives before it asks — no account required. */}
       <section className="max-w-3xl mx-auto mb-8 px-2">
         <div className="bg-liberation-black-power border border-liberation-gold-divine/30 rounded-xl p-6 md:p-8 text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-liberation-gold-divine font-bold mb-3">
@@ -432,13 +431,15 @@ export default function App() {
             Put yourself in the story. Pick a scene, drop in your photo, walk out with a comic panel
             that's yours.
           </p>
-          <button
-            onClick={() => changeActiveTab('movement')}
+          <a
+            href="https://oomf.blkoutuk.com/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-liberation-gold-divine/10 border border-liberation-gold-divine/40 text-liberation-gold-divine font-bold text-sm uppercase tracking-wide hover:bg-liberation-gold-divine/20 transition-colors"
           >
             <Sparkles className="h-4 w-4" />
             Make your hero panel
-          </button>
+          </a>
         </div>
       </section>
 
