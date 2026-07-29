@@ -154,11 +154,11 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
             BLKOUT Shop
           </span>
           <h1 className="font-display font-black uppercase tracking-tight leading-[0.95] text-6xl sm:text-7xl md:text-8xl lg:text-9xl mt-6 mb-0">
-            What we make.<br />
-            <span className="text-liberation-pride-orange">What we ask.</span>
+            Wear it loud.<br />
+            <span className="text-liberation-pride-orange">Bring it home.</span>
           </h1>
           <p className="font-disrupt italic text-xl md:text-2xl lg:text-[1.75rem] leading-snug text-liberation-neutral-300 max-w-[42ch] mt-8 mb-0">
-            Six paths into a Black queer cooperative — buy what we made, sustain what we're making, give what you can.
+            Three clothing ranges. A graphic novel in print. Organic cotton, printed to order — designs you won't find anywhere else.
           </p>
           <hr className="h-1.5 bg-liberation-pride-orange border-0 mt-12 w-24" />
         </header>
@@ -169,11 +169,11 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
             What this is
           </span>
           <p className="font-disrupt italic text-xl md:text-2xl leading-snug text-white max-w-[50ch] m-0">
-            BLKOUT is a{' '}
+            Organic tees and hoods, printed to order in the UK — no inventory, no waste, free returns. A journal worth holding. Events worth leaving the house for. And every purchase lands in a{' '}
             <span className="not-italic font-display font-black uppercase tracking-tight text-liberation-pride-orange">
-              Community Benefit Society
-            </span>
-            . The shop is how the cooperative pays for itself — and how you find what we make. Wear it, support a print run, become a member, learn with us, gather with us, or just back the work.
+              community-owned pot
+            </span>{' '}
+            that stays working for Black queer men in the UK.
           </p>
         </section>
 
