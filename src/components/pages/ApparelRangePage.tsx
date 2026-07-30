@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 interface ApparelRangePageProps {
   range: 'blkout-proud' | 'brother-to-brother' | 'icons';
   onNavigate?: (tab: string) => void;
@@ -15,6 +17,7 @@ interface RangeContent {
   imageNote: string;
   heroVideo?: string;
   heroPoster?: string;
+  heroImages?: string[];
   paragraphs: string[];
   pull?: { quote: string; attr: string };
   teemillHref: string;
@@ -47,6 +50,14 @@ const CONTENT: Record<ApparelRangePageProps['range'], RangeContent> = {
     subtitle: "Joseph Beam's revolutionary act, worn out loud.",
     imageNote: '[range hero · Joseph Beam tribute, archive imagery]',
     heroPoster: '/images/apparel/brother-to-brother-poster.jpg',
+    heroImages: [
+      '/images/apparel/b2b-campaign-1-stoop.jpg',
+      '/images/apparel/b2b-campaign-2-gallery.jpg',
+      '/images/apparel/b2b-campaign-3-dinner.jpg',
+      '/images/apparel/b2b-campaign-4-rooftop.jpg',
+      '/images/apparel/b2b-campaign-5-southbank.jpg',
+      '/images/apparel/b2b-campaign-6-kitchen.jpg',
+    ],
     paragraphs: [
       "In 1986 Joseph Beam wrote: Black men loving Black men is the revolutionary act. He was right then. He's right now. The Brother-to-Brother range carries that line forward — onto backs, onto chests, into the daily.",
       'The design is the cover of the book that carried the words — Brother to Brother, the anthology Beam conceived and Essex Hemphill finished after his death. Two faces, drawn together. Tees and hoods, in colourways.',
@@ -76,6 +87,44 @@ const CONTENT: Record<ApparelRangePageProps['range'], RangeContent> = {
     teemillLabel: 'Browse the Icons range on Teemill →',
   },
 };
+
+function HeroCarousel({ images, name }: { images: string[]; name: string }) {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const timer = setInterval(() => setCurrent((n) => (n + 1) % images.length), 4500);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  return (
+    <div className="relative w-full max-w-2xl mx-auto aspect-[4/5] overflow-hidden bg-liberation-black-power">
+      {images.map((src, n) => (
+        <img
+          key={src}
+          src={src}
+          alt={`${name} campaign, image ${n + 1} of ${images.length}`}
+          loading={n === 0 ? 'eager' : 'lazy'}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+            n === current ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+      ))}
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+        {images.map((_, n) => (
+          <button
+            key={n}
+            onClick={() => setCurrent(n)}
+            aria-label={`Show campaign image ${n + 1}`}
+            className={`w-2.5 h-2.5 rounded-full transition-colors ${
+              n === current ? 'bg-liberation-sovereignty-gold' : 'bg-white/30 hover:bg-white/60'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function ApparelRangePage({ range, onNavigate }: ApparelRangePageProps) {
   const c = CONTENT[range];
@@ -127,9 +176,11 @@ export default function ApparelRangePage({ range, onNavigate }: ApparelRangePage
           <hr className="h-1.5 bg-liberation-sovereignty-gold border-0 mt-10 w-24" />
         </header>
 
-        {/* Range hero — video > poster image > hatched placeholder */}
+        {/* Range hero — carousel > video > poster image > hatched placeholder */}
         <section className="mb-16">
-          {c.heroVideo ? (
+          {c.heroImages?.length ? (
+            <HeroCarousel images={c.heroImages} name={c.name} />
+          ) : c.heroVideo ? (
             <video
               className="w-full h-auto block"
               autoPlay
