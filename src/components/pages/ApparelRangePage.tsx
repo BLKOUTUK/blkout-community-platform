@@ -55,7 +55,7 @@ const CONTENT: Record<ApparelRangePageProps['range'], RangeContent> = {
       quote: 'Black men loving Black men is the revolutionary act.',
       attr: 'Joseph Beam, In the Life (1986)',
     },
-    teemillHref: 'https://blkoutuk.teemill.com/collection/brother-to-brother-22/',
+    teemillHref: 'https://blkoutuk.teemill.com/collection/brother-to-brother/',
     teemillLabel: 'Browse Brother-to-Brother on Teemill →',
   },
   icons: {
