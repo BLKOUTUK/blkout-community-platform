@@ -143,6 +143,10 @@ app.use((req, res, next) => {
   if (req.path === '/picnic' || req.path === '/picnic/') {
     return res.redirect(302, 'https://commons.blkoutuk.com/picnic.html');
   }
+  // Newsletter signup. Own the shared link so the list host stays swappable.
+  if (['/subscribe', '/subscribe/', '/newsletter', '/newsletter/'].includes(req.path)) {
+    return res.redirect(302, 'https://sendfox.com/blkoutuk');
+  }
   next();
 });
 
