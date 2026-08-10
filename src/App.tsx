@@ -364,8 +364,8 @@ export default function App() {
       {/* Hero Section */}
       <VideoHero
         title="BLKOUT_UK"
-        subtitle="What Black queer men build when we stop waiting."
-        description="When we decide, unapologetically, that our wellness is not a private project, our networks are not optional, and our joy is nobody else's job to protect."
+        subtitle="The Black Queer Men's Liberation Collective"
+        description="What Black queer men build when we stop waiting. When we decide, unapologetically, that our wellness is not a private project, our networks are not optional, and our joy is nobody else's job to protect."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
@@ -425,7 +425,7 @@ export default function App() {
             Try it — no account needed
           </p>
           <h3 className="text-2xl md:text-3xl font-black text-white mb-3 font-signature">
-            Make yourself a hero panel.
+            You are the hero you've been waiting for.
           </h3>
           <p className="text-gray-300 mb-5 leading-relaxed">
             Put yourself in the story. Pick a scene, drop in your photo, walk out with a comic panel
