@@ -101,7 +101,7 @@ gatherings ← card-33, stories ← card-24. Plus lorde-poster / baldwin-poster 
 
 ## Revision 26 Aug (Rob's review)
 
-Three notes from Rob, implemented in `MovementSplit.tsx` + `MovementSplit.css` only.
+Four notes from Rob, implemented in `MovementSplit.tsx` + `MovementSplit.css` only.
 
 **1. Act 4, the turn — no lateral reveal, and the argument keeps its trail.**
 The left-to-right clip-path wipe on `golden-hour.jpg` is gone. The image is now the
@@ -158,6 +158,20 @@ referenced by the retained `TheoryOfChangeMasonry.tsx`. Dropping it also removed
 em dash in visible copy: the page now has none. The purple leftover kicker became
 `.ms-eyebrow`, the page's own gold uppercase.
 
+**4. Act 5, "Voices we carry" — two clips, equal weight.**
+`.ms-voices` went from `2fr / 1fr` to `repeat(2, minmax(0, 1fr))`: Lorde and Baldwin now
+render the same size side by side, and stack equal full-width on phones. No headline and
+companion any more. Baldwin was hard to read at a third of the row, so it gains `controls`
+(pause to read, or go fullscreen) while keeping its muted IntersectionObserver loop.
+`MutedLoopVideo` now **hands over the moment the visitor touches the controls**: a pause
+while the clip is on screen, or an unmute, stops the observer playing or pausing it again,
+so a clip stopped mid-sentence stays stopped. `muted` is no longer a JSX attribute; it is
+set once imperatively on mount and never re-asserted, so **an audio track arriving in a
+later mp4 swap needs no code change** and an unmute through the controls sticks. Captions
+follow: "James Baldwin, from the archive. Pause it to read." replaces "Silent loop", and
+the aria-label drops "no sound", so neither goes stale when Rob finds the audio. Lorde's
+contract is untouched: user-initiated, sound on press.
+
 ### Verification of the revision
 
 | Check | Result |
@@ -169,11 +183,15 @@ em dash in visible copy: the page now has none. The purple leftover kicker becam
 | Bundle grep | "staying alone", "Become a member", "Coming soon", "How membership will work", "heroes we've been waiting for", "Now put yourself in the story" all PRESENT; "oomf-heroes-promo" absent (inclusion only — an un-code-split bundle carries every page's strings) |
 | Cue windows | Simulated `cueSpec` for all five act-4 cues: each plateaus, all close at 1, none holds |
 | Em dashes in visible copy | Zero in the file, comments included |
+| `curl` both Voices clips on :4173 | PASS — `Lordescroll.mp4` and `baldwinscroll.mp4` 200 `video/mp4`, 4592066 and 4945881, both matching disk |
+| Built CSS carries the equalised row | PRESENT — `.ms-voices{...repeat(2,minmax(0,1fr))...}` plus the single-column phone rule; "Silent loop" and "no sound" now absent from the bundle |
 
 **Still not verified:** rendered pixels, scroll feel, the gif's weight against the type at
 real size, the phone layouts (act 4's side-by-side band and the stacked doors), whether the
-three doors read as equal weight with the third deliberately quieter, and whether the film
-at full width leaves the OOMF iframe enough air below it.
+three doors read as equal weight with the third deliberately quieter, whether the film
+at full width leaves the OOMF iframe enough air below it, and whether Baldwin's on-screen
+text is actually legible at half the Voices row (the controls are the fallback if it is
+not: pause, or fullscreen).
 
 ## Tuning notes
 

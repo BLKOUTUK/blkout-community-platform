@@ -204,7 +204,15 @@ const KineticHeading: React.FC<{
 
 /* ----------------------------------------------------------------- videos */
 
-/** Muted companion clip: plays while it is on screen, pauses when it is not. */
+/**
+ * Muted companion clip: loops while it is on screen, and hands over the moment
+ * the visitor touches the controls, so a clip paused to read stays paused and
+ * an unmuted clip stays unmuted.
+ *
+ * `muted` is set once, imperatively, and never re-asserted: it is the loop's
+ * starting state, not a property the code holds down. An mp4 swap that brings
+ * an audio track therefore needs no change here.
+ */
 const MutedLoopVideo: React.FC<{
   src: string;
   poster: string;
@@ -217,9 +225,25 @@ const MutedLoopVideo: React.FC<{
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
+    video.muted = true;
+
+    let onScreen = false;
+    let handedOver = false;
+
+    const onVolumeChange = () => {
+      if (!video.muted) handedOver = true;
+    };
+    // The observer only ever pauses off screen, so a pause while on screen is
+    // the visitor stopping to read.
+    const onPause = () => {
+      if (onScreen) handedOver = true;
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          onScreen = entry.isIntersecting;
+          if (handedOver) return;
           if (entry.isIntersecting) {
             video.play().catch(() => {});
           } else {
@@ -229,8 +253,15 @@ const MutedLoopVideo: React.FC<{
       },
       { threshold: 0.3 }
     );
+
+    video.addEventListener('volumechange', onVolumeChange);
+    video.addEventListener('pause', onPause);
     observer.observe(video);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      video.removeEventListener('volumechange', onVolumeChange);
+      video.removeEventListener('pause', onPause);
+    };
   }, []);
 
   return (
@@ -241,8 +272,8 @@ const MutedLoopVideo: React.FC<{
       width={width}
       height={height}
       aria-label={label}
+      controls
       loop
-      muted
       playsInline
       preload="metadata"
     />
@@ -698,9 +729,9 @@ const ActEvidence: React.FC<{ reduced: boolean }> = ({ reduced }) => (
               poster="/images/movement/baldwin-poster.jpg"
               width={864}
               height={1080}
-              label="James Baldwin, archive clip, no sound"
+              label="James Baldwin, archive clip"
             />
-            <figcaption className="ms-body">James Baldwin. Silent loop.</figcaption>
+            <figcaption className="ms-body">James Baldwin, from the archive. Pause it to read.</figcaption>
           </figure>
         </div>
       </div>

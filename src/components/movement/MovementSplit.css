@@ -532,9 +532,11 @@
   }
 }
 
+/* Two voices, equal weight: equal columns on desktop, equal full-width rows
+   on a phone. Neither clip is the other's companion. */
 .ms-voices {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(16px, 2vw, 28px);
   align-items: start;
   margin-top: clamp(40px, 6vh, 72px);
