@@ -800,6 +800,18 @@ const ActCollapse: React.FC<{ reduced: boolean }> = ({ reduced }) => {
 
 /* ------------------------------------------------------------- act 8 close */
 
+/**
+ * The close answers the poll in kind. A thin network is invited in; a full one
+ * is asked to bring itself, because telling someone with a crew to change
+ * something is the wrong register. Keyed off `ANSWERS` so the two never drift.
+ */
+const CLOSING_INVITATION: Record<string, string> = {
+  [ANSWERS[2]]: "Bring them. Here's where we extend the network.",
+  [ANSWERS[3]]: "Bring your crew. Here's where we extend the network.",
+};
+
+const DEFAULT_INVITATION = "Let's change that. There's a seat here with your name on it.";
+
 const ActClose: React.FC<{ reduced: boolean; answer: string | null }> = ({ reduced, answer }) => {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
@@ -837,7 +849,7 @@ const ActClose: React.FC<{ reduced: boolean; answer: string | null }> = ({ reduc
               {answer ? `Earlier you said ${answer}.` : 'Most of us said 1 or fewer.'}
             </p>
             <p className="ms-quiet ms-gold" style={{ fontSize: 'clamp(1.3rem, 2.2vw, 2rem)' }}>
-              {"Let's change that. There's a seat here with your name on it."}
+              {(answer && CLOSING_INVITATION[answer]) || DEFAULT_INVITATION}
             </p>
           </Cue>
 

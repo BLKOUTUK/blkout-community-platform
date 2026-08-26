@@ -101,7 +101,7 @@ gatherings ← card-33, stories ← card-24. Plus lorde-poster / baldwin-poster 
 
 ## Revision 26 Aug (Rob's review)
 
-Six notes from Rob, implemented in `MovementSplit.tsx` + `MovementSplit.css` only.
+Seven notes from Rob, implemented in `MovementSplit.tsx` + `MovementSplit.css` only.
 
 **1. Act 4, the turn — no lateral reveal, and the argument keeps its trail.**
 The left-to-right clip-path wipe on `golden-hour.jpg` is gone. The image is now the
@@ -118,7 +118,8 @@ windows `[0,1,0,.08]`, `[.12,1,.14,.09]`, `[.30,1,.14,.11]`, `[.48,1,.19,.15]`,
 `[.66,1,.29,.23]` — every one plateaus, all five begin their fade at p ≈ 0.92 and reach 0
 at exactly 1, so the middle-act rule is intact. Divider swing 0.28 → 0.58 and the 0.5
 seam pulse are untouched. Column widths are measured against the seam at its narrowest in
-this act (42%): left `min(46ch, 38%)`, right `min(52ch, 42%)`, so neither can be clipped.
+this act (42%): left `min(46ch, 38%)`, right `min(52ch, 42%)`, so neither can be clipped
+(the right column later came down to `min(50ch, 40%)` under note 5, for spring headroom).
 On phones the alone band shrinks as the seam rises, so the quote and the gif sit side by
 side (gif 132px) instead of stacked.
 
@@ -209,6 +210,16 @@ white on the hub gradient **4.7:1** at the fuchsia end, **4.8:1** at the midpoin
 **4.6:1** at the pink end (the tightest on the page, and passing), member label
 **11.4:1**, member subline **8.1:1**, coming-soon tag **9.4:1**, governance link **8.5:1**.
 
+**7. The close answers the poll in kind.**
+"Earlier you said Squad deep." followed by "Let's change that" was the wrong register for
+someone who is already well connected. Line 1 and the two-line structure are unchanged;
+line 2 now branches on the stored answer: "0" and "1–2" keep "Let's change that. There's a
+seat here with your name on it.", "3–5" gets "Bring them. Here's where we extend the
+network.", "Squad deep" gets "Bring your crew. Here's where we extend the network.", and
+the unanswered fallback is untouched. `CLOSING_INVITATION` is keyed off `ANSWERS[2]` and
+`ANSWERS[3]` rather than repeated string literals, so the poll buttons and the close can
+never drift apart on an en dash.
+
 ### Verification of the revision
 
 | Check | Result |
@@ -218,6 +229,7 @@ white on the hub gradient **4.7:1** at the fuchsia end, **4.8:1** at the midpoin
 | Asset path diff | PASS — 17 paths referenced, 17 present, 0 missing, 0 orphans in `public/images/movement/` |
 | `curl` new assets on :4173 | PASS — `rupaul-amen.gif` 200 `image/gif` 1066428, `rupaul-amen-still.jpg` 200 `image/jpeg` 36245, `Heroes2.mp4` 200 `video/mp4` 36789221, `poster-Heroes2.jpg` 200 `image/jpeg` 51307; every content-length byte-identical to disk |
 | Bundle grep | "staying alone", "Become a member", "Coming soon", "How membership will work", "heroes we've been waiting for", "Now put yourself in the story" all PRESENT; "oomf-heroes-promo" absent (inclusion only — an un-code-split bundle carries every page's strings) |
+| Poll callback branches | PASS — all five paths executed against `ANSWERS` parsed from the source: "0" and "1–2" keep the original invitation, "3–5" and "Squad deep" get the extend-the-network lines, unanswered unchanged; the map keys are byte-identical to the poll buttons |
 | Cue windows | Simulated `cueSpec` for all five act-4 cues: each plateaus, all close at 1, none holds |
 | Em dashes in visible copy | Zero in the file, comments included |
 | `curl` both Voices clips on :4173 | PASS — `Lordescroll.mp4` and `baldwinscroll.mp4` 200 `video/mp4`, 4592066 and 4945881, both matching disk |
