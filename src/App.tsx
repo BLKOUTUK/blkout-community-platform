@@ -30,7 +30,7 @@ import HealthDashboard from '@/components/pages/HealthDashboard';
 import MobileNav from '@/components/ui/MobileNav';
 import InstallPrompt from '@/components/ui/InstallPrompt';
 import VideoHero from '@/components/ui/VideoHero';
-import TheoryOfChangeMasonry from '@/components/movement/TheoryOfChangeMasonry';
+import MovementSplit from '@/components/movement/MovementSplit';
 import ShopPage from '@/components/pages/ShopPage';
 import MembershipPage from '@/components/pages/MembershipPage';
 import ApparelPage from '@/components/pages/ApparelPage';
@@ -330,7 +330,7 @@ export default function App() {
       case 'health-dashboard':
         return <HealthDashboard />;
       case 'movement':
-        return <TheoryOfChangeMasonry />;
+        return <MovementSplit />;
       case 'shop':
         return <ShopPage onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />;
       case 'shop/membership':
