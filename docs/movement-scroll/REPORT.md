@@ -101,7 +101,7 @@ gatherings ← card-33, stories ← card-24. Plus lorde-poster / baldwin-poster 
 
 ## Revision 26 Aug (Rob's review)
 
-Four notes from Rob, implemented in `MovementSplit.tsx` + `MovementSplit.css` only.
+Six notes from Rob, implemented in `MovementSplit.tsx` + `MovementSplit.css` only.
 
 **1. Act 4, the turn — no lateral reveal, and the argument keeps its trail.**
 The left-to-right clip-path wipe on `golden-hour.jpg` is gone. The image is now the
@@ -172,6 +172,43 @@ follow: "James Baldwin, from the archive. Pause it to read." replaces "Silent lo
 the aria-label drops "no sound", so neither goes stale when Rob finds the audio. Lorde's
 contract is untouched: user-initiated, sound on press.
 
+**5. "The slides below the Lorde and Baldwin videos eat the slogans in the sideways
+scroll" — the balance timeline was measured against the wrong element.**
+The clipped lines are act 7's, the two peak slogans that follow the Voices row, not act
+5's plates (the plates sit in `.ms-flow--right`, which is not inside a `.ms-side`, has no
+clip-path ancestor, and enters on opacity plus `y` only, so nothing can clip them or slide
+them sideways at any scroll position). **Root cause:** `useScroll` was targeting
+`rootRef`, and the root carries the post-close block and the footer as well as the acts.
+`balanceKeyframes()` is computed from the ACTS table and assumes a travel of exactly
+`14.6 - 1 = 13.6vh`, so counting roughly 2.5vh of post-close height stretched the whole
+timeline by about a fifth. Measured: at act 7's first slogan the seam should be at 0% and
+was still at **27.3%**, so the left quarter of "Tenderness is a political act." sat under
+the together side's clip; it was still eating 13.8% at the second slogan. The same bug had
+act 4's together side only 31 to 42.5% wide for the whole act, against a 42% column, so
+revision 1's interruption would have been clipped too. **Fix:** `useScroll` now targets a
+new `actsRef` on `.ms-acts`, whose height is the act table's own 14.6vh, so document
+progress and the balance keyframes describe the same scroll.
+**Belt and braces:** act 7's and act 8's full-width copy (and the scrims that protect it)
+were lifted out of `.ms-side--together` to become direct children of `.ms-stage`, the same
+place act 1's `<h1>` already lives. The ground still floods with the seam; the words are
+now structurally outside the clip, so no timing, spring state or scroll position can eat
+them. Act 4's right column came down from 42% to `min(50ch, 40%)` for spring headroom.
+
+**6. The CTA trio in three colours.**
+Each door now wears the identity of where it leads, not decoration: newsletter in house
+sovereignty gold (`--ms-gold` fill, black type), BLKOUTHUB in its own sanctioned sub-brand
+magenta (`linear-gradient(135deg, #c026d3, #db2777)`, the fuchsia-600 to pink-600 family
+the old masonry used for exactly this card, white type), membership in cooperative purple
+(`blkout-600` #9333ea as border and wash over a dark ground) and deliberately the quietest
+of the three, because it is still a holding page. All three are equal-height grid columns;
+`.ms-door__link` uses `margin-top: auto` so the governance link sits on the card's floor.
+Copy, links, targets and the coming-soon behaviour are untouched: presentation only. Three
+columns now appear from 1024px up rather than 1280px, and stack as full-width rows below.
+Measured contrast, every value: black on gold **14.0:1**, gold-door subline **9.4:1**,
+white on the hub gradient **4.7:1** at the fuchsia end, **4.8:1** at the midpoint and
+**4.6:1** at the pink end (the tightest on the page, and passing), member label
+**11.4:1**, member subline **8.1:1**, coming-soon tag **9.4:1**, governance link **8.5:1**.
+
 ### Verification of the revision
 
 | Check | Result |
@@ -185,13 +222,21 @@ contract is untouched: user-initiated, sound on press.
 | Em dashes in visible copy | Zero in the file, comments included |
 | `curl` both Voices clips on :4173 | PASS — `Lordescroll.mp4` and `baldwinscroll.mp4` 200 `video/mp4`, 4592066 and 4945881, both matching disk |
 | Built CSS carries the equalised row | PRESENT — `.ms-voices{...repeat(2,minmax(0,1fr))...}` plus the single-column phone rule; "Silent loop" and "no sound" now absent from the bundle |
+| **Acceptance test: no copy can sit under the seam's clip** | PASS, by geometry. Every copy column measured against the seam across the window in which it has any visible content, entry travel included (`p < 0`, when the sticky stage is on screen but the pin has not started): act 1 alone 46% vs a side never under 50% (+4 pts), act 1 together 46% vs 50% (+4), act 3 alone 48% vs 50% (+2), act 4 alone 38% vs 42% (+4), act 4 together 40% vs 48.7% (+8.7). Acts 7 and 8 are outside the clip entirely, so they hold at any value. Act 5's plates are inside no side at all |
+| Acceptance test: nothing slides sideways | PASS — the only `clipPath` animation left in the component is act 3's `inset(100% 0 0 0)` to `inset(0% 0 0 0)`, a vertical wipe on an image wrapper, never on type; the only `initial`/`whileInView` transforms are `opacity` and `y` |
+| Spring headroom | The spring is overdamped (k 60, c 20, m 1), so its steady-state lag on a ramp is `v × c/k` = 0.33s of travel. A brisk pass through act 4 (0.8vh in about 2s) lags the seam by roughly 5 points, inside the 8.7 above |
+| Built CSS carries the three doors | PRESENT — `.ms-door--news{background:var(--ms-gold)...}`, `.ms-door--hub{background:linear-gradient(135deg,var(--ms-hub-a)...)}`, `.ms-door--soon{background:#260c3cdb;border-color:#9333ea99}`, both door breakpoints (1023/1279) and the reduced-motion stack |
 
 **Still not verified:** rendered pixels, scroll feel, the gif's weight against the type at
 real size, the phone layouts (act 4's side-by-side band and the stacked doors), whether the
 three doors read as equal weight with the third deliberately quieter, whether the film
 at full width leaves the OOMF iframe enough air below it, and whether Baldwin's on-screen
 text is actually legible at half the Voices row (the controls are the fallback if it is
-not: pause, or fullscreen).
+not: pause, or fullscreen), and whether the three door colours sit together as a trio
+rather than as three loud unrelated blocks. The seam fix is proven by geometry, not by
+rendered pixels: what a browser would confirm is that the timeline change did not shift
+any act's feel, since every act's balance now arrives earlier than it did on the page Rob
+scrolled.
 
 ## Tuning notes
 

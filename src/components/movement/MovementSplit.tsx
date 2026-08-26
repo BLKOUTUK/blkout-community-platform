@@ -774,23 +774,23 @@ const ActCollapse: React.FC<{ reduced: boolean }> = ({ reduced }) => {
               {room}
             </motion.div>
           )}
-          <div className="ms-scrim ms-scrim--band" />
-          {/* The copy belongs to the second half of the pin: the divider has
-              released by then, so a full-width column cannot be clipped by a
-              seam that is still travelling. */}
-          <div className="ms-col ms-col--full ms-col--bottom">
-            <div className="ms-stack ms-stack--bottom">
-              <Cue p={p} win={[0.52, 0.8]} reduced={reduced}>
-                <h2 className="ms-display ms-display--peak ms-gold">
-                  {'Tenderness is a political act.'}
-                </h2>
-              </Cue>
-              <Cue p={p} win={[0.74, 0.97]} reduced={reduced}>
-                <h2 className="ms-display ms-display--peak">
-                  {'Black queer joy is revolutionary.'}
-                </h2>
-              </Cue>
-            </div>
+        </div>
+        {/* Scrim and copy sit OUTSIDE the clipped side. The ground is what
+            floods with the seam; the words are never cut by it, whatever the
+            spring is doing. */}
+        <div className="ms-scrim ms-scrim--band" />
+        <div className="ms-col ms-col--full ms-col--bottom">
+          <div className="ms-stack ms-stack--bottom">
+            <Cue p={p} win={[0.52, 0.8]} reduced={reduced}>
+              <h2 className="ms-display ms-display--peak ms-gold">
+                {'Tenderness is a political act.'}
+              </h2>
+            </Cue>
+            <Cue p={p} win={[0.74, 0.97]} reduced={reduced}>
+              <h2 className="ms-display ms-display--peak">
+                {'Black queer joy is revolutionary.'}
+              </h2>
+            </Cue>
           </div>
         </div>
       </div>
@@ -826,58 +826,59 @@ const ActClose: React.FC<{ reduced: boolean; answer: string | null }> = ({ reduc
               alt="An empty wooden chair drawn up in the foreground while the room behind carries on talking and laughing."
             />
           </div>
-          <div className="ms-scrim ms-scrim--column-left" />
+        </div>
+        {/* Same rule as act 7: the close's words live outside the clipped
+            side, so a seam still in transit can never eat them. */}
+        <div className="ms-scrim ms-scrim--column-left" />
 
-          <div className="ms-col ms-col--wide ms-close">
-            <Cue p={p} win={[0.04, 1, 0.1, 0]} reduced={reduced}>
-              <p className="ms-body">
-                {answer ? `Earlier you said ${answer}.` : 'Most of us said 1 or fewer.'}
-              </p>
-              <p className="ms-quiet ms-gold" style={{ fontSize: 'clamp(1.3rem, 2.2vw, 2rem)' }}>
-                {"Let's change that. There's a seat here with your name on it."}
-              </p>
-            </Cue>
+        <div className="ms-col ms-col--wide ms-close">
+          <Cue p={p} win={[0.04, 1, 0.1, 0]} reduced={reduced}>
+            <p className="ms-body">
+              {answer ? `Earlier you said ${answer}.` : 'Most of us said 1 or fewer.'}
+            </p>
+            <p className="ms-quiet ms-gold" style={{ fontSize: 'clamp(1.3rem, 2.2vw, 2rem)' }}>
+              {"Let's change that. There's a seat here with your name on it."}
+            </p>
+          </Cue>
 
-            <Cue p={p} win={[0.16, 1, 0.1, 0]} reduced={reduced}>
-              <h2 className="ms-display ms-display--lg">
-                {'The damage is structural. The repair is relational.'}
-              </h2>
-              <p className="ms-body">{'This is the work. This is the joy.'}</p>
-            </Cue>
+          <Cue p={p} win={[0.16, 1, 0.1, 0]} reduced={reduced}>
+            <h2 className="ms-display ms-display--lg">
+              {'The damage is structural. The repair is relational.'}
+            </h2>
+            <p className="ms-body">{'This is the work. This is the joy.'}</p>
+          </Cue>
 
-            {/* One decision at three depths, in ascending commitment. */}
-            <Cue p={p} win={[0.28, 1, 0.1, 0]} reduced={reduced}>
-              <div className="ms-doors">
-                <a className="ms-door" href="https://crm.blkoutuk.cloud/join">
-                  <span className="ms-door__label">Sign up for the newsletter</span>
-                  <span className="ms-door__sub">A monthly letter. Start here.</span>
+          {/* One decision at three depths, in ascending commitment. Each door
+              wears the colour of the place it leads to. */}
+          <Cue p={p} win={[0.28, 1, 0.1, 0]} reduced={reduced}>
+            <div className="ms-doors">
+              <a className="ms-door ms-door--news" href="https://crm.blkoutuk.cloud/join">
+                <span className="ms-door__label">Sign up for the newsletter</span>
+                <span className="ms-door__sub">A monthly letter. Start here.</span>
+              </a>
+              <a
+                className="ms-door ms-door--hub"
+                href="https://blkouthub.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="ms-door__label">Join the BLKOUTHUB</span>
+                <span className="ms-door__sub">
+                  {'The apps reduce you; their model is you, staying alone. We built the Hub to do the opposite: a space driven by building your networks.'}
+                </span>
+              </a>
+              <div className="ms-door ms-door--soon">
+                <span className="ms-door__label">
+                  Become a member
+                  <span className="ms-door__tag">Coming soon</span>
+                </span>
+                <span className="ms-door__sub">{'Community-owned. One member, one vote.'}</span>
+                <a className="ms-door__link" href="/governance">
+                  How membership will work
                 </a>
-                <a
-                  className="ms-door"
-                  href="https://blkouthub.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="ms-door__label">Join the BLKOUTHUB</span>
-                  <span className="ms-door__sub">
-                    {'The apps reduce you; their model is you, staying alone. We built the Hub to do the opposite: a space driven by building your networks.'}
-                  </span>
-                </a>
-                <div className="ms-door ms-door--soon">
-                  <span className="ms-door__label">
-                    Become a member
-                    <span className="ms-door__tag">Coming soon</span>
-                  </span>
-                  <span className="ms-door__sub">
-                    {'Community-owned. One member, one vote.'}
-                  </span>
-                  <a className="ms-door__link" href="/governance">
-                    How membership will work
-                  </a>
-                </div>
               </div>
-            </Cue>
-          </div>
+            </div>
+          </Cue>
         </div>
       </div>
     </section>
@@ -888,10 +889,15 @@ const ActClose: React.FC<{ reduced: boolean; answer: string | null }> = ({ reduc
 
 export default function MovementSplit() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const actsRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion() === true;
   const [answer, setAnswer] = useState<string | null>(null);
 
-  const { scrollYProgress } = useScroll({ target: rootRef, offset: ['start start', 'end end'] });
+  // Measured against the ACTS, not the root. The root also carries the
+  // post-close block and the footer, and counting their height stretches the
+  // whole balance timeline: the seam then runs roughly a fifth of the page
+  // behind its own table, so it is still travelling under act 7's slogans.
+  const { scrollYProgress } = useScroll({ target: actsRef, offset: ['start start', 'end end'] });
   const balanceRaw = useTransform(scrollYProgress, BALANCE.input, BALANCE.output);
   const balanceSpring = useSpring(balanceRaw, { stiffness: 60, damping: 20, restDelta: 0.0005 });
   const stepped = useMotionValue(ACTS[0].rest);
@@ -1019,7 +1025,7 @@ export default function MovementSplit() {
         </div>
       </div>
 
-      <div className="ms-acts">
+      <div ref={actsRef} className="ms-acts">
         <ActHero reduced={reduced} />
         <ActQuestion answer={answer} onAnswer={setAnswer} />
         <ActProblem reduced={reduced} />
