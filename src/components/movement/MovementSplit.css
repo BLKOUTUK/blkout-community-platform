@@ -1,0 +1,1080 @@
+/*
+ * MovementSplit — split-stage scroll page for /movement.
+ *
+ * Geometry contract, in one place so the component only ever writes numbers:
+ *   --ms-balance  0 = all ALONE, 1 = all TOGETHER. Written from JS each frame.
+ *   --ms-seam     the seam's position as a percentage of the stage.
+ *                 Desktop: distance from the left edge. Mobile: from the top.
+ *
+ * Only transform, opacity and clip-path are animated. Nothing here animates
+ * width, height, top or left, and there is no `transition: all`.
+ */
+
+.ms-root {
+  --ms-balance: 0.5;
+  --ms-seam: calc((1 - var(--ms-balance)) * 100%);
+
+  /* Sticky site nav overlays the top of every pinned viewport: keep out of it. */
+  --ms-clear: 88px;
+  --ms-gutter: clamp(20px, 4vw, 64px);
+
+  --ms-ground-alone: #0b0b0d;
+  --ms-ground-together: #120d02;
+  --ms-gold: #ffd700;
+  --ms-gold-deep: #d4af37;
+  --ms-ink: #edebe6;
+  --ms-ink-soft: #a9a5a0;
+  --ms-ink-warm: #d8c9a4;
+
+  position: relative;
+  left: 50%;
+  width: var(--ms-vw, 100vw);
+  transform: translateX(-50%);
+  /* cancel the app shell's <main> py-8 so the split runs edge to edge */
+  margin-top: -2rem;
+  margin-bottom: -2rem;
+  overflow-x: clip;
+  background: var(--ms-ground-alone);
+  color: var(--ms-ink);
+  font-feature-settings: 'kern' 1;
+}
+
+.ms-root ::selection {
+  background: var(--ms-gold);
+  color: #0b0b0d;
+}
+
+.ms-root :focus-visible {
+  outline: 2px solid var(--ms-gold);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------- the bed */
+/* One persistent split behind every act: two hard grounds and the seam. */
+
+.ms-bedwrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ms-bed {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.ms-panel {
+  position: absolute;
+  inset: 0;
+}
+
+.ms-panel--alone {
+  background: var(--ms-ground-alone);
+}
+
+.ms-panel--together {
+  background-color: var(--ms-ground-together);
+  background-image: radial-gradient(
+    130% 90% at 76% 16%,
+    rgba(212, 175, 55, 0.17),
+    rgba(18, 13, 2, 0) 62%
+  );
+}
+
+/* A flat dark ground bands on real displays; this is the lit-room correction. */
+.ms-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.045;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+}
+
+/* The seam rides on a full-size box translated by the balance percentage,
+   so its position is a transform rather than an animated `left`. */
+.ms-seam {
+  position: absolute;
+  inset: 0;
+  transform: translateX(var(--ms-seam));
+  will-change: transform;
+}
+
+.ms-seam__line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -1px;
+  width: 2px;
+  background: var(--ms-gold-deep);
+}
+
+.ms-seam__core {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--ms-gold);
+  opacity: 0.8;
+}
+
+.ms-seam__glow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -4px;
+  width: 8px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 215, 0, 0) 0%,
+    rgba(255, 215, 0, 0.6) 50%,
+    rgba(255, 215, 0, 0) 100%
+  );
+}
+
+.ms-seam__glow--h {
+  display: none;
+}
+
+.ms-seam__labels {
+  position: absolute;
+  top: var(--ms-clear);
+  left: 0;
+  width: 0;
+}
+
+.ms-label {
+  position: absolute;
+  top: 0;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.ms-label--alone {
+  right: 16px;
+  color: rgba(237, 235, 230, 0.6);
+}
+
+.ms-label--together {
+  left: 16px;
+  color: var(--ms-gold-deep);
+  transform-origin: left center;
+}
+
+/* Panel-corner labels: the mobile arrangement, hidden on desktop. */
+.ms-label--stacked {
+  display: none;
+}
+
+/* ------------------------------------------------------------- side clips */
+/* Anything an act paints on one side of the seam wears one of these. */
+
+.ms-side {
+  position: absolute;
+  inset: 0;
+}
+
+.ms-panel--alone,
+.ms-side--alone {
+  clip-path: inset(0 calc(100% - var(--ms-seam)) 0 0);
+}
+
+/* The together side compresses to a sliver in act 3 but never disappears. */
+.ms-panel--together,
+.ms-side--together {
+  clip-path: inset(0 0 0 min(var(--ms-seam), calc(100% - 64px)));
+}
+
+/* ------------------------------------------------------------------- acts */
+
+.ms-acts {
+  position: relative;
+  z-index: 1;
+}
+
+.ms-act {
+  position: relative;
+  height: calc(var(--ms-span, 1) * 100vh);
+}
+
+.ms-act--flow {
+  height: auto;
+  min-height: calc(var(--ms-span, 1) * 100vh);
+}
+
+.ms-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  padding-top: var(--ms-clear);
+}
+
+.ms-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ms-cool {
+  filter: saturate(0.55) contrast(1.04);
+}
+
+/* Density where the type is, never a full-frame overlay. Always a sibling of
+   the copy it protects, never a child of it. */
+.ms-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ms-scrim--column-left {
+  background: linear-gradient(
+    90deg,
+    rgba(6, 6, 8, 0.92) 0%,
+    rgba(6, 6, 8, 0.86) 46%,
+    rgba(6, 6, 8, 0) 82%
+  );
+}
+
+.ms-scrim--column-right {
+  background: linear-gradient(
+    270deg,
+    rgba(10, 7, 1, 0.9) 0%,
+    rgba(10, 7, 1, 0.82) 46%,
+    rgba(10, 7, 1, 0) 82%
+  );
+}
+
+.ms-scrim--band {
+  background: linear-gradient(
+    0deg,
+    rgba(6, 5, 2, 0.94) 0%,
+    rgba(6, 5, 2, 0.72) 38%,
+    rgba(6, 5, 2, 0) 72%
+  );
+}
+
+/* A copy column, anchored to one side and measured for reading. */
+.ms-col {
+  position: absolute;
+  top: var(--ms-clear);
+  bottom: 0;
+  padding: clamp(24px, 5vh, 64px) var(--ms-gutter);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ms-col--alone {
+  left: 0;
+  width: min(58ch, 46%);
+}
+
+.ms-col--together {
+  right: 0;
+  width: min(58ch, 46%);
+}
+
+/* Act 3's argument column: the alone side is never narrower than 50% while
+   this is on screen, so 48% can never be clipped by the seam. */
+.ms-col--wide {
+  left: 0;
+  width: min(62ch, 48%);
+}
+
+/* Act 7 only, where the together side owns the whole frame. */
+.ms-col--full {
+  left: 0;
+  width: min(64ch, 72%);
+}
+
+/* Absolutely stacked cues: only one is at full opacity at a time. Each cue
+   fills the stack and centres its own content, so framer-motion owns the
+   element's transform outright and nothing fights it for centring. */
+.ms-stack {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+}
+
+.ms-stack > * {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+}
+
+/* ------------------------------------------------------------- typography */
+
+.ms-display {
+  font-family: 'Work Sans', Inter, system-ui, sans-serif;
+  font-weight: 900;
+  line-height: 1.02;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+  color: var(--ms-ink);
+}
+
+.ms-display--hero {
+  font-size: clamp(2rem, 4.5vw, 4rem);
+}
+
+.ms-display--xl {
+  font-size: clamp(1.8rem, 3.6vw, 3.2rem);
+}
+
+.ms-display--lg {
+  font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+}
+
+.ms-display--md {
+  font-size: clamp(1.25rem, 2.1vw, 1.9rem);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.14;
+}
+
+.ms-gold {
+  color: var(--ms-gold);
+}
+
+.ms-gold-deep {
+  color: var(--ms-gold-deep);
+}
+
+.ms-body {
+  font-family: 'Work Sans', Inter, system-ui, sans-serif;
+  font-weight: 400;
+  font-size: clamp(1rem, 1.15vw, 1.15rem);
+  line-height: 1.62;
+  letter-spacing: 0.004em;
+  max-width: 62ch;
+  color: var(--ms-ink-soft);
+  text-wrap: pretty;
+}
+
+.ms-quiet {
+  font-family: Fraunces, Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1rem, 1.35vw, 1.3rem);
+  line-height: 1.5;
+  max-width: 54ch;
+  color: var(--ms-ink-warm);
+}
+
+.ms-eyebrow {
+  font-family: 'Work Sans', Inter, system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ms-gold-deep);
+}
+
+/* Kinetic line assembly: each line rides up from behind its own mask.
+   The mask carries padding so descenders are never sheared. */
+.ms-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.16em;
+  margin-bottom: -0.16em;
+}
+
+/* -------------------------------------------------------------- the sliver */
+
+.ms-sliver-label {
+  position: absolute;
+  top: 42%;
+  right: 14px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ms-gold);
+}
+
+/* ------------------------------------------------------------- the answer */
+
+.ms-poll {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 0;
+  border: 0;
+}
+
+.ms-poll__btn {
+  min-height: 44px;
+  min-width: 84px;
+  padding: 10px 20px;
+  font-family: 'Work Sans', Inter, system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ms-gold);
+  background: #0b0b0d;
+  border: 1px solid var(--ms-gold-deep);
+  cursor: pointer;
+  transition: background-color 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    color 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ms-poll__btn[aria-pressed='true'] {
+  background: var(--ms-gold);
+  color: #0b0b0d;
+  border-color: var(--ms-gold);
+}
+
+.ms-poll__btn:active {
+  transform: translateY(1px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ms-poll__btn:hover {
+    background: rgba(255, 215, 0, 0.14);
+  }
+
+  .ms-poll__btn[aria-pressed='true']:hover {
+    background: var(--ms-gold);
+  }
+}
+
+/* ----------------------------------------------------------------- plates */
+
+.ms-plates {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 6vh, 72px);
+}
+
+.ms-plate {
+  display: grid;
+  grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+  gap: clamp(20px, 2.4vw, 36px);
+  align-items: start;
+}
+
+.ms-plate__figure {
+  margin: 0;
+}
+
+.ms-plate__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(212, 175, 55, 0.28);
+}
+
+.ms-link {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 6px 0;
+  min-height: 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ms-gold-deep);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+  transition: color 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ms-link:hover {
+    color: var(--ms-gold);
+  }
+}
+
+.ms-voices {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: clamp(16px, 2vw, 28px);
+  align-items: start;
+  margin-top: clamp(40px, 6vh, 72px);
+}
+
+.ms-voices video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #000;
+  border: 1px solid rgba(212, 175, 55, 0.28);
+}
+
+/* ------------------------------------------------------------ act frames */
+/* Static sub-frames inside a side, so an image is cropped for the column it
+   will actually occupy rather than for the whole stage. Widths never animate. */
+
+.ms-frame {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
+.ms-frame--l50 { left: 0; right: 50%; }
+.ms-frame--r50 { left: 50%; right: 0; }
+.ms-frame--r58 { left: 42%; right: 0; }
+.ms-frame--full { left: 0; right: 0; }
+
+/* One h1, two spans, one per column. */
+.ms-h1 {
+  position: absolute;
+  inset: var(--ms-clear) 0 0 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+.ms-h1__side {
+  position: absolute;
+  top: 46%;
+  display: block;
+  width: min(52ch, 46%);
+  padding: 0 var(--ms-gutter);
+}
+
+.ms-h1__side--alone { left: 0; }
+.ms-h1__side--together { right: 0; }
+
+.ms-h1__side > span {
+  display: block;
+}
+
+.ms-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ms-figure {
+  margin: 0;
+  width: min(280px, 46%);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+}
+
+.ms-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ms-sticky-media {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.ms-stack--bottom {
+  flex: 0 0 auto;
+  min-height: 46vh;
+}
+
+.ms-stack--bottom > * {
+  justify-content: flex-end;
+}
+
+.ms-close {
+  gap: clamp(18px, 2.6vh, 30px);
+}
+
+.ms-close > * {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.ms-voices-block {
+  margin-top: clamp(40px, 6vh, 72px);
+}
+
+.ms-col--bottom {
+  justify-content: flex-end;
+  padding-bottom: clamp(48px, 9vh, 108px);
+}
+
+/* The close holds the same room, dimmed, behind a left-anchored text block. */
+.ms-close__room img {
+  filter: brightness(0.42) saturate(0.9);
+}
+
+.ms-close__chair img {
+  filter: brightness(0.66);
+}
+
+.ms-display--peak {
+  font-size: clamp(2.4rem, 6.4vw, 5.6rem);
+  letter-spacing: -0.03em;
+}
+
+/* The together side of act 2 waits, dim, until it has something to answer. */
+.ms-reveal {
+  opacity: 0.14;
+  transform: translateY(14px);
+  transition: opacity 480ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 480ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.ms-reveal.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+/* A flow act whose content belongs to the together side. */
+.ms-flow {
+  position: relative;
+  padding: clamp(40px, 7vh, 96px) var(--ms-gutter);
+  padding-top: calc(var(--ms-clear) + clamp(16px, 3vh, 40px));
+}
+
+.ms-flow--right {
+  margin-left: 44%;
+  width: min(64ch, 52%);
+  margin-right: 0;
+}
+
+.ms-flow--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: clamp(32px, 7vw, 120px);
+  align-items: center;
+}
+
+/* Ownership carries a governance fact, so it runs as type on a hairline
+   rather than as a third identical figure plate. */
+.ms-plate--type {
+  grid-template-columns: minmax(0, 1fr);
+  border-top: 1px solid rgba(212, 175, 55, 0.4);
+  padding-top: clamp(20px, 3vh, 32px);
+}
+
+/* -------------------------------------------------------------------- CTA */
+
+.ms-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+  margin-top: 8px;
+  padding: 15px 34px;
+  font-family: 'Work Sans', Inter, system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  color: #0b0b0d;
+  background: var(--ms-gold);
+  text-decoration: none;
+  transition: background-color 150ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ms-cta:hover {
+    background: var(--ms-gold-deep);
+  }
+}
+
+.ms-cta:active {
+  transform: translateY(1px);
+}
+
+.ms-secondary {
+  margin-top: 20px;
+  font-size: 0.92rem;
+  color: var(--ms-ink-soft);
+}
+
+.ms-secondary a {
+  color: var(--ms-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding: 4px 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ms-secondary a:hover {
+    color: var(--ms-gold);
+  }
+}
+
+/* ------------------------------------------------------------- post-close */
+
+.ms-post {
+  position: relative;
+  z-index: 1;
+  background: #050506;
+  padding: clamp(56px, 9vh, 104px) var(--ms-gutter);
+}
+
+.ms-post__inner {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.ms-disclaimer {
+  margin-top: 40px;
+  font-size: 0.8rem;
+  color: rgba(169, 165, 160, 0.85);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------ phone */
+/* The seam turns horizontal: ALONE on top, TOGETHER below, and the together
+   side literally rises as the page progresses. */
+
+@media (max-width: 767px) {
+  .ms-root {
+    --ms-clear: 80px;
+  }
+
+  .ms-seam {
+    transform: translateY(var(--ms-seam));
+  }
+
+  .ms-seam__line {
+    top: -1px;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 2px;
+  }
+
+  .ms-seam__core {
+    top: 0;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 1px;
+  }
+
+  .ms-seam__glow {
+    top: -4px;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 8px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 215, 0, 0) 0%,
+      rgba(255, 215, 0, 0.6) 50%,
+      rgba(255, 215, 0, 0) 100%
+    );
+  }
+
+  .ms-seam__labels {
+    display: none;
+  }
+
+  .ms-label--stacked {
+    display: block;
+    position: absolute;
+    left: var(--ms-gutter);
+  }
+
+  .ms-label--stacked.ms-label--alone {
+    top: var(--ms-clear);
+    right: auto;
+  }
+
+  .ms-label--stacked.ms-label--together {
+    bottom: 24px;
+    top: auto;
+    left: var(--ms-gutter);
+  }
+
+  .ms-panel--alone,
+  .ms-side--alone {
+    clip-path: inset(0 0 calc(100% - var(--ms-seam)) 0);
+  }
+
+  .ms-panel--together,
+  .ms-side--together {
+    clip-path: inset(min(var(--ms-seam), calc(100% - 56px)) 0 0 0);
+  }
+
+  .ms-col {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: auto;
+    top: var(--ms-clear);
+    bottom: auto;
+    padding: 20px var(--ms-gutter);
+    justify-content: flex-start;
+  }
+
+  .ms-col--together,
+  .ms-col--wide,
+  .ms-col--full {
+    left: 0;
+    right: 0;
+    width: auto;
+  }
+
+  /* Each side owns a horizontal band on the phone: ALONE hangs from under the
+     nav, TOGETHER sits off the bottom edge. Both offsets are static, so the
+     moving seam never triggers layout. */
+  .ms-col--alone {
+    top: var(--ms-clear);
+    bottom: auto;
+    justify-content: flex-start;
+  }
+
+  .ms-col--together {
+    top: auto;
+    bottom: 40px;
+  }
+
+  /* Act 1's supporting lines sit inside their own band, clear of the two
+     headline halves above them. */
+  .ms-col--alone.ms-col--bottom {
+    top: 34%;
+    bottom: auto;
+    padding-bottom: 0;
+  }
+
+  .ms-col--together.ms-col--bottom {
+    top: auto;
+    bottom: 16%;
+    padding-bottom: 0;
+  }
+
+  .ms-stack {
+    flex: 0 0 auto;
+    min-height: 46vh;
+  }
+
+  .ms-sliver-label {
+    top: auto;
+    bottom: 14px;
+    right: var(--ms-gutter);
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .ms-seam__glow--v {
+    display: none;
+  }
+
+  .ms-seam__glow--h {
+    display: block;
+    top: -4px;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 8px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 215, 0, 0) 0%,
+      rgba(255, 215, 0, 0.6) 50%,
+      rgba(255, 215, 0, 0) 100%
+    );
+  }
+
+  .ms-frame--l50 { left: 0; right: 0; top: 0; bottom: 50%; }
+  .ms-frame--r50 { left: 0; right: 0; top: 50%; bottom: 0; }
+  .ms-frame--r58 { left: 0; right: 0; top: 42%; bottom: 0; }
+  .ms-frame--full { left: 0; right: 0; top: 0; bottom: 0; }
+
+  /* The close: the chair carries the whole frame on a phone. */
+  .ms-close__room { display: none; }
+  .ms-close__chair { left: 0; right: 0; top: 0; bottom: 0; }
+
+  .ms-stack--bottom {
+    min-height: 40vh;
+  }
+
+  .ms-figure {
+    width: min(220px, 60%);
+  }
+
+  .ms-h1__side {
+    position: absolute;
+    width: auto;
+    left: 0;
+    right: 0;
+  }
+
+  .ms-h1__side--alone { top: 8%; }
+  .ms-h1__side--together { top: 56%; }
+
+  .ms-flow--right {
+    margin-left: 0;
+    width: auto;
+  }
+
+  .ms-flow--split {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(32px, 6vh, 56px);
+    align-items: start;
+  }
+
+  .ms-plate {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .ms-plate__figure img {
+    max-width: 320px;
+  }
+
+  .ms-voices {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* --------------------------------------------------------- reduced motion */
+/* Fewer and gentler, not zero. Every cue renders fully, the pins release into
+   ordinary document flow, and the divider steps between act rest positions. */
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-act,
+  .ms-act--flow {
+    height: auto;
+    min-height: 0;
+  }
+
+  .ms-stage {
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding-top: 0;
+  }
+
+  .ms-side {
+    position: static;
+    clip-path: none;
+  }
+
+  .ms-col {
+    position: static;
+    width: auto;
+    height: auto;
+    max-width: 68ch;
+    padding: clamp(40px, 6vh, 72px) var(--ms-gutter);
+  }
+
+  .ms-stack {
+    flex: 0 0 auto;
+    min-height: 0;
+  }
+
+  .ms-stack > * {
+    position: relative;
+    inset: auto;
+    display: block;
+    margin-bottom: clamp(28px, 4vh, 48px);
+  }
+
+  /* A column of density so the copy stays legible over the persistent bed. */
+  .ms-col > * {
+    background: rgba(6, 6, 8, 0.88);
+    padding: clamp(16px, 2vw, 28px);
+  }
+
+  .ms-frame,
+  .ms-sticky-media {
+    position: relative;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    height: auto;
+    max-height: 56vh;
+  }
+
+  .ms-stack--bottom {
+    min-height: 0;
+  }
+
+  .ms-close > * {
+    align-items: flex-start;
+  }
+
+  .ms-media {
+    position: relative;
+    height: auto;
+    max-height: 56vh;
+  }
+
+  .ms-scrim {
+    display: none;
+  }
+
+  .ms-h1 {
+    position: static;
+    inset: auto;
+    padding: clamp(40px, 6vh, 72px) var(--ms-gutter);
+  }
+
+  .ms-h1__side {
+    position: static;
+    width: auto;
+    max-width: 30ch;
+    padding: 0;
+    margin-bottom: 24px;
+  }
+
+  .ms-flow {
+    padding-top: clamp(40px, 7vh, 96px);
+  }
+
+  .ms-flow--right {
+    margin-left: 0;
+    width: auto;
+    max-width: 68ch;
+  }
+
+  .ms-flow--split {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(32px, 6vh, 56px);
+  }
+
+  .ms-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .ms-sliver-label {
+    position: static;
+    writing-mode: horizontal-tb;
+    transform: none;
+    display: block;
+    padding: 12px var(--ms-gutter);
+  }
+
+  .ms-poll__btn,
+  .ms-cta,
+  .ms-link,
+  .ms-secondary a {
+    transition: none;
+  }
+}
