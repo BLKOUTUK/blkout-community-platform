@@ -99,6 +99,82 @@ gatherings ← card-33, stories ← card-24. Plus lorde-poster / baldwin-poster 
 7. **One em dash survives in the OOMF promo alt text** (carried verbatim per SPEC); none
    in visible copy.
 
+## Revision 26 Aug (Rob's review)
+
+Three notes from Rob, implemented in `MovementSplit.tsx` + `MovementSplit.css` only.
+
+**1. Act 4, the turn — no lateral reveal, and the argument keeps its trail.**
+The left-to-right clip-path wipe on `golden-hour.jpg` is gone. The image is now the
+right column's ground from the act's first frame, opacity `0.4 → 1` across `p 0 → 0.22`
+(present at p=0, so the "ground or greet" rule still holds). Nothing in act 4 translates
+sideways. The right column dropped `ms-stack` (absolute, one-cue-at-a-time) for flow
+layout in `.ms-col--turn-right`, so lines assemble in place and accumulate: each joins
+the ones above it instead of replacing them. New order — LEFT: the Ru quote, then the
+RuPaul amen gif beneath it as the bridge (`public/images/movement/rupaul-amen.gif`,
+copied from `theory-of-change/`, ~1MB; `rupaul-amen-still.jpg` 36KB, frame 0 via PIL, is
+swapped in under `prefers-reduced-motion`). RIGHT: "Hold on a minute, Ru…" → "Loving
+ourselves is learned through community." → "We are each other's missing link." Cue
+windows `[0,1,0,.08]`, `[.12,1,.14,.09]`, `[.30,1,.14,.11]`, `[.48,1,.19,.15]`,
+`[.66,1,.29,.23]` — every one plateaus, all five begin their fade at p ≈ 0.92 and reach 0
+at exactly 1, so the middle-act rule is intact. Divider swing 0.28 → 0.58 and the 0.5
+seam pulse are untouched. Column widths are measured against the seam at its narrowest in
+this act (42%): left `min(46ch, 38%)`, right `min(52ch, 42%)`, so neither can be clipped.
+On phones the alone band shrinks as the seam rises, so the quote and the gif sit side by
+side (gif 132px) instead of stacked.
+
+**2. Act 8, the close — three doors instead of one CTA.**
+The single `Join BLKOUT` button and the small secondary links are replaced by
+`.ms-doors`: one decision at three depths, ascending. (1) "Sign up for the newsletter" /
+"A monthly letter. Start here." → `https://crm.blkoutuk.cloud/join`. (2) "Join the
+BLKOUTHUB" carrying Rob's differentiation near-verbatim ("The apps reduce you; their
+model is you, staying alone. We built the Hub to do the opposite: a space driven by
+building your networks.") → `https://blkouthub.com`, new tab — this pays off act 3's apps
+beat. (3) "Become a member" is **not a link**: membership is a holding page, so it renders
+quieter (no fill, muted hairline) with a "Coming soon" tag, the subline "Community-owned.
+One member, one vote.", and one small underlined link, "How membership will work" →
+`/governance` (44px target). Poll callback and thesis lines unchanged; the doors follow
+them on the same holding cue `[0.28, 1, 0.1, 0]`. Three across at ≥1280px, full-width
+rows below that and on phones. The close column widened to `min(88ch, 66%)` and the chair
+frame moved to `left: 66%` so the doors have room; both revert to full-bleed on phones.
+`.ms-cta` and `.ms-secondary` were removed from the CSS — nothing referenced them once the
+single CTA went.
+
+**3. Post-close — the film carries the OOMF invitation.**
+The cold promo-image-then-iframe drop is now sequenced: kicker "One more thing", then
+`/videos/Heroes2.mp4` full width in the content column (click to play, `controls`,
+`preload="none"` so none of its 36 MB is fetched until the visitor presses it,
+`poster="/images/poster-Heroes2.jpg"`, `playsInline`), then the payoff in live type,
+"We're the heroes we've been waiting for." / "Now put yourself in the story.", then the
+OOMF iframe and its open-in-new-tab fallback exactly as ported. **No `autoPlay` and no
+`muted`**: nothing plays or fetches on its own, and sound arrives only on the visitor's
+press, the same contract as the Lorde clip in act 5. (The homepage's Heroes2 element
+carries `muted` as a leftover from when it autoplayed; muting a film the visitor has
+deliberately started would cost the invitation the thing that makes it fun.)
+**`oomf-heroes-promo.jpg` was dropped**, my call under the brief's option: its copy is
+baked into the image, and that copy is now live type in the payoff headline directly
+above the iframe, so keeping it would have duplicated the line, crowded the film and put
+type-in-an-image on the page against the taste floor. It stays on disk and is still
+referenced by the retained `TheoryOfChangeMasonry.tsx`. Dropping it also removed the last
+em dash in visible copy: the page now has none. The purple leftover kicker became
+`.ms-eyebrow`, the page's own gold uppercase.
+
+### Verification of the revision
+
+| Check | Result |
+|---|---|
+| `npx tsc --noEmit` | PASS — zero errors in MovementSplit.tsx/.css; App.tsx's same 8 pre-existing errors, repo total still 424 |
+| `npm run build` | PASS — 2394 modules, 13.0s |
+| Asset path diff | PASS — 17 paths referenced, 17 present, 0 missing, 0 orphans in `public/images/movement/` |
+| `curl` new assets on :4173 | PASS — `rupaul-amen.gif` 200 `image/gif` 1066428, `rupaul-amen-still.jpg` 200 `image/jpeg` 36245, `Heroes2.mp4` 200 `video/mp4` 36789221, `poster-Heroes2.jpg` 200 `image/jpeg` 51307; every content-length byte-identical to disk |
+| Bundle grep | "staying alone", "Become a member", "Coming soon", "How membership will work", "heroes we've been waiting for", "Now put yourself in the story" all PRESENT; "oomf-heroes-promo" absent (inclusion only — an un-code-split bundle carries every page's strings) |
+| Cue windows | Simulated `cueSpec` for all five act-4 cues: each plateaus, all close at 1, none holds |
+| Em dashes in visible copy | Zero in the file, comments included |
+
+**Still not verified:** rendered pixels, scroll feel, the gif's weight against the type at
+real size, the phone layouts (act 4's side-by-side band and the stacked doors), whether the
+three doors read as equal weight with the third deliberately quieter, and whether the film
+at full width leaves the OOMF iframe enough air below it.
+
 ## Tuning notes
 
 - Phone layout first when reviewing — least constrained, never rendered.

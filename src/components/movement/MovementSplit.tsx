@@ -484,7 +484,9 @@ const ActProblem: React.FC<{ reduced: boolean }> = ({ reduced }) => {
 const ActTurn: React.FC<{ reduced: boolean }> = ({ reduced }) => {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const wipe = useTransform(p, [0.14, 0.46], ['inset(0 100% 0 0)', 'inset(0 0% 0 0)']);
+  // The warm side is ground here, not a reveal: present from the act's first
+  // frame, lifting gently. No wipe, nothing travels sideways.
+  const groundIn = useTransform(p, [0, 0.22], [0.4, 1]);
 
   const goldenHour = (
     <img
@@ -496,15 +498,36 @@ const ActTurn: React.FC<{ reduced: boolean }> = ({ reduced }) => {
     />
   );
 
+  const amen = reduced ? (
+    <img
+      src="/images/movement/rupaul-amen-still.jpg"
+      width={462}
+      height={462}
+      alt="RuPaul, big blonde wig, looking straight down the camera and asking the room: can I get an amen up in here?"
+    />
+  ) : (
+    <img
+      src="/images/movement/rupaul-amen.gif"
+      width={462}
+      height={462}
+      alt="RuPaul, big blonde wig, looking straight down the camera and asking the room: can I get an amen up in here?"
+    />
+  );
+
   return (
     <section ref={ref} className="ms-act" data-ms-rest="0.58" style={spanStyle(1.8)}>
       <div className="ms-stage">
         <div className="ms-side ms-side--alone">
-          <div className="ms-col ms-col--alone">
-            <Cue p={p} win={[0, 0.46, 0, 0.42]} reduced={reduced}>
+          {/* What we've been told, and the culture co-signing it. Both stay put
+              while the other side answers: the trail is the argument. */}
+          <div className="ms-col ms-col--alone ms-col--turn-left">
+            <Cue p={p} win={[0, 1, 0, 0.08]} reduced={reduced} className="ms-turn-told">
               <p className="ms-display ms-display--md">
                 {"What we've been told: 'If you can't love yourself, how you gonna love somebody else?'"}
               </p>
+            </Cue>
+            <Cue p={p} win={[0.12, 1, 0.14, 0.09]} reduced={reduced} className="ms-turn-amen">
+              <figure className="ms-amen">{amen}</figure>
             </Cue>
           </div>
         </div>
@@ -513,29 +536,30 @@ const ActTurn: React.FC<{ reduced: boolean }> = ({ reduced }) => {
           {reduced ? (
             <div className="ms-frame ms-frame--r58">{goldenHour}</div>
           ) : (
-            <motion.div className="ms-frame ms-frame--r58" style={{ clipPath: wipe }}>
+            <motion.div className="ms-frame ms-frame--r58" style={{ opacity: groundIn }}>
               {goldenHour}
             </motion.div>
           )}
           <div className="ms-scrim ms-scrim--column-right" />
-          <div className="ms-col ms-col--together">
-            <div className="ms-stack">
-              <Cue p={p} win={[0.42, 0.66]} reduced={reduced}>
-                <p className="ms-quiet ms-gold" style={{ fontSize: 'clamp(1.4rem, 2.4vw, 2.2rem)' }}>
-                  {"Hold on a minute, Ru. You've missed a step."}
-                </p>
-              </Cue>
-              <Cue p={p} win={[0.6, 0.82]} reduced={reduced}>
-                <h2 className="ms-display ms-display--lg">
-                  {'Loving ourselves is learned through community.'}
-                </h2>
-              </Cue>
-              <Cue p={p} win={[0.76, 1, 0.3, 0.12]} reduced={reduced}>
-                <h2 className="ms-display ms-display--xl ms-gold">
-                  {"We are each other's missing link."}
-                </h2>
-              </Cue>
-            </div>
+          {/* The interruption assembles in place and accumulates: each line
+              joins the ones above it, and they all release together at the
+              act's end (only act 8 may hold). */}
+          <div className="ms-col ms-col--together ms-col--turn-right">
+            <Cue p={p} win={[0.3, 1, 0.14, 0.11]} reduced={reduced}>
+              <p className="ms-quiet ms-gold" style={{ fontSize: 'clamp(1.4rem, 2.4vw, 2.2rem)' }}>
+                {"Hold on a minute, Ru. You've missed a step."}
+              </p>
+            </Cue>
+            <Cue p={p} win={[0.48, 1, 0.19, 0.15]} reduced={reduced}>
+              <h2 className="ms-display ms-display--lg">
+                {'Loving ourselves is learned through community.'}
+              </h2>
+            </Cue>
+            <Cue p={p} win={[0.66, 1, 0.29, 0.23]} reduced={reduced}>
+              <h2 className="ms-display ms-display--xl ms-gold">
+                {"We are each other's missing link."}
+              </h2>
+            </Cue>
           </div>
         </div>
       </div>
@@ -790,24 +814,37 @@ const ActClose: React.FC<{ reduced: boolean; answer: string | null }> = ({ reduc
               <p className="ms-body">{'This is the work. This is the joy.'}</p>
             </Cue>
 
+            {/* One decision at three depths, in ascending commitment. */}
             <Cue p={p} win={[0.28, 1, 0.1, 0]} reduced={reduced}>
-              <a className="ms-cta" href="https://crm.blkoutuk.cloud/join">
-                Join BLKOUT
-              </a>
-              <p className="ms-body">
-                {'A monthly letter. First through the door as membership opens.'}
-              </p>
-            </Cue>
-
-            <Cue p={p} win={[0.38, 1, 0.1, 0]} reduced={reduced}>
-              <p className="ms-secondary">
-                {'Already in community? '}
-                <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer">
-                  BLKOUTHUB
+              <div className="ms-doors">
+                <a className="ms-door" href="https://crm.blkoutuk.cloud/join">
+                  <span className="ms-door__label">Sign up for the newsletter</span>
+                  <span className="ms-door__sub">A monthly letter. Start here.</span>
                 </a>
-                {' · Just looking? '}
-                <a href="/stories">The stories</a>
-              </p>
+                <a
+                  className="ms-door"
+                  href="https://blkouthub.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="ms-door__label">Join the BLKOUTHUB</span>
+                  <span className="ms-door__sub">
+                    {'The apps reduce you; their model is you, staying alone. We built the Hub to do the opposite: a space driven by building your networks.'}
+                  </span>
+                </a>
+                <div className="ms-door ms-door--soon">
+                  <span className="ms-door__label">
+                    Become a member
+                    <span className="ms-door__tag">Coming soon</span>
+                  </span>
+                  <span className="ms-door__sub">
+                    {'Community-owned. One member, one vote.'}
+                  </span>
+                  <a className="ms-door__link" href="/governance">
+                    How membership will work
+                  </a>
+                </div>
+              </div>
             </Cue>
           </div>
         </div>
@@ -981,16 +1018,30 @@ export default function MovementSplit() {
           transition={{ delay: 0.5, duration: 1 }}
           className="text-center px-4 max-w-6xl w-full ms-post__inner"
         >
-          <p className="text-sm text-purple-600 uppercase tracking-widest mb-8">One more thing...</p>
+          <p className="ms-eyebrow ms-post__kicker">One more thing</p>
 
-          {/* OOMF Crew Image */}
-          <div className="mb-12">
-            <img
-              src="/images/theory-of-change/oomf-heroes-promo.jpg"
-              alt="We’re the heroes we’ve been waiting for — now put yourself in the story. BLKOUT board members reimagined as OOMF comic heroes."
-              className="max-w-3xl w-full mx-auto rounded-2xl"
+          {/* The film carries the invitation. Click to play: 36 MB, so
+              preload="none" fetches nothing until the visitor presses it, and
+              sound arrives only on that press. No autoplay anywhere. */}
+          <figure className="ms-film">
+            <video
+              src="/videos/Heroes2.mp4"
+              poster="/images/poster-Heroes2.jpg"
+              width={1920}
+              height={1080}
+              controls
+              playsInline
+              preload="none"
             />
-          </div>
+            <figcaption className="ms-film__cap">
+              {'Our heroes, our story. Press play for sound.'}
+            </figcaption>
+          </figure>
+
+          <h2 className="ms-display ms-display--lg ms-post__headline">
+            {"We're the heroes we've been waiting for."}
+          </h2>
+          <p className="ms-quiet ms-post__sub">{'Now put yourself in the story.'}</p>
 
           <div className="w-full max-w-3xl mx-auto mb-8">
             <div
