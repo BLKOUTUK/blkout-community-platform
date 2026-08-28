@@ -107,6 +107,8 @@ const LEARNING_TOOLS: LearningTool[] = [
 
 interface IVORAssistantProps {
   onClose: () => void;
+  /** A question handed in via ?q= — sent as the first message when the widget opens. */
+  initialQuestion?: string;
   utmParams?: {
     utmSource?: string;
     utmMedium?: string;
@@ -115,7 +117,7 @@ interface IVORAssistantProps {
   };
 }
 
-export default function IVORAssistant({ onClose, utmParams }: IVORAssistantProps) {
+export default function IVORAssistant({ onClose, utmParams, initialQuestion }: IVORAssistantProps) {
   const [messages, setMessages] = useState<IVORMessage[]>([
     {
       id: '1',
@@ -243,6 +245,16 @@ export default function IVORAssistant({ onClose, utmParams }: IVORAssistantProps
   const handleLearningToolSelect = (tool: LearningTool) => {
     handleSendMessage(tool.prompt);
   };
+
+  // Send a handed-in question once, on mount (Ask AIvor box on events.blkoutuk.com).
+  const sentInitial = useRef(false);
+  useEffect(() => {
+    if (initialQuestion && !sentInitial.current) {
+      sentInitial.current = true;
+      handleSendMessage(initialQuestion);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-2 md:p-4">

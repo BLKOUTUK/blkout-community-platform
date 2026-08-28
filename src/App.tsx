@@ -177,10 +177,12 @@ export default function App() {
   const [currentQuote, setCurrentQuote] = useState(0);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false); // Require authentication
   const [showIVOR, setShowIVOR] = useState(() => {
-    // Open chat if ?chat=open is in URL (from external links)
+    // Open chat if ?chat=open is in URL (from external links), or if a question was handed in (?q=…)
     const params = new URLSearchParams(window.location.search);
-    return params.get('chat') === 'open';
+    return params.get('chat') === 'open' || !!params.get('q');
   });
+  // A question handed in by another surface (e.g. the Ask AIvor box on events.blkoutuk.com) — sent on open.
+  const [ivorInitialQuestion] = useState(() => new URLSearchParams(window.location.search).get('q')?.trim() || undefined);
   // Extract UTM parameters from URL for campaign tracking
   const [utmParams] = useState(() => {
     const params = new URLSearchParams(window.location.search);
@@ -708,7 +710,7 @@ export default function App() {
 
           {/* IVOR Assistant Overlay */}
           {showIVOR && (
-            <IVORAssistant onClose={() => setShowIVOR(false)} utmParams={utmParams} />
+            <IVORAssistant onClose={() => setShowIVOR(false)} utmParams={utmParams} initialQuestion={ivorInitialQuestion} />
           )}
 
       </div>
