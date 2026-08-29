@@ -20,6 +20,8 @@ interface VideoHeroProps {
   children?: React.ReactNode;
   showLogo?: boolean;
   logoSrc?: string;
+  /** 'xl' bumps the title up a step for pages where it's the only headline text. */
+  titleSize?: 'lg' | 'xl';
 }
 
 const VideoHero: React.FC<VideoHeroProps> = ({
@@ -33,7 +35,8 @@ const VideoHero: React.FC<VideoHeroProps> = ({
   className,
   children,
   showLogo = true,
-  logoSrc = "/Branding and logos/blkoutlogo_wht_transparent.png"
+  logoSrc = "/Branding and logos/blkoutlogo_wht_transparent.png",
+  titleSize = 'lg'
 }) => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -170,7 +173,9 @@ const VideoHero: React.FC<VideoHeroProps> = ({
           )}
 
           <h1 className={cn(
-            'text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 md:mb-6',
+            titleSize === 'xl'
+              ? 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-4 md:mb-6'
+              : 'text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-4 md:mb-6',
             'leading-tight tracking-tight',
             // Outline text styles for better video visibility
             textColor === 'light'

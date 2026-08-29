@@ -3,7 +3,7 @@
 // STRICT SEPARATION: Application shell only - NO business logic
 
 import React, { useState, useEffect } from 'react';
-import { DollarSign, Brain, Play, Sparkles } from 'lucide-react';
+import { DollarSign, Brain } from 'lucide-react';
 import {
   cn,
   culturalUtils,
@@ -365,9 +365,8 @@ export default function App() {
     <div className="space-y-8">
       {/* Hero Section */}
       <VideoHero
-        title="BLKOUT_UK"
+        title="BLKOUT"
         subtitle="The Black Queer Men's Liberation Collective"
-        description="What Black queer men build when we stop waiting. When we decide, unapologetically, that our wellness is not a private project, our networks are not optional, and our joy is nobody else's job to protect."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',
@@ -378,99 +377,14 @@ export default function App() {
         overlayOpacity={0.7}
         className="mb-8"
         logoSrc="/Branding and logos/blkoutlogo_wht_transparent.png"
+        titleSize="xl"
       />
 
-      {/* What this is — Beat 2. Canonical ABOUT.md text, verbatim.
-          Beat 1 (the register) is carried in the hero above; this is the concrete
-          answer that stops a visitor leaving none the wiser. specs/introduction-spec-01.md §4A. */}
-      <section className="max-w-3xl mx-auto text-center mb-8 px-2">
-        <p className="text-lg md:text-xl leading-relaxed text-gray-200 font-signature">
-          A London-based, national collective of bi, gay, and trans* men of African descent, we use
-          digital media, creative arts, participatory research, and immersive events to activate the
-          networks and resources that grow{' '}
-          <span className="text-liberation-gold-divine font-bold">health, wealth, and happiness</span>{' '}
-          among us — and across every community we're part of.
-        </p>
-      </section>
-
-      {/* This week, from AIvor — the amuse-bouche (§4C). Links out rather than embedding a
-          specific video: the weekly render succeeded once in its last five runs, so we cannot
-          honestly claim a specific video is "this week's" without risking a stale one presented
-          as current. The channel itself is always truthful about what's newest. */}
-      <section className="max-w-3xl mx-auto mb-8 px-2">
-        <div className="bg-liberation-black-power border border-liberation-gold-divine/30 rounded-xl p-6 md:p-8 text-center">
-          <p className="text-xs uppercase tracking-[0.2em] text-liberation-gold-divine font-bold mb-3">
-            This week, from AIvor
-          </p>
-          <p className="text-gray-300 mb-5 leading-relaxed">
-            Every Sunday, AIvor reads out the stories the community's been talking about — a few
-            minutes, no account needed.
-          </p>
-          <a
-            href="https://www.youtube.com/channel/UC7g_Es50958bYJauxym0n1A"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-liberation-gold-divine/10 border border-liberation-gold-divine/40 text-liberation-gold-divine font-bold text-sm uppercase tracking-wide hover:bg-liberation-gold-divine/20 transition-colors"
-          >
-            <Play className="h-4 w-4" />
-            Watch the weekly digest
-          </a>
-        </div>
-      </section>
-
-      {/* One first gesture (§4D) — the OOMF comic generator. DNS for oomf.blkoutuk.com went
-          live 29 Jul 2026 (verified: 200, Let's Encrypt cert), so this links the app directly
-          rather than routing through /movement. Gives before it asks — no account required. */}
-      <section className="max-w-3xl mx-auto mb-8 px-2">
-        <div className="bg-liberation-black-power border border-liberation-gold-divine/30 rounded-xl p-6 md:p-8 text-center">
-          <p className="text-xs uppercase tracking-[0.2em] text-liberation-gold-divine font-bold mb-3">
-            Try it — no account needed
-          </p>
-          <h3 className="text-2xl md:text-3xl font-black text-white mb-3 font-signature">
-            You are the hero you've been waiting for.
-          </h3>
-          <p className="text-gray-300 mb-5 leading-relaxed">
-            Put yourself in the story. Pick a scene, drop in your photo, walk out with a comic panel
-            that's yours.
-          </p>
-          <a
-            href="https://oomf.blkoutuk.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-md bg-liberation-gold-divine/10 border border-liberation-gold-divine/40 text-liberation-gold-divine font-bold text-sm uppercase tracking-wide hover:bg-liberation-gold-divine/20 transition-colors"
-          >
-            <Sparkles className="h-4 w-4" />
-            Make your hero panel
-          </a>
-        </div>
-      </section>
-
-      {/* Where to go next, quietly (§4E) — a list, not six competing gradient cards. */}
-      <section className="max-w-3xl mx-auto mb-6 px-2 text-center">
-        <p className="text-xs uppercase tracking-[0.2em] text-gray-500 font-bold mb-3">
-          Where to go next
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-          <button onClick={() => changeActiveTab('ten-years')} className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">Ten Years</button>
-          <button onClick={() => changeActiveTab('movement')} className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">Movement</button>
-          <a href="https://news.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">News</a>
-          <a href="https://events.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">Events</a>
-          <a href="https://commons.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">Commons</a>
-          <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className="text-sm md:text-base text-gray-300 hover:text-liberation-gold-divine underline underline-offset-4 decoration-gray-600 hover:decoration-liberation-gold-divine transition-colors">The Hub</a>
-        </div>
-      </section>
-
-      {/* What holds it (§4F) — the CBS + asset lock, linking to the full account. */}
-      <section className="max-w-3xl mx-auto mb-8 px-2 text-center">
-        <p className="text-sm text-gray-400 leading-relaxed">
-          BLKOUT is a Community Benefit Society — member-owned, asset-locked, built to outlast us.{' '}
-          <button onClick={() => changeActiveTab('ten-years')} className="text-liberation-gold-divine hover:underline font-bold">
-            The full ten years →
-          </button>
-        </p>
-      </section>
-
-      {/* Animated Liberation Grid - Progressive reveal gateway */}
+      {/* Animated Liberation Grid - Progressive reveal gateway.
+          The page's focus (Rob, 29 Aug 2026): everything that used to sit between
+          the hero and this — the Beat 2 paragraph (replicated on /discover), the
+          AIvor digest box, the OOMF box, "where to go next" — is gone or moved to
+          the foot, so this is the first thing a visitor reaches after the hero. */}
       <AnimatedLiberationGrid onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />
 
       {/* Rotating Liberation Quotes — below the grid; less important than the gateway. */}
@@ -520,73 +434,38 @@ export default function App() {
         </div>
       </section>
 
-      {/* Heroes & 10th Anniversary Videos */}
-      <section className="mb-8">
-        <div className="text-center mb-6">
-          <h2 className="text-3xl md:text-4xl font-bold text-liberation-gold-divine">
-            Our Heroes, Our Story
-          </h2>
-          <p className="text-xl mt-2 opacity-90">
-            Discover how we're building liberation together
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {/* Heroes2 — Theory of Change */}
-          <div
-            onClick={() => changeActiveTab('movement')}
-            className="relative rounded-xl overflow-hidden shadow-2xl cursor-pointer group"
-          >
-            <div style={{ aspectRatio: '16/9' }}>
-              {/* Was autoPlay on a 35 MB file. preload="none" means nothing is
-                  fetched until the visitor presses play. */}
-              <video
-                src="/videos/Heroes2.mp4"
-                className="w-full h-full object-cover"
-                controls
-                preload="none"
-                poster="/images/poster-Heroes2.jpg"
-                muted
-                playsInline
-              />
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-              <p className="text-white font-bold text-sm uppercase tracking-wide group-hover:text-liberation-gold-divine transition-colors">
-                Explore Our Theory of Change →
-              </p>
-            </div>
-          </div>
-
-          {/* Ten — 10th anniversary film (7 Feb 2026). Click-to-play: six months on it
-              should be present, not overbearing, and it is a 20 MB download. */}
-          <a
-            href="https://comms.blkoutuk.com/10years"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="relative rounded-xl overflow-hidden shadow-2xl group block"
-          >
-            <div style={{ aspectRatio: '16/9' }}>
-              <video
-                controls
-                preload="none"
-                poster="/images/poster-Ten.jpg"
-                src="/videos/Ten.mp4"
-                className="w-full h-full object-cover"
-                muted
-                playsInline
-              />
-            </div>
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-              <p className="text-liberation-gold-divine text-xs uppercase tracking-widest font-semibold mb-1">
-                #BLKOUT10Years
-              </p>
-              <p className="text-white font-bold text-sm uppercase tracking-wide group-hover:text-liberation-gold-divine transition-colors">
-                10 Years of Liberation →
-              </p>
-            </div>
-            <div className="absolute inset-0 border-2 border-transparent group-hover:border-liberation-gold-divine/50 rounded-xl transition-colors duration-500 pointer-events-none" />
+      {/* Where to go next — six destinations, each its own circle and colour,
+          moved to the foot of the page (Rob, 29 Aug 2026). */}
+      <section className="max-w-3xl mx-auto mt-4 mb-8 px-2 text-center">
+        <p className="text-xs uppercase tracking-[0.2em] text-gray-500 font-bold mb-6">
+          Where to go next
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+          <button onClick={() => changeActiveTab('ten-years')} className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-gold-divine text-liberation-black-power text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+            Ten Years
+          </button>
+          <button onClick={() => changeActiveTab('movement')} className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-pride-cyan text-liberation-black-power text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+            Movement
+          </button>
+          <a href="https://news.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-pride-purple-deep text-white text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+            News
+          </a>
+          <a href="https://events.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-events text-liberation-black-power text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+            Events
+          </a>
+          <a href="https://commons.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-pan-african-green text-white text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+            Commons
+          </a>
+          <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-pride-purple text-liberation-black-power text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+            The Hub
           </a>
         </div>
+        <p className="text-sm text-gray-400 leading-relaxed mt-8">
+          BLKOUT is a Community Benefit Society — member-owned, asset-locked, built to outlast us.{' '}
+          <button onClick={() => changeActiveTab('ten-years')} className="text-liberation-gold-divine hover:underline font-bold">
+            The full ten years →
+          </button>
+        </p>
       </section>
 
     </div>
