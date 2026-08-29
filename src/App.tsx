@@ -147,6 +147,10 @@ function getSectionAccent(tab: string): string {
   return SECTION_ACCENT[tab] || 'bg-liberation-gold-divine';
 }
 
+// Shared sizing/shape for the "Where to go next" circles at the foot of the
+// homepage — colour is supplied per-destination alongside this base.
+const CIRCLE_LINK_BASE = 'flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110';
+
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
@@ -434,29 +438,36 @@ export default function App() {
         </div>
       </section>
 
-      {/* Where to go next — six destinations, each its own circle and colour,
-          moved to the foot of the page (Rob, 29 Aug 2026). */}
+      {/* Where to go next — eight destinations, each its own circle and colour,
+          moved to the foot of the page (Rob, 29 Aug 2026). Two groups of four:
+          BLKOUT's own pages first, then the wider platform's other sites. */}
       <section className="max-w-3xl mx-auto mt-4 mb-8 px-2 text-center">
         <p className="text-xs uppercase tracking-[0.2em] text-gray-500 font-bold mb-6">
           Where to go next
         </p>
-        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-          <button onClick={() => changeActiveTab('ten-years')} className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-gold-divine text-liberation-black-power text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6 justify-items-center">
+          <button onClick={() => changeActiveTab('ten-years')} className={cn(CIRCLE_LINK_BASE, 'bg-liberation-gold-divine text-liberation-black-power')}>
             Ten Years
           </button>
-          <button onClick={() => changeActiveTab('movement')} className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-pride-cyan text-liberation-black-power text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+          <button onClick={() => changeActiveTab('movement')} className={cn(CIRCLE_LINK_BASE, 'bg-liberation-pride-cyan text-liberation-black-power')}>
             Movement
           </button>
-          <a href="https://news.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-pride-purple-deep text-white text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+          <button onClick={() => changeActiveTab('shop')} className={cn(CIRCLE_LINK_BASE, 'bg-liberation-pride-orange text-liberation-black-power')}>
+            Shop
+          </button>
+          <a href="https://comms.blkoutuk.com/discover" className={cn(CIRCLE_LINK_BASE, 'bg-liberation-pride-blue text-liberation-black-power')}>
+            Discover
+          </a>
+          <a href="https://news.blkoutuk.com" target="_blank" rel="noopener noreferrer" className={cn(CIRCLE_LINK_BASE, 'bg-liberation-pride-purple-deep text-white')}>
             News
           </a>
-          <a href="https://events.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-events text-liberation-black-power text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+          <a href="https://events.blkoutuk.com" target="_blank" rel="noopener noreferrer" className={cn(CIRCLE_LINK_BASE, 'bg-liberation-events text-liberation-black-power')}>
             Events
           </a>
-          <a href="https://commons.blkoutuk.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-pan-african-green text-white text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+          <a href="https://commons.blkoutuk.com" target="_blank" rel="noopener noreferrer" className={cn(CIRCLE_LINK_BASE, 'bg-liberation-pan-african-green text-white')}>
             Commons
           </a>
-          <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-liberation-pride-purple text-liberation-black-power text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110">
+          <a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" className={cn(CIRCLE_LINK_BASE, 'bg-liberation-pride-purple text-liberation-black-power')}>
             The Hub
           </a>
         </div>
