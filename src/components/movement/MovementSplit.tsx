@@ -40,9 +40,9 @@ type ActDef = {
 const ACTS: ActDef[] = [
   { id: 'hero', span: 1.8, rest: 0.5 },
   { id: 'question', span: 1.2, rest: 0.5 },
-  { id: 'problem', span: 2.2, rest: 0.28 },
+  { id: 'problem', span: 2.6, rest: 0.28 },
   { id: 'turn', span: 1.8, rest: 0.58 },
-  { id: 'evidence', span: 2.4, rest: 0.66 },
+  { id: 'evidence', span: 2.2, rest: 0.66 },
   { id: 'breath', span: 0.6, rest: 0.66 },
   // the divider releases across the first half of the peak's pin
   { id: 'collapse', span: 3.2, rest: 1, restAt: 0.5 },
@@ -430,7 +430,7 @@ const ActProblem: React.FC<{ reduced: boolean }> = ({ reduced }) => {
   );
 
   return (
-    <section ref={ref} className="ms-act" data-ms-rest="0.28" style={spanStyle(2.2)}>
+    <section ref={ref} className="ms-act" data-ms-rest="0.28" style={spanStyle(2.6)}>
       <div className="ms-stage">
         <div className="ms-side ms-side--alone">
           <div className="ms-col ms-col--wide">
@@ -654,7 +654,7 @@ const Plate: React.FC<PlateProps> = ({
 };
 
 const ActEvidence: React.FC<{ reduced: boolean }> = ({ reduced }) => (
-  <section className="ms-act ms-act--flow" data-ms-rest="0.66" style={spanStyle(2.4)}>
+  <section className="ms-act ms-act--flow" data-ms-rest="0.66" style={spanStyle(2.2)}>
     <div className="ms-side ms-side--alone" aria-hidden="true">
       <div className="ms-sticky-media">
         <img
