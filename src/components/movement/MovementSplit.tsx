@@ -40,7 +40,7 @@ type ActDef = {
 const ACTS: ActDef[] = [
   { id: 'hero', span: 1.8, rest: 0.5 },
   { id: 'question', span: 1.2, rest: 0.5 },
-  { id: 'problem', span: 2.6, rest: 0.28 },
+  { id: 'problem', span: 4.0, rest: 0.28 },
   { id: 'turn', span: 1.8, rest: 0.58 },
   { id: 'evidence', span: 2.2, rest: 0.66 },
   { id: 'breath', span: 0.6, rest: 0.66 },
@@ -416,7 +416,7 @@ const ActQuestion: React.FC<{
 const ActProblem: React.FC<{ reduced: boolean }> = ({ reduced }) => {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
-  const appWipe = useTransform(p, [0.3, 0.47], ['inset(100% 0 0 0)', 'inset(0% 0 0 0)']);
+  const appWipe = useTransform(p, [0.37, 0.54], ['inset(100% 0 0 0)', 'inset(0% 0 0 0)']);
 
   const appFigure = (
     <figure className="ms-figure">
@@ -430,12 +430,17 @@ const ActProblem: React.FC<{ reduced: boolean }> = ({ reduced }) => {
   );
 
   return (
-    <section ref={ref} className="ms-act" data-ms-rest="0.28" style={spanStyle(2.6)}>
+    <section ref={ref} className="ms-act" data-ms-rest="0.28" style={spanStyle(4.0)}>
       <div className="ms-stage">
         <div className="ms-side ms-side--alone">
           <div className="ms-col ms-col--wide">
             <div className="ms-stack">
-              <Cue p={p} win={[0, 0.22, 0, 0.3]} reduced={reduced}>
+              {/* Five cues, each gets a clean 0.05 gap of true silence before the
+                  next rises — the previous timing had every transition overlap
+                  the one before it (Rob, 29 Aug: "arrives late... squashed").
+                  Widths are chosen to preserve each cue's plateau read-time
+                  exactly as it was before this pass, just spaced out. */}
+              <Cue p={p} win={[0, 0.14, 0, 0.3]} reduced={reduced}>
                 <KineticHeading
                   p={p}
                   from={0}
@@ -445,11 +450,11 @@ const ActProblem: React.FC<{ reduced: boolean }> = ({ reduced }) => {
                 />
               </Cue>
 
-              <Cue p={p} win={[0.16, 0.36]} reduced={reduced}>
+              <Cue p={p} win={[0.19, 0.32]} reduced={reduced}>
                 <p className="ms-quiet">{'Funny fake names, borrowed pics, unclear motives.'}</p>
               </Cue>
 
-              <Cue p={p} win={[0.3, 0.56]} reduced={reduced}>
+              <Cue p={p} win={[0.37, 0.54]} reduced={reduced}>
                 {reduced ? (
                   appFigure
                 ) : (
@@ -461,10 +466,10 @@ const ActProblem: React.FC<{ reduced: boolean }> = ({ reduced }) => {
                 </p>
               </Cue>
 
-              <Cue p={p} win={[0.5, 0.76]} reduced={reduced}>
+              <Cue p={p} win={[0.59, 0.76]} reduced={reduced}>
                 <KineticHeading
                   p={p}
-                  from={0.5}
+                  from={0.59}
                   reduced={reduced}
                   className="ms-display ms-display--lg"
                   lines={[
@@ -474,10 +479,10 @@ const ActProblem: React.FC<{ reduced: boolean }> = ({ reduced }) => {
                 />
               </Cue>
 
-              <Cue p={p} win={[0.7, 1, 0.3, 0.12]} reduced={reduced}>
+              <Cue p={p} win={[0.81, 1, 0.3, 0.12]} reduced={reduced}>
                 <KineticHeading
                   p={p}
-                  from={0.7}
+                  from={0.81}
                   reduced={reduced}
                   className="ms-display ms-display--lg"
                   lines={[
@@ -781,7 +786,11 @@ const ActCollapse: React.FC<{ reduced: boolean }> = ({ reduced }) => {
         <div className="ms-scrim ms-scrim--band" />
         <div className="ms-col ms-col--full ms-col--bottom">
           <div className="ms-stack ms-stack--bottom">
-            <Cue p={p} win={[0.52, 0.8]} reduced={reduced}>
+            {/* restAt: 0.5 in ACTS is when the seam finishes releasing — this
+                line now greets exactly there instead of trailing in ~0.1
+                later, so the words land with the visual moment, not after it
+                (Rob, 29 Aug). */}
+            <Cue p={p} win={[0.5, 0.8, 0]} reduced={reduced}>
               <h2 className="ms-display ms-display--peak ms-gold">
                 {'Tenderness is a political act.'}
               </h2>
