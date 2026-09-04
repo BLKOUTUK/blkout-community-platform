@@ -133,6 +133,16 @@ app.use((req, res, next) => {
   next();
 });
 
+// /newsroom/* is the pre-2025 site's news path. Nothing links it now, but old links and
+// crawlers still hit /newsroom/null (21 pageviews Jul–Aug 2026 in Plausible) and the SPA
+// shell answered 200. Send them to the newsroom that exists.
+app.use((req, res, next) => {
+  if (req.path === '/newsroom' || req.path.startsWith('/newsroom/')) {
+    return res.redirect(301, 'https://news.blkoutuk.com/');
+  }
+  next();
+});
+
 // Vanity redirects → canonical pages on their own subdomains.
 // 302 (not 301) so these marketing URLs stay repointable year to year.
 // Must precede express.static / SPA fallback so they aren't shadowed.
