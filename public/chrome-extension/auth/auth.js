@@ -98,13 +98,11 @@ class ModeratorAuth {
     const hashedPassword = await this.hashPassword(password);
     const storedHash = await this.getStoredPasswordHash();
 
-    // For initial setup, if no password is stored, use default
+    // No hardcoded default: fail closed until a real password has been
+    // set via setNewPassword(). Provision the first password out-of-band
+    // (e.g. call ModeratorAuth.setNewPassword() once via the extension's
+    // own console context) rather than relying on a shared default.
     if (!storedHash) {
-      const defaultHash = await this.hashPassword('liberation2025');
-      if (hashedPassword === defaultHash) {
-        // First time login - prompt to set new password
-        return 'FIRST_TIME_LOGIN';
-      }
       return false;
     }
 
