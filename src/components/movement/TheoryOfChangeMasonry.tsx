@@ -671,7 +671,7 @@ export default function TheoryOfChangeMasonry() {
         body: 'Survival is a good start. If we want to thrive',
         highlight: 'Alone together is not enough'
       },
-      cta: { text: 'Join our next gathering', link: 'https://events.blkoutuk.cloud', color: 'amber' },
+      cta: { text: 'Join our next gathering', link: 'https://events.blkoutuk.com', color: 'amber' },
       textPosition: 'bottomLeft'
     },
     {
@@ -700,11 +700,11 @@ export default function TheoryOfChangeMasonry() {
   // ACT 3: What We're Building (Cards 19-26, 28)
   const act3Cards: Card[] = [
     { id: 19, type: 'statement', size: 'hero', imageUrl: '/images/theory-of-change/card-25-infrastructure.png', bgGradient: 'from-purple-950 to-indigo-950', content: { title: 'So we\'re building:', heading2: 'Space to be we', body: 'Space to be free' }, animationType: 'stagger', aspectRatio: 'tall', textPosition: 'bottomRight', imageAnchor: '50% 40%' },
-    { id: 21, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-21-gatherings.png', bgGradient: 'from-fuchsia-600 to-purple-600', content: { body: 'we\'re getting social', highlight: 'Real conversations. Shared experiences.' }, cta: { text: 'See what\'s happening', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' },
+    { id: 21, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-21-gatherings.png', bgGradient: 'from-fuchsia-600 to-purple-600', content: { body: 'we\'re getting social', highlight: 'Real conversations. Shared experiences.' }, cta: { text: 'See what\'s happening', link: 'https://events.blkoutuk.com', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' },
     { id: 22, type: 'interactive', size: 'large', imageUrl: '/images/theory-of-change/card-22-wordcloud.png', bgGradient: 'from-indigo-950 to-purple-950', content: { body: 'talking de tings:' }, interactive: { type: 'wordcloud', data: { topics: ['Family', 'Sex', 'Money', 'Health', 'Faith', 'Fear', 'Joy', 'Aging', 'Love', 'Loneliness', 'Dreams', 'Rage', 'Healing'] }}, animationType: 'default', textPosition: 'bottomLeft' },
-    { id: 23, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-23-connection.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'Connecting, not networking', highlight: 'No transaction required.' }, cta: { text: 'Join the conversation', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'bounce', textPosition: 'bottomLeft' },
+    { id: 23, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-23-connection.png', bgGradient: 'from-purple-950 to-violet-950', content: { body: 'Connecting, not networking', highlight: 'No transaction required.' }, cta: { text: 'Join the conversation', link: 'https://events.blkoutuk.com', color: 'amber' }, animationType: 'bounce', textPosition: 'bottomLeft' },
     { id: 24, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-24-articles.png', bgGradient: 'from-violet-950 to-purple-950', content: { subtitle: 'storytelling', body: '8 years building our archive.\nTelling our stories.\nOn our terms.' }, cta: { text: 'Read the archive', link: '/stories', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomRight' },
-    { id: 26, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-26-map.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'From London to Bristol to Manchester', highlight: 'Finding each other' }, cta: { text: 'Connect locally', link: 'https://events.blkoutuk.cloud', color: 'amber' }, animationType: 'default', textPosition: 'topLeft' },
+    { id: 26, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-26-map.png', bgGradient: 'from-purple-950 to-indigo-950', content: { body: 'From London to Bristol to Manchester', highlight: 'Finding each other' }, cta: { text: 'Connect locally', link: 'https://events.blkoutuk.com', color: 'amber' }, animationType: 'default', textPosition: 'topLeft' },
     { id: 27, type: 'beauty', size: 'small', imageUrl: '/images/theory-of-change/silhouette letters white rgb.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: {} },
     { id: 28, type: 'statement', size: 'large', imageUrl: '/images/theory-of-change/card-28-digital-human.png', bgGradient: 'from-fuchsia-950 to-purple-950', content: { subtitle: 'AIvor: Your AI companion', body: 'Each one, Teach one', highlight: 'Tech that serves, not surveils' }, cta: { text: 'Meet AIvor', link: '/?chat=open', color: 'amber' }, animationType: 'reveal', textPosition: 'bottomLeft' }
   ];
@@ -975,7 +975,7 @@ export default function TheoryOfChangeMasonry() {
               <div>
                 <h4 className="text-white font-bold mb-4 uppercase">Platform</h4>
                 <ul className="space-y-2 text-purple-300 text-sm">
-                  <li><a href="https://events.blkoutuk.cloud" className="hover:text-white">Events</a></li>
+                  <li><a href="https://events.blkoutuk.com" className="hover:text-white">Events</a></li>
                   <li><a href="/stories" className="hover:text-white">Archive</a></li>
                   <li><a href="/?chat=open" className="hover:text-white">AIvor</a></li>
                 </ul>

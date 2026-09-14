@@ -683,7 +683,7 @@ const ActEvidence: React.FC<{ reduced: boolean }> = ({ reduced }) => (
           heading="Gatherings"
           body="Real rooms. Real conversations. No transaction required."
           linkLabel="See what's on"
-          linkHref="https://events.blkoutuk.cloud"
+          linkHref="https://events.blkoutuk.com"
           figure={{
             src: '/images/movement/gatherings.jpg',
             width: 957,
@@ -1140,7 +1140,7 @@ export default function MovementSplit() {
               <h4 className="text-white font-bold mb-4 uppercase">Platform</h4>
               <ul className="space-y-2 text-purple-300 text-sm">
                 <li>
-                  <a href="https://events.blkoutuk.cloud" className="hover:text-white">
+                  <a href="https://events.blkoutuk.com" className="hover:text-white">
                     Events
                   </a>
                 </li>

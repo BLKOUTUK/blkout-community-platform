@@ -433,7 +433,7 @@ export default function MemberPortalPage() {
                   </a>
                 )}
                 <a
-                  href="https://events.blkoutuk.cloud"
+                  href="https://events.blkoutuk.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full bg-blue-500/20 border border-blue-500 text-blue-400 py-2 px-4 rounded-lg font-semibold hover:bg-blue-500/30 text-center transition-colors"
