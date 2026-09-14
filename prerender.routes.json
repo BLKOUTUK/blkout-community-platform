@@ -1,27 +1,683 @@
 {
   "origin": "https://blkoutuk.com",
-  "strip": ["div.fixed.bottom-4.z-50"],
+  "strip": [
+    "div.fixed.bottom-4.z-50"
+  ],
   "routes": [
-    { "path": "/", "title": "BLKOUT UK — the Black Queer Men's Liberation Collective", "description": "What Black queer men build when we stop waiting: a community-owned co-operative for Black queer men in the UK, with a door in every borough, stories, events, open governance and a shop." },
-    { "path": "/liberation", "canonical": "/", "title": "BLKOUT UK — the Black Queer Men's Liberation Collective", "description": "What Black queer men build when we stop waiting: a community-owned co-operative for Black queer men in the UK, with a door in every borough, stories, events, open governance and a shop." },
-    { "path": "/about", "title": "About BLKOUT — a Community Benefit Society for Black queer men", "description": "BLKOUT is a liberation-first, community-owned Community Benefit Society built by and for Black queer men in the UK. Who we are, what we hold, and how to join." },
-    { "path": "/intro", "title": "IVOR — BLKOUT's community liberation assistant", "description": "Meet IVOR, BLKOUT's AI community assistant: what it does for Black queer men, what it will never do, and the published AI policy it answers to." },
-    { "path": "/ten-years", "title": "Ten Years of BLKOUT", "description": "Ten years of revolutionary love for Black queer men: four shapes, one commitment, and a great deal of joy taken seriously." },
-    { "path": "/movement", "title": "The Movement — BLKOUT's theory of change", "description": "How BLKOUT turns connection between Black queer men into collective power: the theory of change, card by card." },
-    { "path": "/stories", "title": "Stories — the BLKOUT archive", "description": "Ten years of writing, reporting and organising by Black queer men in the UK: the BLKOUT story archive, searchable." },
-    { "path": "/governance", "title": "Governance — how BLKOUT is run", "description": "BLKOUT is democratically governed and member-owned: one member, one vote, a Community Benefit Society with an asset lock, and a board answerable to its members." },
-    { "path": "/governance-proposals", "title": "Proposals — one member, one vote", "description": "Member proposals and votes that shape the BLKOUT platform. Democratic governance in practice." },
-    { "path": "/board", "title": "The BLKOUT board", "description": "The directors of BLKOUT CBS, how the board is structured in pairs, and how it answers to members." },
-    { "path": "/platform", "title": "The BLKOUT platform — every door in one place", "description": "Everything BLKOUT runs for Black queer men: the events surface and borough doors, Voices, News, the Hub, IVOR and the shop." },
-    { "path": "/shop", "title": "BLKOUT Shop — Issue 01", "description": "Wear it loud. Apparel, drops and co-operative membership from BLKOUT: community-owned, made to order." },
-    { "path": "/shop/membership", "title": "Co-operative membership — BLKOUT CBS", "description": "Become a member-owner of BLKOUT's Community Benefit Society: what membership gives you, the tiers, and why access beats influence." },
-    { "path": "/shop/apparel", "title": "Apparel — BLKOUT Shop, Issue 01", "description": "The BLKOUT apparel range: three lines for Black queer men, printed to order, worn loud." },
-    { "path": "/shop/apparel/blkout-proud", "title": "BLKOUT Proud — apparel range", "description": "The BLKOUT Proud range: what it is for, who it is for, and how to buy it." },
-    { "path": "/shop/apparel/brother-to-brother", "title": "Brother to Brother — apparel range", "description": "The Brother to Brother range: what it is for, who it is for, and how to buy it." },
-    { "path": "/shop/apparel/icons", "title": "Icons — apparel range", "description": "The Icons range: Black queer figures worn with pride. What it is for and how to buy it." },
-    { "path": "/shop/drops/compass-journal", "title": "Ivor's Compass journal — BLKOUT Drop 01", "description": "Drop 01 from BLKOUT: the Ivor's Compass journal. Print run pending; register your interest." },
-    { "path": "/gbp-paris", "title": "Global Black Pride 2026, Paris — travel with BLKOUT?", "description": "Should BLKOUT organise a group for Global Black Pride 2026 in Paris? Register your interest." },
-    { "path": "/terms", "title": "Terms of Service — BLKOUT", "description": "Community agreements for a safer, more liberating space: the BLKOUT terms of service." },
-    { "path": "/privacy", "title": "Privacy Policy — BLKOUT", "description": "Your privacy matters. How BLKOUT protects and respects your data." }
+    {
+      "path": "/",
+      "title": "BLKOUT UK — the Black Queer Men's Liberation Collective",
+      "description": "What Black queer men build when we stop waiting: a community-owned co-operative for Black queer men in the UK, with a door in every borough, stories, events, open governance and a shop.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://blkoutuk.com/#org",
+            "name": "BLKOUT UK",
+            "alternateName": [
+              "BLKOUT",
+              "BLKOUT CBS"
+            ],
+            "legalName": "BLKOUT Creative Ltd",
+            "url": "https://blkoutuk.com",
+            "logo": "https://blkoutuk.com/blkout-logo.png",
+            "description": "A community-owned Community Benefit Society built by and for Black queer men in the UK: doors in every borough, stories, events, open governance and a shop. Asset-locked; one member, one vote.",
+            "identifier": {
+              "@type": "PropertyValue",
+              "propertyID": "FCA Mutuals Public Register",
+              "value": "RS009639"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "London",
+              "addressCountry": "GB"
+            },
+            "sameAs": [
+              "https://instagram.com/blkoutuk",
+              "https://youtube.com/@blkoutuk",
+              "https://facebook.com/blkoutuk",
+              "https://linkedin.com/company/blkoutuk",
+              "https://blkouthub.com"
+            ],
+            "knowsAbout": [
+              "Black queer men",
+              "community ownership",
+              "co-operatives",
+              "mental health",
+              "Black British history"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://blkoutuk.com/#site",
+            "url": "https://blkoutuk.com",
+            "name": "BLKOUT UK",
+            "publisher": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/#page",
+            "url": "https://blkoutuk.com/",
+            "name": "BLKOUT UK — the Black Queer Men's Liberation Collective",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/liberation",
+      "canonical": "/",
+      "title": "BLKOUT UK — the Black Queer Men's Liberation Collective",
+      "description": "What Black queer men build when we stop waiting: a community-owned co-operative for Black queer men in the UK, with a door in every borough, stories, events, open governance and a shop.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://blkoutuk.com/#org",
+            "name": "BLKOUT UK",
+            "alternateName": [
+              "BLKOUT",
+              "BLKOUT CBS"
+            ],
+            "legalName": "BLKOUT Creative Ltd",
+            "url": "https://blkoutuk.com",
+            "logo": "https://blkoutuk.com/blkout-logo.png",
+            "description": "A community-owned Community Benefit Society built by and for Black queer men in the UK: doors in every borough, stories, events, open governance and a shop. Asset-locked; one member, one vote.",
+            "identifier": {
+              "@type": "PropertyValue",
+              "propertyID": "FCA Mutuals Public Register",
+              "value": "RS009639"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "London",
+              "addressCountry": "GB"
+            },
+            "sameAs": [
+              "https://instagram.com/blkoutuk",
+              "https://youtube.com/@blkoutuk",
+              "https://facebook.com/blkoutuk",
+              "https://linkedin.com/company/blkoutuk",
+              "https://blkouthub.com"
+            ],
+            "knowsAbout": [
+              "Black queer men",
+              "community ownership",
+              "co-operatives",
+              "mental health",
+              "Black British history"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://blkoutuk.com/#site",
+            "url": "https://blkoutuk.com",
+            "name": "BLKOUT UK",
+            "publisher": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/#page",
+            "url": "https://blkoutuk.com/",
+            "name": "BLKOUT UK — the Black Queer Men's Liberation Collective",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/about",
+      "title": "About BLKOUT — a Community Benefit Society for Black queer men",
+      "description": "BLKOUT is a liberation-first, community-owned Community Benefit Society built by and for Black queer men in the UK. Who we are, what we hold, and how to join.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "AboutPage",
+            "@id": "https://blkoutuk.com/about#page",
+            "url": "https://blkoutuk.com/about",
+            "name": "About BLKOUT",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            },
+            "description": "BLKOUT is a liberation-first, community-owned Community Benefit Society built by and for Black queer men in the UK."
+          }
+        ]
+      }
+    },
+    {
+      "path": "/intro",
+      "title": "IVOR — BLKOUT's community liberation assistant",
+      "description": "Meet IVOR, BLKOUT's AI community assistant: what it does for Black queer men, what it will never do, and the published AI policy it answers to.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/intro#page",
+            "url": "https://blkoutuk.com/intro",
+            "name": "IVOR — BLKOUT's community liberation assistant",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@type": "SoftwareApplication",
+              "name": "IVOR",
+              "applicationCategory": "Community assistant",
+              "publisher": {
+                "@id": "https://blkoutuk.com/#org"
+              },
+              "description": "BLKOUT's AI community assistant for Black queer men, operating under BLKOUT's published AI policy."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/ten-years",
+      "title": "Ten Years of BLKOUT",
+      "description": "Ten years of revolutionary love for Black queer men: four shapes, one commitment, and a great deal of joy taken seriously.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/ten-years#page",
+            "url": "https://blkoutuk.com/ten-years",
+            "name": "Ten Years of BLKOUT",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/movement",
+      "title": "The Movement — BLKOUT's theory of change",
+      "description": "How BLKOUT turns connection between Black queer men into collective power: the theory of change, card by card.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/movement#page",
+            "url": "https://blkoutuk.com/movement",
+            "name": "The Movement — BLKOUT's theory of change",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/stories",
+      "title": "Stories — the BLKOUT archive",
+      "description": "Ten years of writing, reporting and organising by Black queer men in the UK: the BLKOUT story archive, searchable.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://blkoutuk.com/stories#page",
+            "url": "https://blkoutuk.com/stories",
+            "name": "Stories — the BLKOUT archive",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/governance",
+      "title": "Governance — how BLKOUT is run",
+      "description": "BLKOUT is democratically governed and member-owned: one member, one vote, a Community Benefit Society with an asset lock, and a board answerable to its members.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/governance#page",
+            "url": "https://blkoutuk.com/governance",
+            "name": "Governance — how BLKOUT is run",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            },
+            "description": "Democratically governed and member-owned: one member, one vote, a Community Benefit Society with an asset lock, and a board answerable to its members."
+          }
+        ]
+      }
+    },
+    {
+      "path": "/governance-proposals",
+      "title": "Proposals — one member, one vote",
+      "description": "Member proposals and votes that shape the BLKOUT platform. Democratic governance in practice.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/governance-proposals#page",
+            "url": "https://blkoutuk.com/governance-proposals",
+            "name": "Proposals — one member, one vote",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/board",
+      "title": "The BLKOUT board",
+      "description": "The directors of BLKOUT CBS, how the board is structured in pairs, and how it answers to members.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/board#page",
+            "url": "https://blkoutuk.com/board",
+            "name": "The BLKOUT board",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            },
+            "description": "The directors of BLKOUT CBS, how the board is structured in pairs, and how it answers to members."
+          }
+        ]
+      }
+    },
+    {
+      "path": "/platform",
+      "title": "The BLKOUT platform — every door in one place",
+      "description": "Everything BLKOUT runs for Black queer men: the events surface and borough doors, Voices, News, the Hub, IVOR and the shop.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://blkoutuk.com/platform#page",
+            "url": "https://blkoutuk.com/platform",
+            "name": "The BLKOUT platform",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/shop",
+      "title": "BLKOUT Shop — Issue 01",
+      "description": "Wear it loud. Apparel, drops and co-operative membership from BLKOUT: community-owned, made to order.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://blkoutuk.com/shop#page",
+            "url": "https://blkoutuk.com/shop",
+            "name": "BLKOUT Shop — Issue 01",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            },
+            "description": "Three clothing ranges printed to order on organic cotton, a graphic novel in print, and co-operative membership. Every purchase lands in a community-owned pot for Black queer men in the UK.",
+            "hasPart": [
+              {
+                "@id": "https://blkoutuk.com/shop/apparel/blkout-proud#product"
+              },
+              {
+                "@id": "https://blkoutuk.com/shop/apparel/brother-to-brother#product"
+              },
+              {
+                "@id": "https://blkoutuk.com/shop/apparel/icons#product"
+              },
+              {
+                "@id": "https://blkoutuk.com/shop/drops/compass-journal#product"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/shop/membership",
+      "title": "Co-operative membership — BLKOUT CBS",
+      "description": "Become a member-owner of BLKOUT's Community Benefit Society: what membership gives you, the tiers, and why access beats influence.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Product",
+            "@id": "https://blkoutuk.com/shop/membership#product",
+            "name": "BLKOUT co-operative membership",
+            "description": "Three ways into BLKOUT's Community Benefit Society. None of them are about influence — governance is one member, one vote — all of them are about access and about keeping building together. In-kind activity is real membership; sustaining money pays for the work.",
+            "url": "https://blkoutuk.com/shop/membership",
+            "brand": {
+              "@type": "Brand",
+              "name": "BLKOUT"
+            },
+            "manufacturer": {
+              "@id": "https://blkoutuk.com/#org"
+            },
+            "category": "Membership",
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": "In-kind",
+                "price": "0",
+                "priceCurrency": "GBP",
+                "description": "In-kind activity, not money: time, attention and signal-boosting. You are in, and active.",
+                "seller": {
+                  "@id": "https://blkoutuk.com/#org"
+                }
+              },
+              {
+                "@type": "Offer",
+                "name": "Sustaining — £3 a month",
+                "price": "3",
+                "priceCurrency": "GBP",
+                "priceSpecification": {
+                  "@type": "UnitPriceSpecification",
+                  "price": "3",
+                  "priceCurrency": "GBP",
+                  "billingIncrement": 1,
+                  "unitCode": "MON"
+                },
+                "description": "£3 per month, £36 a year. Sustaining the work most of us do.",
+                "seller": {
+                  "@id": "https://blkoutuk.com/#org"
+                }
+              },
+              {
+                "@type": "Offer",
+                "name": "Patron — £10 a month",
+                "price": "10",
+                "priceCurrency": "GBP",
+                "priceSpecification": {
+                  "@type": "UnitPriceSpecification",
+                  "price": "10",
+                  "priceCurrency": "GBP",
+                  "billingIncrement": 1,
+                  "unitCode": "MON"
+                },
+                "description": "£10 per month, £120 a year. For those with more to give — bring someone with you.",
+                "seller": {
+                  "@id": "https://blkoutuk.com/#org"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "path": "/shop/apparel",
+      "title": "Apparel — BLKOUT Shop, Issue 01",
+      "description": "The BLKOUT apparel range: three lines for Black queer men, printed to order, worn loud.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://blkoutuk.com/shop/apparel#page",
+            "url": "https://blkoutuk.com/shop/apparel",
+            "name": "Apparel — BLKOUT Shop, Issue 01",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/shop/apparel/blkout-proud",
+      "title": "BLKOUT Proud — apparel range",
+      "description": "The BLKOUT Proud range: what it is for, who it is for, and how to buy it.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Product",
+            "@id": "https://blkoutuk.com/shop/apparel/blkout-proud#product",
+            "name": "BLKOUT Proud — apparel range",
+            "description": "Pride pieces: joy as a political act. Designs first printed in 2018 — Black Queer Lives Matter, said plainly, worn plainly — brought back because the demand has not gone anywhere. The range is called STILL TRUE. Organic tees and hoods printed to order.",
+            "url": "https://blkoutuk.com/shop/apparel/blkout-proud",
+            "brand": {
+              "@type": "Brand",
+              "name": "BLKOUT"
+            },
+            "manufacturer": {
+              "@id": "https://blkoutuk.com/#org"
+            },
+            "category": "Apparel",
+            "offers": {
+              "@type": "Offer",
+              "availability": "https://schema.org/InStock",
+              "priceCurrency": "GBP",
+              "description": "Printed to order on organic cotton by Teemill in the UK; sizes and prices on Teemill. BLKOUT earns the margin.",
+              "seller": {
+                "@id": "https://blkoutuk.com/#org"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/shop/apparel/brother-to-brother",
+      "title": "Brother to Brother — apparel range",
+      "description": "The Brother to Brother range: what it is for, who it is for, and how to buy it.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Product",
+            "@id": "https://blkoutuk.com/shop/apparel/brother-to-brother#product",
+            "name": "Brother to Brother — apparel range",
+            "description": "Joseph Beam's revolutionary act, worn out loud: \"Black men loving Black men is the revolutionary act\" (In the Life, 1986). The design is the cover of Brother to Brother, the anthology Beam conceived and Essex Hemphill finished. Tees and hoods, in colourways, printed to order.",
+            "url": "https://blkoutuk.com/shop/apparel/brother-to-brother",
+            "brand": {
+              "@type": "Brand",
+              "name": "BLKOUT"
+            },
+            "manufacturer": {
+              "@id": "https://blkoutuk.com/#org"
+            },
+            "category": "Apparel",
+            "offers": {
+              "@type": "Offer",
+              "availability": "https://schema.org/InStock",
+              "priceCurrency": "GBP",
+              "description": "Printed to order on organic cotton by Teemill in the UK; sizes and prices on Teemill. BLKOUT earns the margin.",
+              "seller": {
+                "@id": "https://blkoutuk.com/#org"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/shop/apparel/icons",
+      "title": "Icons — apparel range",
+      "description": "The Icons range: Black queer figures worn with pride. What it is for and how to buy it.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Product",
+            "@id": "https://blkoutuk.com/shop/apparel/icons#product",
+            "name": "Black Queer Icons UK — apparel range",
+            "description": "Our forebears, worn into the present: Ivor Cummings (1919–1992), Berto Pasuka (1911–1963), Pearl Alcock (1934–2006), Justin Fashanu (1961–1998). Each piece carries their names so the lineage stays visible. Printed to order.",
+            "url": "https://blkoutuk.com/shop/apparel/icons",
+            "brand": {
+              "@type": "Brand",
+              "name": "BLKOUT"
+            },
+            "manufacturer": {
+              "@id": "https://blkoutuk.com/#org"
+            },
+            "category": "Apparel",
+            "offers": {
+              "@type": "Offer",
+              "availability": "https://schema.org/InStock",
+              "priceCurrency": "GBP",
+              "description": "Printed to order on organic cotton by Teemill in the UK; sizes and prices on Teemill. BLKOUT earns the margin.",
+              "seller": {
+                "@id": "https://blkoutuk.com/#org"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/shop/drops/compass-journal",
+      "title": "Ivor's Compass journal — BLKOUT Drop 01",
+      "description": "Drop 01 from BLKOUT: the Ivor's Compass journal. Print run pending; register your interest.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Product",
+            "@id": "https://blkoutuk.com/shop/drops/compass-journal#product",
+            "name": "Ivor's Compass journal — BLKOUT Drop 01",
+            "description": "The graphic novel and workshop record about Ivor Cummings, bound and printed: seven directions through one man's life, with the Croydon workshop record. Softbound, around 80 pages, A5. Print run pending; register interest.",
+            "url": "https://blkoutuk.com/shop/drops/compass-journal",
+            "brand": {
+              "@type": "Brand",
+              "name": "BLKOUT"
+            },
+            "manufacturer": {
+              "@id": "https://blkoutuk.com/#org"
+            },
+            "category": "Books",
+            "offers": {
+              "@type": "Offer",
+              "availability": "https://schema.org/PreOrder",
+              "priceCurrency": "GBP",
+              "seller": {
+                "@id": "https://blkoutuk.com/#org"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/gbp-paris",
+      "title": "Global Black Pride 2026, Paris — travel with BLKOUT?",
+      "description": "Should BLKOUT organise a group for Global Black Pride 2026 in Paris? Register your interest.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/gbp-paris#page",
+            "url": "https://blkoutuk.com/gbp-paris",
+            "name": "Global Black Pride 2026, Paris — travel with BLKOUT?",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/terms",
+      "title": "Terms of Service — BLKOUT",
+      "description": "Community agreements for a safer, more liberating space: the BLKOUT terms of service.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/terms#page",
+            "url": "https://blkoutuk.com/terms",
+            "name": "Terms of Service",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "path": "/privacy",
+      "title": "Privacy Policy — BLKOUT",
+      "description": "Your privacy matters. How BLKOUT protects and respects your data.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/privacy#page",
+            "url": "https://blkoutuk.com/privacy",
+            "name": "Privacy Policy",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    }
   ]
 }

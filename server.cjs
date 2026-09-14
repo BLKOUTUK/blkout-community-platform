@@ -177,6 +177,59 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'dist'), { redirect: false }));
 
 // SPA fallback - serve index.html for all non-API routes
+// /stories/<slug> republishes Voices articles (and the archive) inside the SPA, so a crawler saw a
+// bare shell and search engines saw a duplicate of voices.blkoutuk.com. Serve the shell with the
+// story's title, description and a canonical: the Voices URL for Voices pieces, itself for archive
+// pieces (which also get Article schema and their text). Any failure falls through to the shell.
+app.get('/stories/:slug', async (req, res, next) => {
+  const slug = String(req.params.slug || '');
+  if (!/^[a-z0-9][a-z0-9-]{2,200}$/i.test(slug)) return next();
+  try {
+    const { default: storiesHandler } = await import('./api/stories.ts');
+    const payload = await new Promise((resolve, reject) => {
+      const fakeRes = {
+        _status: 200,
+        setHeader() { return this; },
+        status(c) { this._status = c; return this; },
+        json(body) { resolve({ status: this._status, body }); },
+        end() { resolve({ status: this._status, body: null }); },
+      };
+      Promise.resolve(storiesHandler({ method: 'GET', query: { slug, limit: '1' }, headers: {} }, fakeRes)).catch(reject);
+    });
+    const story = payload && payload.body && payload.body.data && Array.isArray(payload.body.data.stories) ? payload.body.data.stories.find((st) => st.slug === slug) : null;
+    if (!story) return next();
+    const esc = (v) => String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const strip = (v) => String(v ?? '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+    const description = strip(story.excerpt || story.content).slice(0, 300);
+    const isVoices = story.source === 'voices';
+    const canonical = isVoices ? `https://voices.blkoutuk.com/articles/${slug}` : `https://blkoutuk.com/stories/${slug}`;
+    const shellPath = path.join(DIST, fs.existsSync(path.join(DIST, 'shell.html')) ? 'shell.html' : 'index.html');
+    let html = fs.readFileSync(shellPath, 'utf8');
+    const headBits = [`<link rel="canonical" href="${esc(canonical)}" />`];
+    if (!isVoices) {
+      const ld = { '@context': 'https://schema.org', '@type': 'Article', headline: story.title, description, url: canonical, mainEntityOfPage: canonical,
+        author: { '@type': 'Organization', name: story.author || 'BLKOUT UK' }, publisher: { '@type': 'Organization', name: 'BLKOUT UK', url: 'https://blkoutuk.com' },
+        ...(story.publishedAt ? { datePublished: story.publishedAt } : {}), ...(story.category ? { articleSection: story.category } : {}) };
+      headBits.push(`<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`);
+    }
+    html = html
+      .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(story.title)} | BLKOUT</title>\n    ${headBits.join('\n    ')}`)
+      .replace(/<meta name="description" content="[^"]*" \/>/, `<meta name="description" content="${esc(description)}" />`)
+      .replace(/<meta property="og:title" content="[^"]*" \/>/, `<meta property="og:title" content="${esc(story.title)}" />`)
+      .replace(/<meta property="og:description" content="[^"]*" \/>/, `<meta property="og:description" content="${esc(description)}" />`)
+      .replace(/<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${esc(canonical)}" />`);
+    if (!isVoices) {
+      const body = `<article><h1>${esc(story.title)}</h1>${story.excerpt ? `<p>${esc(strip(story.excerpt))}</p>` : ''}<div>${String(story.content || '').replace(/<(script|iframe|style|object|embed)[\s\S]*?<\/\1>/gi, '').replace(/\son\w+="[^"]*"/gi, '')}</div></article>`;
+      html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
+    }
+    res.setHeader('Cache-Control', 'no-store');
+    res.send(html);
+  } catch (error) {
+    console.error('STORY HEAD INJECTION FAILED — serving bare shell:', error);
+    next();
+  }
+});
+
 // Prerendered routes (scripts/prerender.mjs) live at dist/<route>/index.html and the bare
 // shell at dist/shell.html. An extensionless GET gets its prerendered page if one exists,
 // otherwise the shell — never another route's prerendered content.
