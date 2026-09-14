@@ -6,6 +6,10 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
+# Headless Chromium for the build-time prerender (scripts/prerender.mjs). Builder stage only.
+RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
 # Copy package files
 COPY package*.json ./
 
@@ -33,6 +37,9 @@ ENV VITE_CRM_API_URL=https://crm.blkoutuk.cloud
 
 # Build the frontend
 RUN npm run build
+
+# Prerender the public routes into dist/<route>/index.html (keeps dist/shell.html for the SPA fallback)
+RUN npm run prerender
 
 # Stage 2: Production with Express server
 FROM node:20-alpine AS production

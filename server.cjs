@@ -161,15 +161,25 @@ app.use((req, res, next) => {
 });
 
 // Serve static files from Vite build
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'dist'), { redirect: false }));
 
 // SPA fallback - serve index.html for all non-API routes
+// Prerendered routes (scripts/prerender.mjs) live at dist/<route>/index.html and the bare
+// shell at dist/shell.html. An extensionless GET gets its prerendered page if one exists,
+// otherwise the shell — never another route's prerendered content.
+const fs = require('fs');
+const DIST = path.join(__dirname, 'dist');
 app.use((req, res, next) => {
   // Skip if already handled by API routes
   if (req.path.startsWith('/api/')) {
     return next();
   }
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+  const clean = path.normalize(req.path).replace(/\/+$/, '');
+  const prerendered = path.join(DIST, clean, 'index.html');
+  if (clean && prerendered.startsWith(DIST + path.sep) && !path.extname(clean) && fs.existsSync(prerendered)) {
+    return res.sendFile(prerendered);
+  }
+  res.sendFile(path.join(DIST, fs.existsSync(path.join(DIST, 'shell.html')) ? 'shell.html' : 'index.html'));
 });
 
 // Error handling middleware

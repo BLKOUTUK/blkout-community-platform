@@ -1,0 +1,27 @@
+{
+  "origin": "https://blkoutuk.com",
+  "strip": ["div.fixed.bottom-4.z-50"],
+  "routes": [
+    { "path": "/", "title": "BLKOUT UK — the Black Queer Men's Liberation Collective", "description": "What Black queer men build when we stop waiting: a community-owned co-operative for Black queer men in the UK, with a door in every borough, stories, events, open governance and a shop." },
+    { "path": "/liberation", "canonical": "/", "title": "BLKOUT UK — the Black Queer Men's Liberation Collective", "description": "What Black queer men build when we stop waiting: a community-owned co-operative for Black queer men in the UK, with a door in every borough, stories, events, open governance and a shop." },
+    { "path": "/about", "title": "About BLKOUT — a Community Benefit Society for Black queer men", "description": "BLKOUT is a liberation-first, community-owned Community Benefit Society built by and for Black queer men in the UK. Who we are, what we hold, and how to join." },
+    { "path": "/intro", "title": "IVOR — BLKOUT's community liberation assistant", "description": "Meet IVOR, BLKOUT's AI community assistant: what it does for Black queer men, what it will never do, and the published AI policy it answers to." },
+    { "path": "/ten-years", "title": "Ten Years of BLKOUT", "description": "Ten years of revolutionary love for Black queer men: four shapes, one commitment, and a great deal of joy taken seriously." },
+    { "path": "/movement", "title": "The Movement — BLKOUT's theory of change", "description": "How BLKOUT turns connection between Black queer men into collective power: the theory of change, card by card." },
+    { "path": "/stories", "title": "Stories — the BLKOUT archive", "description": "Ten years of writing, reporting and organising by Black queer men in the UK: the BLKOUT story archive, searchable." },
+    { "path": "/governance", "title": "Governance — how BLKOUT is run", "description": "BLKOUT is democratically governed and member-owned: one member, one vote, a Community Benefit Society with an asset lock, and a board answerable to its members." },
+    { "path": "/governance-proposals", "title": "Proposals — one member, one vote", "description": "Member proposals and votes that shape the BLKOUT platform. Democratic governance in practice." },
+    { "path": "/board", "title": "The BLKOUT board", "description": "The directors of BLKOUT CBS, how the board is structured in pairs, and how it answers to members." },
+    { "path": "/platform", "title": "The BLKOUT platform — every door in one place", "description": "Everything BLKOUT runs for Black queer men: the events surface and borough doors, Voices, News, the Hub, IVOR and the shop." },
+    { "path": "/shop", "title": "BLKOUT Shop — Issue 01", "description": "Wear it loud. Apparel, drops and co-operative membership from BLKOUT: community-owned, made to order." },
+    { "path": "/shop/membership", "title": "Co-operative membership — BLKOUT CBS", "description": "Become a member-owner of BLKOUT's Community Benefit Society: what membership gives you, the tiers, and why access beats influence." },
+    { "path": "/shop/apparel", "title": "Apparel — BLKOUT Shop, Issue 01", "description": "The BLKOUT apparel range: three lines for Black queer men, printed to order, worn loud." },
+    { "path": "/shop/apparel/blkout-proud", "title": "BLKOUT Proud — apparel range", "description": "The BLKOUT Proud range: what it is for, who it is for, and how to buy it." },
+    { "path": "/shop/apparel/brother-to-brother", "title": "Brother to Brother — apparel range", "description": "The Brother to Brother range: what it is for, who it is for, and how to buy it." },
+    { "path": "/shop/apparel/icons", "title": "Icons — apparel range", "description": "The Icons range: Black queer figures worn with pride. What it is for and how to buy it." },
+    { "path": "/shop/drops/compass-journal", "title": "Ivor's Compass journal — BLKOUT Drop 01", "description": "Drop 01 from BLKOUT: the Ivor's Compass journal. Print run pending; register your interest." },
+    { "path": "/gbp-paris", "title": "Global Black Pride 2026, Paris — travel with BLKOUT?", "description": "Should BLKOUT organise a group for Global Black Pride 2026 in Paris? Register your interest." },
+    { "path": "/terms", "title": "Terms of Service — BLKOUT", "description": "Community agreements for a safer, more liberating space: the BLKOUT terms of service." },
+    { "path": "/privacy", "title": "Privacy Policy — BLKOUT", "description": "Your privacy matters. How BLKOUT protects and respects your data." }
+  ]
+}
