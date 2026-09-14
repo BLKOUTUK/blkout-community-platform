@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /my-account
+Disallow: /health-dashboard
+Disallow: /compliance
+
+Sitemap: https://blkoutuk.com/sitemap.xml
+Sitemap: https://blkoutuk.com/sitemap-index.xml

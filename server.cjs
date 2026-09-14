@@ -177,6 +177,48 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'dist'), { redirect: false }));
 
 // SPA fallback - serve index.html for all non-API routes
+// /sitemap.xml: every prerendered page in dist (deduplicated by canonical, so /liberation folds
+// into /) plus the archive stories that are canonical here. Voices pieces are canonical on
+// voices.blkoutuk.com and live in that sitemap. Stories are cached for an hour.
+let storySitemapCache = { at: 0, urls: [] };
+app.get('/sitemap.xml', async (_req, res) => {
+  try {
+    const urls = [];
+    const seen = new Set();
+    const walk = (dir, depth) => {
+      for (const name of fs.readdirSync(dir)) {
+        const p = path.join(dir, name);
+        const st = fs.statSync(p);
+        if (st.isDirectory()) { if (depth < 4 && name !== 'assets') walk(p, depth + 1); continue; }
+        if (name !== 'index.html') continue;
+        const html = fs.readFileSync(p, 'utf8');
+        if (!html.includes('name="prerendered"')) continue;
+        const canon = html.match(/<link rel="canonical" href="([^"]+)"/);
+        const loc = canon ? canon[1] : `https://blkoutuk.com/${path.relative(DIST, dir).split(path.sep).join('/')}`;
+        if (seen.has(loc)) continue;
+        seen.add(loc);
+        urls.push(`  <url><loc>${loc}</loc><lastmod>${st.mtime.toISOString().slice(0, 10)}</lastmod></url>`);
+      }
+    };
+    walk(DIST, 0);
+    if (Date.now() - storySitemapCache.at > 60 * 60 * 1000) {
+      const { default: storiesHandler } = await import('./api/stories.ts');
+      const payload = await new Promise((resolve, reject) => {
+        const fakeRes = { _status: 200, setHeader() { return this; }, status(c) { this._status = c; return this; }, json(body) { resolve(body); }, end() { resolve(null); } };
+        Promise.resolve(storiesHandler({ method: 'GET', query: { limit: '500' }, headers: {} }, fakeRes)).catch(reject);
+      });
+      const stories = payload && payload.data && Array.isArray(payload.data.stories) ? payload.data.stories : [];
+      storySitemapCache = { at: Date.now(), urls: stories.filter((st) => st.source === 'archive' && st.slug).map((st) =>
+        `  <url><loc>https://blkoutuk.com/stories/${st.slug}</loc>${st.publishedAt ? `<lastmod>${String(st.publishedAt).slice(0, 10)}</lastmod>` : ''}</url>`) };
+    }
+    res.set('Content-Type', 'application/xml; charset=utf-8');
+    res.send(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.concat(storySitemapCache.urls).join('\n')}\n</urlset>`);
+  } catch (error) {
+    console.error('SITEMAP FAILED:', error);
+    res.status(500).send('Error generating sitemap');
+  }
+});
+
 // /stories/<slug> republishes Voices articles (and the archive) inside the SPA, so a crawler saw a
 // bare shell and search engines saw a duplicate of voices.blkoutuk.com. Serve the shell with the
 // story's title, description and a canonical: the Voices URL for Voices pieces, itself for archive
