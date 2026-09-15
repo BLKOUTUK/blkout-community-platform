@@ -264,7 +264,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                     BLACK HISTORY MONTH: ASK AIvor'S ICONS QUIZ
                   </h3>
                   <p className="text-gray-300">
-                    All October, ask AIvor about the four BLKOUT Icons — Ivor Cummings, Berto Pasuka,
+                    From 24 September to 31 October, ask AIvor about the four BLKOUT Icons — Ivor Cummings, Berto Pasuka,
                     Pearl Alcock, Justin Fashanu. Every right answer gives you a letter; unscramble the
                     word to enter the end-of-month draw for a BLKOUT Icons tee.
                   </p>
