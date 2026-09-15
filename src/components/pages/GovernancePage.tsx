@@ -35,6 +35,9 @@ const GovernancePage: React.FC = () => {
             <p className="text-xl md:text-2xl text-white max-w-2xl mx-auto font-semibold">
               Cooperative ownership. Collective power.
             </p>
+            <p className="text-gray-500 text-xs uppercase tracking-[0.2em] mt-8">
+              Published <time dateTime="2025-09-25">25 September 2025</time> · Updated <time dateTime="2026-09-15">15 September 2026</time>
+            </p>
           </motion.div>
         </div>
       </section>
