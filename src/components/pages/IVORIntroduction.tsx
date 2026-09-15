@@ -257,6 +257,19 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                   </p>
                 </div>
 
+                <div className="bg-liberation-aivor/10 border border-liberation-aivor/20 rounded-sharp p-6">
+                  <h3 className="text-liberation-aivor font-bold text-lg mb-4 uppercase" style={{
+                    textShadow: '1px 1px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000'
+                  }}>
+                    BLACK HISTORY MONTH: ASK AIvor'S ICONS QUIZ
+                  </h3>
+                  <p className="text-gray-300">
+                    All October, ask AIvor about the four BLKOUT Icons — Ivor Cummings, Berto Pasuka,
+                    Pearl Alcock, Justin Fashanu. Every right answer gives you a letter; unscramble the
+                    word to enter the end-of-month draw for a BLKOUT Icons tee.
+                  </p>
+                </div>
+
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={onStartChat}
