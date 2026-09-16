@@ -7,7 +7,7 @@
     {
       "path": "/",
       "title": "BLKOUT UK — the Black Queer Men's Liberation Collective",
-      "description": "What Black queer men build when we stop waiting: a community-owned co-operative for Black queer men in the UK, with a door in every borough, stories, events, open governance and a shop.",
+      "description": "BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK.",
       "jsonld": {
         "@context": "https://schema.org",
         "@graph": [
@@ -22,7 +22,7 @@
             "legalName": "BLKOUT Creative Ltd",
             "url": "https://blkoutuk.com",
             "logo": "https://blkoutuk.com/blkout-logo.png",
-            "description": "A community-owned Community Benefit Society built by and for Black queer men in the UK: doors in every borough, stories, events, open governance and a shop. Asset-locked; one member, one vote.",
+            "description": "BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK. Through local chapters, cooperative membership, creative events, shared learning, and digital media, we turn connection into individual well-being and collective power — owned by and accountable to the people we serve.",
             "identifier": {
               "@type": "PropertyValue",
               "propertyID": "FCA Mutuals Public Register",
@@ -38,7 +38,8 @@
               "https://youtube.com/@blkoutuk",
               "https://facebook.com/blkoutuk",
               "https://linkedin.com/company/blkoutuk",
-              "https://blkouthub.com"
+              "https://blkouthub.com",
+              "https://twitter.com/blkoutuk"
             ],
             "knowsAbout": [
               "Black queer men",
@@ -46,7 +47,25 @@
               "co-operatives",
               "mental health",
               "Black British history"
-            ]
+            ],
+            "foundingDate": "2025-11-24",
+            "areaServed": {
+              "@type": "Country",
+              "name": "United Kingdom"
+            },
+            "keywords": "Black gay men UK, Black queer men, Black bi men UK, Black trans men UK, Black LGBTQ+ community, liberation collective, community benefit society, co-operative",
+            "additionalProperty": [
+              {
+                "@type": "PropertyValue",
+                "name": "organisationalLineage",
+                "value": "BLKOUT Creative Ltd, registered as a Community Benefit Society on 24 November 2025, continues the BLKOUT work begun in 2016"
+              }
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "community",
+              "url": "https://blkoutuk.com/about"
+            }
           },
           {
             "@type": "WebSite",
@@ -81,7 +100,7 @@
       "path": "/liberation",
       "canonical": "/",
       "title": "BLKOUT UK — the Black Queer Men's Liberation Collective",
-      "description": "What Black queer men build when we stop waiting: a community-owned co-operative for Black queer men in the UK, with a door in every borough, stories, events, open governance and a shop.",
+      "description": "BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK.",
       "jsonld": {
         "@context": "https://schema.org",
         "@graph": [
@@ -96,7 +115,7 @@
             "legalName": "BLKOUT Creative Ltd",
             "url": "https://blkoutuk.com",
             "logo": "https://blkoutuk.com/blkout-logo.png",
-            "description": "A community-owned Community Benefit Society built by and for Black queer men in the UK: doors in every borough, stories, events, open governance and a shop. Asset-locked; one member, one vote.",
+            "description": "BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK. Through local chapters, cooperative membership, creative events, shared learning, and digital media, we turn connection into individual well-being and collective power — owned by and accountable to the people we serve.",
             "identifier": {
               "@type": "PropertyValue",
               "propertyID": "FCA Mutuals Public Register",
@@ -112,7 +131,8 @@
               "https://youtube.com/@blkoutuk",
               "https://facebook.com/blkoutuk",
               "https://linkedin.com/company/blkoutuk",
-              "https://blkouthub.com"
+              "https://blkouthub.com",
+              "https://twitter.com/blkoutuk"
             ],
             "knowsAbout": [
               "Black queer men",
@@ -120,7 +140,25 @@
               "co-operatives",
               "mental health",
               "Black British history"
-            ]
+            ],
+            "foundingDate": "2025-11-24",
+            "areaServed": {
+              "@type": "Country",
+              "name": "United Kingdom"
+            },
+            "keywords": "Black gay men UK, Black queer men, Black bi men UK, Black trans men UK, Black LGBTQ+ community, liberation collective, community benefit society, co-operative",
+            "additionalProperty": [
+              {
+                "@type": "PropertyValue",
+                "name": "organisationalLineage",
+                "value": "BLKOUT Creative Ltd, registered as a Community Benefit Society on 24 November 2025, continues the BLKOUT work begun in 2016"
+              }
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "community",
+              "url": "https://blkoutuk.com/about"
+            }
           },
           {
             "@type": "WebSite",
@@ -154,7 +192,7 @@
     {
       "path": "/about",
       "title": "About BLKOUT — a Community Benefit Society for Black queer men",
-      "description": "BLKOUT is a liberation-first, community-owned Community Benefit Society built by and for Black queer men in the UK. Who we are, what we hold, and how to join.",
+      "description": "BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK.",
       "jsonld": {
         "@context": "https://schema.org",
         "@graph": [
@@ -169,7 +207,7 @@
             "about": {
               "@id": "https://blkoutuk.com/#org"
             },
-            "description": "BLKOUT is a liberation-first, community-owned Community Benefit Society built by and for Black queer men in the UK."
+            "description": "BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK. Through local chapters, cooperative membership, creative events, shared learning, and digital media, we turn connection into individual well-being and collective power — owned by and accountable to the people we serve."
           }
         ]
       }
@@ -281,7 +319,7 @@
             "name": "BLKOUT UK",
             "legalName": "BLKOUT Creative Ltd",
             "url": "https://blkoutuk.com",
-            "description": "A community-owned Community Benefit Society (RS009639) built by and for Black queer men in the UK. Asset-locked; one member, one vote."
+            "description": "BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK. Through local chapters, cooperative membership, creative events, shared learning, and digital media, we turn connection into individual well-being and collective power — owned by and accountable to the people we serve."
           },
           {
             "@type": "WebPage",

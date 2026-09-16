@@ -371,6 +371,7 @@ export default function App() {
       <VideoHero
         title="BLKOUT"
         subtitle="The Black Queer Men's Liberation Collective"
+        description="BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK. Through local chapters, cooperative membership, creative events, shared learning, and digital media, we turn connection into individual well-being and collective power — owned by and accountable to the people we serve."
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
           '/videos/hero/PLATFORM HERO 2.mp4',

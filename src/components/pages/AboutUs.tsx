@@ -138,9 +138,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
               <div>
                 <h4 className="text-lg font-bold text-liberation-pride-pink mb-3">Core Mission</h4>
                 <p className="text-gray-300 leading-relaxed">
-                  BLKOUT Liberation Platform exists to create technical infrastructure that prioritizes Black queer liberation
-                  through economic sovereignty, democratic governance, and trauma-informed community protection. We reject
-                  extractive technology models in favor of cooperative ownership and genuine community empowerment.
+                  BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK. Through local chapters, cooperative membership, creative events, shared learning, and digital media, we turn connection into individual well-being and collective power — owned by and accountable to the people we serve.
                 </p>
               </div>
 
