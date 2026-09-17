@@ -13,6 +13,40 @@ interface RangeTileProps {
   img?: string;
 }
 
+function ZeffyEmbed({ formUrl, title }: { formUrl: string; title: string }) {
+  useEffect(() => {
+    if (document.querySelector('script[data-zeffy-embed-script]')) return;
+    const script = document.createElement('script');
+    script.src = 'https://www.zeffy.com/embed/v2/zeffy-embed.js';
+    script.setAttribute('data-zeffy-embed-script', 'true');
+    script.onerror = () => {
+      document.querySelectorAll('[data-zeffy-embed-fallback]').forEach((el) => {
+        (el as HTMLElement).style.display = 'block';
+        el.querySelectorAll('iframe[data-zeffy-embed-src]').forEach((f) => {
+          (f as HTMLIFrameElement).src = f.getAttribute('data-zeffy-embed-src') || '';
+        });
+      });
+    };
+    document.body.appendChild(script);
+  }, []);
+
+  return (
+    <div>
+      <div data-zeffy-embed data-form-url={formUrl} />
+      <div data-zeffy-embed-fallback style={{ display: 'none' }}>
+        <div style={{ position: 'relative', overflow: 'hidden', height: 450, width: '100%', paddingTop: 450 }}>
+          <iframe
+            title={title}
+            style={{ position: 'absolute', border: 0, top: 0, left: 0, bottom: 0, right: 0, width: '100%', height: '100%' }}
+            data-zeffy-embed-src={`https://www.zeffy.com${formUrl}`}
+            allowTransparency
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function RangeTile({ num, name, brief, href, img }: RangeTileProps) {
   return (
     <a
@@ -355,11 +389,11 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
             name="Donate."
             pitch="Any amount. No strings. Zeffy charges no platform fees, so 100% reaches BLKOUT."
           />
-          <div className="inline-flex items-baseline gap-3 mt-8 px-6 py-4 border border-dashed border-liberation-neutral-800 font-display font-black text-sm tracking-[0.15em] uppercase text-liberation-neutral-500">
-            Opening soon — we're setting up Zeffy
+          <div className="mt-8">
+            <ZeffyEmbed formUrl="/embed/ticketing/shop-blkoutuk-2" title="Donation form powered by Zeffy" />
           </div>
           <p className="font-disrupt italic text-sm text-liberation-neutral-500 mt-6 max-w-[60ch]">
-            Donations don't get you a vote — that's what membership is for. They just back the work. Until the button goes live, <a href="/shop/membership" onClick={goMembership} className="text-liberation-pride-orange not-italic">membership</a> is the way in.
+            Donations don't get you a vote — that's what membership is for. They just back the work. If you want a say too, <a href="/shop/membership" onClick={goMembership} className="text-liberation-pride-orange not-italic">membership</a> is the way in.
           </p>
         </section>
 
@@ -390,7 +424,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
             Where this is right now
           </p>
           <p className="text-liberation-neutral-300 m-0 text-base leading-relaxed max-w-[60ch]">
-            Apparel, the Compass journal pre-order, and membership are live now. Courses open with the first cohort; the donation button lands when our Zeffy setup completes. We mark each surface honestly so you know what's ready and what's promised.
+            Apparel, the Compass journal pre-order, membership, and donations are live now. Courses open with the first cohort. We mark each surface honestly so you know what's ready and what's promised.
           </p>
         </section>
 
