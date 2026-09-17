@@ -76,7 +76,7 @@ const CONTENT: Record<ApparelRangePageProps['range'], RangeContent> = {
     imageNote: '[range hero · forebear portraits, archive sourcing]',
     heroPoster: '/images/apparel/icons-poster.jpg',
     paragraphs: [
-      'The names we weren\'t taught. Ivor Cummings, 1919–1992. Berto Pasuka, 1911–1963. Pearl Alcock, 1934–2006. Justin Fashanu, 1961–1998. The queer contribution to Black British history — gathered, named, and worn.',
+      'The names we weren\'t taught. Ivor Cummings, 1913–1992. Berto Pasuka, 1911–1963. Pearl Alcock, 1934–2006. Justin Fashanu, 1961–1998. The queer contribution to Black British history — gathered, named, and worn.',
       "Each piece carries their names — ivor, berto, pearl & justin — so the lineage stays visible: to ourselves, and to whoever needs to see us. The archive isn't behind us. It's what we wear.",
     ],
     pull: {
