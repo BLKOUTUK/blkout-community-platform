@@ -1,7 +1,8 @@
 // Article Detail Page - Full article content display
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Clock, User, ExternalLink, Calendar, Tag, Heart, Share2 } from 'lucide-react';
+import { ArrowLeft, Clock, User, ExternalLink, Calendar, Tag } from 'lucide-react';
 import { motion } from 'framer-motion';
+import ArticleShareButtons from '../voices/ArticleShareButtons';
 
 interface ArticleDetailProps {
   articleId: string;
@@ -81,19 +82,6 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ articleId, source, onBack
       month: 'long',
       day: 'numeric'
     });
-  };
-
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: article?.title,
-        text: article?.excerpt,
-        url: window.location.href
-      });
-    } else {
-      // Fallback: copy to clipboard
-      navigator.clipboard.writeText(window.location.href);
-    }
   };
 
   if (loading) {
@@ -202,15 +190,15 @@ const ArticleDetail: React.FC<ArticleDetailProps> = ({ articleId, source, onBack
               </p>
             )}
 
-            {/* Action Buttons */}
+            {/* Share + actions */}
             <div className="flex flex-wrap items-center gap-4">
-              <button
-                onClick={handleShare}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition-colors"
-              >
-                <Share2 className="w-4 h-4" />
-                Share
-              </button>
+              <ArticleShareButtons
+                title={article.title}
+                excerpt={article.excerpt}
+                url={typeof window !== 'undefined' ? window.location.href : ''}
+                author={article.author}
+                publication={article.sourceName || (source === 'news' ? 'BLKOUT News' : 'BLKOUT Stories')}
+              />
 
               {article.originalUrl && article.originalUrl !== '#' && (
                 <a
