@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>The Way In · BLKOUT board reading day</title>
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;900&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column, chapters in order, the hub course as the place to post. blkoutuk.com house style: black ground, sovereignty gold, white type, Work Sans with Fraunces italic accents; cooperative purple as the governance accent (brand: governance and membership surfaces). */
+:root{
+  --bg:#000; --surface:#111; --raise:#1a1a1a; --ink:#fff; --muted:#b9b4a6; --line:#2e2a20;
+  --gold:#FFD700; --gold-deep:#D4AF37; --gold-soft:#2a2410;
+  --gov:#a855f7; --gov-fill:#9333ea; --gov-soft:#1f1230;
+  --body:"Work Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --accent:"Fraunces",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:760px;margin:0 auto}
+h1,h2,h3{font-family:var(--body);font-weight:900;line-height:1.1;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.6rem,9vw,4.2rem)}
+h2{font-size:clamp(1.6rem,5vw,2.2rem)}
+h3{font-size:1.15rem;font-weight:600}
+em,.it{font-family:var(--accent);font-style:italic;font-weight:400;color:var(--gold)}
+p{margin:0;max-width:65ch}
+a{color:var(--gold)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gov)}
+.stack{display:flex;flex-direction:column;gap:14px}
+header.hero{padding-block:56px 32px;display:flex;flex-direction:column;gap:18px;border-bottom:1px solid var(--line)}
+.lede{font-size:1.15rem;color:var(--muted)}
+.start{background:var(--gold);color:#000;border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.start b{font-weight:900}
+.start a{color:#000;font-weight:600}
+.runsheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.runsheet div{border-top:2px solid var(--gov-fill);padding-top:6px;font-size:.88rem;color:var(--muted)}
+.runsheet b{display:block;font-family:var(--mono);font-weight:500;font-size:.72rem;color:var(--ink)}
+section.chapter{padding-block:44px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:18px}
+ul.facts{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.ladder{list-style:none;margin:0;padding:0}
+.ladder li{display:grid;grid-template-columns:6.5rem 1fr;gap:14px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--line)}
+.ladder .n{font-weight:900;font-size:1.5rem;color:var(--gold);text-align:right;font-variant-numeric:tabular-nums}
+.ladder small{font-size:.72rem;color:var(--muted);font-weight:400}
+.ladder b{display:block}
+.ladder li>span:last-child{min-width:0;color:var(--muted)}
+.ladder li>span:last-child b{color:var(--ink)}
+@media (max-width:420px){.ladder li{grid-template-columns:5rem 1fr}.ladder .n{font-size:1.2rem}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.card .tag{font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gov)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.door,.provo{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.ask{font-size:.92rem;color:var(--muted)}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.role{font:inherit;color:inherit;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px;cursor:pointer;display:flex;flex-direction:column;gap:4px;min-width:0}
+.role:hover{border-color:var(--gov)}
+.role[aria-pressed="true"]{border-color:var(--gov);background:var(--gov-soft)}
+.role .rname{font-weight:600;font-size:1.1rem}
+.role .rplace{font-family:var(--accent);font-style:italic;color:var(--gold-deep);font-size:.95rem}
+.quest{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.quest h4{font-family:var(--mono);font-weight:500;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
+.quest ol{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:.88rem;border:1px solid var(--line);border-radius:999px;padding:4px 12px;text-decoration:none;color:var(--ink);background:var(--raise)}
+.chip:hover{border-color:var(--gold)}
+.fork{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.fork button{font:inherit;color:inherit;text-align:left;background:var(--raise);border:1px dashed var(--muted);border-radius:6px;padding:12px 14px;cursor:pointer}
+.fork button[aria-pressed="true"]{border-style:solid;border-color:var(--gold);background:var(--gold-soft)}
+.forkout{border-left:3px solid var(--gold);padding-left:14px}
+.pairnote{background:var(--gov-soft);border-radius:6px;padding:10px 14px;font-size:.95rem}
+.trap{font-size:.92rem;color:var(--muted)}
+.dice{display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.d20{width:96px;height:96px;flex:none;display:grid;place-items:center;font-weight:900;font-size:2.2rem;color:#000;background:var(--gold);clip-path:polygon(50% 0,95% 25%,95% 75%,50% 100%,5% 75%,5% 25%);font-variant-numeric:tabular-nums}
+.d20.rolling{animation:spin .6s ease-out}
+@keyframes spin{from{transform:rotate(-200deg) scale(.7)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.d20.rolling{animation:none}}
+.btn{font:inherit;font-weight:600;border:0;border-radius:6px;padding:10px 18px;background:var(--gold);color:#000;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.status{font-size:.9rem;color:var(--muted)}
+form{display:flex;flex-direction:column;gap:12px}
+label{font-weight:600;font-size:.92rem;display:flex;flex-direction:column;gap:6px}
+label span{font-weight:400;color:var(--muted)}
+input,textarea,select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 12px;width:100%}
+textarea{min-height:90px;resize:vertical}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.carry{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.carry div{background:var(--gov-soft);border-radius:6px;padding:10px 12px;font-size:.9rem;min-width:0}
+.carry b{display:block;font-family:var(--mono);font-weight:500;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gov)}
+details summary{cursor:pointer;color:var(--gold);font-weight:600}
+details textarea{margin-top:10px;font-family:var(--mono);font-size:.8rem;min-height:240px}
+footer{padding-block:32px;color:var(--muted);font-size:.85rem;display:flex;flex-direction:column;gap:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+  <span class="eyebrow">BLKOUT board · reading day · Wednesday 7 October 2026</span>
+  <h1>The Way <em>In</em></h1>
+  <p class="lede">A game for the board, with one question running through it: <em>what do we, as an organisation, have to do to build a membership in 2027?</em></p>
+  <div class="start">
+    <b>Start in BLKOUTHUB.</b>
+    <span>The course <b>The Way In</b> is waiting for you in <a href="https://blkouthub.com">BLKOUTHUB</a>. Each lesson is a chapter, and each links to its own thread where you post what you find and reply to each other. This page is the game board: the quests, the dice, the story engine and the listening practice.</span>
+  </div>
+  <p>Play at your own pace, any time on the 7th, for 60 to 90 minutes. If you only have an hour: one discovery, one moment from the last 12 months, one member's year. Thursday is for decisions.</p>
+  <div class="runsheet" aria-label="Suggested time for each chapter">
+    <div><b>Ch. 1</b>The story so far · 5 min</div>
+    <div><b>Ch. 2</b>Your quest · 30 min</div>
+    <div><b>Ch. 3</b>Roll for trouble · 10 min</div>
+    <div><b>Ch. 4</b>Provocations · 10 min</div>
+    <div><b>Ch. 5</b>A member's year · 15 min</div>
+    <div><b>Ch. 6</b>Your OOMF origin · 10 min</div>
+  </div>
+</header>
+
+<section class="chapter" id="story-so-far">
+  <span class="eyebrow">Chapter 1</span>
+  <h2>The story so <em>far</em></h2>
+  <ul class="facts">
+    <li>In July the board adopted the membership offer: free membership with a full vote and a reciprocal obligation, plus optional sustainer tiers at £3 and £10 a month that buy no extra vote.</li>
+    <li>Membership opens on Monday 28 December 2026, Joseph Beam Day. The AGM, working date Tuesday 24 November, announces its shape.</li>
+    <li>Being known to us is not the same as being a member who shapes and owns what we do.</li>
+    <li>We believe that when people get into the room, they stay. The problem is the way in, not the room. So we're testing a reframe of <i>Making Ourselves From Scratch</i>: four dinners with participatory workshop space between them, the speech work done in people's own time, and everyone at the table as a participant.</li>
+  </ul>
+  <h3>What the signals say</h3>
+  <p class="ask">Counted in different ways, so read them as a ladder of attention, not a single funnel.</p>
+  <ol class="ladder">
+    <li><span class="n">~3,100</span><span><b>Known to us</b>People in our records who have engaged with us.</span></li>
+    <li><span class="n">1,449</span><span><b>On the list</b>Newsletter subscribers, 30 September.</span></li>
+    <li><span class="n">190<small>/Sept</small></span><span><b>Looking now</b>UK visitors to blkoutuk.com in September. Most came via Google or directly; seven in ten left after one page. No join page exists yet.</span></li>
+    <li><span class="n">92</span><span><b>In the hub</b>BLKOUTHUB members, mostly in London.</span></li>
+    <li><span class="n">83</span><span><b>Signed up for a day</b>Picnic sign-ups, against a target of 100.</span></li>
+    <li><span class="n">1</span><span><b>Answered the ask</b>Replies to the <i>Making Ourselves From Scratch</i> advert.</span></li>
+  </ol>
+  <p>Help arrives by reply, not through forms. People ask who may come. As you play, propose <b>one thing we should count in 2027</b> that would tell us belonging is growing, and post it in the hub.</p>
+  <div class="card">
+    <span class="tag">Before you set off · looking back</span>
+    <p>Our first year as a society ran from October 2025 to September 2026: registration in November, Ivor's Compass at Stanley Arts in April, our AI policy published in June, the membership offer in July, the picnic in August. Name <b>one moment when the way in worked</b>, and <b>one when it didn't</b>, and post both in the Chapter 1 thread.</p>
+  </div>
+  <h3>The doorways we already hold</h3>
+  <div class="grid" id="doors"></div>
+</section>
+
+<section class="chapter" id="quest">
+  <span class="eyebrow">Chapter 2</span>
+  <h2>Choose your <em>quest</em></h2>
+  <p>Pick your portfolio. The two Finance seats are vacant, so anyone can take that quest as well as their own. Bring back evidence, not just opinion. One question answered well is enough.</p>
+  <div class="roles" id="roles" role="group" aria-label="Choose a quest"></div>
+  <div id="questPanel" hidden></div>
+</section>
+
+<section class="chapter" id="trouble">
+  <span class="eyebrow">Chapter 3</span>
+  <h2>Roll for <em>trouble</em></h2>
+  <p>No campaign survives contact with real life. Roll, then decide what your character does in the first week, and what we'd need to have built already for it to go well.</p>
+  <div class="dice">
+    <div class="d20" id="d20" aria-live="polite">?</div>
+    <div class="stack" style="flex:1;min-width:200px">
+      <button class="btn" id="rollBtn" type="button">Roll the d20</button>
+      <span class="status">Low rolls bring harder trouble. A natural 20 brings a gift, and you have to work out why it happened.</span>
+    </div>
+  </div>
+  <div id="complication" class="card" hidden></div>
+</section>
+
+<section class="chapter" id="provocations">
+  <span class="eyebrow">Chapter 4</span>
+  <h2><em>Provocations</em></h2>
+  <p>Watch at least one. Each link opens a search, so you choose the version you find. Sit with the question underneath it.</p>
+  <div class="grid" id="provos"></div>
+</section>
+
+<section class="chapter" id="year">
+  <span class="eyebrow">Chapter 5</span>
+  <h2>A member's <em>year</em></h2>
+  <p>Invent one person who first hears about BLKOUT in January 2027. In about 150 words, tell their year: where they hear about us, the first thing they actually do, the moment they almost drift away, and what keeps them. Walk them from Awareness to Participation to Ownership, and let at least one of our doorways appear.</p>
+  <p>On Thursday we'll read some aloud and ask of each: <em>what would we have to do for this story to come true?</em></p>
+</section>
+
+<section class="chapter" id="oomf">
+  <span class="eyebrow">Chapter 6</span>
+  <h2>Your OOMF <em>origin</em></h2>
+  <p>In The OOMF, the Nexus Engine reveals powers The Signal tried to suppress. Fill in a few lines and this page writes a prompt for any AI (ChatGPT, Gemini, Copilot, Claude) to tell your origin story. Your quest, crossroads and roll carry across.</p>
+  <div class="carry" id="carry"></div>
+  <form id="oomfForm" novalidate>
+    <div class="two">
+      <label for="o-name">Your code name <span>Make one up.</span><input id="o-name" maxlength="40" placeholder="e.g. Hearthline"></label>
+      <label for="o-place">A real place you'd defend <span>A street, venue, park or room in the UK.</span><input id="o-place" maxlength="120"></label>
+    </div>
+    <label for="o-work">The real cultural work you already do <span>In your life, not your board role.</span><input id="o-work" maxlength="200" placeholder="e.g. I'm the one who cooks for everyone and remembers who's missing"></label>
+    <label for="o-stake">What you want to protect <span>Optional. A place, a room, a habit, a name. Go only as far as you want.</span><textarea id="o-stake" maxlength="300" style="min-height:70px"></textarea></label>
+    <div class="row">
+      <button class="btn" type="submit">Write my prompt</button>
+      <span class="status" id="oomfStatus" role="status"></span>
+    </div>
+  </form>
+  <div class="stack" id="oomfOut" hidden>
+    <textarea id="oomfPrompt" readonly rows="12" aria-label="Your OOMF prompt"></textarea>
+    <div class="row">
+      <button class="btn" type="button" id="oomfCopy">Copy the prompt</button>
+      <a class="btn ghost" href="https://oomf.blkoutuk.com/" target="_blank" rel="noopener">Make a comic panel</a>
+    </div>
+  </div>
+  <p class="ask">Post your story in the Chapter 6 thread. Stories quoted in the annual report are credited by code name, and only if you add “OK for the report”.</p>
+</section>
+
+<section class="chapter" id="talk">
+  <span class="eyebrow">Practice</span>
+  <h2>Get Me to <em>Talk</em></h2>
+  <p>Twenty minutes of listening practice. You meet a guarded man from our world with a story worth hearing: twelve questions, scored as they land, then a full playback, and an optional task on confidentiality and safeguarding checked against our own policy. Copy the prompt into any AI and press send.</p>
+  <p class="ask">Don't name your real person, or include anything that identifies them, and check your chat service's settings on saving conversations.</p>
+  <div class="row">
+    <button class="btn" type="button" id="copyTalk">Copy the prompt</button>
+    <span class="status" id="talkStatus" role="status"></span>
+  </div>
+  <details><summary>Read the prompt first</summary><textarea id="talkPrompt" readonly rows="12" aria-label="The Get Me to Talk prompt">You are running a listening drill for a volunteer board member of BLKOUT, a UK community organisation for and by Black queer men. The drill teaches how to get a guarded person talking. Work through the stages below in order. Ask me one question at a time and wait for my answer before going on.
+
+PRIVACY (tell me this first, in two sentences): I should not name the real person I&#x27;m thinking of or give details that would identify them, and I may want to check this chat service&#x27;s settings on saving and training on conversations.
+
+STAGE 1. SET UP. Ask me, one at a time:
+a) Who in my BLKOUT work gives me the polite version (a description, not a name).
+b) What I want to hear from them that I haven&#x27;t yet.
+c) How good I think I am at getting people to open up, out of 10, and my go-to move. Record these; don&#x27;t comment on them yet.
+d) Which stranger I want to meet: (1) the man from the picnic, who came once, stood near the food and left early; (2) the writer who wrote two pieces for BLKOUT years ago, then stopped replying; (3) the elder who ran a London club night in the 1990s and has agreed to ten minutes; (4) the accountant suggested for the board&#x27;s vacant Finance seats, polite and noncommittal. And how guarded: gentle, standard or hard.
+
+STAGE 2. BUILD THE STRANGER (silently). Invent a fictional Black queer British man from that starting point. Fix his whole story now and never change it. Give it three layers: SURFACE (the polite version anyone gets), MIDDLE (what a decent listener gets), CORE (what he rarely tells). The core is surprising, human and about belonging: a hope, a skill nobody asked for, a hurt from a room or an organisation, the real reason he stopped coming. It must not involve illness, death or grief, abuse, self-harm, crime, or anything graphic. Plant at least two small loose threads he will let slip early, each leading toward the core if I follow it. Do not show me any of this. Show me only the setting in two or three sentences, what he looks like, and his first line. Then tell me the terms: twelve questions, an openness meter that starts at 2 out of 10, the goal is the core, the rules stay hidden until the end, and asking for a hint spends a question.
+
+STAGE 3. PLAY. Answer each of my questions in character, guarded but not hostile, at the length a real person would use. He opens up for follow-ups built on his own words, specific open questions, patience, and a small honest disclosure from me in proportion to the moment. He closes down for stacked questions, yes/no questions, leading questions, unrequested advice, flattery, turning the talk to me, and the big question asked before trust exists. The core opens only when I follow a thread and the meter is 7 or more, never because I ask for it directly. The meter moves at most 2 per question. After each answer add one line in brackets: [opened, held or closed · meter N/10]. Keep the reasons to yourself. Stop after twelve questions, or earlier if I reach the core.
+
+STAGE 4. PLAY IT BACK. Step out of character and give me, with these headings:
+- The whole story, in his voice, with each layer marked reached or missed and where each thread appeared.
+- Question by question: each question, its tag, the meter after it and why.
+- Best, worst, missed: the question that opened him most, the one that closed the door, and the thread I walked past with the question that would have followed it.
+- The rules: what opened him and what closed him, tied to my own questions.
+- My habits: count my questions as open, yes/no, follow-ups, stacked, leading, advice, about me; name the costliest habit; compare honestly with my self-rating and go-to move.
+- My person: a guess, labelled as a guess, at what keeps them on the surface; two habits to drop with them, one to keep, and three opening questions written for them.
+- First conversation: ask me when and where I&#x27;ll next see them, the habit to watch, and the sign it went better.
+
+STAGE 5. ADDITIONAL TASK: CONFIDENTIALITY AND SAFEGUARDING. Ask whether I want to do it now. Give a one-line content note first: it involves an adult describing coercive control, financial abuse or exploitation; never graphic; no suicide, self-harm or children. If I say yes: in the last minutes of the conversation, the same stranger discloses ONE of: coercive control by a partner; financial abuse or exploitation by a lodger, partner or friend; a younger adult man (18 to 21) he knows being controlled or exploited by someone older. Include one detail that makes the risk or consent genuinely uncertain. He ends by asking me not to tell anyone. Then ask me, one at a time:
+1) What do you say to him now, in your own words?
+2) What do you write down, when, and where do you keep it?
+3) Who do you tell, and by when?
+4) Do you share without his consent? Why or why not?
+5) What, if anything, goes into the CRM, a board document, a WhatsApp group or board papers?
+Then assess my answers against BLKOUT&#x27;s Safeguarding Policy below, marking each point met, partly or missed with a sentence citing my words: listened and supported him; did not promise confidentiality; did not investigate or ask leading questions; asked his consent to share; told the Safeguarding Lead promptly; wrote a clear record in his own words, kept securely; judged sharing without consent against the policy&#x27;s four tests; recognised whether there was immediate danger; protected his privacy, including his sexuality, sharing only what was needed with only who needed it. Then give the right decision, a strong answer, and what is specific to us: sharing a disclosure can also out a Black queer man, his sexuality is special category data under UK GDPR, services may not feel safe to him, and Galop is an LGBT+ specialist route. Judge only against this policy and sound adult-safeguarding practice; where the policy is silent, say so.
+
+BLKOUT SAFEGUARDING POLICY 2026 (adults), the parts that apply:
+- Adult at risk (Care Act 2014): 18 or over, has needs for care and support, is experiencing or at risk of abuse or neglect, and as a result cannot protect themselves. Abuse includes financial or material abuse, emotional or psychological abuse, domestic abuse including coercive control, and modern slavery.
+- If someone discloses abuse: make sure they feel listened to and supported; don&#x27;t promise to keep information confidential between you and them; tell the Designated Safeguarding Lead; ask for their consent to share; write a clear statement of what you were told, saw or heard.
+- Life-threatening: call 999, make the situation safe, inform the Safeguarding Lead. Immediate danger: call the police. Not immediate danger: the Safeguarding Lead contacts the local authority safeguarding team within 24 hours.
+- Share without consent only if: there is serious risk of harm or abuse; a serious crime has been or will be committed; the person may lack capacity to decide; or the law requires it.
+- Designated Safeguarding Lead: Rob Berkeley, rob@blkoutuk.com. Galop (LGBT+ anti-abuse): 0800 999 5428. National Domestic Abuse Helpline: 0808 2000 247. Police: 999 or 101.
+
+Rules throughout: the stranger is fiction and must stay consistent with what he has said. Never diagnose or psychoanalyse me or my real person. British English. No fluff. Keep the whole session to about twenty-five minutes. Begin now with the privacy note, then Stage 1, question a.</textarea></details>
+</section>
+
+<footer>
+  <p>Post what you find in the course in <a href="https://blkouthub.com">BLKOUTHUB</a>. Nothing is quoted in the annual report unless you add “OK for the report” to your post.</p>
+  <p>BLKOUT Creative Ltd is a Community Benefit Society, member-owned and asset-locked. “Get Me to Talk” is adapted from a prompt published on There's An AI For That.</p>
+</footer>
+</div>
+
+<script>
+const DATA={"ROLES": [{"id": "chair", "name": "Co-Chairs", "place": "The mutual halls", "pair": 2, "brief": "You travel to organisations that turned customers and fans into owners. Find out how they made ownership feel real rather than legal.", "questions": ["How did FC United of Manchester persuade supporters to buy community shares, and what do members actually decide?", "What does the Co-operative Group or a local credit union do to make members feel like owners and not just customers?", "Mondragon is famous for worker ownership. What do they do in the first year someone joins?"], "look": [["FC United community shares", "https://www.google.com/search?q=FC%20United%20of%20Manchester%20community%20share%20offer%20members"], ["Co-op member engagement", "https://www.google.com/search?q=co-operative%20member%20engagement%20democracy%20participation"], ["Mondragon new members", "https://www.google.com/search?q=Mondragon%20cooperative%20new%20member%20induction"]], "fork": {"q": "At the crossroads you meet a founder who says the vote is what makes a member.", "a": ["Follow the vote", "Find one example where giving members a real decision early on changed how many stayed. What was the decision?"], "b": ["Follow the feast", "Find one example where ownership grew from shared ritual, food or gathering before any vote. What was the ritual?"]}, "trap": "Watch for: governance that looks democratic on paper but where nobody turns up to vote."}, {"id": "treasurer", "name": "Finance · open seats", "place": "The counting houses", "pair": 0, "brief": "Both Finance seats are vacant, so this quest is open to anyone. You study how communities pool money without extracting from each other. Find out what people will pay for when the thing they're paying for is belonging, and scout who in our community might fill these seats.", "questions": ["How does a pardner hand (susu) work, and why do people trust it with real money?", "The Guardian asks readers to support it without a paywall. What does the ask say, and what makes people give?", "What do Kenyan chamas or other rotating savings groups do when someone can't pay this month?"], "look": [["Pardner / susu", "https://www.google.com/search?q=pardner%20hand%20susu%20how%20it%20works%20Caribbean%20community%20savings"], ["Guardian reader support", "https://www.google.com/search?q=Guardian%20reader%20contributions%20model%20how%20it%20works"], ["Chamas", "https://www.google.com/search?q=chama%20Kenya%20savings%20group%20how%20it%20works"]], "fork": {"q": "A funder offers to cover all membership costs for 2027, on one condition: membership stays free.", "a": ["Take the money", "What do we lose when members don't contribute anything? Find one organisation that went free and what happened next."], "b": ["Ask the members", "Design a contribution that isn't money: time, skill, a dish at dinner. Find one place that counts non-financial contribution as membership."]}, "trap": "Watch for: pricing models built for people with spare income, presented as universal."}, {"id": "secretary", "name": "Company Secretary", "place": "The town criers", "pair": 1, "brief": "You learn how invitations travel. Find out why one advert got one reply, and what makes a message feel like it was meant for you.", "questions": ["Decidim in Barcelona and vTaiwan in Taiwan invite citizens into decisions. How do they phrase the invitation?", "Churches, barbershops and community radio reach people adverts can't. What does a notice from someone you trust do that an advert doesn't?", "Find two invitations that made you want to go somewhere. What did they have in common?", "Look at our own signals: which pages and channels bring people to us, and where do they stop? What does that say about our invitation?"], "look": [["Decidim participation", "https://www.google.com/search?q=Decidim%20Barcelona%20participatory%20democracy%20how%20citizens%20join"], ["vTaiwan", "https://www.google.com/search?q=vTaiwan%20how%20it%20works%20public%20participation"], ["Word of mouth", "https://www.google.com/search?q=word%20of%20mouth%20recruitment%20community%20organising%20relational"]], "fork": {"q": "You can send exactly one message to all 1,449 people on the newsletter. Or you can send six personal messages from six board members.", "a": ["The one message", "Write the subject line that would get it opened. Find one example of a mass message that started something."], "b": ["The nine messages", "Who would you message, and why them? Find one example of relational organising that grew from one-to-one asks."]}, "trap": "Watch for: confusing reach with relationship."}, {"id": "tech", "name": "Technology", "place": "The signal towers", "pair": 2, "brief": "You study digital places where people actually stick around. Find out what a platform does to make a stranger into a regular.", "questions": ["Pick one Discord server, WhatsApp community or Mastodon instance with a real culture. What happens in someone's first week there?", "Strava clubs and running crews turn solo activity into belonging. What does the app do, and what do the people do?", "What digital tool did a Black or queer community build for itself, rather than borrow? What did ownership change?", "Read our own website analytics alongside the newsletter numbers. Where is the biggest gap between people looking and people joining?"], "look": [["Online community onboarding", "https://www.google.com/search?q=online%20community%20onboarding%20first%20week%20retention"], ["Running crews", "https://www.google.com/search?q=Black%20running%20crews%20community%20how%20they%20grew"], ["Community-owned platforms", "https://www.google.com/search?q=community%20owned%20platform%20cooperative%20social%20media"]], "fork": {"q": "AIvor can greet every new member personally, at any hour. Or a human volunteer can greet ten people a week.", "a": ["The machine at the door", "Find one place where automated welcome built belonging rather than replacing it. What made it work?"], "b": ["The human at the door", "Find one place where a named human welcome made the difference. Could a tool support that person instead?"]}, "trap": "Watch for: building a feature when the gap is a relationship."}, {"id": "community", "name": "Community", "place": "The houses", "pair": 2, "brief": "You learn from Black and queer traditions of chosen family. Find out how they've always made a way in for people nobody else made room for.", "questions": ["How does the ballroom house system work? What does a house mother or father do for someone new?", "What do UK Black Pride, or a Black queer club night you know, do to make a first-timer feel they belong?", "Find a community that grew through food, such as supper clubs, church dinners or the cookout. What turns a guest into a host?"], "look": [["Ballroom houses", "https://www.google.com/search?q=ballroom%20house%20system%20house%20mother%20role%20new%20members"], ["UK Black Pride", "https://www.google.com/search?q=UK%20Black%20Pride%20history%20community%20volunteers"], ["Supper clubs", "https://www.google.com/search?q=supper%20club%20community%20building%20guests%20become%20hosts"]], "fork": {"q": "Someone comes to one dinner, loves it, and doesn't come back.", "a": ["Go and find them", "What does a house or a family do when someone drifts? Find one practice of calling people back in."], "b": ["Change the room", "What about the room made it easy to leave? Find one community that redesigned its welcome after losing people."]}, "trap": "Watch for: assuming the people who stay are the people we're for."}, {"id": "wanderer", "name": "The Wanderer", "place": "Anywhere you like", "pair": 0, "brief": "For anyone who wants a different path, or who can't make the day. Pick a sector, country or industry none of the others will visit, and bring back one lesson about the way in.", "questions": ["Where in the world have you seen a group grow from a handful of people to a movement? What happened in its first year?", "What sector is great at turning one-off visitors into regulars? Gyms, faith groups, fandoms, football terraces?", "What did you join and stay in, and what made you stay?"], "look": [["Movement growth", "https://www.google.com/search?q=how%20small%20movements%20grow%20first%20year%20organising%20lessons"], ["Fandom communities", "https://www.google.com/search?q=fandom%20community%20belonging%20how%20fans%20become%20organisers"]], "fork": {"q": "You can only bring back one thing.", "a": ["A practice", "Something we could try at the first dinner. Describe it exactly."], "b": ["A warning", "Something that killed a membership somewhere else. Describe how it happened."]}, "trap": "Watch for: lessons that only work at a scale we're not at. Small is good."}], "DOORS": [["agm", "The AGM", "Our first annual general meeting as a Community Benefit Society.", "Could the AGM feel like a gathering people want to come to, not a duty? What would make a first-timer bring a friend?"], ["mofs", "Making Ourselves From Scratch", "Reframed as four dinners with participatory workshop space between them.", "Who is each dinner for, and who personally invites them? What happens between dinner one and dinner two?"], ["tide", "Joseph Beam Day, 28 December", "The day membership opens, held in Joseph Beam's name: his birthday and the day he died.", "Is this a day for the people already with us, or the day someone first finds us? What would they leave holding?"], ["compass", "Ivor's Compass", "Offered to members as a sponsored gift.", "Does a gift make someone a member, or a recipient? What would turn receiving it into taking part?"], ["review", "BLKOUT Review", "Our magazine of new writing and commentary, in print and online, which we aim to publish quarterly.", "Could a byline be a way in? What would it take for a member to go from reader to writer, editor or commissioner?"]], "COMPLICATIONS": [[1, "The silence", "The 2027 launch email goes to everyone. Three people open it. One unsubscribes."], [2, "The gatekeeper", "A respected elder in the community says BLKOUT isn't for people like them. Others are listening."], [3, "The burnout", "Two board members step back in March. The work is still there."], [4, "The funder's spreadsheet", "A funder asks for member numbers by June, broken down by borough and age."], [5, "The wrong room", "The dinner venue is up two flights of stairs. Someone messages to say they can't come."], [6, "The group chat", "The WhatsApp group hits 200 people and turns into announcements nobody reads."], [7, "What do I get?", "A new member asks, kindly but directly: what do I actually get for being a member?"], [8, "The clique", "A first-timer says the dinner felt like everyone already knew each other."], [9, "The pile-on", "A post goes wrong online and people who've never been to anything are angry."], [10, "The fee", "You introduce a small contribution. Half the active members say nothing. You don't know why."], [11, "The rival", "A well-funded organisation launches a similar programme across town, with free food."], [12, "The quiet expert", "You discover a member has been running something brilliant for years. Nobody asked them."], [13, "The partner", "A health service wants to refer people to us. That means more members, and more expectations."], [14, "The data", "The CRM shows most members joined at one event in 2023 and haven't been seen since."], [15, "The young ones", "Under-25s turn up for the music and leave before the talking."], [16, "The other cities", "People in Manchester and Birmingham ask to start their own chapter."], [17, "The AGM", "The AGM needs 10% of members for quorum. You've never had that many in one place."], [18, "The ask back", "A member offers to host a dinner in their own flat. Is that safe? Is it ours?"], [19, "The press", "A journalist wants to profile BLKOUT. They want to speak to members, not the board."], [20, "Natural 20", "A member brings five friends to the third dinner, unprompted. What did we do right, and how do we do it again on purpose?"]], "PROVOS": [["The first follower", "Derek Sivers' three-minute talk on how a movement starts.", "Who is our first follower, and are we celebrating them?", "https://www.youtube.com/results?search_query=Derek%20Sivers%20how%20to%20start%20a%20movement"], ["The art of gathering", "Priya Parker on why most gatherings are forgettable.", "What is the specific purpose of each of our four dinners?", "https://www.youtube.com/results?search_query=Priya%20Parker%20art%20of%20gathering%20TED"], ["Tongues Untied", "Marlon Riggs, 1989, on Black gay men loving each other.", "What would we say now, in our own words, about why we gather?", "https://www.google.com/search?q=Marlon%20Riggs%20Tongues%20Untied"], ["Ballroom houses", "Any documentary or interview on the house system.", "How does chosen family make a way in? Could BLKOUT have houses?", "https://www.youtube.com/results?search_query=ballroom%20house%20system%20documentary%20house%20mother"], ["Start with why", "Simon Sinek on people joining belief before product.", "Does our invitation say why, or only what?", "https://www.youtube.com/results?search_query=Simon%20Sinek%20start%20with%20why%20TED"], ["Relational organising", "Any talk on organising through one-to-one conversations.", "How many one-to-ones has each of us had this year?", "https://www.youtube.com/results?search_query=relational%20organising%20one%20to%20one%20conversations"]]};
+const {ROLES,DOORS,COMPLICATIONS,PROVOS}=DATA;
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+let G={role:null,fork:null,roll:null};
+try{const g=JSON.parse(localStorage.getItem("wayin-web")||"null"); if(g) G=Object.assign(G,g);}catch(e){}
+function save(){try{localStorage.setItem("wayin-web",JSON.stringify(G));}catch(e){}}
+async function copyFrom(ta,statusEl){
+  try{await navigator.clipboard.writeText(ta.value);statusEl.textContent="Copied. Paste it into a new chat.";}
+  catch(e){const d=ta.closest("details"); if(d) d.open=true; ta.focus();ta.select();statusEl.textContent="Selected. Copy it with your keyboard.";}
+}
+
+$("doors").innerHTML=DOORS.map(([id,t,d,q])=>`<div class="door"><h3>${esc(t)}</h3><p>${esc(d)}</p><p class="ask">${esc(q)}</p></div>`).join("");
+$("provos").innerHTML=PROVOS.map(([t,d,q,u])=>`<div class="provo"><h3>${esc(t)}</h3><p>${esc(d)}</p><p class="ask">${esc(q)}</p><a href="${esc(u)}" target="_blank" rel="noopener">Find it ↗</a></div>`).join("");
+
+ROLES.forEach(r=>{
+  const b=document.createElement("button"); b.type="button"; b.className="role"; b.dataset.id=r.id; b.setAttribute("aria-pressed","false");
+  b.innerHTML=`<span class="rname">${esc(r.name)}</span><span class="rplace">${esc(r.place)}</span>`;
+  b.addEventListener("click",()=>selectRole(r.id,true)); $("roles").append(b);
+});
+function selectRole(id,scroll){
+  const r=ROLES.find(x=>x.id===id); if(!r) return;
+  if(G.role!==id){G.role=id;G.fork=null;save();}
+  $("roles").querySelectorAll(".role").forEach(b=>b.setAttribute("aria-pressed",b.dataset.id===id));
+  const qp=$("questPanel"); qp.hidden=false;
+  qp.innerHTML=`<div class="quest">
+    <div class="stack"><span class="eyebrow">${esc(r.name)} · ${esc(r.place)}</span><p>${esc(r.brief)}</p></div>
+    <div class="stack"><h4>Your discovery questions</h4><ol>${r.questions.map(q=>`<li>${esc(q)}</li>`).join("")}</ol></div>
+    <div class="stack"><h4>Places to start looking</h4><div class="chips">${r.look.map(([t,u])=>`<a class="chip" href="${esc(u)}" target="_blank" rel="noopener">${esc(t)} ↗</a>`).join("")}</div></div>
+    <div class="stack"><h4>The crossroads</h4><p>${esc(r.fork.q)}</p>
+      <div class="fork" role="group" aria-label="Choose a path"><button type="button" data-k="a">${esc(r.fork.a[0])}</button><button type="button" data-k="b">${esc(r.fork.b[0])}</button></div>
+      <p class="forkout" id="forkout" hidden></p></div>
+    ${r.pair===2?`<p class="pairnote">You hold this portfolio with one other board member. Agree to take different paths at the crossroads, so between you the board brings back both.</p>`:""}
+    <p class="trap">${esc(r.trap)}</p>
+    <p>Post what you find, where you found it, and what it means for BLKOUT in 2027, under your quest in the Chapter 2 thread in the hub.</p></div>`;
+  qp.querySelectorAll(".fork button").forEach(btn=>btn.addEventListener("click",()=>{
+    qp.querySelectorAll(".fork button").forEach(x=>x.setAttribute("aria-pressed",x===btn));
+    const o=$("forkout"); o.textContent=r.fork[btn.dataset.k][1]; o.hidden=false;
+    G.fork={q:r.fork.q,choice:r.fork[btn.dataset.k][0]}; save(); carry();
+  }));
+  if(G.fork){const k=r.fork.a[0]===G.fork.choice?"a":r.fork.b[0]===G.fork.choice?"b":null;
+    if(k){qp.querySelector(`.fork button[data-k="${k}"]`).setAttribute("aria-pressed","true");const o=$("forkout");o.textContent=r.fork[k][1];o.hidden=false;}}
+  carry();
+  if(scroll) qp.scrollIntoView({behavior:(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)?"auto":"smooth",block:"start"});
+}
+
+const d20=$("d20");
+$("rollBtn").addEventListener("click",()=>{
+  const n=1+Math.floor(Math.random()*20), c=COMPLICATIONS[n-1];
+  d20.classList.remove("rolling"); void d20.offsetWidth; d20.classList.add("rolling"); d20.textContent=n;
+  const box=$("complication"); box.hidden=false;
+  box.innerHTML=`<span class="tag">Roll ${n} · ${esc(c[1])}</span><p>${esc(c[2])}</p><p class="status">Post your roll and your move in the Chapter 3 thread.</p>`;
+  G.roll={n,title:c[1],text:c[2]}; save(); carry();
+});
+
+function carry(){
+  const r=ROLES.find(x=>x.id===G.role);
+  $("carry").innerHTML=`<div><b>Your quest</b>${r?esc(r.name+" · "+r.place):"Choose one in Chapter 2"}</div>
+    <div><b>Your crossroads</b>${G.fork?esc(G.fork.choice):"Not chosen yet"}</div>
+    <div><b>Your trouble</b>${G.roll?esc("Roll "+G.roll.n+" · "+G.roll.title):"Not rolled yet"}</div>`;
+}
+carry();
+if(G.role) selectRole(G.role,false);
+
+$("oomfForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const v=id=>$(id).value.trim(), i={name:v("o-name"),place:v("o-place"),work:v("o-work"),stake:v("o-stake")};
+  if(!i.work){$("oomfStatus").textContent="Add the cultural work you already do first.";return;}
+  const r=ROLES.find(x=>x.id===G.role);
+  const door=DOORS[[...(i.name||"x")].reduce((a,c)=>a+c.charCodeAt(0),0)%DOORS.length];
+  $("oomfPrompt").value=`You are writing for The OOMF ("Officially Missing Our Future"), BLKOUT UK's Afrofuturist cyberpunk story universe about Black queer community resisting systematic erasure.
+
+WORLD: The Signal is the ultimate evolution of unbridled capitalism: systemic, not a person. It erases histories, communities and spaces and calls it "progress". Cold blues, sterile whites, glitches. The Archive is an underground data vault beneath the Thames, where the Nexus Engine reveals powers people already had. The Echo is London's last true Black queer sanctuary, erased and then returned. Ivor "Cipher" Cummings is the mentor: measured, strategic, speaks about time, memory and visibility. Other OOMF members include Fluxion, NovaCode, Lumina, VibraBolt, EchoLink and SoulCircuit.
+
+RULES: The hero's power grows out of the real cultural work they already do. Ground it in a real UK place with a futuristic overlay. Culture, energy and connection are the weapons; community over individual heroism; joy matters as much as struggle. Poetic yet urgent, with vivid sensory detail. Never use any real person's name other than Ivor Cummings; if my answers name someone, refer to them by relationship only. Suitable for a general audience.
+
+THE HERO
+- Code name: ${i.name||"(invent one)"}
+- Real cultural work they already do: ${i.work}
+- What they want to protect: ${i.stake||"(not given)"}
+- Place they'd defend: ${i.place||"somewhere in South London"}
+- Their quest: ${r?r.name+", sent to "+r.place+": "+r.brief:"(none)"}
+- Their choice at the crossroads: ${G.fork?G.fork.q+" They chose: "+G.fork.choice:"(none)"}
+- The trouble they rolled (The Signal strikes back with this in Act 2): ${G.roll?G.roll.title+": "+G.roll.text:"(invent a complication about people drifting away)"}
+
+THEME: how a Black queer community organisation builds a membership people want to belong to. The Signal's weapon is isolation and drift. The hero's victory is a way in for others.
+
+Write, in plain text with these headings: ACT 1 · THE CALL (about 120 words); ACT 2 · THE AWAKENING (about 140 words); ACT 3 · THE MISSION (about 140 words); THE FIGHT CONTINUES IN YOUR WORLD (one or two sentences inviting the reader into this real BLKOUT doorway: ${door[1]}, ${door[2]}). Then an ENGINE BRIEF: title, hero, setting, mission type, a beat for each act, an ally from The OOMF, visual notes.`;
+  $("oomfOut").hidden=false; $("oomfStatus").textContent="Your prompt is ready below.";
+});
+$("oomfCopy").addEventListener("click",()=>copyFrom($("oomfPrompt"),$("oomfStatus")));
+$("copyTalk").addEventListener("click",()=>copyFrom($("talkPrompt"),$("talkStatus")));
+</script>
+</body>
+</html>
