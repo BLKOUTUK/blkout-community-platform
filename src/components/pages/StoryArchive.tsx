@@ -32,6 +32,23 @@ const StoryArchive: React.FC<StoryArchiveProps> = ({ initialSlug }) => {
     loadStories();
   }, [searchQuery, currentPage]);
 
+  // Every story as a plain link, grouped by year, under the paged grid: the grid is
+  // paged by JS, so without this list crawlers (and readers) can't reach most of the archive.
+  const [allStories, setAllStories] = useState<(Story & { source?: string })[]>([]);
+  useEffect(() => {
+    fetch('/api/stories?limit=500')
+      .then((r) => r.json())
+      .then((j) => setAllStories(j?.data?.stories || []))
+      .catch(() => setAllStories([]));
+  }, []);
+  const storiesByYear = allStories
+    .filter((st) => st.slug && st.publishedAt)
+    .reduce<Record<string, (Story & { source?: string })[]>>((acc, st) => {
+      const y = String(st.publishedAt).slice(0, 4);
+      (acc[y] = acc[y] || []).push(st);
+      return acc;
+    }, {});
+
   // Deep-link load: /stories/<slug> opens that article directly on mount.
   useEffect(() => {
     if (!initialSlug) return;
@@ -435,6 +452,36 @@ const StoryArchive: React.FC<StoryArchiveProps> = ({ initialSlug }) => {
               </div>
             )}
           </>
+        )}
+
+        {!searchQuery && Object.keys(storiesByYear).length > 0 && (
+          <section className="mt-20 border-t border-liberation-pride-purple-deep/30 pt-12">
+            <h2 className="text-2xl font-bold text-white mb-8">Every story, by year</h2>
+            {Object.keys(storiesByYear).sort((a, b) => b.localeCompare(a)).map((year) => (
+              <div key={year} className="mb-10">
+                <h3 className="text-liberation-sovereignty-gold font-bold text-lg mb-3">{year}</h3>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+                  {storiesByYear[year].map((st) =>
+                    st.source === 'voices' ? (
+                      <li key={st.id}>
+                        <a href={`https://voices.blkoutuk.com/articles/${st.slug}`} className="text-gray-300 hover:text-liberation-sovereignty-gold">{st.title}</a>
+                      </li>
+                    ) : (
+                      <li key={st.id}>
+                        <a
+                          href={`/stories/${st.slug}`}
+                          onClick={(e) => { e.preventDefault(); loadFullStory(st.id); window.scrollTo(0, 0); }}
+                          className="text-gray-300 hover:text-liberation-sovereignty-gold"
+                        >
+                          {st.title}
+                        </a>
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+            ))}
+          </section>
         )}
       </main>
     </div>

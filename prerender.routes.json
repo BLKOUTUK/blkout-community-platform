@@ -49,10 +49,84 @@
               "Black British history"
             ],
             "foundingDate": "2025-11-24",
-            "areaServed": {
-              "@type": "Country",
-              "name": "United Kingdom"
-            },
+            "areaServed": [
+              {
+                "@type": "Country",
+                "name": "United Kingdom"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Brent",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Brent", "url": "https://events.blkoutuk.com/brent/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Camden",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Camden", "url": "https://events.blkoutuk.com/camden/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Croydon",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Croydon", "url": "https://events.blkoutuk.com/croydon/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Enfield",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Enfield", "url": "https://events.blkoutuk.com/enfield/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Hackney",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Hackney", "url": "https://events.blkoutuk.com/hackney/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Haringey",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Haringey", "url": "https://events.blkoutuk.com/haringey/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Lambeth",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Lambeth", "url": "https://events.blkoutuk.com/lambeth/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Lewisham",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Lewisham", "url": "https://events.blkoutuk.com/lewisham/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Newham",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Newham", "url": "https://events.blkoutuk.com/newham/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Southwark",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Southwark", "url": "https://events.blkoutuk.com/southwark/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Waltham Forest",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Waltham Forest", "url": "https://events.blkoutuk.com/waltham-forest/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "City of Westminster",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Westminster", "url": "https://events.blkoutuk.com/westminster/" }
+              }
+            ],
             "keywords": "Black gay men UK, Black queer men, Black bi men UK, Black trans men UK, Black LGBTQ+ community, liberation collective, community benefit society, co-operative",
             "additionalProperty": [
               {
@@ -142,10 +216,84 @@
               "Black British history"
             ],
             "foundingDate": "2025-11-24",
-            "areaServed": {
-              "@type": "Country",
-              "name": "United Kingdom"
-            },
+            "areaServed": [
+              {
+                "@type": "Country",
+                "name": "United Kingdom"
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Brent",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Brent", "url": "https://events.blkoutuk.com/brent/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Camden",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Camden", "url": "https://events.blkoutuk.com/camden/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Croydon",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Croydon", "url": "https://events.blkoutuk.com/croydon/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Enfield",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Enfield", "url": "https://events.blkoutuk.com/enfield/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Hackney",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Hackney", "url": "https://events.blkoutuk.com/hackney/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Haringey",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Haringey", "url": "https://events.blkoutuk.com/haringey/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Lambeth",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Lambeth", "url": "https://events.blkoutuk.com/lambeth/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Lewisham",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Lewisham", "url": "https://events.blkoutuk.com/lewisham/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Newham",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Newham", "url": "https://events.blkoutuk.com/newham/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Southwark",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Southwark", "url": "https://events.blkoutuk.com/southwark/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Waltham Forest",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Waltham Forest", "url": "https://events.blkoutuk.com/waltham-forest/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "City of Westminster",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Westminster", "url": "https://events.blkoutuk.com/westminster/" }
+              }
+            ],
             "keywords": "Black gay men UK, Black queer men, Black bi men UK, Black trans men UK, Black LGBTQ+ community, liberation collective, community benefit society, co-operative",
             "additionalProperty": [
               {

@@ -15,6 +15,17 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Security headers (SEO plan T3, 11 Oct 2026). HSTS without includeSubDomains: the subdomains are
+// separate apps and each should opt in on its own. Nothing on the estate frames blkoutuk.com.
+app.disable('x-powered-by');
+app.use((_req, res, next) => {
+  res.setHeader('Strict-Transport-Security', 'max-age=31536000');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Content-Security-Policy', "frame-ancestors 'self'");
+  next();
+});
+
 // Canonical host (14 Sep 2026): www and the Coolify sslip hostname answer this app too.
 // Page requests on an alias 301 to blkoutuk.com; /api stays reachable on every host.
 // GET/HEAD only — a 301 would turn a POST into a GET.
@@ -248,7 +259,10 @@ app.get('/stories/:slug', async (req, res, next) => {
       Promise.resolve(storiesHandler({ method: 'GET', query: { slug, limit: '1' }, headers: {} }, fakeRes)).catch(reject);
     });
     const story = payload && payload.body && payload.body.data && Array.isArray(payload.body.data.stories) ? payload.body.data.stories.find((st) => st.slug === slug) : null;
-    if (!story) return next();
+    if (!story) {
+      if (!payload || payload.status !== 200) req.storyLookupFailed = true; // API error, not a missing story
+      return next();
+    }
     const esc = (v) => String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const strip = (v) => String(v ?? '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
     const description = strip(story.excerpt || story.content).slice(0, 300);
@@ -277,6 +291,7 @@ app.get('/stories/:slug', async (req, res, next) => {
     res.send(html);
   } catch (error) {
     console.error('STORY HEAD INJECTION FAILED — serving bare shell:', error);
+    req.storyLookupFailed = true; // a lookup error is not a missing story: keep the 200
     next();
   }
 });
@@ -286,6 +301,10 @@ app.get('/stories/:slug', async (req, res, next) => {
 // otherwise the shell — never another route's prerendered content.
 const fs = require('fs');
 const DIST = path.join(__dirname, 'dist');
+// Paths the SPA renders as pages — keep in step with validTabs in src/App.tsx getInitialTabFromURL.
+// Anything else still gets the friendly shell, but with a real 404 so search engines don't index
+// made-up addresses (SEO plan T2, 11 Oct 2026). Unknown /stories/<slug> fall through to here too.
+const SPA_ROUTES = new Set(['liberation', 'ten-years', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'shop/membership', 'shop/apparel', 'shop/apparel/blkout-proud', 'shop/apparel/brother-to-brother', 'shop/apparel/icons', 'shop/drops/compass-journal', 'board', 'campaigns', 'compliance', 'gbp-paris']);
 app.use((req, res, next) => {
   // Skip if already handled by API routes
   if (req.path.startsWith('/api/')) {
@@ -296,7 +315,10 @@ app.use((req, res, next) => {
   if (clean && prerendered.startsWith(DIST + path.sep) && !path.extname(clean) && fs.existsSync(prerendered)) {
     return res.sendFile(prerendered);
   }
-  res.sendFile(path.join(DIST, fs.existsSync(path.join(DIST, 'shell.html')) ? 'shell.html' : 'index.html'));
+  const route = clean.replace(/^\/+/, '');
+  const known = route === '' || SPA_ROUTES.has(route) || req.storyLookupFailed;
+  if (!known && path.extname(clean)) return res.status(404).send('Not found');
+  res.status(known ? 200 : 404).sendFile(path.join(DIST, fs.existsSync(path.join(DIST, 'shell.html')) ? 'shell.html' : 'index.html'));
 });
 
 // Error handling middleware

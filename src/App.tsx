@@ -606,7 +606,7 @@ export default function App() {
           </main>
 
           {/* Footer */}
-          <Footer />
+          <Footer onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} currentTab={activeTab} />
 
           {/* IVOR Assistant Overlay */}
           {showIVOR && (

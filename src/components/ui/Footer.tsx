@@ -16,6 +16,8 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
     { id: 'discover', label: 'Discover', icon: ExternalLink, type: 'link', href: 'https://comms.blkoutuk.com/discover' },
     { id: 'voices', label: 'Voices', icon: ExternalLink, type: 'link', href: 'https://voices.blkoutuk.com' },
     { id: 'governance', label: 'Governance', icon: Vote, type: 'button' },
+    { id: 'governance-proposals', label: 'Proposals', icon: Vote, type: 'button' },
+    { id: 'ten-years', label: 'Ten Years', icon: Heart, type: 'button' },
     { id: 'stories', label: 'Archive', icon: Calendar, type: 'button' }
   ];
 
@@ -37,9 +39,11 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
                 <span className="text-sm font-medium">{link.label}</span>
               </a>
             ) : (
-              <button
+              // A real link (crawlers follow href; buttons are invisible to them), navigated in-app.
+              <a
                 key={link.id}
-                onClick={() => onNavigate(link.id)}
+                href={link.id === 'liberation' ? '/' : `/${link.id}`}
+                onClick={(e) => { e.preventDefault(); onNavigate(link.id); }}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 ${
                   currentTab === link.id
                     ? 'bg-liberation-sovereignty-gold text-black font-bold'
@@ -48,7 +52,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
               >
                 <link.icon className="h-4 w-4" />
                 <span className="text-sm font-medium">{link.label}</span>
-              </button>
+              </a>
             )
           )}
         </div>
