@@ -194,6 +194,45 @@ app.use((req, res, next) => {
 });
 
 // Serve static files from Vite build
+// /stories: the archive grid is paged by JS and the build-time prerender has no API, so the raw
+// HTML carried no story links. Insert the same 'Every story, by year' list StoryArchive renders
+// (React replaces it on mount) from the stories API, cached for an hour. SEO plan T1, 11 Oct 2026.
+let storyListCache = { at: 0, stories: [] };
+async function allStories() {
+  if (Date.now() - storyListCache.at < 60 * 60 * 1000) return storyListCache.stories;
+  const { default: storiesHandler } = await import('./api/stories.ts');
+  const payload = await new Promise((resolve, reject) => {
+    const fakeRes = { _status: 200, setHeader() { return this; }, status(c) { this._status = c; return this; }, json(body) { resolve(body); }, end() { resolve(null); } };
+    Promise.resolve(storiesHandler({ method: 'GET', query: { limit: '500' }, headers: {} }, fakeRes)).catch(reject);
+  });
+  const stories = payload && payload.data && Array.isArray(payload.data.stories) ? payload.data.stories : [];
+  if (stories.length) storyListCache = { at: Date.now(), stories };
+  return stories;
+}
+app.get(['/stories', '/stories/'], async (_req, res, next) => {
+  try {
+    const file = path.join(__dirname, 'dist', 'stories', 'index.html');
+    if (!require('fs').existsSync(file)) return next();
+    let html = require('fs').readFileSync(file, 'utf8');
+    const anchor = '<footer class="bg-liberation-black-power';
+    const stories = (await allStories()).filter((st) => st.slug && st.publishedAt);
+    if (!stories.length || html.indexOf(anchor) < 0) return next();
+    const esc = (v) => String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const byYear = {};
+    for (const st of stories) (byYear[String(st.publishedAt).slice(0, 4)] ||= []).push(st);
+    const section = '<section class="container mx-auto px-4 mt-20 pt-12"><h2 class="text-2xl font-bold text-white mb-8">Every story, by year</h2>' +
+      Object.keys(byYear).sort((a, b) => b.localeCompare(a)).map((y) => `<div class="mb-10"><h3 class="text-lg font-bold mb-3">${y}</h3><ul>` +
+        byYear[y].map((st) => `<li><a href="${st.source === 'voices' ? `https://voices.blkoutuk.com/articles/${esc(st.slug)}` : `/stories/${esc(st.slug)}`}">${esc(st.title)}</a></li>`).join('') +
+        '</ul></div>').join('') + '</section>';
+    html = html.replace(anchor, section + anchor);
+    res.setHeader('Cache-Control', 'public, max-age=0');
+    res.send(html);
+  } catch (error) {
+    console.error('STORIES LIST INJECTION FAILED — serving the prerendered page:', error);
+    next();
+  }
+});
+
 app.use(express.static(path.join(__dirname, 'dist'), { redirect: false }));
 
 // SPA fallback - serve index.html for all non-API routes
