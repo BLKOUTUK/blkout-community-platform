@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { imageSize } from '@/lib/imageSize';
 
 interface ApparelRangePageProps {
   range: 'blkout-proud' | 'brother-to-brother' | 'icons';
@@ -103,6 +104,7 @@ function HeroCarousel({ images, name }: { images: string[]; name: string }) {
         <img
           key={src}
           src={src}
+          {...imageSize(src)}
           alt={`${name} campaign, image ${n + 1} of ${images.length}`}
           loading={n === 0 ? 'eager' : 'lazy'}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
@@ -154,7 +156,7 @@ export default function ApparelRangePage({ range, onNavigate }: ApparelRangePage
             className="inline-flex items-center gap-3"
             aria-label="Apparel ranges"
           >
-            <img src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-10 w-auto block" />
+            <img width={300} height={300} src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-10 w-auto block" />
             <span className="text-liberation-sovereignty-gold text-[0.7rem] tracking-[0.25em]">
               ← back to apparel
             </span>
@@ -196,6 +198,7 @@ export default function ApparelRangePage({ range, onNavigate }: ApparelRangePage
           ) : c.heroPoster ? (
             <img
               src={c.heroPoster}
+              {...imageSize(c.heroPoster)}
               alt={`${c.name} range hero`}
               className="w-full h-auto block"
             />
@@ -301,7 +304,7 @@ export default function ApparelRangePage({ range, onNavigate }: ApparelRangePage
         {/* FOOT */}
         <footer className="border-t border-liberation-neutral-800 py-8 text-liberation-neutral-500 text-sm flex justify-between flex-wrap items-center gap-4">
           <span className="inline-flex items-center gap-4">
-            <img src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-8 w-auto opacity-60" />
+            <img width={300} height={300} src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-8 w-auto opacity-60" />
             BLKOUT CBS · Black queer men in the UK building infrastructure we own.
           </span>
           <span className="font-mono">blkoutuk.com</span>

@@ -27,7 +27,7 @@ export function BlkoutHubWidget() {
           <div className="flex items-center gap-4">
             {/* BLKOUTHUB Logo */}
             <div className="flex justify-center">
-              <img
+              <img width={1080} height={1080}
                 src="/Branding and logos/blkouthub_logo.png"
                 alt="BLKOUTHUB"
                 className="h-16 w-auto object-contain"

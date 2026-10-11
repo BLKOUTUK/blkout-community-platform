@@ -13,6 +13,8 @@
  * tokens are undefined in the preset and emit no CSS at all, failing silently.
  */
 
+import { imageSize } from '@/lib/imageSize';
+
 const GOLD = '#FFD700';
 const GOLD_DEEP = '#D4AF37';
 
@@ -192,7 +194,7 @@ function Print({
       className={`group transition-transform duration-300 hover:!rotate-0 hover:z-40 ${className}`}
       style={{ ...PRINT, transform: `rotate(${tilt}deg)`, ...style }}
     >
-      <img src={src} alt={alt} loading="lazy" className="block w-full object-cover" />
+      <img src={src} {...imageSize(src)} alt={alt} loading="lazy" className="block w-full object-cover" />
       {caption && (
         <figcaption
           className="mt-2 text-[10.5px] leading-snug"

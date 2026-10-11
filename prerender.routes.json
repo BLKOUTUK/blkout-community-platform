@@ -192,7 +192,7 @@
     {
       "path": "/about",
       "title": "About BLKOUT — a Community Benefit Society for Black queer men",
-      "description": "BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK.",
+      "description": "Who BLKOUT is and how it works: a Community Benefit Society for and by Black queer men, our theory of change, and the board our members elect.",
       "jsonld": {
         "@context": "https://schema.org",
         "@graph": [
@@ -234,7 +234,12 @@
               "publisher": {
                 "@id": "https://blkoutuk.com/#org"
               },
-              "description": "BLKOUT's AI community assistant for Black queer men, operating under BLKOUT's published AI policy."
+              "description": "BLKOUT's AI community assistant for Black queer men, operating under BLKOUT's published AI policy.",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "GBP"
+              }
             }
           }
         ]
@@ -419,51 +424,6 @@
             "@id": "https://blkoutuk.com/governance-proposals#page",
             "url": "https://blkoutuk.com/governance-proposals",
             "name": "Proposals — one member, one vote",
-            "isPartOf": {
-              "@id": "https://blkoutuk.com/#site"
-            },
-            "about": {
-              "@id": "https://blkoutuk.com/#org"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "path": "/board",
-      "title": "The BLKOUT board",
-      "description": "The directors of BLKOUT CBS, how the board is structured in pairs, and how it answers to members.",
-      "jsonld": {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "WebPage",
-            "@id": "https://blkoutuk.com/board#page",
-            "url": "https://blkoutuk.com/board",
-            "name": "The BLKOUT board",
-            "isPartOf": {
-              "@id": "https://blkoutuk.com/#site"
-            },
-            "about": {
-              "@id": "https://blkoutuk.com/#org"
-            },
-            "description": "The directors of BLKOUT CBS, how the board is structured in pairs, and how it answers to members."
-          }
-        ]
-      }
-    },
-    {
-      "path": "/platform",
-      "title": "The BLKOUT platform — every door in one place",
-      "description": "Everything BLKOUT runs for Black queer men: the events surface and borough doors, Voices, News, the Hub, IVOR and the shop.",
-      "jsonld": {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "CollectionPage",
-            "@id": "https://blkoutuk.com/platform#page",
-            "url": "https://blkoutuk.com/platform",
-            "name": "The BLKOUT platform",
             "isPartOf": {
               "@id": "https://blkoutuk.com/#site"
             },

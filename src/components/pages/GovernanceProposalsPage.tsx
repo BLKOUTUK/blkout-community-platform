@@ -194,7 +194,7 @@ export default function GovernanceProposalsPage() {
                 </div>
 
                 {/* Title & Category */}
-                <h3 className="text-2xl font-bold mb-2 text-white">{proposal.title}</h3>
+                <h2 className="text-2xl font-bold mb-2 text-white">{proposal.title}</h2>
                 <div className="text-yellow-500 text-sm mb-4">{proposal.category}</div>
 
                 {/* Description */}

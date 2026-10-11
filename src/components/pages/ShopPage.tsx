@@ -174,7 +174,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
         {/* Top crumb with logo */}
         <div className="pt-6 flex justify-between items-center text-liberation-neutral-500 text-xs tracking-[0.2em] uppercase font-bold">
           <a href="/" className="inline-flex items-center gap-3" aria-label="BLKOUT home">
-            <img src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-10 w-auto block" />
+            <img width={300} height={300} src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-10 w-auto block" />
             <span className="text-liberation-pride-orange text-[0.7rem] tracking-[0.25em]">
               ← back to blkoutuk.com
             </span>
@@ -259,7 +259,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
               href="/shop/drops/compass-journal"
               className="border border-liberation-neutral-800 border-t-4 border-t-liberation-pride-orange p-8 flex flex-col min-h-[22rem] transition-colors hover:border-liberation-pride-orange hover:border-t-liberation-pride-orange"
             >
-              <img
+              <img width={1080} height={1350}
                 src="/images/drops/compass-journal-card.jpg"
                 alt="Ivor's Compass print journal"
                 className="w-full h-auto block mb-6"
@@ -431,7 +431,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
         {/* FOOT */}
         <footer className="border-t border-liberation-neutral-800 py-8 text-liberation-neutral-500 text-sm flex justify-between flex-wrap items-center gap-4">
           <span className="inline-flex items-center gap-4">
-            <img src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-8 w-auto opacity-60" />
+            <img width={300} height={300} src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-8 w-auto opacity-60" />
             BLKOUT CBS · Black queer men in the UK building infrastructure we own.
           </span>
           <span className="font-mono">blkoutuk.com</span>

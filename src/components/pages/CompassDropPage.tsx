@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { imageSize } from '@/lib/imageSize';
 
 interface CompassDropPageProps {
   onNavigate?: (tab: string) => void;
@@ -93,7 +94,7 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
         {/* Top crumb */}
         <div className="pt-6 flex justify-between items-center text-liberation-neutral-500 text-xs tracking-[0.2em] uppercase font-bold">
           <a href="/shop" onClick={go('shop')} className="inline-flex items-center gap-3" aria-label="BLKOUT Shop">
-            <img src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-10 w-auto block" />
+            <img width={300} height={300} src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-10 w-auto block" />
             <span className="text-liberation-sovereignty-gold text-[0.7rem] tracking-[0.25em]">
               ← back to /shop
             </span>
@@ -132,7 +133,7 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
               <source src={HERO_VIDEO} type="video/mp4" />
             </video>
           ) : HERO_POSTER ? (
-            <img src={HERO_POSTER} alt="Ivor's Compass print journal" className="w-full h-auto block" />
+            <img src={HERO_POSTER} {...imageSize(HERO_POSTER)} alt="Ivor's Compass print journal" className="w-full h-auto block" />
           ) : (
             <div
               className="border border-dashed border-liberation-neutral-800 min-h-[24rem] md:min-h-[32rem] grid place-items-center text-liberation-neutral-700 text-sm tracking-[0.2em] uppercase"
@@ -179,6 +180,7 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
               <img
                 key={src}
                 src={src}
+                {...imageSize(src)}
                 alt={`Compass journal spread ${i + 1}`}
                 className="w-full h-auto block border border-liberation-neutral-800"
                 loading="lazy"
@@ -360,7 +362,7 @@ export default function CompassDropPage({ onNavigate }: CompassDropPageProps) {
         {/* FOOT */}
         <footer className="border-t border-liberation-neutral-800 py-8 text-liberation-neutral-500 text-sm flex justify-between flex-wrap items-center gap-4">
           <span className="inline-flex items-center gap-4">
-            <img src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-8 w-auto opacity-60" />
+            <img width={300} height={300} src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-8 w-auto opacity-60" />
             BLKOUT CBS · Black queer men in the UK building infrastructure we own.
           </span>
           <span className="font-mono">blkoutuk.com</span>

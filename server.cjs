@@ -170,6 +170,11 @@ app.use((req, res, next) => {
   if (req.path === '/scratch' || req.path === '/scratch/') {
     return res.redirect(302, 'https://commons.blkoutuk.com/scratch.html');
   }
+  // /platform was a client-side bounce to comms /discover, so the prerender saved a copy of that
+  // page here (no sharing tags, duplicate content). The directory lives on comms (11 Oct 2026).
+  if (req.path === '/platform' || req.path === '/platform/') {
+    return res.redirect(301, 'https://comms.blkoutuk.com/discover');
+  }
   // Newsletter signup. Own the shared link so the list host stays swappable.
   if (['/subscribe', '/subscribe/', '/newsletter', '/newsletter/'].includes(req.path)) {
     return res.redirect(302, 'https://sendfox.com/blkoutuk');

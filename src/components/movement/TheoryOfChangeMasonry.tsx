@@ -936,13 +936,13 @@ export default function TheoryOfChangeMasonry() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
               <motion.a href="https://crm.blkoutuk.cloud/join" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.1 }} className="bg-gradient-to-br from-amber-600 to-amber-500 p-8 hover:scale-105 transition-all">
-                <div className="text-black"><img src="/Branding and logos/blkout_logo_roundel_colour.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Stay in Touch</h3><p className="text-lg font-semibold mb-4">Newsletter</p><p className="text-sm opacity-80">Weekly updates from the collective</p></div>
+                <div className="text-black"><img width={1080} height={1350} src="/Branding and logos/blkout_logo_roundel_colour.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Stay in Touch</h3><p className="text-lg font-semibold mb-4">Newsletter</p><p className="text-sm opacity-80">Weekly updates from the collective</p></div>
               </motion.a>
               <motion.a href="https://blkouthub.com" target="_blank" rel="noopener noreferrer" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.2 }} className="bg-gradient-to-br from-fuchsia-600 to-pink-600 p-8 hover:scale-105 transition-all">
-                <div className="text-white"><img src="/Branding and logos/blkouthub_logo.png" alt="BLKOUTHUB" className="w-auto h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Get Connected</h3><p className="text-lg font-semibold mb-4">Join the BLKOUTHUB</p><p className="text-sm opacity-90">Active membership. Real gatherings.</p></div>
+                <div className="text-white"><img width={1080} height={1080} src="/Branding and logos/blkouthub_logo.png" alt="BLKOUTHUB" className="w-auto h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Get Connected</h3><p className="text-lg font-semibold mb-4">Join the BLKOUTHUB</p><p className="text-sm opacity-90">Active membership. Real gatherings.</p></div>
               </motion.a>
               <motion.a href="/platform" whileInView={{ opacity: 1, y: 0 }} initial={{ opacity: 0, y: 50 }} transition={{ delay: 0.3 }} className="bg-gradient-to-br from-purple-600 to-indigo-600 p-8 hover:scale-105 transition-all">
-                <div className="text-white"><img src="/Branding and logos/blkoutlogo_wht_transparent.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Learn</h3><p className="text-lg font-semibold mb-4">Explore Resources</p><p className="text-sm opacity-90">280+ articles, Events, AIvor</p></div>
+                <div className="text-white"><img width={300} height={300} src="/Branding and logos/blkoutlogo_wht_transparent.png" alt="BLKOUT" className="w-16 h-16 mb-4 object-contain" /><h3 className="text-3xl font-signature font-black uppercase mb-3">Learn</h3><p className="text-lg font-semibold mb-4">Explore Resources</p><p className="text-sm opacity-90">280+ articles, Events, AIvor</p></div>
               </motion.a>
             </div>
           </div>
@@ -955,7 +955,7 @@ export default function TheoryOfChangeMasonry() {
 
             {/* OOMF Crew Image */}
             <div className="mb-12">
-              <img src="/images/theory-of-change/oomf-heroes-promo.jpg" alt="We’re the heroes we’ve been waiting for — now put yourself in the story. BLKOUT board members reimagined as OOMF comic heroes." className="max-w-3xl w-full mx-auto rounded-2xl" />
+              <img width={1400} height={1275} src="/images/theory-of-change/oomf-heroes-promo.jpg" alt="We’re the heroes we’ve been waiting for — now put yourself in the story. BLKOUT board members reimagined as OOMF comic heroes." className="max-w-3xl w-full mx-auto rounded-2xl" />
             </div>
 
 

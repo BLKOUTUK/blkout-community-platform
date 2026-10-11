@@ -506,7 +506,7 @@ export default function App() {
               <div className="flex items-center justify-between h-16 md:h-18">
                 {/* Logo, Brain icon and Brand */}
                 <div className="flex items-center space-x-3">
-                  <img
+                  <img width={1080} height={1350}
                     src="/blkout-logo.png"
                     alt="BLKOUT"
                     className="h-10 md:h-12 w-auto cursor-pointer hover:scale-105 transition-transform drop-shadow-lg"

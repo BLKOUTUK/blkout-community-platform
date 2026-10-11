@@ -15,7 +15,7 @@ const GovernancePage: React.FC = () => {
             className="text-center"
           >
             <div className="flex justify-center mb-8">
-              <img
+              <img width={1080} height={1350}
                 src="/Branding and logos/blkout_logo_roundel_colour.png"
                 alt="BLKOUT"
                 className="h-24 md:h-32 lg:h-40 w-auto mx-auto filter drop-shadow-2xl"
@@ -285,7 +285,7 @@ const GovernancePage: React.FC = () => {
 
           {/* Values Image */}
           <div className="flex justify-center mb-12">
-            <img
+            <img width={1280} height={1600}
               src="/Branding and logos/blkoutvalues.png"
               alt="BLKOUT Values"
               className="max-w-full h-auto max-w-md shadow-lg border-2 border-[#d4af37]/30"
@@ -379,7 +379,7 @@ const GovernancePage: React.FC = () => {
           </p>
 
           <div className="flex justify-center mb-12">
-            <img
+            <img width={2160} height={2160}
               src="/Branding and logos/REALNESS UNLEASHED Infographic Graph.png"
               alt="BLKOUT Realness Unleashed Development Roadmap"
               className="max-w-full h-auto shadow-2xl border-2 border-[#d4af37]/30"

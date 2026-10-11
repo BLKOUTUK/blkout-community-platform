@@ -92,7 +92,7 @@ export default function GbpParisInterestPage({ onNavigate }: GbpParisInterestPag
             className="inline-flex items-center gap-3"
             aria-label="BLKOUT"
           >
-            <img
+            <img width={300} height={300}
               src="/Branding and logos/blkoutlogo_wht_transparent.png"
               alt="BLKOUT"
               className="h-10 w-auto block"
@@ -294,7 +294,7 @@ export default function GbpParisInterestPage({ onNavigate }: GbpParisInterestPag
 
         <footer className="border-t border-liberation-neutral-800 py-8 text-liberation-neutral-500 text-sm flex justify-between flex-wrap items-center gap-4">
           <span className="inline-flex items-center gap-4">
-            <img src="/Branding and logos/blkoutlogo_wht_transparent.png" alt="BLKOUT" className="h-8 w-auto opacity-60" />
+            <img width={300} height={300} src="/Branding and logos/blkoutlogo_wht_transparent.png" alt="BLKOUT" className="h-8 w-auto opacity-60" />
             BLKOUT CBS · Black queer men in the UK building infrastructure we own.
           </span>
           <span className="font-mono">blkoutuk.com</span>

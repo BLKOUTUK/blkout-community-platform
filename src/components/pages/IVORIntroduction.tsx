@@ -123,7 +123,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
             <div className="text-center">
               {/* BLKOUT Logo */}
               <div className="flex justify-center mb-4">
-                <img
+                <img width={300} height={300}
                   src="/Branding and logos/blkoutlogo_wht_transparent.png"
                   alt="BLKOUT"
                   className="h-16 md:h-20 w-auto mx-auto filter drop-shadow-2xl"
@@ -219,7 +219,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
             {/* Right: Introduction Content */}
             <div className="order-1 lg:order-2">
               <div className="flex items-center space-x-4 mb-6">
-                <img
+                <img width={1000} height={1000}
                   src="/Branding and logos/ivor.png"
                   alt="AIvor Logo"
                   className="h-16 w-16 rounded-full border-2 border-liberation-aivor"
@@ -313,7 +313,7 @@ const IVORIntroduction: React.FC<IVORIntroductionProps> = ({ onStartChat, onJoin
                 className="bg-liberation-black-power border border-liberation-aivor/30 rounded-sharp p-6 hover:border-liberation-aivor transition-all duration-300"
               >
                 <div className="w-12 h-12 bg-liberation-aivor/20 rounded-sharp flex items-center justify-center mb-4">
-                  <img src="/blkout-logo.png" alt="BLKOUT Logo" className="h-6 w-6 rounded-full" />
+                  <img width={1080} height={1350} src="/blkout-logo.png" alt="BLKOUT Logo" className="h-6 w-6 rounded-full" />
                 </div>
                 <h3 className="text-lg font-bold text-white mb-3">{feature.title}</h3>
                 <p className="text-gray-400 leading-relaxed">{feature.description}</p>

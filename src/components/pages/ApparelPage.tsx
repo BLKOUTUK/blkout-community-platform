@@ -1,3 +1,4 @@
+import { imageSize } from '@/lib/imageSize';
 interface ApparelPageProps {
   onNavigate?: (tab: string) => void;
 }
@@ -22,6 +23,7 @@ function RangeCard({ num, name, brief, body, href, poster, onClick }: RangeCardP
       {poster ? (
         <img
           src={poster}
+          {...imageSize(poster)}
           alt={`${name} range`}
           className="w-full h-auto block mb-6"
         />
@@ -69,7 +71,7 @@ export default function ApparelPage({ onNavigate }: ApparelPageProps) {
         {/* Top crumb with logo */}
         <div className="pt-6 flex justify-between items-center text-liberation-neutral-500 text-xs tracking-[0.2em] uppercase font-bold">
           <a href="/shop" onClick={go('shop')} className="inline-flex items-center gap-3" aria-label="BLKOUT Shop">
-            <img src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-10 w-auto block" />
+            <img width={300} height={300} src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-10 w-auto block" />
             <span className="text-liberation-sovereignty-gold text-[0.7rem] tracking-[0.25em]">
               ← back to /shop
             </span>
@@ -160,7 +162,7 @@ export default function ApparelPage({ onNavigate }: ApparelPageProps) {
         {/* FOOT */}
         <footer className="border-t border-liberation-neutral-800 py-8 text-liberation-neutral-500 text-sm flex justify-between flex-wrap items-center gap-4">
           <span className="inline-flex items-center gap-4">
-            <img src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-8 w-auto opacity-60" />
+            <img width={300} height={300} src="/images/blkout-logo-white.png" alt="BLKOUT" className="h-8 w-auto opacity-60" />
             BLKOUT CBS · Black queer men in the UK building infrastructure we own.
           </span>
           <span className="font-mono">blkoutuk.com</span>

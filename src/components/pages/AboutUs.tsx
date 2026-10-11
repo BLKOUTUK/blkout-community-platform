@@ -176,7 +176,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
               <div className="bg-gray-800 p-6 rounded-xl border-l-4 border-liberation-sovereignty-gold">
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="flex-shrink-0">
-                    <img
+                    <img width={750} height={750}
                       src="/Branding and logos/Robwebsite.png"
                       alt="Dr Rob Berkeley - Site Editor & Creator"
                       className="w-32 h-32 md:w-40 md:h-40 rounded-lg object-cover shadow-lg"
@@ -626,7 +626,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                 <h5 className="font-bold text-liberation-sovereignty-gold mb-4 text-xl">About the Editor</h5>
                 <div className="flex flex-col md:flex-row items-start gap-6">
                   <div className="flex-shrink-0">
-                    <img
+                    <img width={750} height={750}
                       src="/Branding and logos/Robwebsite.png"
                       alt="Dr Rob Berkeley - Site Editor & Creator"
                       className="w-32 h-32 md:w-40 md:h-40 rounded-lg object-cover shadow-lg border-2 border-liberation-sovereignty-gold"
@@ -661,7 +661,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
                 <h5 className="font-bold text-liberation-sovereignty-gold mb-4">Download Official Logo</h5>
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-20 h-20 bg-black rounded-lg border-2 border-gray-700 p-2 flex items-center justify-center">
-                    <img
+                    <img width={1024} height={1024}
                       src="/brand/BLKOUT_Logo_1024px.png"
                       alt="BLKOUT Logo"
                       className="w-full h-full object-contain"

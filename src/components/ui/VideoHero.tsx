@@ -165,6 +165,8 @@ const VideoHero: React.FC<VideoHeroProps> = ({
             >
               <img
                 src={logoSrc}
+                width={300}
+                height={300}
                 alt="BLKOUT Logo"
                 className="h-24 md:h-32 lg:h-40 w-auto mx-auto filter drop-shadow-2xl"
                 loading="eager"

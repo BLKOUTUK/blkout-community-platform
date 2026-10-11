@@ -1137,7 +1137,7 @@ export default function MovementSplit() {
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
-              <h4 className="text-white font-bold mb-4 uppercase">Platform</h4>
+              <h3 className="text-white font-bold mb-4 uppercase">Platform</h3>
               <ul className="space-y-2 text-purple-300 text-sm">
                 <li>
                   <a href="https://events.blkoutuk.com" className="hover:text-white">
@@ -1157,7 +1157,7 @@ export default function MovementSplit() {
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-bold mb-4 uppercase">Community</h4>
+              <h3 className="text-white font-bold mb-4 uppercase">Community</h3>
               <ul className="space-y-2 text-purple-300 text-sm">
                 <li>
                   <a href="https://blkouthub.com" className="hover:text-white">
@@ -1177,7 +1177,7 @@ export default function MovementSplit() {
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-bold mb-4 uppercase">Connect</h4>
+              <h3 className="text-white font-bold mb-4 uppercase">Connect</h3>
               <ul className="space-y-2 text-purple-300 text-sm">
                 <li>
                   <a href="https://instagram.com/blkoutuk" className="hover:text-white">
@@ -1192,7 +1192,7 @@ export default function MovementSplit() {
               </ul>
             </div>
             <div>
-              <h4 className="text-white font-bold mb-4 uppercase">BLKOUT UK</h4>
+              <h3 className="text-white font-bold mb-4 uppercase">BLKOUT UK</h3>
               <p className="text-purple-400 text-sm">Community-owned liberation platform</p>
               <p className="text-purple-600 text-xs mt-4">© 2026 BLKOUT UK Cooperative</p>
             </div>
