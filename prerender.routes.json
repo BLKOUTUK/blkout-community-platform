@@ -848,28 +848,6 @@
       }
     },
     {
-      "path": "/gbp-paris",
-      "title": "Global Black Pride 2026, Paris — travel with BLKOUT?",
-      "description": "Should BLKOUT organise a group for Global Black Pride 2026 in Paris? Register your interest.",
-      "jsonld": {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "WebPage",
-            "@id": "https://blkoutuk.com/gbp-paris#page",
-            "url": "https://blkoutuk.com/gbp-paris",
-            "name": "Global Black Pride 2026, Paris — travel with BLKOUT?",
-            "isPartOf": {
-              "@id": "https://blkoutuk.com/#site"
-            },
-            "about": {
-              "@id": "https://blkoutuk.com/#org"
-            }
-          }
-        ]
-      }
-    },
-    {
       "path": "/terms",
       "title": "Terms of Service — BLKOUT",
       "description": "Community agreements for a safer, more liberating space: the BLKOUT terms of service.",
