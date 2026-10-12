@@ -147,7 +147,7 @@ export default function AnimatedLiberationGrid({ onNavigate }: AnimatedLiberatio
   const revealedCount = Object.values(squareStates).filter(s => s !== 'initial').length;
 
   return (
-    <section className="py-8" aria-label="Explore BLKOUT - Interactive Grid">
+    <section id="find-out-more" className="py-8" aria-label="Explore BLKOUT - Interactive Grid">
       {/* Instructions */}
       <div className="text-center mb-8">
         <h2 className="text-2xl md:text-3xl font-bold text-liberation-gold-divine mb-3">

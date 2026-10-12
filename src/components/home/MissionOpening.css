@@ -1,0 +1,51 @@
+/* Homepage opening — option D+ (Rob, 12 Oct 2026). Scroll-driven: for each of four beats the
+   words land big, then that part of the mission statement appears; then the whole statement
+   turns gold; then it zooms out to reveal "Find out more". Preview:
+   blkout/projects/ai-visibility/output/homepage-animation-options-2026-10-11.html */
+.mo-track { position: relative; height: 620vh; }
+.mo-sticky { position: sticky; top: 0; min-height: 100vh; display: flex; align-items: center; padding: 6rem 0 2rem; }
+.mo-stage { width: 100%; max-width: 62rem; margin: 0 auto; color: #fff; }
+
+.mo-beats { display: grid; margin: 0 0 2rem; max-height: 40rem;
+  transition: max-height .9s cubic-bezier(.6,0,.2,1), margin .9s, opacity .5s; }
+.mo-beat { grid-area: 1 / 1; display: flex; flex-wrap: wrap; align-content: flex-end; gap: .15em .55em;
+  font: 900 clamp(2rem, 6vw, 4.6rem)/1.02 'Work Sans', system-ui, sans-serif; letter-spacing: -.02em; transition: opacity .6s; }
+.mo-beat.mo-sm { font-size: clamp(1.7rem, 4.6vw, 3.6rem); }
+.mo-beat span { opacity: 0; transform: translateY(1.2rem); transition: opacity .45s, transform .45s; }
+.mo-beat span:nth-child(even) { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; color: #FFD700; }
+.mo-beat.mo-on span { opacity: 1; transform: none; }
+.mo-beat.mo-dim { opacity: .16; }
+.mo-beat.mo-gone { opacity: 0; }
+
+.mo-finale { position: relative; }
+.mo-statement { margin: 0; font: 400 clamp(1.35rem, 2.6vw, 2.1rem)/1.38 'Work Sans', system-ui, sans-serif;
+  transform-origin: 50% 0; transition: transform 1s cubic-bezier(.6,0,.2,1); }
+.mo-s { opacity: 0; transition: opacity .8s, color .6s; }
+.mo-s.mo-on { opacity: 1; }
+.mo-s.mo-past { color: #8a877f; }
+.mo-k { transition: color .6s; }
+.mo-s.mo-on .mo-k { color: #FFD700; }
+
+.mo-cta { position: absolute; left: 50%; top: calc(66% + 1.6rem); transform: translate(-50%, 1rem); opacity: 0; pointer-events: none;
+  background: #FFD700; color: #000; text-decoration: none; font: 600 1.05rem 'Work Sans', system-ui, sans-serif;
+  letter-spacing: .06em; text-transform: uppercase; padding: 1rem 1.8rem; white-space: nowrap;
+  transition: opacity .6s .5s, transform .6s .5s; }
+.mo-cta:hover { background: #D4AF37; }
+.mo-hint { color: #77746d; font-size: .85rem; margin-top: 1.5rem; transition: opacity .4s; }
+
+.mo-one .mo-s, .mo-one .mo-s .mo-k { color: #FFD700; }
+.mo-zoom .mo-beats { max-height: 0; margin: 0; opacity: 0; }
+.mo-zoom .mo-statement { transform: scale(.66); }
+.mo-zoom .mo-cta { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.mo-zoom .mo-hint { opacity: 0; }
+
+#find-out-more { scroll-margin-top: 7rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mo-track { height: auto; }
+  .mo-sticky { position: static; min-height: 0; padding: 3rem 0; }
+  .mo-beats, .mo-hint { display: none; }
+  .mo-s { opacity: 1; transition: none; }
+  .mo-k { color: #FFD700; }
+  .mo-cta { position: static; display: inline-block; margin-top: 2rem; opacity: 1; transform: none; pointer-events: auto; transition: none; }
+}

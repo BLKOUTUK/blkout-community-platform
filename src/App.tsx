@@ -41,6 +41,7 @@ import BoardNavigationHub from '@/components/governance/board/BoardNavigationHub
 import CampaignDashboard from '@/components/pages/campaigns/CampaignDashboard';
 import CompliancePage from '@/components/pages/CompliancePage';
 import AnimatedLiberationGrid from '@/components/home/AnimatedLiberationGrid';
+import MissionOpening from '@/components/home/MissionOpening';
 import { supabase } from '@/lib/supabase';
 
 // API Configuration - Working backend
@@ -389,17 +390,11 @@ export default function App() {
           the hero and this — the Beat 2 paragraph (replicated on /discover), the
           AIvor digest box, the OOMF box, "where to go next" — is gone or moved to
           the foot, so this is the first thing a visitor reaches after the hero. */}
-      <AnimatedLiberationGrid onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />
+      {/* Mission statement opening — option D+ (Rob, 12 Oct 2026): the statement builds beat by beat
+          on scroll, turns gold, then zooms out to "Find out more", which lands on the grid below. */}
+      <MissionOpening />
 
-      {/* Mission statement — moved here from the hero (Rob, 17 Sep): the hero's italic
-          Fraunces tagline slot is built for a short line, not a ~75-word paragraph, and
-          it was crowding the video/title. Plain sans-serif (Work Sans via font-display),
-          below the grid instead. */}
-      <section className="bg-liberation-black-power px-6 py-8 md:py-10 mb-8">
-        <p className="font-display font-normal not-italic text-base md:text-lg lg:text-xl leading-relaxed max-w-3xl mx-auto text-center text-gray-300">
-          BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK. Through local chapters, cooperative membership, creative events, shared learning, and digital media, we turn connection into individual well-being and collective power — owned by and accountable to the people we serve.
-        </p>
-      </section>
+      <AnimatedLiberationGrid onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />
 
       {/* Rotating Liberation Quotes — below the grid; less important than the gateway. */}
       <section
