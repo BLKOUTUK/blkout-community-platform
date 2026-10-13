@@ -93,6 +93,12 @@
               },
               {
                 "@type": "AdministrativeArea",
+                "name": "London Borough of Islington",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Islington", "url": "https://events.blkoutuk.com/islington/" }
+              },
+              {
+                "@type": "AdministrativeArea",
                 "name": "London Borough of Lambeth",
                 "containedInPlace": { "@type": "City", "name": "London" },
                 "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Lambeth", "url": "https://events.blkoutuk.com/lambeth/" }
@@ -114,6 +120,12 @@
                 "name": "London Borough of Southwark",
                 "containedInPlace": { "@type": "City", "name": "London" },
                 "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Southwark", "url": "https://events.blkoutuk.com/southwark/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Tower Hamlets",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Tower Hamlets", "url": "https://events.blkoutuk.com/tower-hamlets/" }
               },
               {
                 "@type": "AdministrativeArea",
@@ -261,6 +273,12 @@
               },
               {
                 "@type": "AdministrativeArea",
+                "name": "London Borough of Islington",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Islington", "url": "https://events.blkoutuk.com/islington/" }
+              },
+              {
+                "@type": "AdministrativeArea",
                 "name": "London Borough of Lambeth",
                 "containedInPlace": { "@type": "City", "name": "London" },
                 "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Lambeth", "url": "https://events.blkoutuk.com/lambeth/" }
@@ -282,6 +300,12 @@
                 "name": "London Borough of Southwark",
                 "containedInPlace": { "@type": "City", "name": "London" },
                 "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Southwark", "url": "https://events.blkoutuk.com/southwark/" }
+              },
+              {
+                "@type": "AdministrativeArea",
+                "name": "London Borough of Tower Hamlets",
+                "containedInPlace": { "@type": "City", "name": "London" },
+                "subjectOf": { "@type": "WebPage", "name": "BLKOUT in Tower Hamlets", "url": "https://events.blkoutuk.com/tower-hamlets/" }
               },
               {
                 "@type": "AdministrativeArea",
