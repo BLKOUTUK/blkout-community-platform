@@ -92,9 +92,9 @@ const GovernancePage: React.FC = () => {
             <h3 className="text-xs font-black text-[#d4af37] uppercase tracking-[0.3em] mb-4 text-center">Leadership</h3>
             <div className="grid md:grid-cols-3 gap-4 mb-10">
               {[
-                { title: 'Chair', desc: 'Leads board meetings, represents BLKOUT publicly, holds the strategic line.' },
-                { title: 'Vice-Chair / Secretary', desc: 'Records, communications, compliance. The organisational memory.' },
-                { title: 'Managing Editor', desc: 'Editorial direction across news, comms, and platform voice.' },
+                { title: 'Chair & Co-Chair', desc: 'A leadership pair. Leads board meetings, represents BLKOUT publicly, holds the strategic line.' },
+                { title: 'Secretary', desc: 'Records, notices, compliance: the organisational memory. Held by the Managing Editor, who works with the board but is not a director.' },
+                { title: 'Managing Editor', desc: 'Editorial direction across news, comms, and platform voice. The executive role, accountable to the board, not a board seat.' },
               ].map((position, index) => (
                 <motion.div
                   key={position.title}
@@ -128,7 +128,7 @@ const GovernancePage: React.FC = () => {
                 },
                 {
                   title: 'Finance / Fundraising',
-                  desc: 'Stewards financial health, budgeting, reporting. Ensures our 75% creator revenue share is honoured.',
+                  desc: 'Stewards financial health, budgeting, reporting and fundraising. Ensures our 75% creator revenue share is honoured. Both seats open.',
                   vacant: true,
                 },
               ].map((pair, index) => (
@@ -181,9 +181,22 @@ const GovernancePage: React.FC = () => {
                 We're Still Recruiting
               </h2>
               <p className="text-gray-300 text-lg max-w-2xl mx-auto text-center mb-4">
-                The Finance / Fundraising pair has an open seat &mdash; we're actively looking for a
-                <span className="text-[#d4af37] font-bold"> co-treasurer</span> to steward BLKOUT's
-                liberation economics alongside their pair-partner.
+                Both seats in the Finance / Fundraising pair are open &mdash; we're looking for
+                <span className="text-[#d4af37] font-bold"> two co-treasurers</span> to steward BLKOUT's
+                liberation economics together. We're filling them two ways: by appointment, and through
+                this open call.
+              </p>
+              <ul className="text-gray-300 max-w-xl mx-auto mb-4 list-disc pl-6 space-y-1 text-left">
+                <li>Overseeing BLKOUT's financial health and reporting</li>
+                <li>Supporting grant budgets, fundraising and funder reporting</li>
+                <li>Presenting financial updates at board meetings (online, evenings)</li>
+                <li>Making sure we meet our legal obligations as a Community Benefit Society</li>
+                <li>Working with the Managing Editor on budget planning and financial strategy</li>
+              </ul>
+              <p className="text-gray-300 max-w-2xl mx-auto text-center mb-4">
+                You don't need to be a qualified accountant: you need to be comfortable with numbers and
+                budgets, and willing to ask the questions that keep a small organisation honest. It's a
+                voluntary role, with training and development on offer.
               </p>
               <p className="text-gray-300 max-w-2xl mx-auto text-center mb-6">
                 Other pairs welcome conversations from members ready to step up &mdash; the board
