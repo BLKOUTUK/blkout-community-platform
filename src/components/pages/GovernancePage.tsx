@@ -128,7 +128,7 @@ const GovernancePage: React.FC = () => {
                 },
                 {
                   title: 'Finance / Fundraising',
-                  desc: 'Stewards financial health, budgeting, reporting and fundraising. Ensures our 75% creator revenue share is honoured. Both seats open.',
+                  desc: 'Stewards financial health, budgeting, reporting and fundraising. Both seats open.',
                   vacant: true,
                 },
               ].map((pair, index) => (
