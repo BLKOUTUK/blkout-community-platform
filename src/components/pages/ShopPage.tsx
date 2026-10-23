@@ -13,7 +13,7 @@ interface RangeTileProps {
   img?: string;
 }
 
-function ZeffyEmbed({ formUrl, title }: { formUrl: string; title: string }) {
+export function ZeffyEmbed({ formUrl, title }: { formUrl: string; title: string }) {
   useEffect(() => {
     if (document.querySelector('script[data-zeffy-embed-script]')) return;
     const script = document.createElement('script');
@@ -245,6 +245,7 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
           <p className="font-disrupt italic text-sm text-liberation-neutral-500 mt-6 max-w-[60ch]">
             BLKOUT earns the margin, Teemill prints + ships, no inventory risk. The buying decision happens here; the cart happens there.
           </p>
+          <CTA href="/shop/print" label="Mugs, totes, posters →" />
         </section>
 
         {/* II · DROPS */}

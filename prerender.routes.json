@@ -841,6 +841,24 @@
       }
     },
     {
+      "path": "/shop/print",
+      "title": "Print — BLKOUT Shop",
+      "description": "Mugs, totes, posters and coasters from BLKOUT, printed when you order and posted to your door.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "@id": "https://blkoutuk.com/shop/print#page",
+            "url": "https://blkoutuk.com/shop/print",
+            "name": "Print — BLKOUT Shop",
+            "isPartOf": { "@id": "https://blkoutuk.com/#site" },
+            "about": { "@id": "https://blkoutuk.com/#org" }
+          }
+        ]
+      }
+    },
+    {
       "path": "/shop/drops/compass-journal",
       "title": "Ivor's Compass journal — BLKOUT Drop 01",
       "description": "Drop 01 from BLKOUT: the Ivor's Compass journal. Print run pending; register your interest.",
