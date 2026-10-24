@@ -51,6 +51,12 @@ three public statements (2017, 2021, 2025) as the visible tip of that support, n
 should not imply that a public statement is the measure of solidarity. Private support is not evidenced
 or described, for the protection of the people involved.
 
+Rob then named what solidarity rests on: **holding space, building relationships, supporting networks, and building
+the commons. All of these are necessary, though not sufficient, for solidarity.** That gives the principle's
+"What grew" section its shape: the everyday groundwork (the Hub, brunches and picnics, the Commons Kit,
+community-owned media) comes first, and the public statements are the escalation it makes possible.
+"Necessary, not sufficient" is Rob's framing, and it stays: solidarity is never claimed as achieved.
+
 ### From the story archive (searched 24 Oct 2026: `archived_articles`, 268 posts, 2016–2024)
 
 Each of these can be a "What grew" link to blkoutuk.com/stories/<slug>.
