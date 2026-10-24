@@ -93,11 +93,6 @@ const GROUPS: Group[] = [
             by: 'bell hooks',
             source: 'We Real Cool',
           },
-          {
-            text: 'There is never a time in the future in which we will work out our salvation. The challenge is in the moment, the time is always now.',
-            by: 'James Baldwin',
-            source: 'Nobody Knows My Name',
-          },
         ],
         reading: [
           { label: 'Building collaborative communities', href: 'https://scott.london/articles/oncollaboration.html' },
@@ -188,14 +183,19 @@ const GROUPS: Group[] = [
         ],
       },
       {
-        id: 'the-right-time-is-now',
-        name: 'the right time is now',
+        id: 'the-time-is-always-now',
+        name: 'the time is always now',
         commitment: 'We believe that prevention is both better and easier than cure. We seek to be responsive to the needs and ambitions of our peers in ways that challenge patterns of disregard and create cultures of care and support.',
         body: [
           'We are creating the conditions for our survival and building resilient communities among Black queer men. We understand the benefits to physical and mental health of working to address the ‘wider determinants’ of health, including socio-economic, environmental and cultural conditions.',
           'We value and promote the creation of sustainable, supportive networks of men, both through and beyond our interventions, and seek a legacy for our work that includes the growth of assets that bolster the resilience of Black queer men.',
         ],
         quotes: [
+          {
+            text: 'There is never a time in the future in which we will work out our salvation. The challenge is in the moment, the time is always now.',
+            by: 'James Baldwin',
+            source: 'Nobody Knows My Name',
+          },
           {
             text: 'There’s good evidence that if people are disempowered, if they have little control over their lives, if they’re socially isolated or unable to participate fully in society, then there are biological effects . . . The lower you are in the hierarchy the worse your health, the higher you are, the better your health.',
             by: 'Prof Michael Marmot',
