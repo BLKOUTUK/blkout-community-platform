@@ -188,8 +188,8 @@ const GROUPS: Group[] = [
         ],
       },
       {
-        id: 'the-time-is-now',
-        name: 'the time is now',
+        id: 'the-right-time-is-now',
+        name: 'the right time is now',
         commitment: 'We believe that prevention is both better and easier than cure. We seek to be responsive to the needs and ambitions of our peers in ways that challenge patterns of disregard and create cultures of care and support.',
         body: [
           'We are creating the conditions for our survival and building resilient communities among Black queer men. We understand the benefits to physical and mental health of working to address the ‘wider determinants’ of health, including socio-economic, environmental and cultural conditions.',
