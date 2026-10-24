@@ -1,51 +1,75 @@
-/* Homepage opening — option D+ (Rob, 12 Oct 2026). Scroll-driven: for each of four beats the
-   words land big, then that part of the mission statement appears; then the whole statement
-   turns gold; then it zooms out to reveal "Find out more". Preview:
-   blkout/projects/ai-visibility/output/homepage-animation-options-2026-10-11.html */
-.mo-track { position: relative; height: 620vh; }
-.mo-sticky { position: sticky; top: 0; min-height: 100vh; display: flex; align-items: center; padding: 6rem 0 2rem; }
-.mo-stage { width: 100%; max-width: 62rem; margin: 0 auto; color: #fff; }
+/* Homepage opening, "Sign o' the Times" (Rob, 24 Oct 2026; replaces option D+ of 12 Oct).
+   Everything is scoped under .so. Without JS or with reduced motion, only the plain final
+   statement and "Find out more" show (complete at rest); .so-live switches on the pinned stage.
+   Prototype: blkout/projects/homepage-statement/prototypes/statement-motion.html */
+.so { --so-gold: #FFD700; --so-gold-deep: #D4AF37; --so-dim: #8a877f; color: #fff; overflow-x: clip; }
+.so-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-.mo-beats { display: grid; margin: 0 0 2rem; max-height: 40rem;
-  transition: max-height .9s cubic-bezier(.6,0,.2,1), margin .9s, opacity .5s; }
-.mo-beat { grid-area: 1 / 1; display: flex; flex-wrap: wrap; align-content: flex-end; gap: .15em .55em;
-  font: 900 clamp(2rem, 6vw, 4.6rem)/1.02 'Work Sans', system-ui, sans-serif; letter-spacing: -.02em; transition: opacity .6s; }
-.mo-beat.mo-sm { font-size: clamp(1.7rem, 4.6vw, 3.6rem); }
-.mo-beat span { opacity: 0; transform: translateY(1.2rem); transition: opacity .45s, transform .45s; }
-.mo-beat span:nth-child(even) { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; color: #FFD700; }
-.mo-beat.mo-on span { opacity: 1; transform: none; }
-.mo-beat.mo-dim { opacity: .16; }
-.mo-beat.mo-gone { opacity: 0; }
+.so .stage { position: relative; }
+.so .beat { display: none; }
+.so .beat-final { display: grid; place-items: center; padding: 7rem 1rem 3rem; }
 
-.mo-finale { position: relative; }
-.mo-statement { margin: 0; font: 400 clamp(1.35rem, 2.6vw, 2.1rem)/1.38 'Work Sans', system-ui, sans-serif;
-  transform-origin: 50% 0; transition: transform 1s cubic-bezier(.6,0,.2,1); }
-.mo-s { opacity: 0; transition: opacity .8s, color .6s; }
-.mo-s.mo-on { opacity: 1; }
-.mo-s.mo-past { color: #8a877f; }
-.mo-k { transition: color .6s; }
-.mo-s.mo-on .mo-k { color: #FFD700; }
+.so.so-live .stage { height: 100svh; overflow: hidden; display: grid; place-items: center; }
+.so.so-live .beat { display: grid; position: absolute; inset: 0; place-items: center; text-align: center; padding-inline: 8px; opacity: 0; }
+.so.so-live .beat > div { max-width: 92vw; text-wrap: balance; padding-block: 12vh; }
+.so.so-live .beat-final { padding: 0 1rem; }
 
-.mo-cta { position: absolute; left: 50%; top: calc(66% + 1.6rem); transform: translate(-50%, 1rem); opacity: 0; pointer-events: none;
-  background: #FFD700; color: #000; text-decoration: none; font: 600 1.05rem 'Work Sans', system-ui, sans-serif;
-  letter-spacing: .06em; text-transform: uppercase; padding: 1rem 1.8rem; white-space: nowrap;
-  transition: opacity .6s .5s, transform .6s .5s; }
-.mo-cta:hover { background: #D4AF37; }
-.mo-hint { color: #77746d; font-size: .85rem; margin-top: 1.5rem; transition: opacity .4s; }
+.so .w { display: inline-block; position: relative; }
+.so .ch, .so .wd { display: inline-block; will-change: transform; }
+.so .bleed { white-space: nowrap; }
 
-.mo-one .mo-s, .mo-one .mo-s .mo-k { color: #FFD700; }
-.mo-zoom .mo-beats { max-height: 0; margin: 0; opacity: 0; }
-.mo-zoom .mo-statement { transform: scale(.66); }
-.mo-zoom .mo-cta { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
-.mo-zoom .mo-hint { opacity: 0; }
+/* phrase styles */
+.so .b-small { font: 300 clamp(24px, 6vw, 44px)/1.2 'Work Sans', system-ui, sans-serif; letter-spacing: .02em; }
+.so .b-mid { font-size: clamp(26px, 7vw, 60px); }
+.so .b-heavy { font: 900 clamp(40px, 12vw, 128px)/.92 'Work Sans', system-ui, sans-serif; text-transform: uppercase; }
+.so .b-huge { font-size: clamp(48px, 14.5vw, 200px); }
+.so .b-serif { font: italic 300 clamp(36px, 10vw, 110px)/1 'Fraunces', Georgia, serif; }
+.so .b-serif-word { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-weight: 300; text-transform: none; }
+.so .b-mono { font: 600 clamp(22px, 6vw, 58px)/1.25 'IBM Plex Mono', ui-monospace, monospace; }
+.so .b-mono-word { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-weight: 600; }
+.so .b-light { font-weight: 300; text-transform: none; }
+.so .b-gold { color: var(--so-gold); }
+.so .b-list { font-size: clamp(22px, 6.5vw, 64px); line-height: 1.15; }
+.so .b-list .fx-list { display: block; }
+.so .b-list .item { display: block; }
+.so .b-identity .wd { margin-inline: .12em; }
+.so .b-identity .rule { display: block; height: 3px; width: 100%; max-width: 70vw; margin: .35em auto 0; background: var(--so-gold); transform-origin: center; }
+
+/* word effects */
+.so .fx-bold { font-weight: 700; }
+.so .fx-sans-heavy { font-family: 'Work Sans', system-ui, sans-serif; font-style: normal; font-weight: 800; }
+.so .fx-liberation { font-family: 'Fraunces', Georgia, serif; font-weight: 800; text-transform: none; padding: .05em .12em; }
+.so .fx-liberation .bars { position: absolute; inset: -.05em; background: repeating-linear-gradient(90deg, transparent 0 .32em, var(--so-dim) .32em .38em); border-top: 3px solid var(--so-dim); border-bottom: 3px solid var(--so-dim); pointer-events: none; }
+.so .fx-dialogue { text-transform: none; }
+.so .fx-dialogue .ch:nth-child(odd) { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--so-gold); }
+.so .fx-technology .cursor { display: inline-block; width: .55em; background: var(--so-gold); animation: so-blink 1s steps(1) infinite; }
+@keyframes so-blink { 50% { opacity: 0; } }
+.so .fx-health { font-family: 'Fraunces', Georgia, serif; font-weight: 400; }
+.so .fx-health.on { animation: so-breathe 4.5s ease-in-out infinite; }
+@keyframes so-breathe { 0%, 100% { transform: scale(1); font-variation-settings: "wght" 380; } 50% { transform: scale(1.12); font-variation-settings: "wght" 620; } }
+.so .fx-wealth { font-family: 'Fraunces', Georgia, serif; text-transform: none; }
+.so .fx-wealth .ch { background: linear-gradient(100deg, var(--so-gold-deep) 0%, var(--so-gold) 35%, #fff6c2 50%, var(--so-gold) 65%, var(--so-gold-deep) 100%); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; }
+.so .fx-wealth.on .ch { animation: so-sheen 3s linear infinite; }
+@keyframes so-sheen { to { background-position: -300% 0; } }
+.so .fx-happiness { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-style: normal; font-variation-settings: "SOFT" 100, "WONK" 1; }
+.so .fx-across { font-weight: 300; display: block; }
+.so .fx-connection { font-family: 'Fraunces', Georgia, serif; }
+.so .fx-connection .link { position: absolute; left: 0; right: 0; bottom: .08em; height: 3px; background: var(--so-gold); transform-origin: left; }
+.so .fx-power { font-variation-settings: "wght" 200; }
+.so .fx-power .battery { position: absolute; left: 50%; bottom: -.75em; transform: translateX(-50%); display: flex; gap: .09em; padding: .07em; border: .045em solid var(--so-dim); border-radius: .08em; height: .32em; width: 2.6em; }
+.so .fx-power .battery::after { content: ""; position: absolute; right: -.14em; top: 25%; height: 50%; width: .09em; background: var(--so-dim); border-radius: 0 .04em .04em 0; }
+.so .fx-power .bar { flex: 1; background: var(--so-gold); opacity: .12; border-radius: .03em; }
+.so .dash { display: inline-block; height: .09em; width: .6em; background: currentColor; vertical-align: middle; transform-origin: left; margin-left: .15em; }
+.so .fx-owned { color: var(--so-gold); }
+.so .fx-owned .seal { position: absolute; left: 0; right: 0; bottom: -.04em; height: 4px; background: var(--so-gold); transform-origin: left; }
+
+/* the plain closing statement */
+.so .b-final { font: 400 clamp(17px, 4.3vw, 24px)/1.8 'Work Sans', system-ui, sans-serif; color: #fff; max-width: 34rem; text-align: left; }
+.so .b-final p { margin: 0 0 1.2em; }
+.so .so-cta { display: inline-block; margin-top: .6rem; background: var(--so-gold); color: #000; text-decoration: none; font: 600 1rem 'Work Sans', system-ui, sans-serif; letter-spacing: .06em; text-transform: uppercase; padding: 1rem 1.8rem; }
+.so .so-cta:hover { background: var(--so-gold-deep); }
+.so .so-cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.so .progress { position: absolute; left: 0; bottom: 0; height: 3px; width: 0; background: var(--so-gold-deep); }
+.so:not(.so-live) .progress { display: none; }
 
 #find-out-more { scroll-margin-top: 7rem; }
-
-@media (prefers-reduced-motion: reduce) {
-  .mo-track { height: auto; }
-  .mo-sticky { position: static; min-height: 0; padding: 3rem 0; }
-  .mo-beats, .mo-hint { display: none; }
-  .mo-s { opacity: 1; transition: none; }
-  .mo-k { color: #FFD700; }
-  .mo-cta { position: static; display: inline-block; margin-top: 2rem; opacity: 1; transform: none; pointer-events: auto; transition: none; }
-}
