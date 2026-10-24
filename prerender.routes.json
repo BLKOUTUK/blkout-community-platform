@@ -442,6 +442,28 @@
       }
     },
     {
+      "path": "/principles",
+      "title": "12 Principles for Action — BLKOUT's values",
+      "description": "BLKOUT is a values-led organisation. Our 12 Principles for Action: we are becoming, enough, not all the same; we believe the whole is greater than the sum of its parts; we practice accountability, learning and joy.",
+      "jsonld": {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebPage",
+            "@id": "https://blkoutuk.com/principles#page",
+            "url": "https://blkoutuk.com/principles",
+            "name": "12 Principles for Action",
+            "isPartOf": {
+              "@id": "https://blkoutuk.com/#site"
+            },
+            "about": {
+              "@id": "https://blkoutuk.com/#org"
+            }
+          }
+        ]
+      }
+    },
+    {
       "path": "/movement",
       "title": "The Movement — BLKOUT's theory of change",
       "description": "How BLKOUT turns connection between Black queer men into collective power: the theory of change, card by card.",

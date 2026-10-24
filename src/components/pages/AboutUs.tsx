@@ -102,6 +102,32 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
         </a>
       </div>
 
+      {/* Principles CTA — the values come before the structure */}
+      <div className="max-w-4xl mx-auto px-6 pb-8">
+        <button
+          onClick={() => onNavigate?.('principles')}
+          className="w-full text-left block bg-liberation-black-power border-2 border-liberation-gold-divine/40 rounded-sharp p-8 hover:border-liberation-gold-divine transition-all duration-300 group"
+        >
+          <div className="flex items-center gap-6">
+            <div className="flex-shrink-0 w-16 h-16 rounded-full bg-liberation-gold-divine/10 border-2 border-liberation-gold-divine/40 flex items-center justify-center group-hover:bg-liberation-gold-divine/20 transition-colors">
+              <Heart className="w-8 h-8 text-liberation-gold-divine" />
+            </div>
+            <div className="flex-1">
+              <h2 className="text-2xl md:text-3xl font-black text-white mb-2">
+                Our 12 Principles for Action
+              </h2>
+              <p className="text-gray-300 text-base mb-3">
+                We are becoming, enough, not all the same. We practice accountability, learning and joy. The values that lead everything we do.
+              </p>
+              <div className="inline-flex items-center gap-2 text-liberation-gold-divine font-bold uppercase text-sm group-hover:gap-3 transition-all">
+                Read the principles
+                <ArrowRight className="w-4 h-4" />
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
+
       {/* Board CTA */}
       <div className="max-w-4xl mx-auto px-6 pb-8">
         <a

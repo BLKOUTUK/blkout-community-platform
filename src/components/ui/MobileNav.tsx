@@ -24,6 +24,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
     { id: 'newsroom', label: 'News', icon: ExternalLink, type: 'link' as const, href: 'https://news.blkoutuk.com' },
     { id: 'intro', label: 'AIvor', icon: Brain, type: 'button' as const },
     { id: 'about', label: 'About', icon: Info, type: 'button' as const },
+    { id: 'principles', label: 'Principles', icon: Heart, type: 'button' as const },
     { id: 'ten-years', label: 'Ten Years', icon: Calendar, type: 'button' as const },
   ];
 

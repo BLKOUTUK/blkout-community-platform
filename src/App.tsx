@@ -15,6 +15,7 @@ import AdminDashboard from '@/components/admin/AdminDashboard';
 import AboutUs from '@/components/pages/AboutUs';
 import StoryArchive from '@/components/pages/StoryArchive';
 import TenYears from '@/components/pages/TenYears';
+import PrinciplesPage from '@/components/pages/PrinciplesPage';
 import ArticleDetail from '@/components/pages/ArticleDetail';
 import DiscoverPage from '@/components/pages/DiscoverPage.enhanced';
 import Footer from '@/components/ui/Footer';
@@ -56,7 +57,7 @@ const LIBERATION_API = import.meta.env.VITE_API_URL || '/api';
  */
 
 // Navigation tab type
-type NavigationTab = 'liberation' | 'ten-years' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'discover' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'shop/membership' | 'shop/apparel' | 'shop/apparel/blkout-proud' | 'shop/apparel/brother-to-brother' | 'shop/apparel/icons' | 'shop/drops/compass-journal' | 'board' | 'campaigns' | 'compliance' | 'gbp-paris';
+type NavigationTab = 'liberation' | 'ten-years' | 'principles' | 'governance' | 'governance-proposals' | 'my-account' | 'finances' | 'about' | 'stories' | 'intro' | 'admin' | 'platform' | 'discover' | 'terms' | 'privacy' | 'health-dashboard' | 'movement' | 'shop' | 'shop/membership' | 'shop/apparel' | 'shop/apparel/blkout-proud' | 'shop/apparel/brother-to-brother' | 'shop/apparel/icons' | 'shop/drops/compass-journal' | 'board' | 'campaigns' | 'compliance' | 'gbp-paris';
 
 // Liberation Quotes Collection - Powerful voices from our community
 const LIBERATION_QUOTES = [
@@ -136,6 +137,7 @@ const SECTION_ACCENT: Partial<Record<string, string>> = {
   stories: 'bg-liberation-pride-purple-deep',
   about: 'bg-liberation-pan-african-red',
   'ten-years': 'bg-liberation-gold-divine',
+  principles: 'bg-liberation-gold-divine',
   governance: 'bg-liberation-pan-african-red',
   'governance-proposals': 'bg-liberation-pan-african-red',
   'my-account': 'bg-liberation-pan-african-red',
@@ -155,7 +157,7 @@ const CIRCLE_LINK_BASE = 'flex items-center justify-center w-24 h-24 md:w-28 md:
 // Function to get initial tab from URL path
 function getInitialTabFromURL(): NavigationTab {
   const path = window.location.pathname.slice(1); // Remove leading slash
-  const validTabs: NavigationTab[] = ['liberation', 'ten-years', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'shop/membership', 'shop/apparel', 'shop/apparel/blkout-proud', 'shop/apparel/brother-to-brother', 'shop/apparel/icons', 'shop/drops/compass-journal', 'board', 'campaigns', 'compliance', 'gbp-paris'];
+  const validTabs: NavigationTab[] = ['liberation', 'ten-years', 'principles', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'shop/membership', 'shop/apparel', 'shop/apparel/blkout-proud', 'shop/apparel/brother-to-brother', 'shop/apparel/icons', 'shop/drops/compass-journal', 'board', 'campaigns', 'compliance', 'gbp-paris'];
 
   if (validTabs.includes(path as NavigationTab)) {
     return path as NavigationTab;
@@ -301,6 +303,8 @@ export default function App() {
         return <StoryArchive initialSlug={getStorySlugFromURL()} />;
       case 'ten-years':
         return <TenYears onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />;
+      case 'principles':
+        return <PrinciplesPage onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />;
       case 'intro':
         return <IVORIntroduction
           onStartChat={() => setShowIVOR(true)}
@@ -579,7 +583,7 @@ export default function App() {
             </div>
             {/* Second row — only on Home, AIvor, About.
                 Section accents per tab: Shop=orange, Membership/About=red, Discover/Community=core gold. */}
-            {['liberation', 'intro', 'about', 'ten-years'].includes(activeTab) && (
+            {['liberation', 'intro', 'about', 'ten-years', 'principles'].includes(activeTab) && (
               <div className="hidden lg:block border-t border-liberation-gold-divine/20 bg-liberation-black-power/80">
                 <div className="container mx-auto px-4">
                   <div className="flex items-center gap-3 justify-end py-1.5">
@@ -588,6 +592,7 @@ export default function App() {
                     <button onClick={() => changeActiveTab('shop')} className={`px-3 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-200 border-b-2 ${activeTab === 'shop' ? 'text-liberation-pride-orange border-liberation-pride-orange' : 'text-gray-400 border-transparent hover:text-liberation-pride-orange hover:border-liberation-pride-orange/60'}`}>Shop</button>
                     <button onClick={() => changeActiveTab('governance')} className={`px-3 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-200 border-b-2 ${activeTab === 'governance' ? 'text-liberation-pan-african-red border-liberation-pan-african-red' : 'text-gray-400 border-transparent hover:text-liberation-pan-african-red hover:border-liberation-pan-african-red/60'}`}>Membership</button>
                     <button onClick={() => changeActiveTab('about')} className={`px-3 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-200 border-b-2 ${activeTab === 'about' ? 'text-liberation-pan-african-red border-liberation-pan-african-red' : 'text-gray-400 border-transparent hover:text-liberation-pan-african-red hover:border-liberation-pan-african-red/60'}`}>About</button>
+                    <button onClick={() => changeActiveTab('principles')} className={`px-3 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-200 border-b-2 ${activeTab === 'principles' ? 'text-liberation-gold-divine border-liberation-gold-divine' : 'text-gray-400 border-transparent hover:text-liberation-gold-divine hover:border-liberation-gold-divine/60'}`}>Principles</button>
                     <button onClick={() => changeActiveTab('ten-years')} className={`px-3 py-1 text-sm font-bold uppercase tracking-wider transition-colors duration-200 border-b-2 ${activeTab === 'ten-years' ? 'text-liberation-gold-divine border-liberation-gold-divine' : 'text-gray-400 border-transparent hover:text-liberation-gold-divine hover:border-liberation-gold-divine/60'}`}>Ten Years</button>
                   </div>
                 </div>
