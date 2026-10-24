@@ -105,7 +105,7 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
       {/* Principles CTA — the values come before the structure */}
       <div className="max-w-4xl mx-auto px-6 pb-8">
         <button
-          onClick={() => onNavigate?.('principles')}
+          onClick={() => onNavigate?.('about/principles')}
           className="w-full text-left block bg-liberation-black-power border-2 border-liberation-gold-divine/40 rounded-sharp p-8 hover:border-liberation-gold-divine transition-all duration-300 group"
         >
           <div className="flex items-center gap-6">

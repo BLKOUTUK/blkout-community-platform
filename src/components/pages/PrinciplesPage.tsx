@@ -3,10 +3,12 @@
  *
  * Source: the 2020 Google Site (sites.google.com/view/blackoutprinciples/home), brought
  * home 24 Oct 2026 so the values are part of the platform, not buried in a hub resource.
+ * Lives under About (/about/principles) by Rob's call, 24 Oct 2026: no nav heading of its own;
+ * reached from the card at the top of About and the breadcrumb back.
  * Text is the site's, verbatim apart from typo fixes. The 2020 intro paragraph is replaced
  * by the approved mission statement (platform/COMMS.md). Plain-text twin: platform/VALUES.md.
  *
- * Each principle has an anchor id (e.g. /principles#becoming) so BLKOUTHUB and
+ * Each principle has an anchor id (e.g. /about/principles#becoming) so BLKOUTHUB and
  * other pages can deep-link to a single principle.
  *
  * Colours are arbitrary hex values on purpose, as in TenYears.tsx: several `liberation-*`
@@ -365,7 +367,8 @@ export default function PrinciplesPage({ onNavigate }: PrinciplesPageProps) {
       {/* Opening */}
       <header className="pt-6 pb-12 md:pt-12 md:pb-16 border-b" style={{ borderColor: `${GOLD_DEEP}55` }}>
         <p className="text-xs uppercase tracking-[0.25em] mb-4" style={{ fontFamily: MONO, color: GOLD_DEEP }}>
-          What we stand on · first published 2020
+          <button onClick={() => onNavigate?.('about')} className="uppercase hover:underline underline-offset-4">About</button>
+          {' / '}Our principles · first published 2020
         </p>
         <h1 className="text-4xl md:text-6xl font-black uppercase leading-[0.95] mb-6">
           12 Principles<br />for Action

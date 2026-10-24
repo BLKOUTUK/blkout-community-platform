@@ -347,7 +347,7 @@ const DIST = path.join(__dirname, 'dist');
 // Paths the SPA renders as pages — keep in step with validTabs in src/App.tsx getInitialTabFromURL.
 // Anything else still gets the friendly shell, but with a real 404 so search engines don't index
 // made-up addresses (SEO plan T2, 11 Oct 2026). Unknown /stories/<slug> fall through to here too.
-const SPA_ROUTES = new Set(['liberation', 'ten-years', 'principles', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'shop/membership', 'shop/apparel', 'shop/apparel/blkout-proud', 'shop/apparel/brother-to-brother', 'shop/apparel/icons', 'shop/drops/compass-journal', 'board', 'campaigns', 'compliance']);
+const SPA_ROUTES = new Set(['liberation', 'ten-years', 'about/principles', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'shop/membership', 'shop/apparel', 'shop/apparel/blkout-proud', 'shop/apparel/brother-to-brother', 'shop/apparel/icons', 'shop/drops/compass-journal', 'board', 'campaigns', 'compliance']);
 app.use((req, res, next) => {
   // Skip if already handled by API routes
   if (req.path.startsWith('/api/')) {

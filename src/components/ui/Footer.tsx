@@ -13,7 +13,6 @@ const Footer: React.FC<FooterProps> = ({ onNavigate, currentTab }) => {
     { id: 'newsroom', label: 'News', icon: ExternalLink, type: 'link', href: 'https://news.blkoutuk.com' },
     { id: 'intro', label: 'AIvor', icon: Brain, type: 'button' },
     { id: 'about', label: 'About', icon: Info, type: 'button' },
-    { id: 'principles', label: 'Principles', icon: Heart, type: 'button' },
     { id: 'discover', label: 'Discover', icon: ExternalLink, type: 'link', href: 'https://comms.blkoutuk.com/discover' },
     { id: 'voices', label: 'Voices', icon: ExternalLink, type: 'link', href: 'https://voices.blkoutuk.com' },
     { id: 'governance', label: 'Governance', icon: Vote, type: 'button' },
