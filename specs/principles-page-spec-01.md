@@ -35,9 +35,9 @@ on 28 Jul 2026. Rows marked ⚠ have no evidence yet, so Rob needs to fill them.
 | the whole is greater than the sum of its parts | The co-op working group's time was paid, not volunteered. Twelve founding members signed up while there was still nothing to join. | Ten Years |
 | our glass is always half full | In The Picture: peer-led research recording education, work, play, love, growing older and happiness, not only sexual health, homelessness and asylum. | Ten Years |
 | the time is always now | The 2024 pause: we read what the moment needed and changed shape, rather than delivering badly. Each generation has its own task. | Ten Years + Rob's meaning (memory) |
-| unresolved trauma has a real impact in our lives | ⚠ Candidates: Diasporan Dialogues on Black gay men's health (ViiV); Social Movement for Health; the mental-health pathway page. | Rob |
-| justice and solidarity take work | ⚠ No evidence yet. | Rob |
-| no one is free until everyone is free | "Accomplice or ally" was one of the four ways to register for NXT. ⚠ Anything stronger? | Ten Years / Rob |
+| unresolved trauma has a real impact in our lives | A mental-health focus to the work. Ivor's Compass (SCT 150, launched 12 Apr 2026). ⚠ The wording of the line still needs drafting. | Rob, 24 Oct 2026; memory |
+| justice and solidarity take work | Each One Teach One. Community research. DiaspoRainbow (our response to the partner consultation, 2026). Vocal, pre-emptive public support for Jason Okundaye, Christopher DeShields and Fr Jarel Brown when the press was circling threateningly. ⚠ Dates, and the spelling of names, still to be confirmed. ⚠ Naming them publicly needs their consent. | Rob, 24 Oct 2026 |
+| no one is free until everyone is free | "Accomplice or ally" was one of the four ways to register for NXT. ⚠ Rob's message broke off at "inter…", so this row is waiting on the rest. | Ten Years / Rob |
 | we practice accountability | Registered 24 Nov 2025 as a Community Benefit Society (no. 9639) with an asset lock: members, not shareholders. One member, one vote. Everyone on a project is paid the same flat rate. The Year One report is public. | Ten Years, COMMS.md, memory |
 | we practice learning | In The Picture (2019–20). The Stories archive. The Commons Kit values exercise, offered to other organisations. "We learn, not fail." | Ten Years, projects/commons |
 | we practice joy | Black Men Who Brunch. David McAlmont singing at Croydon Pride. The Berto Pasuka Prize. A Place For Us at Queer Britain (January 2023). | Ten Years |
