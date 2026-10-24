@@ -93,6 +93,28 @@ Each of these can be a "What grew" link to blkoutuk.com/stories/<slug>.
    that helps other organisations find their own. This is the "learn from" part.
 6. **Close.** Become a member, and back to About.
 
+### The principles and the theory of change (Rob, 24 Oct 2026)
+
+"Our theory of change is based on these values." The theory of change already lives at
+blkoutuk.com/movement (`src/components/movement/TheoryOfChangeMasonry.tsx`), and it echoes the principles
+without naming them:
+
+| Theory of change (/movement) | Principle it rests on |
+|---|---|
+| "Our differences are a strength, not a problem." | we are not all the same (almost word for word) |
+| "Without community, there is no love, and no liberation" | we are not all the same (Lorde, quoted under that principle) |
+| "Each one, Teach one" | justice and solidarity take work |
+| "Survival is a good start. If we want to thrive…" | our glass is always half full |
+| "The damage is structural. The repair is relational." | unresolved trauma has a real impact in our lives; we are becoming |
+| "Connecting, not networking" | the whole is greater than the sum of its parts |
+
+This needs two links, one in each direction:
+- **Principles → theory of change:** a short section after the twelve: "Our theory of change is built on
+  these principles", linking to /movement. This is the "learn from it" path: values first, then how
+  we think change happens.
+- **Theory of change → principles:** one line on /movement naming the principles it rests on, linking to
+  /about/principles. This is a small edit to TheoryOfChangeMasonry.tsx, made in the same build.
+
 ## Design
 
 - The blkoutuk.com palette (black, gold, white) with Work Sans and Fraunces italic. Afrofuturist, not
