@@ -390,8 +390,8 @@ export default function App() {
           the hero and this — the Beat 2 paragraph (replicated on /discover), the
           AIvor digest box, the OOMF box, "where to go next" — is gone or moved to
           the foot, so this is the first thing a visitor reaches after the hero. */}
-      {/* Mission statement opening — option D+ (Rob, 12 Oct 2026): the statement builds beat by beat
-          on scroll, turns gold, then zooms out to "Find out more", which lands on the grid below. */}
+      {/* Mission statement opening — "Sign o' the Times" (Rob, 24 Oct 2026; replaced D+): the stage pins
+          and the statement plays phrase by phrase, then settles as plain text with "Find out more". */}
       <MissionOpening />
 
       <AnimatedLiberationGrid onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />
