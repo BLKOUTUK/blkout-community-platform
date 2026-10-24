@@ -36,11 +36,30 @@ on 28 Jul 2026. Rows marked ⚠ have no evidence yet, so Rob needs to fill them.
 | our glass is always half full | In The Picture: peer-led research recording education, work, play, love, growing older and happiness, not only sexual health, homelessness and asylum. | Ten Years |
 | the time is always now | The 2024 pause: we read what the moment needed and changed shape, rather than delivering badly. Each generation has its own task. | Ten Years + Rob's meaning (memory) |
 | unresolved trauma has a real impact in our lives | A mental-health focus to the work. Ivor's Compass (SCT 150, launched 12 Apr 2026). ⚠ The wording of the line still needs drafting. | Rob, 24 Oct 2026; memory |
-| justice and solidarity take work | Each One Teach One. Community research. DiaspoRainbow (our response to the partner consultation, 2026). Vocal, pre-emptive public support for Jason Okundaye, Christopher DeShields and Fr Jarel Brown when the press was circling threateningly. ⚠ Dates, and the spelling of names, still to be confirmed. ⚠ Naming them publicly needs their consent. | Rob, 24 Oct 2026 |
+| justice and solidarity take work | Each One Teach One. Community research. DiaspoRainbow (our response to the partner consultation, 2026). Vocal, pre-emptive public support for Jason Osamede Okundaye (2017), Revd Jarel Robinson-Brown (2021) and Christopher DeShields when the press was circling threateningly. ⚠ Dates, and the spelling of names, still to be confirmed. ⚠ Naming them publicly needs their consent. | Rob, 24 Oct 2026 |
 | no one is free until everyone is free | Our policy that money is no barrier to taking part. Intergenerational work: on HIV, ageing and youth. "Accomplice or ally" was one of the four ways to register for NXT. ⚠ Examples and dates for each still to come from Rob. | Rob, 24 Oct 2026; Ten Years |
 | we practice accountability | Registered 24 Nov 2025 as a Community Benefit Society (no. 9639) with an asset lock: members, not shareholders. One member, one vote. Everyone on a project is paid the same flat rate. The Year One report is public. | Ten Years, COMMS.md, memory |
 | we practice learning | In The Picture (2019–20). The Stories archive. The Commons Kit values exercise, offered to other organisations. "We learn, not fail." | Ten Years, projects/commons |
 | we practice joy | Black Men Who Brunch. David McAlmont singing at Croydon Pride. The Berto Pasuka Prize. A Place For Us at Queer Britain (January 2023). | Ten Years |
+
+### From the story archive (searched 24 Oct 2026: `archived_articles`, 268 posts, 2016–2024)
+
+Each of these can be a "What grew" link to blkoutuk.com/stories/<slug>.
+
+| Principle | Article | Slug |
+|---|---|---|
+| our glass is always half full | "BlackOut: what's the big idea?" (17 May 2019). It names the "glass-half-full focus on lack rather than abundance" imposed on us, which shows the principle predates the 2020 site. | `blackout-whats-the-big-idea` |
+| justice and solidarity take work (each one teach one) | "Apply: Lessons In The Life" (14 Dec 2018): an online curriculum "by Black queer men for Black queer men" for 2019, with paid facilitators, funded by The National Lottery Community Fund. | `apply-lessons-in-the-life` |
+| justice and solidarity take work (community research) | "Wanted: 10 community researchers" (17 May 2019): paid, trained, and joining a pan-London research panel. | `apply-wanted-10-community-researchers` |
+| justice and solidarity take work (community research) | "Report: In The Picture" (29 Oct 2020). | `report-in-the-picture` |
+| justice and solidarity take work (press support) | "We Stand with Jason" (7 Aug 2017). The archive gives his name as Jason **Osamede** Okundaye. | `read-we-stand-with-jason` |
+| justice and solidarity take work (press support) | "In Solidarity" (5 Feb 2021): an open letter for **Revd Jarel Robinson-Brown**, co-signed with House of Rainbow. Rob had given the name as "Fr Jarel Brown"; this is the archive's version. | `read-in-solidarity` |
+| justice and solidarity take work (press support) | ⚠ Christopher DeShields: nothing found under "Christopher", "DeShields" or "Desheilds". | n/a |
+| no one is free (money, generations, HIV) | The 2019 researcher call: paid, and it particularly sought men under 25, men over 55, trans men and men living with HIV. | `apply-wanted-10-community-researchers` |
+| no one is free (HIV) | World AIDS Day 2018, "No longer speechless?": a film by Phil Samba, *Standing on the Shoulders of Giants*. Also "30 years with HIV: celebrating life" (1 Dec 2016). | `watch-no-longer-speechless-world-aids-day-2018`, `read-30-years-with-hiv-celebrating-life` |
+| no one is free (intergenerational) | "Pearl's Return" (3 Mar 2021): reviving Pearl Alcock's Brixton shebeen from the 1960s and 70s. Also the "BlackOut Inheritance" series (Mar–Apr 2018). | `pledge-pearls-return`, `read-blackout-inheritance-part-one` |
+| unresolved trauma (mental health) | "Is being Black and Queer bad for your health?" (event 24 Jul 2018, report back 6 Sep 2018). | `event-is-being-black-and-queer-bad-for-your-health`, `listen-is-being-black-and-queer-bad-for-your-health-the-report-back` |
+| accountability | "Cometh the hour… join the vanguard" (5 Apr 2020): Hub members shaping the community, with interventions that "match our values/mission". | `read-cometh-the-hour` |
 
 ## Structure
 
