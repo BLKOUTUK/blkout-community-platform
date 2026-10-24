@@ -42,6 +42,15 @@ on 28 Jul 2026. Rows marked ⚠ have no evidence yet, so Rob needs to fill them.
 | we practice learning | In The Picture (2019–20). The Stories archive. The Commons Kit values exercise, offered to other organisations. "We learn, not fail." | Ten Years, projects/commons |
 | we practice joy | Black Men Who Brunch. David McAlmont singing at Croydon Pride. The Berto Pasuka Prize. A Place For Us at Queer Britain (January 2023). | Ten Years |
 
+### How we show support (Rob, 24 Oct 2026)
+
+"Public media is not the only way we may offer support; it's often an escalation." Support starts in private,
+person to person, and goes public only when that is what's needed. This is the principle itself, "call our
+brothers in rather than call them out", applied to how we stand with people. The page should present the
+three public statements (2017, 2021, 2025) as the visible tip of that support, not the whole of it, and
+should not imply that a public statement is the measure of solidarity. Private support is not evidenced
+or described, for the protection of the people involved.
+
 ### From the story archive (searched 24 Oct 2026: `archived_articles`, 268 posts, 2016–2024)
 
 Each of these can be a "What grew" link to blkoutuk.com/stories/<slug>.
