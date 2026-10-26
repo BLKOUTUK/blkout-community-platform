@@ -288,7 +288,7 @@ app.get('/sitemap.xml', async (_req, res) => {
 // pieces (which also get Article schema and their text). Any failure falls through to the shell.
 app.get('/stories/:slug', async (req, res, next) => {
   const slug = String(req.params.slug || '');
-  if (!/^[a-z0-9][a-z0-9-]{2,200}$/i.test(slug)) return next();
+  if (!/^[a-z0-9][a-z0-9_-]{2,200}$/i.test(slug)) return next();
   try {
     const { default: storiesHandler } = await import('./api/stories.ts');
     const payload = await new Promise((resolve, reject) => {
