@@ -203,6 +203,9 @@ app.use((req, res, next) => {
 const LEGACY_PATHS = {
   '/contact-us': '/about',
   '/about/about-us': '/about',
+  '/about/support-blackout-uk': '/about',
+  '/about/support-blkout-uk': '/about',
+  '/about/write-photograph-or-film-for-black-out-uk': '/about',
   '/membership': '/shop/membership',
   '/shop-blkout/shophomepage': '/shop',
   '/shop/drops': '/shop',
@@ -220,7 +223,7 @@ app.use((req, res, next) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') return next();
   const p = req.path.length > 1 ? req.path.replace(/\/+$/, '') : req.path;
   if (LEGACY_PATHS[p]) return res.redirect(301, LEGACY_PATHS[p]);
-  const dated = p.match(/^\/\d{4}\/\d{2}\/\d{2}\/([a-z0-9][a-z0-9_-]+)$/i);
+  const dated = p.match(/^\/\d{4}\/\d{2}\/\d{2}\/([a-z0-9][a-z0-9_-]+)(\/[^/]*)?$/i);
   if (dated) return res.redirect(301, `/stories/${dated[1]}`);
   if (/^\/category(\/|$)/.test(p) || /^\/archives\/\d+$/.test(p)) return res.redirect(301, '/stories');
   next();
@@ -377,6 +380,27 @@ const DIST = path.join(__dirname, 'dist');
 // Anything else still gets the friendly shell, but with a real 404 so search engines don't index
 // made-up addresses (SEO plan T2, 11 Oct 2026). Unknown /stories/<slug> fall through to here too.
 const SPA_ROUTES = new Set(['liberation', 'ten-years', 'about/principles', 'governance', 'governance-proposals', 'my-account', 'finances', 'about', 'stories', 'intro', 'admin', 'platform', 'discover', 'terms', 'privacy', 'health-dashboard', 'movement', 'shop', 'shop/membership', 'shop/apparel', 'shop/apparel/blkout-proud', 'shop/apparel/brother-to-brother', 'shop/apparel/icons', 'shop/drops/compass-journal', 'board', 'campaigns', 'compliance']);
+// Old WordPress posts also lived at /<slug>/. When that slug is a story here, send it there
+// (Search Console 'duplicate without canonical', Oct 2026). Slugs are cached for an hour.
+let storySlugCache = { at: 0, slugs: new Set() };
+app.use(async (req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const m = req.path.match(/^\/([a-z0-9][a-z0-9_-]{2,200})\/?$/i);
+  if (!m || SPA_ROUTES.has(m[1])) return next();
+  try {
+    if (Date.now() - storySlugCache.at > 60 * 60 * 1000) {
+      const { default: storiesHandler } = await import('./api/stories.ts');
+      const payload = await new Promise((resolve, reject) => {
+        const fakeRes = { _status: 200, setHeader() { return this; }, status(c) { this._status = c; return this; }, json(body) { resolve(body); }, end() { resolve(null); } };
+        Promise.resolve(storiesHandler({ method: 'GET', query: { limit: '500' }, headers: {} }, fakeRes)).catch(reject);
+      });
+      const stories = payload && payload.data && Array.isArray(payload.data.stories) ? payload.data.stories : [];
+      storySlugCache = { at: Date.now(), slugs: new Set(stories.map((st) => st.slug).filter(Boolean)) };
+    }
+    if (storySlugCache.slugs.has(m[1])) return res.redirect(301, `/stories/${m[1]}`);
+  } catch (e) { console.error('STORY SLUG LOOKUP FAILED:', e); }
+  next();
+});
 app.use((req, res, next) => {
   // Skip if already handled by API routes
   if (req.path.startsWith('/api/')) {
