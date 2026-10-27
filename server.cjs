@@ -197,6 +197,35 @@ app.use((req, res, next) => {
   next();
 });
 
+// The pre-2025 WordPress site's addresses still get crawled (Search Console 404s, Oct 2026).
+// Its posts now live in the stories archive under the same slug; send old links there.
+// Media attachment pages and junk URLs are left to 404, which is the right answer for them.
+const LEGACY_PATHS = {
+  '/contact-us': '/about',
+  '/about/about-us': '/about',
+  '/membership': '/shop/membership',
+  '/shop-blkout/shophomepage': '/shop',
+  '/shop/drops': '/shop',
+  '/blkouthub': 'https://blkouthub.com/',
+  '/blkout-join2024/blkouthub': 'https://blkouthub.com/',
+  '/marsha_p_johnson': '/stories/pride-fight-like-marsha-p-johnson',
+  '/pearls-return': '/stories/action-pearls-return-partner-preview',
+  '/152-2': '/stories/152-2',
+  '/2016/10/16/152': '/stories/152-2',
+  '/watch-this-space-dlpluglondon': '/stories/watch-this-space-dlpluglondon',
+  '/long-read-counted-as-warriors': '/stories/long-read-counted-as-warriors',
+  '/kink-while-black': '/stories/kink-while-black',
+};
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const p = req.path.length > 1 ? req.path.replace(/\/+$/, '') : req.path;
+  if (LEGACY_PATHS[p]) return res.redirect(301, LEGACY_PATHS[p]);
+  const dated = p.match(/^\/\d{4}\/\d{2}\/\d{2}\/([a-z0-9][a-z0-9_-]+)$/i);
+  if (dated) return res.redirect(301, `/stories/${dated[1]}`);
+  if (/^\/category(\/|$)/.test(p) || /^\/archives\/\d+$/.test(p)) return res.redirect(301, '/stories');
+  next();
+});
+
 // Serve static files from Vite build
 // /stories: the archive grid is paged by JS and the build-time prerender has no API, so the raw
 // HTML carried no story links. Insert the same 'Every story, by year' list StoryArchive renders
