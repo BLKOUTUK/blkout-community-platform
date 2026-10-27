@@ -680,6 +680,7 @@
             "name": "BLKOUT co-operative membership",
             "description": "Three ways into BLKOUT's Community Benefit Society. None of them are about influence — governance is one member, one vote — all of them are about access and about keeping building together. In-kind activity is real membership; sustaining money pays for the work.",
             "url": "https://blkoutuk.com/shop/membership",
+            "image": "https://blkoutuk.com/blkout-logo.png",
             "brand": {
               "@type": "Brand",
               "name": "BLKOUT"
@@ -768,27 +769,13 @@
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": "Product",
+            "@type": "CollectionPage",
             "@id": "https://blkoutuk.com/shop/apparel/blkout-proud#product",
             "name": "BLKOUT Proud — apparel range",
             "description": "Pride pieces: joy as a political act. Designs first printed in 2018 — Black Queer Lives Matter, said plainly, worn plainly — brought back because the demand has not gone anywhere. The range is called STILL TRUE. Organic tees and hoods printed to order.",
             "url": "https://blkoutuk.com/shop/apparel/blkout-proud",
-            "brand": {
-              "@type": "Brand",
-              "name": "BLKOUT"
-            },
-            "manufacturer": {
+            "publisher": {
               "@id": "https://blkoutuk.com/#org"
-            },
-            "category": "Apparel",
-            "offers": {
-              "@type": "Offer",
-              "availability": "https://schema.org/InStock",
-              "priceCurrency": "GBP",
-              "description": "Printed to order on organic cotton by Teemill in the UK; sizes and prices on Teemill. BLKOUT earns the margin.",
-              "seller": {
-                "@id": "https://blkoutuk.com/#org"
-              }
             }
           }
         ]
@@ -802,27 +789,13 @@
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": "Product",
+            "@type": "CollectionPage",
             "@id": "https://blkoutuk.com/shop/apparel/brother-to-brother#product",
             "name": "Brother to Brother — apparel range",
             "description": "Joseph Beam's revolutionary act, worn out loud: \"Black men loving Black men is the revolutionary act\" (In the Life, 1986). The design is the cover of Brother to Brother, the anthology Beam conceived and Essex Hemphill finished. Tees and hoods, in colourways, printed to order.",
             "url": "https://blkoutuk.com/shop/apparel/brother-to-brother",
-            "brand": {
-              "@type": "Brand",
-              "name": "BLKOUT"
-            },
-            "manufacturer": {
+            "publisher": {
               "@id": "https://blkoutuk.com/#org"
-            },
-            "category": "Apparel",
-            "offers": {
-              "@type": "Offer",
-              "availability": "https://schema.org/InStock",
-              "priceCurrency": "GBP",
-              "description": "Printed to order on organic cotton by Teemill in the UK; sizes and prices on Teemill. BLKOUT earns the margin.",
-              "seller": {
-                "@id": "https://blkoutuk.com/#org"
-              }
             }
           }
         ]
@@ -836,27 +809,13 @@
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": "Product",
+            "@type": "CollectionPage",
             "@id": "https://blkoutuk.com/shop/apparel/icons#product",
             "name": "Black Queer Icons UK — apparel range",
             "description": "Our forebears, worn into the present: Ivor Cummings (1919–1992), Berto Pasuka (1911–1963), Pearl Alcock (1934–2006), Justin Fashanu (1961–1998). Each piece carries their names so the lineage stays visible. Printed to order.",
             "url": "https://blkoutuk.com/shop/apparel/icons",
-            "brand": {
-              "@type": "Brand",
-              "name": "BLKOUT"
-            },
-            "manufacturer": {
+            "publisher": {
               "@id": "https://blkoutuk.com/#org"
-            },
-            "category": "Apparel",
-            "offers": {
-              "@type": "Offer",
-              "availability": "https://schema.org/InStock",
-              "priceCurrency": "GBP",
-              "description": "Printed to order on organic cotton by Teemill in the UK; sizes and prices on Teemill. BLKOUT earns the margin.",
-              "seller": {
-                "@id": "https://blkoutuk.com/#org"
-              }
             }
           }
         ]
@@ -870,26 +829,13 @@
         "@context": "https://schema.org",
         "@graph": [
           {
-            "@type": "Product",
+            "@type": "Book",
             "@id": "https://blkoutuk.com/shop/drops/compass-journal#product",
             "name": "Ivor's Compass journal — BLKOUT Drop 01",
             "description": "The graphic novel and workshop record about Ivor Cummings, bound and printed: seven directions through one man's life, with the Croydon workshop record. Softbound, around 80 pages, A5. Print run pending; register interest.",
             "url": "https://blkoutuk.com/shop/drops/compass-journal",
-            "brand": {
-              "@type": "Brand",
-              "name": "BLKOUT"
-            },
-            "manufacturer": {
+            "publisher": {
               "@id": "https://blkoutuk.com/#org"
-            },
-            "category": "Books",
-            "offers": {
-              "@type": "Offer",
-              "availability": "https://schema.org/PreOrder",
-              "priceCurrency": "GBP",
-              "seller": {
-                "@id": "https://blkoutuk.com/#org"
-              }
             }
           }
         ]
