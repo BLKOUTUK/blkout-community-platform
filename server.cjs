@@ -167,10 +167,33 @@ app.use((req, res, next) => {
   next();
 });
 
+// Count a visit to a vanity link we've promised someone a report on (link_clicks: slug + time
+// only, no IP or user agent stored). Fire-and-forget: a failed count never delays the redirect.
+// HEAD requests and link-preview / crawler fetches are not people, so they aren't counted.
+const NOT_A_PERSON = /bot|crawl|spider|preview|facebookexternalhit|whatsapp|slack|discord|telegram|skype/i;
+function countClick(req, slug) {
+  const url = process.env.VITE_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (req.method !== 'GET' || NOT_A_PERSON.test(req.get('user-agent') || '')) return;
+  if (!url || !key) return console.error(`link_clicks: FAILED to count ${slug} (Supabase env not set)`);
+  fetch(`${url.replace(/\/$/, '')}/rest/v1/link_clicks`, {
+    method: 'POST',
+    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    body: JSON.stringify({ slug }),
+  }).then((r) => { if (!r.ok) console.error(`link_clicks: FAILED to count ${slug}: HTTP ${r.status}`); })
+    .catch((e) => console.error(`link_clicks: FAILED to count ${slug}: ${e.message}`));
+}
+
 // Vanity redirects → canonical pages on their own subdomains.
 // 302 (not 301) so these marketing URLs stay repointable year to year.
 // Must precede express.static / SPA fallback so they aren't shadowed.
 app.use((req, res, next) => {
+  // Portaul's page in the Ivor's Compass journal (Joseph Beam Day 2026 sponsorship, 31 Oct 2026).
+  // Counted so we can report visits to Portaul in January, as the sponsorship brief says.
+  if (req.path === '/portaul' || req.path === '/portaul/') {
+    countClick(req, 'portaul');
+    return res.redirect(302, 'https://portaul.com/?utm_source=blkout&utm_medium=print&utm_campaign=beam-day-journal');
+  }
   if (req.path === '/ivorstable' || req.path === '/ivorstable/') {
     return res.redirect(302, 'https://comms.blkoutuk.com/ivors-table.html');
   }
