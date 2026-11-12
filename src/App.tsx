@@ -394,6 +394,7 @@ export default function App() {
       {/* Hero Section */}
       <VideoHero
         title="BLKOUT"
+        titleDot="text-liberation-gold-divine"
         subtitle="The Black Queer Men's Liberation Collective"
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
