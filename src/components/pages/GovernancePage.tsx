@@ -42,6 +42,25 @@ const GovernancePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Pull line (Rob, 12 Nov 2026): the mission statement's final clause, verbatim from COMMS.md. */}
+      <section className="py-14 md:py-20 px-6 bg-[#0a0a14] border-t border-[#1e1e2a]">
+        <div className="max-w-4xl mx-auto">
+          <p
+            className="text-[clamp(30px,5vw,60px)] leading-[1.08] text-[#f5f1e8] [text-wrap:balance]"
+            style={{ fontFamily: "'Fraunces', Georgia, serif", fontStyle: 'italic', fontWeight: 300 }}
+          >
+            &ldquo;owned by and accountable to the people we serve&rdquo;
+          </p>
+          <div className="w-[120px] h-1 bg-[#e31e24] my-6" aria-hidden="true" />
+          <a
+            href="/about"
+            className="text-[#d4af37] hover:text-[#ffd700] font-bold uppercase tracking-[0.14em] text-sm underline-offset-4 hover:underline"
+          >
+            What BLKOUT is →
+          </a>
+        </div>
+      </section>
+
       {/* Meet the Board — prominent CTA above the structure */}
       <section className="py-12 px-6 bg-black border-t-4 border-[#d4af37]">
         <div className="max-w-4xl mx-auto">

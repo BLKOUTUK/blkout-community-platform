@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { Shield, Heart, Users, MapPin, Mail, ChevronDown, ChevronUp, ArrowRight, Clock } from 'lucide-react';
 import VideoHero from '@/components/ui/VideoHero';
 import FoundationLayer from '@/components/foundation/FoundationLayer';
+import MissionOpening from '@/components/home/MissionOpening';
 
 interface CollapsibleSectionProps {
   title: string;
@@ -154,6 +155,12 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
         </a>
       </div>
 
+      {/* Core mission: "Sign o' the Times" (moved here from Home, Rob 12 Nov 2026), in place of the plain
+          Core Mission paragraph that opened "Our Liberation Mission". It sits just above that section
+          rather than inside it: the pinned stage needs the full width, not a collapsible card. Its sr-only
+          paragraph carries the full statement as text; "Find out more" goes on to membership. */}
+      <MissionOpening ctaHref="/governance" />
+
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-6 py-12">
         <div className="space-y-6">
@@ -161,12 +168,6 @@ export default function AboutUs({ onNavigate }: AboutUsProps) {
           {/* Mission & Values */}
           <CollapsibleSection title="Our Liberation Mission" defaultOpen={true}>
             <div className="space-y-6">
-              <div>
-                <h4 className="text-lg font-bold text-liberation-pride-pink mb-3">Core Mission</h4>
-                <p className="text-gray-300 leading-relaxed">
-                  BLKOUT is the Black Queer Men's Liberation Collective. We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK. Through local chapters, cooperative membership, creative events, shared learning, and digital media, we turn connection into individual well-being and collective power — owned by and accountable to the people we serve.
-                </p>
-              </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="bg-gray-800 p-6 rounded-xl border-l-4 border-liberation-pride-pink">
