@@ -194,6 +194,12 @@ app.use((req, res, next) => {
     countClick(req, 'portaul');
     return res.redirect(302, 'https://portaul.com/?utm_source=blkout&utm_medium=print&utm_campaign=beam-day-journal');
   }
+  // Jason Jones / Privy Council piece on BLKOUT Voices (13 Nov 2026). Printed on the Instagram
+  // image and caption instead of 'link in bio'. Counted so we can see what the post brings.
+  if (req.path === '/jason' || req.path === '/jason/') {
+    countClick(req, 'jason');
+    return res.redirect(302, 'https://voices.blkoutuk.com/articles/jason-jones-wins-at-the-privy-council?utm_source=instagram&utm_medium=social&utm_campaign=jason-jones');
+  }
   if (req.path === '/ivorstable' || req.path === '/ivorstable/') {
     return res.redirect(302, 'https://comms.blkoutuk.com/ivors-table.html');
   }
