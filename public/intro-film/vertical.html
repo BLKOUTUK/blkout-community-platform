@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BLKOUT. intro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700;900&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Made for 9:16. Same 35s timeline as intro-v1.html, so the same sound track (video/intro-sfx.wav) fits.
+   Reels/Shorts overlays: keep text inside x 72-940, y 260-1500 (top status, bottom caption+buttons, right action rail). */
+:root{--obsidian:#0a0a14;--cream:#f5f1e8;--muted:#a8a195;--gold:#d4af37}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1080px;height:1920px;background:var(--obsidian);overflow:hidden;transform-origin:center;
+  font-family:"Work Sans",sans-serif;color:var(--cream)}
+#stage::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 90% 5%,rgba(74,25,66,.45),transparent 55%)}
+.layer{position:absolute;inset:0;opacity:0}
+.mono{font-family:"IBM Plex Mono",monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.tender{font-family:"Fraunces",serif;font-style:italic;font-weight:300;color:var(--gold)}
+.shout{font-weight:900;text-transform:uppercase;letter-spacing:-.04em;line-height:.8}
+.dot{position:absolute;width:56px;height:56px;border-radius:50%;left:0;top:0;opacity:0}
+#kick{position:absolute;left:72px;top:300px;font-size:26px;line-height:1.7}
+/* rolling actions */
+#stack .ln{position:absolute;left:72px;top:0;width:880px}
+#stack .verb{font-size:230px;white-space:nowrap}
+#stack .dest{display:flex;flex-direction:column;margin-top:34px}
+#stack .lab{font-size:34px;font-weight:500;letter-spacing:.16em;margin-bottom:12px}
+#stack .desc{font-size:54px;line-height:1.18;max-width:860px}
+#stack .ln b{font-weight:900}
+.hubdot{display:inline-block;width:.62em;height:.62em;margin-left:.08em;vertical-align:-.02em}
+#marq .hubdot{width:.5em;height:.5em}
+/* photos: full-bleed portrait crops, colour wipe slides up */
+.ph{position:absolute;inset:0;opacity:0;overflow:hidden}
+.ph img{position:absolute;inset:-3%;width:106%;height:106%;object-fit:cover;filter:saturate(1.05) contrast(1.05)}
+.ph .shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,20,.92) 0%,rgba(10,10,20,.55) 30%,rgba(10,10,20,0) 55%)}
+.ph .bar{position:absolute;left:0;top:0;bottom:0;width:16px}
+.ph .cap{position:absolute;left:72px;bottom:460px;white-space:nowrap}
+.ph .wipe{position:absolute;inset:0}
+.ph.top .cap{bottom:auto;top:330px}
+.ph.top .shade{background:linear-gradient(to bottom,rgba(10,10,20,.8) 0%,rgba(10,10,20,.35) 30%,rgba(10,10,20,0) 50%)}
+/* statement: one word per line, each filling the width */
+#st .big{position:absolute;left:72px;top:300px;width:900px}
+#st .big div{white-space:nowrap}
+#st .sub{position:absolute;left:76px;width:880px;font-size:56px;line-height:1.18}
+#marq{position:absolute;left:0;right:0;top:1360px;height:110px;background:#000;border-top:2px solid #1e1e2a;border-bottom:2px solid #1e1e2a;overflow:hidden}
+#marq .track{position:absolute;top:28px;white-space:nowrap;font-weight:900;font-size:50px;letter-spacing:.02em;text-transform:uppercase}
+#marq .track span{margin-right:56px}
+/* finale: BLK / OUT. stacked, like the sigil */
+#fin .word{position:absolute;left:0;right:0;top:520px;text-align:center;font-size:400px;line-height:.82}
+#fin .word i{font-style:normal;display:inline-block;opacity:0}
+#fin .word i.findot{width:.24em;height:.24em;border-radius:50%;background:var(--gold);margin-left:.05em;vertical-align:baseline}
+#fin .tag{position:absolute;left:90px;right:90px;top:1270px;text-align:center;font-size:62px;line-height:1.15;opacity:0}
+#fin .url{position:absolute;left:0;right:0;top:1460px;text-align:center;font-size:28px;opacity:0}
+.guides #guide{display:block}
+/* resting frame: the gateway */
+#gate{z-index:5;visibility:hidden}
+#gate .wm{position:absolute;color:var(--cream)}
+#gate .wm b{color:var(--gold)}
+#gate .gtag{position:absolute}
+#gate a.go{color:var(--cream);text-decoration:none}
+#gate .gv{white-space:nowrap}
+#gate a.go:hover .gv,#gate a.go:focus-visible .gv{color:#ffd700}
+#gate a.go:focus-visible{outline:3px solid var(--gold);outline-offset:10px}
+#gate .wm{left:72px;top:190px;font-size:210px}
+#gate .gtag{left:76px;top:380px;width:900px;font-size:52px;line-height:1.15}
+#gate .grid{position:absolute;left:72px;right:72px;top:540px;display:flex;flex-direction:column}
+#gate a.go{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:22px 0;border-top:2px solid #1e1e2a}
+#gate .gv{font-size:100px}
+#gate .gl{font-size:36px;text-align:right}
+#skip{position:fixed;right:22px;bottom:18px;z-index:9;font:500 13px "IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:none;border:1px solid #2a2a36;padding:8px 12px;cursor:pointer}
+#skip:hover{color:var(--gold);border-color:var(--gold)}
+#guide{display:none;position:absolute;left:72px;top:260px;width:868px;height:1240px;outline:3px dashed #ff149399;z-index:50}
+</style></head><body>
+<div id="stage">
+  <div class="layer" id="kick"><span class="mono">BLKOUT · since 2016<br>community-owned</span></div>
+  <div class="layer" id="stack"></div>
+  <div class="layer" id="photos"></div>
+  <div class="layer" id="st">
+    <div class="big shout" id="big"></div>
+    <div class="sub tender" id="sub">gatherings, dialogue and technology we own together</div>
+    <div id="marq"><div class="track" id="track"></div></div>
+  </div>
+  <div class="layer" id="fin">
+    <div class="word shout" id="word"></div>
+    <div class="tag tender" id="tag">The Black Queer Men's Liberation Collective</div>
+    <div class="url mono" id="url">blkoutuk.com</div>
+  </div>
+  <div id="dots"></div>
+  <div class="layer" id="gate"></div>
+  <div id="guide"></div>
+</div>
+<button id="skip" type="button">Skip intro</button>
+<script>
+const C={red:'#e31e24',orange:'#ff8c00',gold:'#d4af37',lemon:'#ffe600',green:'#00a86b',blue:'#5b9bd5',purple:'#9b4dca',pink:'#ff1493'};
+const SPECTRUM=[C.red,C.orange,C.gold,C.lemon,C.green,C.blue,C.purple,C.pink];
+const SECTIONS=[['Members',C.red,'join the collective, shape our work – are you in?','Join','/governance'],
+  ['Shop',C.orange,'exclusive apparel, gifts for him, limited edition drops','Buy','/shop'],
+  ['Local',C.gold,'BLKOUT where you are','Discover','https://events.blkoutuk.com/#constellation-nav'],['Events',C.lemon,"what's on, updated daily",'Go out','https://events.blkoutuk.com/'],
+  ['Voices',C.green,'commentary, opinions, video essays, for the culture','Tune in','https://voices.blkoutuk.com/'],['AIvor',C.blue,'Need answers? ask AIvor','Find out','/intro'],
+  ['News',C.purple,'Global roundup of news that matters, voted for by you','Vote','https://news.blkoutuk.com/'],
+  ['Mental Health',C.pink,"campaign for Black queer men's mental health",'Speak up','/mental-health'],
+  ['BLKOUTHUB','hub',"private digital network, where the UK's Black queer men meet",'Meet','https://blkouthub.com/']];
+const DOT=c=>c==='hub'?'<img class="hubdot" src="img/hub-roundel.png" alt="">':`<b style="color:${c}">.</b>`;
+// portrait crops chosen per photo (object-position)
+const PHOTOS=[['img/01-workshop.jpg','We|gather',C.red,'38% 50%'],['img/02-celebrate.jpg','We|celebrate',C.orange,'47% 30%'],
+              ['img/03-perform.jpg','We|perform',C.lemon,'50% 25%'],['img/04-ted.jpg','We|speak out',C.green,'55% 30%'],
+              ['img/05-placards.jpg','We|show up',C.blue,'24% 45%'],['img/06-flag.jpg','We|represent',C.purple,'40% 50%','top']];
+const T=36, SW=1080, SH=1920;
+const $=id=>document.getElementById(id);
+const q=new URLSearchParams(location.search); if(q.has('guides')) $('stage').classList.add('guides');
+const dots=SPECTRUM.map(c=>{const d=document.createElement('div');d.className='dot';d.style.background=c;$('dots').appendChild(d);return d;});
+const lines=SECTIONS.map(([w,c,desc,verb])=>{const el=document.createElement('div');el.className='ln';
+  el.innerHTML=`<div class="shout verb">${verb.replace(' ','<br>')}${DOT(c)}</div><div class="dest"><span class="mono lab" style="color:${c==='hub'?'var(--cream)':c}">${w}</span><span class="tender desc">${desc}</span></div>`;
+  $('stack').appendChild(el);return el;});
+const phEls=PHOTOS.map(([src,cap,col,pos,where])=>{const p=document.createElement('div');p.className='ph'+(where?' '+where:'');const [a,b]=cap.split('|');
+  p.innerHTML=`<img src="${src}" alt="" style="object-position:${pos}"><div class="shade"></div><div class="bar" style="background:${col}"></div>
+  <div class="cap shout"><div class="w1">${a}</div><div class="w2">${b}<span style="color:${col}">.</span></div></div><div class="wipe" style="background:${col}"></div>`;
+  $('photos').appendChild(p);return p;});
+$('big').innerHTML=["The Black","Queer","Men's","Liberation","Collective"].map(w=>`<div>${w}</div>`).join('');
+$('track').innerHTML=[...Array(3)].map(()=>SECTIONS.map(([w,c])=>`<span>${w}${DOT(c)}</span>`).join('')).join('');
+const letters=[]; 'BLKOUT'.split('').forEach((ch,i)=>{const e=document.createElement('i');e.textContent=ch;$('word').appendChild(e);letters.push(e);if(i===2)$('word').appendChild(document.createElement('br'));});
+const finDot=document.createElement('i');finDot.className='findot';$('word').appendChild(finDot);
+// ---------- resting frame: the gateway (real links; target=_top leaves the homepage iframe) ----------
+$('gate').innerHTML=`<div class="wm shout">BLKOUT<b>.</b></div><div class="gtag tender">The Black Queer Men's Liberation Collective</div>
+  <nav class="grid" aria-label="Nine ways in">${SECTIONS.map(([w,c,desc,verb,href])=>`<a class="go" href="${href}" target="_top"><span class="gv shout">${verb}${DOT(c)}</span><span class="gl mono" style="color:${c==='hub'?'var(--cream)':c}">${w}</span></a>`).join('')}</nav>`;
+const KEY='blkout-intro-seen';
+const seen=()=>{try{return !!localStorage.getItem(KEY);}catch(e){return false;}};
+const markSeen=()=>{try{localStorage.setItem(KEY,String(Date.now()));}catch(e){}};
+
+// fit-to-width typesetting (runs once fonts are in)
+function fitW(el,max,cap){el.style.fontSize=cap+'px';const w=el.scrollWidth;if(w>max)el.style.fontSize=(cap*max/w)+'px';}
+function typeset(){
+  lines.forEach(l=>{const v=l.querySelector('.verb');v.style.fontSize='230px';
+    const rows=v.innerHTML.split('<br>').length; const w=v.scrollWidth; if(w>880)v.style.fontSize=(230*880/w)+'px';});
+  phEls.forEach(p=>{const c=p.querySelector('.cap');c.style.fontSize='200px';const w=c.scrollWidth;if(w>900)c.style.fontSize=(200*900/w)+'px';});
+  let y=0; [...$('big').children].forEach(d=>{fitW(d,900,300);});
+  const bh=$('big').offsetHeight; $('sub').style.top=(300+bh+50)+'px';
+}
+
+const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v)), p=(t,a,b)=>cl((t-a)/(b-a));
+const eo=x=>1-Math.pow(1-x,3), eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2, back=x=>{const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+const fade=(t,a,b,c,d)=>Math.min(p(t,a,b),1-p(t,c,d));
+const setDot=(d,x,y,s,o)=>{d.style.transform=`translate(${x-28}px,${y-28}px) scale(${s})`;d.style.opacity=o;};
+
+function render(t){
+  $('kick').style.opacity=fade(t,0.3,1.0,1.8,2.4);
+  const col=i=>880+(i-3.5)*100;                       // the spectrum stands up: a column, like stripes
+  dots.forEach((d,i)=>{let x=540,y=880,s=0,o=0;
+    if(t<4.3){const born=eo(p(t,0.3,1.0)),split=eio(p(t,1.8,3.3));
+      y=880+(col(i)-880)*split; s=(i===2?born:split)*(1+0.12*Math.sin(t*5)*(1-split)); o=i===2?born:split;
+      if(t>3.6)o*=1-p(t,3.6,4.2);}
+    else if(t>=28.6){const a=i/8*Math.PI*2+0.6,r=440*(1-eio(p(t,29.0,31.0)));
+      x=finX()+Math.cos(a)*r; y=finY()+Math.sin(a)*r; s=1; o=p(t,28.6,29.2)*(1-p(t,30.95,31.2));}
+    setDot(d,x,y,s,o);});
+  // rolling actions: rise like a swipe
+  $('stack').style.opacity=fade(t,4.0,4.3,17.3,17.7);
+  {const SLOT=1.5,u=cl((t-4.2)/SLOT,0,lines.length-1),k=Math.floor(u),fr=u-k,f=k+eio(cl((fr-0.72)/0.28));
+   lines.forEach((el,i)=>{const d=i-f;const o=d>=0?cl(1-d*1.8):(d>-1?1+d*0.75:cl(0.25+(d+1)*0.25));
+     el.style.opacity=o; el.style.transform=`translateY(${560+d*700}px)`; el.querySelector('.dest').style.opacity=cl(1-Math.abs(d)*2.4);});}
+  // photos: colour panel slides up and away, caption rises
+  $('photos').style.opacity=t>=17.7&&t<26.4?1:0;
+  phEls.forEach((el,i)=>{const a=17.7+i*1.4,b=a+1.4,on=t>=a&&t<b+0.25;el.style.opacity=on?1:0;el.style.zIndex=i;
+    el.querySelector('img').style.transform=`scale(${1+0.06*p(t,a,b+0.25)})`;
+    const w=el.querySelector('.wipe'),wi=eio(p(t,a,a+0.32)); w.style.clipPath=`inset(0 0 ${wi*100}% 0)`; w.style.opacity=wi<1?1:0;
+    const c=el.querySelector('.cap'),cq=eo(p(t,a+0.2,a+0.62)); c.style.opacity=cq; c.style.transform=`translateY(${(1-cq)*90}px)`;});
+  // statement
+  $('st').style.opacity=fade(t,26.1,26.4,28.6,29.0);
+  [...$('big').children].forEach((d,i)=>{const q2=eo(p(t,26.15+i*0.12,26.55+i*0.12)); d.style.opacity=q2; d.style.transform=`translateY(${(1-q2)*50}px)`;});
+  $('track').style.transform=`translateX(${-((t-26.1)*260)%1600}px)`;
+  // finale
+  $('fin').style.opacity=p(t,28.9,29.2)*(1-p(t,35.0,35.5));
+  letters.forEach((l,i)=>{const a=29.3+i*0.11,q2=back(p(t,a,a+0.42)); l.style.opacity=p(t,a,a+0.12); l.style.transform=`translateY(${(1-q2)*-140}px)`;});
+  const land=p(t,31.0,31.25); finDot.style.opacity=land; finDot.style.transform=`scale(${1+0.25*(1-land)+(t>31.8?0.06*Math.sin((t-31.8)*4):0)})`;
+  $('tag').style.opacity=eo(p(t,31.6,32.4)); $('tag').style.transform=`translateY(${(1-eo(p(t,31.6,32.4)))*24}px)`;
+  $('url').style.opacity=eo(p(t,32.4,33.2));
+  // 35-36: the finale hands over to the gateway, which stays
+  const g=p(t,35.2,35.9); $('gate').style.opacity=g; $('gate').style.visibility=g>0?'visible':'hidden';
+}
+let _fx=null,_fy=null;
+function finX(){if(_fx===null){const r=finDot.getBoundingClientRect(),s=$('stage').getBoundingClientRect();_fx=(r.left-s.left+r.width/2)*SW/s.width;}return _fx;}
+function finY(){if(_fy===null){const r=finDot.getBoundingClientRect(),s=$('stage').getBoundingClientRect();_fy=(r.top-s.top+r.height/2)*SH/s.height;}return _fy;}
+function fit(){const k=Math.min(innerWidth/SW,innerHeight/SH);$('stage').style.transform=`translate(-50%,-50%) scale(${k})`;_fx=_fy=null;}
+addEventListener('resize',fit);fit();
+// plays once per visitor (localStorage), Skip jumps to the gateway, Replay runs it again;
+// ?rest shows the gateway, ?play forces a run, ?t= freezes a moment
+let done=false,start=null,resting=false;
+const chrome=r=>{resting=r;$('skip').textContent=r?'Replay intro':'Skip intro';};
+function end(){done=true;render(T);chrome(true);}
+const loop=ts=>{if(done)return;if(start===null)start=ts;const t=(ts-start)/1000;render(Math.min(t,T));if(t<T)requestAnimationFrame(loop);else end();};
+function play(){done=false;start=null;chrome(false);markSeen();requestAnimationFrame(loop);}
+$('skip').onclick=()=>{resting?play():end();};
+document.fonts.ready.then(()=>{typeset();
+  if(q.has('t')){render(parseFloat(q.get('t')));return;}
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches||q.has('rest')||(!q.has('play')&&seen())){end();return;}
+  play();});
+</script>
+</body></html>

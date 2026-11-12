@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BLKOUT. intro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700;900&family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--obsidian:#0a0a14;--abyss:#14141f;--cream:#f5f1e8;--muted:#a8a195;--gold:#d4af37;
+  --red:#e31e24;--orange:#ff8c00;--lemon:#ffe600;--green:#00a86b;--blue:#5b9bd5;--purple:#9b4dca;--pink:#ff1493}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#000;overflow:hidden}
+#wrap{position:fixed;inset:0;display:grid;place-items:center}
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;background:var(--obsidian);overflow:hidden;transform-origin:center;
+  font-family:"Work Sans",sans-serif;color:var(--cream)}
+.layer{position:absolute;inset:0;opacity:0}
+.mono{font-family:"IBM Plex Mono",monospace;font-size:22px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.tender{font-family:"Fraunces",serif;font-style:italic;font-weight:300;color:var(--gold)}
+.shout{font-weight:900;text-transform:uppercase;letter-spacing:-.04em;line-height:.78}
+/* dots */
+.dot{position:absolute;width:44px;height:44px;border-radius:50%;left:0;top:0;opacity:0;will-change:transform}
+/* stacked words */
+#stack{padding:70px 120px}
+#stack .ln{position:absolute;left:120px;white-space:nowrap;opacity:0}
+#stack .ln{left:160px;top:0;will-change:transform,opacity}
+#stack .verb{font-size:170px}
+#stack .dest{display:flex;flex-direction:column;margin-top:26px}
+#stack .lab{font-size:38px;font-weight:500;letter-spacing:.16em;margin-bottom:8px}
+#stack .ln b{font-weight:900}
+#stack .desc{font-size:50px}
+.hubdot{display:inline-block;width:.62em;height:.62em;margin-left:.08em;vertical-align:-.02em}
+#marq .hubdot{width:.5em;height:.5em}
+/* photos */
+.ph{position:absolute;inset:0;opacity:0;overflow:hidden}
+.ph img{position:absolute;inset:-4%;width:108%;height:108%;object-fit:cover;filter:saturate(1.05) contrast(1.05)}
+.ph .shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,20,.88) 0%,rgba(10,10,20,.25) 45%,rgba(10,10,20,0) 70%)}
+.ph .bar{position:absolute;left:0;right:0;top:0;height:14px}
+.ph .cap{position:absolute;left:110px;bottom:96px;font-size:150px}
+.ph .wipe{position:absolute;inset:0}
+.ph.portrait{background:var(--obsidian)}
+.ph.portrait .cap{font-size:118px}
+.ph.portrait img{inset:0 0 0 auto;left:auto;right:0;width:auto;height:100%;max-width:64%;object-fit:cover}
+.ph.portrait .shade{background:linear-gradient(to right,var(--obsidian) 40%,rgba(10,10,20,0) 58%),linear-gradient(to top,rgba(10,10,20,.6),rgba(10,10,20,0) 40%)}
+/* statement + marquee */
+#st .big{position:absolute;left:120px;top:230px;font-size:168px}
+#st .sub{position:absolute;left:124px;top:690px;font-size:52px}
+#marq{position:absolute;left:0;right:0;top:820px;height:110px;background:#000;border-top:2px solid #1e1e2a;border-bottom:2px solid #1e1e2a;overflow:hidden}
+#marq .track{position:absolute;top:28px;white-space:nowrap;font-weight:900;font-size:50px;letter-spacing:.02em;text-transform:uppercase}
+#marq .track span{margin-right:56px}
+/* finale */
+#fin .word{position:absolute;left:0;right:0;top:330px;text-align:center;font-size:330px}
+#fin .word i{font-style:normal;display:inline-block;opacity:0}
+#fin .word i.findot{width:.24em;height:.24em;border-radius:50%;background:var(--gold);margin-left:.05em;vertical-align:baseline}
+#fin .tag{position:absolute;left:0;right:0;top:720px;text-align:center;font-size:58px;opacity:0}
+#fin .url{position:absolute;left:0;right:0;top:830px;text-align:center;opacity:0}
+#kick{position:absolute;left:120px;top:96px}
+/* resting frame: the gateway */
+#gate{z-index:5;visibility:hidden}
+#gate .wm{position:absolute;color:var(--cream)}
+#gate .wm b{color:var(--gold)}
+#gate .gtag{position:absolute}
+#gate a.go{color:var(--cream);text-decoration:none}
+#gate .gv{white-space:nowrap}
+#gate a.go:hover .gv,#gate a.go:focus-visible .gv{color:#ffd700}
+#gate a.go:focus-visible{outline:3px solid var(--gold);outline-offset:10px}
+#gate .wm{left:120px;top:96px;font-size:150px}
+#gate .gtag{left:126px;top:250px;font-size:46px}
+#gate .grid{position:absolute;left:120px;right:120px;top:400px;display:grid;grid-template-columns:repeat(3,1fr);column-gap:60px;row-gap:64px}
+#gate a.go{display:block}
+#gate .gv{display:block;font-size:96px}
+#gate .gl{display:block;margin-top:16px;font-size:26px}
+/* ?fb = Facebook cover-video framing: all text inside the central band desktop shows (y≈175-905 of 1080), bottom-left clear for the profile picture */
+#stage.fb #kick{top:205px}
+#stage.fb .ph .cap{bottom:360px}
+#stage.fb .ph.portrait .cap{bottom:360px}
+#stage.fb #st .big{top:205px}
+#stage.fb #st .sub{top:630px}
+#stage.fb #marq{top:725px}
+#stage.fb #fin .word{top:300px}
+#stage.fb #fin .tag{top:660px}
+#stage.fb #fin .url{top:760px}
+/* chrome */
+#skip{position:fixed;right:22px;bottom:18px;z-index:9;font:500 13px "IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:none;border:1px solid #2a2a36;padding:8px 12px;cursor:pointer}
+#skip:hover{color:var(--gold);border-color:var(--gold)}
+#dbg{position:fixed;left:0;right:0;bottom:0;z-index:9;display:none;background:#000c;padding:8px 16px;gap:12px;align-items:center;font:12px monospace;color:#ccc}
+#dbg input{flex:1}
+</style></head><body>
+<div id="wrap"><div id="stage">
+
+  <div class="layer" id="kick"><span class="mono">BLKOUT · since 2016 · community-owned</span></div>
+
+  <div class="layer" id="stack"></div>
+
+  <div class="layer" id="photos"></div>
+
+  <div class="layer" id="st">
+    <div class="big shout">The Black Queer<br>Men's Liberation<br>Collective</div>
+    <div class="sub tender">gatherings, dialogue and technology we own together</div>
+    <div id="marq"><div class="track" id="track"></div></div>
+  </div>
+
+  <div class="layer" id="fin">
+    <div class="word shout" id="word"></div>
+    <div class="tag tender" id="tag">The Black Queer Men's Liberation Collective</div>
+    <div class="url mono" id="url">blkoutuk.com</div>
+  </div>
+
+  <div class="layer" id="gate"></div>
+
+  <div id="dots"></div>
+</div></div>
+<button id="skip" type="button">Skip intro</button>
+<div id="dbg"><span id="tl">0.00s</span><input id="scrub" type="range" min="0" max="36" step="0.01" value="0"></div>
+
+<script>
+// ---------- data ----------
+const C={red:'#e31e24',orange:'#ff8c00',gold:'#d4af37',lemon:'#ffe600',green:'#00a86b',blue:'#5b9bd5',purple:'#9b4dca',pink:'#ff1493'};
+const SPECTRUM=[C.red,C.orange,C.gold,C.lemon,C.green,C.blue,C.purple,C.pink];   // Pride order, BLKOUT gold at home
+const SECTIONS=[['Members',C.red,'join the collective, shape our work – are you in?','Join','/governance'],
+  ['Shop',C.orange,'exclusive apparel, gifts for him, limited edition drops','Buy','/shop'],
+  ['Local',C.gold,'BLKOUT where you are','Discover','https://events.blkoutuk.com/#constellation-nav'],['Events',C.lemon,"what's on, updated daily",'Go out','https://events.blkoutuk.com/'],
+  ['Voices',C.green,'commentary, opinions, video essays, for the culture','Tune in','https://voices.blkoutuk.com/'],['AIvor',C.blue,'Need answers? ask AIvor','Find out','/intro'],
+  ['News',C.purple,'Global roundup of news that matters, voted for by you','Vote','https://news.blkoutuk.com/'],
+  ['Mental Health',C.pink,"campaign for Black queer men's mental health",'Speak up','/mental-health'],
+  ['BLKOUTHUB','hub',"private digital network, where the UK's Black queer men meet",'Meet','https://blkouthub.com/']];
+const DOT=c=>c==='hub'?'<img class="hubdot" src="img/hub-roundel.png" alt="">':`<b style="color:${c}">.</b>`;
+const PHOTOS=[['img/01-workshop.jpg','We gather',C.red,'50% 55%'],['img/02-celebrate.jpg','We celebrate',C.orange,'50% 30%'],
+              ['img/03-perform.jpg','We perform',C.lemon,'50% 30%'],['img/04-ted.jpg','We speak out',C.green,'50% 30%','portrait'],
+              ['img/05-placards.jpg','We show up',C.blue,'50% 40%'],['img/06-flag.jpg','We represent',C.purple,'50% 50%','portrait']];
+const T=36;
+
+// ---------- build ----------
+const FB=new URLSearchParams(location.search).has('fb'); if(FB) document.getElementById('stage').classList.add('fb');
+const $=id=>document.getElementById(id);
+const dotsEl=$('dots'), dots=SPECTRUM.map(c=>{const d=document.createElement('div');d.className='dot';d.style.background=c;dotsEl.appendChild(d);return d;});
+// stacked words: y positions fill the frame (crushed leading)
+const lines=SECTIONS.map(([w,c,desc,verb])=>{const el=document.createElement('div');el.className='ln';
+  el.innerHTML=`<div class="shout verb">${verb}${DOT(c)}</div><div class="dest"><span class="mono lab" style="color:${c==='hub'?'var(--cream)':c}">${w}</span><span class="tender desc">${desc}</span></div>`;$('stack').appendChild(el);return el;});
+const phEls=PHOTOS.map(([src,cap,col,pos,kind])=>{const p=document.createElement('div');p.className='ph'+(kind?' '+kind:'');
+  p.innerHTML=`<img src="${src}" alt="" style="object-position:${pos}"><div class="shade"></div><div class="bar" style="background:${col}"></div>
+  <div class="cap shout">${cap}<span style="color:${col}">.</span></div><div class="wipe" style="background:${col}"></div>`;
+  $('photos').appendChild(p);return p;});
+$('track').innerHTML=[...Array(3)].map(()=>SECTIONS.map(([w,c])=>`<span>${w}${DOT(c)}</span>`).join('')).join('');
+const letters='BLKOUT'.split('').map(ch=>{const i=document.createElement('i');i.textContent=ch;$('word').appendChild(i);return i;});
+const finDot=document.createElement('i');finDot.className='findot';$('word').appendChild(finDot);
+// ---------- resting frame: the gateway (real links; target=_top leaves the homepage iframe) ----------
+$('gate').innerHTML=`<div class="wm shout">BLKOUT<b>.</b></div><div class="gtag tender">The Black Queer Men's Liberation Collective</div>
+  <nav class="grid" aria-label="Nine ways in">${SECTIONS.map(([w,c,desc,verb,href])=>`<a class="go" href="${href}" target="_top"><span class="gv shout">${verb}${DOT(c)}</span><span class="gl mono" style="color:${c==='hub'?'var(--cream)':c}">${w}</span></a>`).join('')}</nav>`;
+const KEY='blkout-intro-seen';
+const seen=()=>{try{return !!localStorage.getItem(KEY);}catch(e){return false;}};
+const markSeen=()=>{try{localStorage.setItem(KEY,String(Date.now()));}catch(e){}};
+
+// ---------- helpers ----------
+const cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+const p=(t,a,b)=>cl((t-a)/(b-a));                      // progress 0..1 between a and b
+const eo=x=>1-Math.pow(1-x,3), eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2, back=x=>{const c=1.7;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
+const fade=(t,a,b,c,d)=>Math.min(p(t,a,b),1-p(t,c,d));  // in a..b, out c..d
+const setDot=(d,x,y,s,o)=>{d.style.transform=`translate(${x-22}px,${y-22}px) scale(${s})`;d.style.opacity=o;};
+
+// ---------- the timeline: render(t) is pure, so any moment can be frozen ----------
+function render(t){
+  // 0-3s: one gold dot, kicker
+  $('kick').style.opacity=fade(t,0.3,1.0,1.8,2.4);
+  const row=i=>960+(i-3.5)*104;
+  dots.forEach((d,i)=>{
+    let x=960,y=540,s=0,o=0;
+    if(t<4.3){                                         // birth + split into spectrum row
+      const born=eo(p(t,0.3,1.0)); const split=eio(p(t,1.8,3.3));
+      x=960+(row(i)-960)*split; s=(i===2?born:split)*(1+0.12*Math.sin(t*5)*(1-split)); o=i===2?born:split;
+      if(t>3.6){ o*=1-p(t,3.6,4.2); }                  // dots hand over to the words
+    } else if(t>=28.6){                                // return: scatter in, converge to the full stop
+      const a=i/8*Math.PI*2+0.6, r=520*(1-eio(p(t,29.0,31.0)));
+      const fx=finX(), fy=finY();
+      x=fx+Math.cos(a)*r; y=fy+Math.sin(a)*r*0.55; s=1; o=p(t,28.6,29.2)*(1-p(t,30.95,31.2));
+    }
+    setDot(d,x,y,s,o);
+  });
+  // 5.5-11: stacked section words, each landing with its coloured stop
+  $('stack').style.opacity=fade(t,4.0,4.3,17.3,17.7);
+  { const SLOT=1.5, u=cl((t-4.2)/SLOT,0,lines.length-1), k=Math.floor(u), fr=u-k;
+    const f=k+eio(cl((fr-0.72)/0.28));                  // hold ~70% of each slot, then roll
+    lines.forEach((el,i)=>{const d=i-f;
+      const o=d>=0?cl(1-d*1.8):(d>-1?1+d*0.72:cl(0.28+(d+1)*0.28));
+      el.style.opacity=o; el.style.transform=`translateY(${(FB?330:360)+d*300}px)`;
+      const dq=cl(1-Math.abs(d)*2.4); el.querySelector('.dest').style.opacity=dq;});
+  }
+  // 11-19.3: photo punctuation, 1.38s each, colour wipe cut
+  $('photos').style.opacity=t>=17.7&&t<26.4?1:0;
+  phEls.forEach((el,i)=>{const a=17.7+i*1.4, b=a+1.4; const on=t>=a&&t<b+0.25; el.style.opacity=on?1:0; el.style.zIndex=i;
+    const k=p(t,a,b+0.25); el.querySelector('img').style.transform=`scale(${1+0.06*k})`;
+    const w=el.querySelector('.wipe'); const wi=p(t,a,a+0.28); w.style.clipPath=`inset(0 0 0 ${wi*100}%)`; w.style.opacity=wi<1?1:0;
+    const cap=el.querySelector('.cap'); const cq=eo(p(t,a+0.2,a+0.6)); cap.style.opacity=cq; cap.style.transform=`translateX(${(1-cq)*-80}px)`;});
+  // 19.3-23: statement + marquee
+  $('st').style.opacity=fade(t,26.1,26.4,28.6,29.0);
+  $('track').style.transform=`translateX(${-((t-26.1)*260)%1600}px)`;
+  // 23-30: BLKOUT. slams in, the dot lands, tagline and url
+  $('fin').style.opacity=p(t,28.9,29.2)*(1-p(t,35.0,35.5));
+  letters.forEach((l,i)=>{const a=29.3+i*0.11, q=back(p(t,a,a+0.42)); l.style.opacity=p(t,a,a+0.12); l.style.transform=`translateY(${(1-q)*-120}px)`;});
+  const land=p(t,31.0,31.25); finDot.style.opacity=land; finDot.style.transform=`scale(${1+0.25*(1-land)+(t>31.8?0.06*Math.sin((t-31.8)*4):0)})`;
+  $('tag').style.opacity=eo(p(t,31.6,32.4)); $('tag').style.transform=`translateY(${(1-eo(p(t,31.6,32.4)))*24}px)`;
+  $('url').style.opacity=eo(p(t,32.4,33.2));
+  // 35-36: the finale hands over to the gateway, which stays
+  const g=p(t,35.2,35.9); $('gate').style.opacity=g; $('gate').style.visibility=g>0?'visible':'hidden';
+}
+// where the final full stop sits (after the T)
+let _fx=null,_fy=null;
+function finX(){ if(_fx===null){const r=finDot.getBoundingClientRect(),s=$('stage').getBoundingClientRect(),k=1920/s.width;_fx=(r.left-s.left+r.width*0.5)*k;} return _fx; }
+function finY(){ if(_fy===null){const r=finDot.getBoundingClientRect(),s=$('stage').getBoundingClientRect(),k=1080/s.height;_fy=(r.top-s.top+r.height*0.5)*k;} return _fy; }
+
+// ---------- fit + play ----------
+function fit(){const k=Math.min(innerWidth/1920,innerHeight/1080);$('stage').style.transform=`translate(-50%,-50%) scale(${k})`;_fx=_fy=null;}
+addEventListener('resize',fit);fit();
+const q=new URLSearchParams(location.search), frozen=q.has('t'), reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+// plays once per visitor (localStorage), Skip jumps to the gateway, Replay runs it again;
+// ?rest shows the gateway, ?play forces a run, ?t= freezes a moment
+let done=false,start=null,resting=false;
+const chrome=r=>{resting=r;$('skip').textContent=r?'Replay intro':'Skip intro';};
+function end(){done=true;render(T);chrome(true);}
+const loop=ts=>{if(done)return;if(start===null)start=ts;const t=(ts-start)/1000;render(Math.min(t,T));$('tl').textContent=t.toFixed(2)+'s';$('scrub').value=t;if(t<T)requestAnimationFrame(loop);else end();};
+function play(){done=false;start=null;chrome(false);markSeen();requestAnimationFrame(loop);}
+$('skip').onclick=()=>{resting?play():end();};
+document.fonts.ready.then(()=>{
+  if(frozen){render(parseFloat(q.get('t')));return;}
+  if(reduced||q.has('rest')||(!q.has('play')&&seen())){end();return;}
+  if(q.has('debug')){const s=$('scrub');$('dbg').style.display='flex';s.oninput=()=>{done=true;render(+s.value);$('tl').textContent=(+s.value).toFixed(2)+'s';};}
+  play();
+});
+</script>
+</body></html>

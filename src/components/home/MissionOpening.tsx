@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 // search engines and screen readers read it whole. Reduced motion shows the plain final state.
 // Prototype: blkout/projects/homepage-statement/prototypes/statement-motion.html
 
-const STATEMENT = [
+export const STATEMENT = [
   "BLKOUT is the Black Queer Men's Liberation Collective.",
   'We host gatherings, build space for dialogue, and create community-owned technology for the health, wealth and happiness of Black gay, bi and trans men across the UK.',
   'Through local chapters, cooperative membership, creative events, shared learning, and digital media, we turn connection into individual well-being and collective power — owned by and accountable to the people we serve.',
@@ -168,7 +168,13 @@ function scrollToFindOutMore(e: React.MouseEvent) {
   target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
 }
 
-export default function MissionOpening() {
+interface MissionOpeningProps {
+  // Where "Find out more" goes. Default scrolls to #find-out-more on the same page; on /about it
+  // points onward to membership, never back to About (Rob, 12 Nov 2026).
+  ctaHref?: string;
+}
+
+export default function MissionOpening({ ctaHref = '#find-out-more' }: MissionOpeningProps) {
   const rootRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -182,10 +188,11 @@ export default function MissionOpening() {
     // Shrink any phrase that would spill off the screen (except the ones that bleed on purpose).
     const fit = () => beats.forEach((b) => {
       const box = b.firstElementChild as HTMLElement | null;
-      if (!box || box.querySelector('.bleed')) return;
+      if (!box || box.querySelector('.bleed') || b.classList.contains('beat-final')) return;
       box.style.fontSize = '';
       let guard = 0;
-      while (box.scrollWidth > window.innerWidth * 0.94 && guard++ < 30) {
+      const room = Math.min(window.innerWidth, stage.clientWidth || window.innerWidth) * 0.94;
+      while (box.scrollWidth > room && guard++ < 30) {
         box.style.fontSize = parseFloat(getComputedStyle(box).fontSize) * 0.94 + 'px';
       }
     });
@@ -243,7 +250,7 @@ export default function MissionOpening() {
         <div className="beat beat-final">
           <div className="b-final">
             {STATEMENT.map((s) => <p key={s} aria-hidden="true">{s}</p>)}
-            <a className="so-cta" href="#find-out-more" onClick={scrollToFindOutMore}>Find out more</a>
+            <a className="so-cta" href={ctaHref} onClick={ctaHref === '#find-out-more' ? scrollToFindOutMore : undefined}>Find out more</a>
           </div>
         </div>
         <div className="progress" aria-hidden="true" />

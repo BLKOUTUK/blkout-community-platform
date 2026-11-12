@@ -30,7 +30,6 @@ import PrivacyPolicy from '@/components/pages/PrivacyPolicy';
 import HealthDashboard from '@/components/pages/HealthDashboard';
 import MobileNav from '@/components/ui/MobileNav';
 import InstallPrompt from '@/components/ui/InstallPrompt';
-import VideoHero from '@/components/ui/VideoHero';
 import MovementSplit from '@/components/movement/MovementSplit';
 import ShopPage from '@/components/pages/ShopPage';
 import MembershipPage from '@/components/pages/MembershipPage';
@@ -41,8 +40,8 @@ import GbpParisInterestPage from '@/components/pages/GbpParisInterestPage';
 import BoardNavigationHub from '@/components/governance/board/BoardNavigationHub';
 import CampaignDashboard from '@/components/pages/campaigns/CampaignDashboard';
 import CompliancePage from '@/components/pages/CompliancePage';
-import AnimatedLiberationGrid from '@/components/home/AnimatedLiberationGrid';
-import MissionOpening from '@/components/home/MissionOpening';
+import IntroHero from '@/components/home/IntroHero';
+import HomeStatement from '@/components/home/HomeStatement';
 import { supabase } from '@/lib/supabase';
 
 // API Configuration - Working backend
@@ -391,36 +390,16 @@ export default function App() {
   // Main liberation dashboard
   const renderLiberationDashboard = () => (
     <div className="space-y-8">
-      {/* Hero Section */}
-      <VideoHero
-        title="BLKOUT"
-        titleDot="text-liberation-gold-divine"
-        subtitle="The Black Queer Men's Liberation Collective"
-        videos={[
-          '/videos/hero/PLATFORM HERO 1.mp4',
-          '/videos/hero/PLATFORM HERO 2.mp4',
-          '/videos/hero/PLATFORM HERO 3.mp4'
-        ]}
-        height="lg"
-        textColor="light"
-        overlayOpacity={0.7}
-        className="mb-8"
-        logoSrc="/Branding and logos/blkoutlogo_wht_transparent.png"
-        titleSize="xl"
-      />
+      {/* Intro (Rob, 12 Nov 2026): the platform intro film replaces the video hero. It plays once per
+          visitor and rests on a working gateway (the nine ways in), so the Animated Liberation Grid
+          that used to follow is retired from Home, and "Sign o' the Times" (MissionOpening) moved to /about. */}
+      <div>
+        <IntroHero />
+        {/* What BLKOUT is, as real text (mission statement, COMMS.md verbatim): the page's one H1. */}
+        <HomeStatement onAbout={() => changeActiveTab('about')} />
+      </div>
 
-      {/* Animated Liberation Grid - Progressive reveal gateway.
-          The page's focus (Rob, 29 Aug 2026): everything that used to sit between
-          the hero and this — the Beat 2 paragraph (replicated on /discover), the
-          AIvor digest box, the OOMF box, "where to go next" — is gone or moved to
-          the foot, so this is the first thing a visitor reaches after the hero. */}
-      {/* Mission statement opening — "Sign o' the Times" (Rob, 24 Oct 2026; replaced D+): the stage pins
-          and the statement plays phrase by phrase, then settles as plain text with "Find out more". */}
-      <MissionOpening />
-
-      <AnimatedLiberationGrid onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />
-
-      {/* Rotating Liberation Quotes — below the grid; less important than the gateway. */}
+      {/* Rotating Liberation Quotes — below the statement; less important than the gateway. */}
       <section
         onClick={advanceQuote}
         role="button"
