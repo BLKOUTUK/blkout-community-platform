@@ -150,6 +150,25 @@ function getSectionAccent(tab: string): string {
   return SECTION_ACCENT[tab] || 'bg-liberation-gold-divine';
 }
 
+// Text-colour twin of SECTION_ACCENT for the wordmark's full stop. Classes are written
+// literally (Tailwind purges dynamically built names) — keep in step with SECTION_ACCENT.
+const SECTION_DOT: Partial<Record<string, string>> = {
+  stories: 'text-liberation-pride-purple-deep',
+  about: 'text-liberation-pan-african-red',
+  'ten-years': 'text-liberation-gold-divine',
+  'about/principles': 'text-liberation-pan-african-red',
+  governance: 'text-liberation-pan-african-red',
+  'governance-proposals': 'text-liberation-pan-african-red',
+  'my-account': 'text-liberation-pan-african-red',
+  finances: 'text-liberation-pan-african-red',
+  board: 'text-liberation-pan-african-red',
+  shop: 'text-liberation-pride-orange',
+  intro: 'text-liberation-aivor',
+};
+function getSectionDot(tab: string): string {
+  return SECTION_DOT[tab] || 'text-liberation-gold-divine';
+}
+
 // Shared sizing/shape for the "Where to go next" circles at the foot of the
 // homepage — colour is supplied per-destination alongside this base.
 const CIRCLE_LINK_BASE = 'flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full text-center text-xs md:text-sm font-bold uppercase tracking-wide leading-tight px-2 shadow-liberation-lg transition-transform hover:scale-110';
@@ -375,6 +394,7 @@ export default function App() {
       {/* Hero Section */}
       <VideoHero
         title="BLKOUT"
+        titleDot="text-liberation-gold-divine"
         subtitle="The Black Queer Men's Liberation Collective"
         videos={[
           '/videos/hero/PLATFORM HERO 1.mp4',
@@ -511,6 +531,14 @@ export default function App() {
                     className="h-10 md:h-12 w-auto cursor-pointer hover:scale-105 transition-transform drop-shadow-lg"
                     onClick={() => changeActiveTab('liberation')}
                   />
+                  <a
+                    href="/"
+                    onClick={(e) => { e.preventDefault(); changeActiveTab('liberation'); }}
+                    className="text-2xl font-black tracking-tighter text-[#f5f1e8] no-underline"
+                    style={{ fontFamily: "'Work Sans', system-ui, sans-serif" }}
+                  >
+                    BLKOUT<span className={`transition-colors duration-300 ${getSectionDot(activeTab)}`}>.</span>
+                  </a>
                   <button
                     onClick={() => setShowIVOR(true)}
                     className="p-2 bg-liberation-gold-divine/10 text-liberation-gold-divine rounded-md hover:bg-liberation-gold-divine/20 transition-all duration-200 border border-liberation-gold-divine/30"
@@ -574,6 +602,7 @@ export default function App() {
                 <div className="flex items-center gap-2 lg:hidden">
                   <MobileNav
                     activeTab={activeTab}
+                    dotClass={getSectionDot(activeTab)}
                     onTabChange={changeActiveTab}
                     onIVOROpen={() => setShowIVOR(true)}
                     isAdminAuthenticated={isAdminAuthenticated}

@@ -22,6 +22,8 @@ interface VideoHeroProps {
   logoSrc?: string;
   /** 'xl' bumps the title up a step for pages where it's the only headline text. */
   titleSize?: 'lg' | 'xl';
+  /** Tailwind text-colour class for a full stop after the title (the BLKOUT. wordmark dot). */
+  titleDot?: string;
 }
 
 const VideoHero: React.FC<VideoHeroProps> = ({
@@ -36,7 +38,8 @@ const VideoHero: React.FC<VideoHeroProps> = ({
   children,
   showLogo = true,
   logoSrc = "/Branding and logos/blkoutlogo_wht_transparent.png",
-  titleSize = 'lg'
+  titleSize = 'lg',
+  titleDot
 }) => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -193,6 +196,9 @@ const VideoHero: React.FC<VideoHeroProps> = ({
           }}
           >
             {title}
+            {titleDot && (
+              <span className={titleDot} style={{ WebkitTextStroke: '0' }} aria-hidden>.</span>
+            )}
           </h1>
 
           {subtitle && (
