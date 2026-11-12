@@ -4,6 +4,7 @@ import { cn } from '@/lib/liberation-utils';
 
 interface MobileNavProps {
   activeTab: string;
+  dotClass?: string;
   onTabChange: (tab: string) => void;
   onIVOROpen: () => void;
   isAdminAuthenticated: boolean;
@@ -11,6 +12,7 @@ interface MobileNavProps {
 
 const MobileNav: React.FC<MobileNavProps> = ({
   activeTab,
+  dotClass = 'text-liberation-gold-divine',
   onTabChange,
   onIVOROpen,
   isAdminAuthenticated
@@ -77,7 +79,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
                     alt="BLKOUT"
                     className="h-6 w-auto"
                   />
-                  <span className="text-xl font-bold text-liberation-gold-divine">BLKOUT</span>
+                  <span className="text-xl font-black tracking-tighter text-[#f5f1e8]" style={{ fontFamily: "'Work Sans', system-ui, sans-serif" }}>BLKOUT<span className={dotClass}>.</span></span>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
