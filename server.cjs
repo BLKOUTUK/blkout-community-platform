@@ -200,6 +200,12 @@ app.use((req, res, next) => {
     countClick(req, 'jason');
     return res.redirect(302, 'https://voices.blkoutuk.com/articles/jason-jones-wins-at-the-privy-council?utm_source=instagram&utm_medium=social&utm_campaign=jason-jones');
   }
+  // The one link in every BLKOUT social bio (12 Nov 2026). Points at Discover for now; repoint here
+  // when the 'BLKOUT now' page replaces it, and no bio ever needs editing. Counted.
+  if (req.path === '/now' || req.path === '/now/') {
+    countClick(req, 'now');
+    return res.redirect(302, 'https://comms.blkoutuk.com/discover?utm_source=social-bio&utm_medium=social&utm_campaign=bio-link');
+  }
   if (req.path === '/ivorstable' || req.path === '/ivorstable/') {
     return res.redirect(302, 'https://comms.blkoutuk.com/ivors-table.html');
   }
