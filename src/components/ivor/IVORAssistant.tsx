@@ -109,6 +109,10 @@ interface IVORAssistantProps {
   onClose: () => void;
   /** A question handed in via ?q= — sent as the first message when the widget opens. */
   initialQuestion?: string;
+  /** Page mode sent to AIvor as userContext.page (e.g. 'shop' = shop assistant). */
+  page?: string;
+  /** Replaces the opening line for a page mode. */
+  greeting?: string;
   utmParams?: {
     utmSource?: string;
     utmMedium?: string;
@@ -117,12 +121,12 @@ interface IVORAssistantProps {
   };
 }
 
-export default function IVORAssistant({ onClose, utmParams, initialQuestion }: IVORAssistantProps) {
+export default function IVORAssistant({ onClose, utmParams, initialQuestion, page, greeting }: IVORAssistantProps) {
   const [messages, setMessages] = useState<IVORMessage[]>([
     {
       id: '1',
       type: 'ivor',
-      content: 'Right then. I\'m AIvor — named after Ivor Cummings, Black British civil rights pioneer. I\'m your guide to all things BLKOUT and Black queer life in the UK. Events, resources, history, or just a proper conversation. What\'s on your mind?',
+      content: greeting || 'Right then. I\'m AIvor — named after Ivor Cummings, Black British civil rights pioneer. I\'m your guide to all things BLKOUT and Black queer life in the UK. Events, resources, history, or just a proper conversation. What\'s on your mind?',
       timestamp: new Date(),
       category: 'greeting'
     }
@@ -197,6 +201,7 @@ export default function IVORAssistant({ onClose, utmParams, initialQuestion }: I
           userContext: {
             source: 'web-widget',
             platform: 'community-platform',
+            ...(page ? { page } : {}),
             ...utmParams,
           },
           liberationContext: {

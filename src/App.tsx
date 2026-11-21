@@ -361,7 +361,7 @@ export default function App() {
       case 'movement':
         return <MovementSplit />;
       case 'shop':
-        return <ShopPage onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} />;
+        return <ShopPage onNavigate={(tab) => changeActiveTab(tab as NavigationTab)} onAskIvor={() => setShowIVOR(true)} />;
       case 'shop/membership':
         return <MembershipPage />;
       case 'shop/apparel':
@@ -617,7 +617,8 @@ export default function App() {
 
           {/* IVOR Assistant Overlay */}
           {showIVOR && (
-            <IVORAssistant onClose={() => setShowIVOR(false)} utmParams={utmParams} initialQuestion={ivorInitialQuestion} />
+            <IVORAssistant onClose={() => setShowIVOR(false)} utmParams={utmParams} initialQuestion={ivorInitialQuestion}
+              {...(String(activeTab).startsWith('shop') ? { page: 'shop', greeting: "Welcome to the shop. I'm AIvor, and today I'm minding the till. Ask me about Joseph Beam Day tickets, the tees and hoods, the journal or membership." } : {})} />
           )}
 
       </div>

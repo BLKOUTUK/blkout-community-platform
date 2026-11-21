@@ -3,6 +3,8 @@ import { supabase } from '@/lib/supabase';
 
 interface ShopPageProps {
   onNavigate?: (tab: string) => void;
+  /** Opens AIvor in shop-assistant mode. */
+  onAskIvor?: () => void;
 }
 
 interface RangeTileProps {
@@ -142,7 +144,7 @@ interface NextEvent {
   location: string | null;
 }
 
-export default function ShopPage({ onNavigate }: ShopPageProps) {
+export default function ShopPage({ onNavigate, onAskIvor }: ShopPageProps) {
   const [nextEvent, setNextEvent] = useState<NextEvent | null>(null);
 
   useEffect(() => {
@@ -158,6 +160,14 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
       .then(({ data }) => {
         if (data && data.length > 0) setNextEvent(data[0] as NextEvent);
       });
+  }, []);
+
+  // Links from Discover, Voices and emails land on #beam-day; the section renders after load,
+  // so scroll to it once it exists.
+  useEffect(() => {
+    if (window.location.hash !== '#beam-day') return;
+    const t = setTimeout(() => document.getElementById('beam-day')?.scrollIntoView({ block: 'start' }), 300);
+    return () => clearTimeout(t);
   }, []);
 
   const goMembership = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -196,6 +206,57 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
           </p>
           <hr className="h-1.5 bg-liberation-pride-orange border-0 mt-12 w-24" />
         </header>
+
+        {/* JOSEPH BEAM DAY TICKETS (21 Nov 2026; the block drops itself after the day) */}
+        {new Date() < new Date('2026-12-29T00:00:00Z') && (
+          <section id="beam-day" className="scroll-mt-24 border-t-8 border-liberation-pride-orange pt-12 pb-12 mb-16 mt-4">
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-14 items-start">
+              <div>
+                <span className="font-display uppercase tracking-widest text-xs text-liberation-pride-orange">
+                  Tickets · Monday 28 December · Croydon
+                </span>
+                <h2 className="font-display font-black uppercase tracking-tight leading-[0.95] text-4xl md:text-5xl mt-4 mb-0">
+                  A Day in the Life
+                </h2>
+                <p className="font-disrupt italic text-2xl text-liberation-pride-orange mt-3 mb-0">Joseph Beam Day 2026</p>
+                <a
+                  href="#beam-day-tickets"
+                  className="lg:hidden inline-block mt-6 bg-liberation-pride-orange text-liberation-black-power font-display font-black uppercase tracking-tight px-5 py-3"
+                >
+                  Book tickets &darr;
+                </a>
+                <img
+                  src="https://commons.blkoutuk.com/set-a-place-assets/beam-day-email-table.jpg"
+                  alt="Illustration: Black queer men of every age round a festive table"
+                  width={1080}
+                  height={864}
+                  className="w-full h-auto mt-8 block"
+                />
+                <ul className="mt-8 border-t border-liberation-neutral-800 list-none p-0">
+                  <li className="py-3 border-b border-liberation-neutral-800 text-liberation-neutral-300"><strong className="text-white">1pm · Ivor&rsquo;s Table.</strong> A sit-down lunch, cooked by our chef, Mark.</li>
+                  <li className="py-3 border-b border-liberation-neutral-800 text-liberation-neutral-300"><strong className="text-white">From 3pm · The Play Parlour.</strong> Black men at play: make art, join the games, put yourself on the cover of BLKOUT Review.</li>
+                  <li className="py-3 border-b border-liberation-neutral-800 text-liberation-neutral-300"><strong className="text-white">From 6pm · Club Frolic.</strong> Our White Party, with the crew&rsquo;s Kings&rsquo; Speech and dancing to see the year out.</li>
+                </ul>
+                <p className="text-liberation-neutral-300 mt-6 mb-0">
+                  Hosted by Black queer men, for Black queer men, 18+. Lower prices and pay what you can for every part of the day: money never closes the door.{' '}
+                  <a href="https://commons.blkoutuk.com/beam-day" className="text-liberation-pride-orange underline underline-offset-4">The whole day &rarr;</a>
+                </p>
+                {onAskIvor && (
+                  <button
+                    type="button"
+                    onClick={onAskIvor}
+                    className="mt-6 border-2 border-liberation-pride-orange text-liberation-pride-orange font-display font-black uppercase tracking-tight px-5 py-3 hover:bg-liberation-pride-orange hover:text-liberation-black-power transition-colors"
+                  >
+                    Questions? Ask AIvor &rarr;
+                  </button>
+                )}
+              </div>
+              <div id="beam-day-tickets" className="scroll-mt-24 lg:sticky lg:top-24 bg-liberation-neutral-900 border border-liberation-neutral-800 lg:min-h-[600px]">
+                <ZeffyEmbed formUrl="/embed/ticketing/a-day-in-the-life-joseph-beam-day--2026" title="Joseph Beam Day tickets, powered by Zeffy" />
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* PREFACE */}
         <section className="border-t border-b border-liberation-neutral-800 py-12 mb-20 grid grid-cols-1 lg:grid-cols-[14rem_1fr] gap-6 lg:gap-16">
@@ -437,6 +498,16 @@ export default function ShopPage({ onNavigate }: ShopPageProps) {
           <span className="font-mono">blkoutuk.com</span>
         </footer>
       </div>
+      {onAskIvor && (
+        <button
+          type="button"
+          onClick={onAskIvor}
+          className="hidden md:inline-flex fixed bottom-5 right-5 z-40 bg-liberation-pride-orange text-liberation-black-power font-display font-black uppercase tracking-tight px-5 py-3 shadow-lg hover:bg-white transition-colors"
+          style={{ marginBottom: 'env(safe-area-inset-bottom, 0px)' }}
+        >
+          Ask AIvor
+        </button>
+      )}
     </main>
   );
 }
